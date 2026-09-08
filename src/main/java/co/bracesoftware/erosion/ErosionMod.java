@@ -55,7 +55,7 @@ public final class ErosionMod
       ███▄▄     ████▄ ▄███▄ ▄█▀▀▀ ██  ▄███▄ ████▄ 
       ███       ██ ▀▀ ██ ██ ▀███▄ ██  ██ ██ ██ ██ 
        ▀███████ ██    ▀███▀ ▄▄▄█▀ ██▄ ▀███▀ ██ ██ """+
-    Text.Format(Text.Col.RED)+"v"+Erosion.BUILD+"\n"+
+    Text.Format(Text.Col.RED)+" v"+Erosion.BUILD+"\n"+
     Text.Format(Text.Col.GOLD) +
      "         Geological Chemistry for Minecraft" +
     Text.Format(Text.Col.GRAY);

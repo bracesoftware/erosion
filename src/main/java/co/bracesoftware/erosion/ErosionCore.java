@@ -1137,7 +1137,8 @@ public class ErosionCore
             var a = ITEM_DESCRIPTIONS.get(currentItem);
             for(int i = 0; i < a.size(); i++)
             {
-                tooltip.add(a.get(i));
+                Component f = a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
+                tooltip.add(f);
             }
             return;
         }
@@ -1145,7 +1146,8 @@ public class ErosionCore
         var b = setupItemDescription(currentItem);
         for(var c : b)
         {
-            tooltip.add(c);
+            Component f = c.copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
+            tooltip.add(f);
         }
         return;
     }
@@ -1269,7 +1271,7 @@ public class ErosionCore
                         Component.literal(factor).withStyle(ChatFormatting.BLUE)
                     ).append(
                         Component.literal(" can alter this block’s composition and transform it into:").withStyle(ChatFormatting.GRAY)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
                 for(int i = 0; i < products.size(); i++)
                 {
@@ -1277,7 +1279,7 @@ public class ErosionCore
                         Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                         .append(
                             Component.literal(products.get(i)).withStyle(ChatFormatting.YELLOW)
-                        ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                        )
                     );
                 }
             }
@@ -1294,11 +1296,11 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(refinesIntoNames.get(i)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
             }
             desc.add(
-                Component.literal("- Can be refined into: ").withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                Component.literal("- Can be refined into: ").withStyle(ChatFormatting.GRAY)
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1318,12 +1320,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(meltsIntoNames.get(i)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
             }
             desc.add(
                 Component.literal("- Can be crucible-molten into:")
-                .withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                .withStyle(ChatFormatting.GRAY)
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1333,7 +1335,7 @@ public class ErosionCore
                 Component.literal("- Compatible catalyst: ").withStyle(ChatFormatting.GRAY)
                 .append(
                     Component.literal(catalyst).withStyle(ChatFormatting.DARK_PURPLE)
-                ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                )
             );
         }
 
@@ -1380,12 +1382,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByErodingNames.get(i)).withStyle(ChatFormatting.YELLOW)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
             }
             desc.add(
                 Component.literal("- Made when environmental factors alter the composition of:")
-                .withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                .withStyle(ChatFormatting.GRAY)
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1405,12 +1407,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByRefiningNames.get(i)).withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
             }
             desc.add(
                 Component.literal("- Made by refining:").withStyle(ChatFormatting.GRAY)
-                .withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1429,12 +1431,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByMelting.get(i)).withStyle(ChatFormatting.RED)
-                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                    )
                 );
             }
             desc.add(
                 Component.literal("- Made by crucible-melting: ").withStyle(ChatFormatting.GRAY)
-                .withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+                
             );
             for(int i = 0; i < list.size(); i++)
             {
