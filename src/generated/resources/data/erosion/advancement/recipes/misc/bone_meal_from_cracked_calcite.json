@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_cracked_calcite": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:cracked_calcite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "erosion:bone_meal_from_cracked_calcite"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_cracked_calcite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "erosion:bone_meal_from_cracked_calcite"
+    ]
+  }
+}

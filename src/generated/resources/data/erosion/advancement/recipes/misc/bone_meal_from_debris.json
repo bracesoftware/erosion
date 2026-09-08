@@ -1,11 +1,11 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_cracked_calcite": {
+    "has_debris": {
       "conditions": {
         "items": [
           {
-            "items": "erosion:cracked_calcite"
+            "items": "erosion:debris"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:bone_meal"
+        "recipe": "erosion:bone_meal_from_debris"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -21,12 +21,12 @@
   "requirements": [
     [
       "has_the_recipe",
-      "has_cracked_calcite"
+      "has_debris"
     ]
   ],
   "rewards": {
     "recipes": [
-      "minecraft:bone_meal"
+      "erosion:bone_meal_from_debris"
     ]
   }
 }

@@ -921,7 +921,7 @@ public class ErosionCore
 
     public static final CrucibleCatalyst CRUSHED_EGG_SHELL = new CrucibleCatalyst(
         ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName(),
-        () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 25
+        () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 20
     );
 
     public static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = List.of(
@@ -1321,14 +1321,14 @@ public class ErosionCore
         }
 
         List<String> meltsIntoNames = new java.util.ArrayList<>();
-        List<String> catalyst = null;
+        List<String> catalystListLmao = new ArrayList<>();
         for(RefinableMaterial m : REFINABLE_MATERIALS_LIST)
         {
             if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE) if(m.materialItem == currentItem)
             {
                 for(var c : m.catalyst)
                 {
-                    catalyst.add(c.name);
+                    catalystListLmao.add(c.name);
                 }
                 for (Item prodItem : m.productItem)
                 { 
@@ -1413,11 +1413,11 @@ public class ErosionCore
                 desc.add(list.get(i));
             }
             MutableComponent catalysts = Component.literal("None");
-            if(!catalyst.isEmpty())
+            if(!catalystListLmao.isEmpty())
             {
                 catalysts = Component.literal("");
             }
-            for(var s : catalyst)
+            for(var s : catalystListLmao)
             {
                 catalysts.append(
                     Component.literal(s).withStyle(ChatFormatting.DARK_PURPLE)

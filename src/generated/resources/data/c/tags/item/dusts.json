@@ -1,6 +1,8 @@
 {
   "values": [
     "erosion:feldspar_powder",
-    "erosion:flux"
+    "erosion:flux",
+    "erosion:debris",
+    "erosion:crushed_egg_shell"
   ]
 }
