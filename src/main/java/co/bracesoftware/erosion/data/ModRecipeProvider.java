@@ -62,13 +62,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             RecipeCategory.MISC, Items.BONE_MEAL
         ).requires(ErosionRegistry.Items.CRACKED_CALCITE.get())
         .unlockedBy("has_cracked_calcite", has(ErosionRegistry.Items.CRACKED_CALCITE.get()))
-        .save(output);
+        .save(output, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "bone_meal_from_cracked_calcite"));
 
         ShapelessRecipeBuilder.shapeless(
             RecipeCategory.MISC, Items.BONE_MEAL
         ).requires(ErosionRegistry.Items.DEBRIS.get())
         .unlockedBy("has_debris", has(ErosionRegistry.Items.DEBRIS.get()))
-        .save(output);
+        .save(output, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "bone_meal_from_debris"));
 
         //MOD COMPAT!!
         ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
