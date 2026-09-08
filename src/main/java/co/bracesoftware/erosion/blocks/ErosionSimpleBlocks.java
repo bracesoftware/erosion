@@ -115,7 +115,7 @@ public class ErosionSimpleBlocks
             ),
             Block.box(
                 SHAPE_THIRDDIM_X1, SHAPE_THIRDDIM_Y1, SHAPE_THIRDDIM_Z1,
-                SHAPE_THIRDDIM_Y1, SHAPE_THIRDDIM_Y2, SHAPE_THIRDDIM_Z2
+                SHAPE_THIRDDIM_X1, SHAPE_THIRDDIM_Y2, SHAPE_THIRDDIM_Z2
             )
         );
 
