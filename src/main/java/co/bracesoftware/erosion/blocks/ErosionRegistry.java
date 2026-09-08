@@ -112,6 +112,7 @@ public class ErosionRegistry
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
         public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
+        public static final IRawRegistry CRUSHED_EGG_SHELL = new IRawRegistry("crushed_egg_shell", "Crushed Egg Shell");
         public static final IRawRegistry RAW_LIMONITE = new IRawRegistry("raw_limonite", "Raw Limonite");
         public static final IRawRegistry RAW_HEMATITE = new IRawRegistry("raw_hematite", "Raw Hematite");
         public static final IRawRegistry RAW_MAGNETITE = new IRawRegistry("raw_magnetite", "Raw Magnetite");
@@ -387,6 +388,9 @@ public class ErosionRegistry
         public static final DeferredItem<Item> FLUX = ITEMS.register(
             RawRegistry.FLUX.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
+        public static final DeferredItem<Item> CRUSHED_EGG_SHELL = ITEMS.register(
+            RawRegistry.CRUSHED_EGG_SHELL.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
 
         public static final DeferredItem<Item> RAW_LIMONITE = ITEMS.register(
             RawRegistry.RAW_LIMONITE.getId(), () -> new BlockItem(
@@ -513,6 +517,7 @@ public class ErosionRegistry
 
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());
+            output.accept(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
             output.accept(ErosionRegistry.Items.FELDSPAR_POWDER.get());
 
             //MACHINES

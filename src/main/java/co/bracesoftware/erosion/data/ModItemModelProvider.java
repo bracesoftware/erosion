@@ -17,6 +17,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     {
         basicItem(ErosionRegistry.Items.FELDSPAR_POWDER.get());
         basicItem(ErosionRegistry.Items.FLUX.get());
+        basicItem(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
 
         basicItem(ErosionRegistry.Items.RAW_HEMATITE.get());
         basicItem(ErosionRegistry.Items.RAW_LIMONITE.get());

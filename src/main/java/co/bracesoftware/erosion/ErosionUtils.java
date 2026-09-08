@@ -48,4 +48,12 @@ public class ErosionUtils
     {
         return "../src/main/resources/";
     }
+
+    public static class Misc
+    {
+        public static boolean randomWithChanceToBe(boolean res, int chance)
+        {
+            return res == (ErosionMod.RANDOM.nextInt(100) < chance);
+        }
+    }
 }

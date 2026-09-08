@@ -8,6 +8,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -41,6 +42,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.List;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -258,8 +261,8 @@ public class CrucibleBlock extends BaseEntityBlock
                 var m = ErosionCore.BlockEntityRecipes.Crucible.CATALYSTS;
                 if(m.containsKey(stack.getItem()))
                 {
-                    CrucibleCatalyst c = m.get(stack.getItem());
-                    if(c.catalystItem != be.catalyst.getItem())
+                    List<Item> c = m.get(stack.getItem());
+                    if(!c.contains(be.catalyst.getItem()))
                     {
                         ErosionUtils.displayMessage(player, "The material isn't eligible for the applied catalyst");
                         return ItemInteractionResult.CONSUME;

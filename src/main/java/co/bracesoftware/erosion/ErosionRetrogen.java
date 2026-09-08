@@ -155,7 +155,10 @@ public class ErosionRetrogen
         return;
     }
 
-    private static List<BlockPos> getRandomSurfacePositionsAround(Level level, BlockPos center, int radius, int count, RandomSource random)
+    private static List<BlockPos> getRandomSurfacePositionsAround(
+        Level level, BlockPos center, 
+        int radius, int count
+    )
     {
         List<BlockPos> positions = new ArrayList<>();
 
@@ -164,17 +167,13 @@ public class ErosionRetrogen
         int minZ = (center.getZ() >> 4) << 4;
         int maxZ = minZ + 15;
 
-        for (int i = 0; i < count; i++)
+        for(int i = 0; i < count; i++)
         {
-            int dx = random.nextInt(-radius, radius + 1);
-            int dz = random.nextInt(-radius, radius + 1);
-
+            int dx = ErosionMod.RANDOM.nextInt(-radius, radius + 1);
+            int dz = ErosionMod.RANDOM.nextInt(-radius, radius + 1);
             int targetX = Math.max(minX, Math.min(maxX, center.getX() + dx));
             int targetZ = Math.max(minZ, Math.min(maxZ, center.getZ() + dz));
-
-            // Pronalazi visinu gornjeg bloka terena na ovim X, Z koordinatama
             int surfaceY = level.getHeight(Heightmap.Types.WORLD_SURFACE, targetX, targetZ) - 1;
-
             positions.add(new BlockPos(targetX, surfaceY, targetZ));
         }
 
@@ -200,7 +199,7 @@ public class ErosionRetrogen
         }
         List<BlockPos> v = new ArrayList<>();
         List<BlockPos> v2 = getRandomSurfacePositionsAround(
-            l, p, 4, RetrogenFeature.MAX_REPLACEMENTS_PER_CHUNK, ErosionMod.RANDOM
+            l, p, 4, RetrogenFeature.MAX_REPLACEMENTS_PER_CHUNK
         );
 
         for(var pos : v2)

@@ -51,6 +51,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ).requires(ErosionRegistry.Items.FELDSPAR_POWDER.get())
         .unlockedBy("has_feldspar_powder", has(ErosionRegistry.Items.FELDSPAR_POWDER.get()))
         .save(output);
+        
+        ShapelessRecipeBuilder.shapeless(
+            RecipeCategory.MISC, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get()
+        ).requires(Items.EGG)
+        .unlockedBy("has_egg", has(Items.EGG))
+        .save(output);
 
         ShapelessRecipeBuilder.shapeless(
             RecipeCategory.MISC, Items.BONE_MEAL

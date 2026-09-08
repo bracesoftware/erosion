@@ -26,6 +26,7 @@ public class ModItemTagProvider extends ItemTagsProvider {
         //SIMPLE ITEMS
         createSimplePowder(provider, ErosionRegistry.Items.FELDSPAR_POWDER.get());
         createSimplePowder(provider, ErosionRegistry.Items.FLUX.get());
+        createSimplePowder(provider, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
 
         createSimpleRawOre(provider, ErosionRegistry.Items.RAW_HEMATITE.get());
         createSimpleRawOre(provider, ErosionRegistry.Items.RAW_LIMONITE.get());

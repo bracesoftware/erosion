@@ -12,6 +12,7 @@ import java.util.function.Supplier;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
+import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
@@ -182,6 +184,7 @@ public class ErosionCore
     public static final AlterationPacketList PENDING_FAST = new AlterationPacketList(ErosionConfig.MAX_PENDING_FAST_SIZE);
 
     public static final Map<Item, List<Component>> ITEM_DESCRIPTIONS = new HashMap<>();
+    public static final Map<Item, Integer> CATALYST_SUCCESS_CHANCE = new HashMap<>();
 
     private static Map<Block, AlterableMaterial> ALTERATION_INVERTED = new HashMap<>();
 
@@ -293,13 +296,15 @@ public class ErosionCore
     {
         public Supplier<Item> catalyst;
         public Item catalystItem;
+        public Integer successChance;
 
-        public CrucibleCatalyst(String n, Supplier<Item> c)
+        public CrucibleCatalyst(String n, Supplier<Item> c, Integer s)
         {
             this.name = n;
             this.catalyst = c;
 
             this.antiDuplicator = new ArrayList<>();
+            this.successChance = s;
         }
 
         @Override 
@@ -307,9 +312,9 @@ public class ErosionCore
         {
             ErosionUtils.Log("Setting up crucible catalyst: " + this.name);
             this.preventDuplication(antiDuplicator);
-            
-
             this.catalystItem = this.catalyst.get();
+
+            CATALYST_SUCCESS_CHANCE.put(this.catalystItem, this.successChance);
         }
 
         @Override 
@@ -317,6 +322,8 @@ public class ErosionCore
         {
             ErosionUtils.Log("Discarding crucible catalyst: " + this.name);
             this.discardDuplicationPreventionSys(antiDuplicator);
+
+            CATALYST_SUCCESS_CHANCE.remove(this.catalystItem);
             return;
         }
 
@@ -332,6 +339,39 @@ public class ErosionCore
             }
             return false;
         }
+
+        public static Integer getCatalystSuccessRate(Item item)
+        {
+            for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
+            {
+                CrucibleCatalyst c = CRUCIBLE_CATALYST_LIST.get(i);
+                if(c.catalystItem == item)
+                {
+                    return c.successChance;
+                }
+            }
+            return 0;
+        }
+        public static ChatFormatting getSRColor(int sr)
+        {
+            if(sr <= 20)
+            {
+                return ChatFormatting.RED;
+            }
+            if((21 < sr) && (sr <= 40))
+            {
+                return ChatFormatting.GOLD;
+            }
+            if((41 < sr) && (sr <= 60))
+            {
+                return ChatFormatting.YELLOW;
+            }
+            if((61 < sr) && (sr <= 80))
+            {
+                return ChatFormatting.GREEN;
+            }
+            return ChatFormatting.DARK_PURPLE;
+        }
     }
 
     public static class RefinableMaterial extends ErosionDynamicItem
@@ -343,7 +383,7 @@ public class ErosionCore
         public Item materialItem = null;
         public List<Item> productItem = null;
 
-        public CrucibleCatalyst catalyst = null;
+        public List<CrucibleCatalyst> catalyst = null;
 
         public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i)
         {
@@ -355,7 +395,7 @@ public class ErosionCore
             this.antiDuplicator = new ArrayList<>();
         }
 
-        public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i, CrucibleCatalyst c)
+        public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i, List<CrucibleCatalyst> c)
         {
             this.name = n;
             this.material = m;
@@ -394,7 +434,15 @@ public class ErosionCore
                 {
                     throw new RuntimeException("Missing a catalyst for recipe: " + this.name);
                 }
-                else BlockEntityRecipes.Crucible.CATALYSTS.putIfAbsent(materialItem, this.catalyst);
+                else
+                {
+                    List<Item> L_ = new ArrayList<>();
+                    for(var f : this.catalyst)
+                    {
+                        L_.add(f.catalystItem);
+                    }
+                    BlockEntityRecipes.Crucible.CATALYSTS.putIfAbsent(materialItem, L_);
+                }
             }
             return;
         }
@@ -868,11 +916,16 @@ public class ErosionCore
 
     public static final CrucibleCatalyst FLUX = new CrucibleCatalyst(
         ErosionRegistry.RawRegistry.FLUX.getName(),
-        () -> ErosionRegistry.Items.FLUX.get()
+        () -> ErosionRegistry.Items.FLUX.get(), 60
+    );
+
+    public static final CrucibleCatalyst CRUSHED_EGG_SHELL = new CrucibleCatalyst(
+        ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName(),
+        () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 25
     );
 
     public static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = List.of(
-        FLUX
+        FLUX, CRUSHED_EGG_SHELL
     );
 
     // ========================== REFINABLE MATERIALS
@@ -914,28 +967,36 @@ public class ErosionCore
         () -> ErosionRegistry.Items.RAW_LIMONITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
     public static final RefinableMaterial RAW_MAGNETITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),
         () -> ErosionRegistry.Items.RAW_MAGNETITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
     public static final RefinableMaterial RAW_HEMATITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_HEMATITE.getName(),
         () -> ErosionRegistry.Items.RAW_HEMATITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
     public static final RefinableMaterial RAW_MALACHITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_MALACHITE.getName(),
         () -> ErosionRegistry.Items.RAW_MALACHITE.get(),
         () -> List.of(
             Items.RAW_COPPER
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
 
     public static final RefinableMaterial NATIVE_GOLD = new RefinableMaterial(
@@ -943,7 +1004,9 @@ public class ErosionCore
         () -> ErosionRegistry.Items.NATIVE_GOLD.get(),
         () -> List.of(
             Items.GOLD_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
 
     public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial(
@@ -998,14 +1061,18 @@ public class ErosionCore
         () -> ErosionRegistry.Items.RAW_CASSITERITE.get(),
         () -> List.of(
             ErosionRegistry.Items.TIN_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX
+        )
     );
     public static final RefinableMaterial NATIVE_SILVER = new RefinableMaterial(
         ErosionRegistry.RawRegistry.NATIVE_SILVER.getName(),
         () -> ErosionRegistry.Items.NATIVE_SILVER.get(),
         () -> List.of(
             ErosionRegistry.Items.SILVER_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX
+        )
     );
 
     public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial(
@@ -1022,7 +1089,9 @@ public class ErosionCore
         () -> ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
         () -> List.of(
             ErosionRegistry.Items.BISMUTH_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1040,7 +1109,9 @@ public class ErosionCore
         () -> ErosionRegistry.Items.RAW_SPHALERITE.get(),
         () -> List.of(
             ErosionRegistry.Items.ZINC_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, FLUX
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1185,6 +1256,13 @@ public class ErosionCore
                 desc.add(
                     Component.literal("Used as a crucible catalyst").withStyle(ChatFormatting.GOLD)
                 );
+                Integer sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
+                desc.add(
+                    Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal(sr.toString())
+                    .withStyle(CrucibleCatalyst.getSRColor(sr)))
+                    .append(Component.literal(" success rate.").withStyle(ChatFormatting.GRAY))
+                );
             }
         }
 
@@ -1243,12 +1321,15 @@ public class ErosionCore
         }
 
         List<String> meltsIntoNames = new java.util.ArrayList<>();
-        String catalyst = null;
+        List<String> catalyst = null;
         for(RefinableMaterial m : REFINABLE_MATERIALS_LIST)
         {
             if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE) if(m.materialItem == currentItem)
             {
-                catalyst = m.catalyst.name;
+                for(var c : m.catalyst)
+                {
+                    catalyst.add(c.name);
+                }
                 for (Item prodItem : m.productItem)
                 { 
                     meltsIntoNames.add(prodItem.getDescription().getString());
@@ -1331,10 +1412,22 @@ public class ErosionCore
             {
                 desc.add(list.get(i));
             }
+            MutableComponent catalysts = Component.literal("None");
+            if(!catalyst.isEmpty())
+            {
+                catalysts = Component.literal("");
+            }
+            for(var s : catalyst)
+            {
+                catalysts.append(
+                    Component.literal(s).withStyle(ChatFormatting.DARK_PURPLE)
+                    .append(Component.literal(", ").withStyle(ChatFormatting.GRAY))
+                );
+            }
             desc.add(
-                Component.literal("- Compatible catalyst: ").withStyle(ChatFormatting.GRAY)
+                Component.literal("- Compatible catalyst(s): ").withStyle(ChatFormatting.GRAY)
                 .append(
-                    Component.literal(catalyst).withStyle(ChatFormatting.DARK_PURPLE)
+                    catalysts
                 )
             );
         }
@@ -1699,7 +1792,7 @@ public class ErosionCore
         public static class Crucible
         {
             public static Map<Item, List<Item>> RECIPES = new HashMap<>();
-            public static Map<Item, CrucibleCatalyst> CATALYSTS = new HashMap<>();
+            public static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
         }
     }
     public static class Extra
