@@ -235,6 +235,65 @@ public class ModBlockStateProvider extends BlockStateProvider
                 ErosionRegistry.RawRegistry.LIMONITE_ORE.getId() //block texture
             )
         );
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_HEMATITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_HEMATITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.HEMATITE_ORE.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_MAGNETITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_MAGNETITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.MAGNETITE_ORE.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_MALACHITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_MALACHITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.NATIVE_GOLD.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.NATIVE_GOLD.getId(), //item for texture
+                ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.NATIVE_SILVER.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.NATIVE_SILVER.getId(), //item for texture
+                ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getId() //block texture
+            )
+        );
+
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_CASSITERITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.CASSITERITE_DEPOSIT.getId() //block texture
+            )
+        );
+
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_SPHALERITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.SPHALERITE_ORE.getId() //block texture
+            )
+        );
+
         // ============================================= //
         return;
     }
@@ -284,15 +343,21 @@ public class ModBlockStateProvider extends BlockStateProvider
             .texture("texture", modLoc("block/" + texturePath))
             
             .element()
-                .from(RockBlock.MIN_XZ, RockBlock.Y_MIN, RockBlock.MIN_XZ)
-                .to(RockBlock.MAX_XZ, RockBlock.Y_MID, RockBlock.MAX_XZ)
-                .allFaces((direction, builder) -> builder.texture("#texture"))
-                .end()
-                
+            .from(RockBlock.SHAPE_FIRSTDIM_X1, RockBlock.SHAPE_FIRSTDIM_Y1, RockBlock.SHAPE_FIRSTDIM_Z1)
+            .to(RockBlock.SHAPE_FIRSTDIM_X2, RockBlock.SHAPE_FIRSTDIM_Y2, RockBlock.SHAPE_FIRSTDIM_Z2)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
             .element()
-                .from(RockBlock.INNER_MIN_XZ, RockBlock.Y_MID, RockBlock.INNER_MIN_XZ)
-                .to(RockBlock.INNER_MAX_XZ, RockBlock.Y_MAX, RockBlock.INNER_MAX_XZ)
-                .allFaces((direction, builder) -> builder.texture("#texture"))
-                .end();
+            .from(RockBlock.SHAPE_SECONDDIM_X1, RockBlock.SHAPE_SECONDDIM_Y1, RockBlock.SHAPE_SECONDDIM_Z1)
+            .to(RockBlock.SHAPE_SECONDDIM_X2, RockBlock.SHAPE_SECONDDIM_Y2, RockBlock.SHAPE_SECONDDIM_Z2)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(RockBlock.SHAPE_THIRDDIM_X1, RockBlock.SHAPE_THIRDDIM_Y1, RockBlock.SHAPE_THIRDDIM_Z1)
+            .to(RockBlock.SHAPE_THIRDDIM_X2, RockBlock.SHAPE_THIRDDIM_Y2, RockBlock.SHAPE_THIRDDIM_Z2)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end();
     }
 }

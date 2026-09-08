@@ -230,6 +230,46 @@ public class ErosionRegistry
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
+        public static final DeferredBlock<Block> RAW_MAGNETITE = BLOCKS.register(
+            RawRegistry.RAW_MAGNETITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_HEMATITE = BLOCKS.register(
+            RawRegistry.RAW_HEMATITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_MALACHITE = BLOCKS.register(
+            RawRegistry.RAW_MALACHITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> NATIVE_GOLD = BLOCKS.register(
+            RawRegistry.NATIVE_GOLD.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> NATIVE_SILVER = BLOCKS.register(
+            RawRegistry.NATIVE_SILVER.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_SPHALERITE = BLOCKS.register(
+            RawRegistry.RAW_SPHALERITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_BISMUTHINITE = BLOCKS.register(
+            RawRegistry.RAW_BISMUTHINITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_CASSITERITE = BLOCKS.register(
+            RawRegistry.RAW_CASSITERITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
     }
     public static class Items
     {
@@ -333,40 +373,56 @@ public class ErosionRegistry
             )
         );
         public static final DeferredItem<Item> RAW_MAGNETITE = ITEMS.register(
-            RawRegistry.RAW_MAGNETITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_MAGNETITE.getId(), () -> new BlockItem(
+                Blocks.RAW_MAGNETITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> RAW_HEMATITE = ITEMS.register(
-            RawRegistry.RAW_HEMATITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_HEMATITE.getId(), () -> new BlockItem(
+                Blocks.RAW_HEMATITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> RAW_MALACHITE = ITEMS.register(
-            RawRegistry.RAW_MALACHITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_MALACHITE.getId(), () -> new BlockItem(
+                Blocks.RAW_MALACHITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
 
         public static final DeferredItem<Item> NATIVE_GOLD = ITEMS.register(
-            RawRegistry.NATIVE_GOLD.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.NATIVE_GOLD.getId(), () -> new BlockItem(
+                Blocks.NATIVE_GOLD.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> RAW_CASSITERITE = ITEMS.register(
-            RawRegistry.RAW_CASSITERITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_CASSITERITE.getId(), () -> new BlockItem(
+                Blocks.RAW_CASSITERITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> TIN_CHUNK = ITEMS.register(
             RawRegistry.TIN_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
         public static final DeferredItem<Item> NATIVE_SILVER = ITEMS.register(
-            RawRegistry.NATIVE_SILVER.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.NATIVE_SILVER.getId(), () -> new BlockItem(
+                Blocks.NATIVE_SILVER.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> SILVER_CHUNK = ITEMS.register(
             RawRegistry.SILVER_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
 
         public static final DeferredItem<Item> RAW_BISMUTHINITE = ITEMS.register(
-            RawRegistry.RAW_BISMUTHINITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_BISMUTHINITE.getId(), () -> new BlockItem(
+                Blocks.RAW_BISMUTHINITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> BISMUTH_CHUNK = ITEMS.register(
             RawRegistry.BISMUTH_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
 
         public static final DeferredItem<Item> RAW_SPHALERITE = ITEMS.register(
-            RawRegistry.RAW_SPHALERITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_SPHALERITE.getId(), () -> new BlockItem(
+                Blocks.RAW_SPHALERITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> ZINC_CHUNK = ITEMS.register(
             RawRegistry.ZINC_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))

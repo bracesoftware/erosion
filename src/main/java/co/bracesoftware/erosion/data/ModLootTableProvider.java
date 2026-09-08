@@ -95,6 +95,16 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
             dropSelf(ErosionRegistry.Blocks.RAW_LIMONITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_HEMATITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_MAGNETITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_MALACHITE.get());
+
+            dropSelf(ErosionRegistry.Blocks.NATIVE_GOLD.get());
+            dropSelf(ErosionRegistry.Blocks.NATIVE_SILVER.get());
+
+            dropSelf(ErosionRegistry.Blocks.RAW_SPHALERITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_CASSITERITE.get());
 
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
@@ -128,6 +138,17 @@ public class ModLootTableProvider extends LootTableProvider
                 ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
 
                 ErosionRegistry.Blocks.RAW_LIMONITE.get(),
+                ErosionRegistry.Blocks.RAW_HEMATITE.get(),
+                ErosionRegistry.Blocks.RAW_MAGNETITE.get(),
+                ErosionRegistry.Blocks.RAW_MALACHITE.get(),
+
+                ErosionRegistry.Blocks.NATIVE_GOLD.get(),
+                ErosionRegistry.Blocks.NATIVE_SILVER.get(),
+
+                ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
+                ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
+                ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
+
 
                 // MACHINES
                 ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),

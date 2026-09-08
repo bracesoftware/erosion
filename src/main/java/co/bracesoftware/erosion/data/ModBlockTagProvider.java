@@ -49,6 +49,16 @@ public class ModBlockTagProvider extends BlockTagsProvider
         createSimpleDirt(provider, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
         createSimpleRock(provider, ErosionRegistry.Blocks.RAW_LIMONITE.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_HEMATITE.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_MAGNETITE.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_MALACHITE.get());
+
+        createSimpleRock(provider, ErosionRegistry.Blocks.NATIVE_GOLD.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.NATIVE_SILVER.get());
+
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_CASSITERITE.get());
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_SPHALERITE.get());
 
         //MACHINES
         // ============================================= //
