@@ -7,6 +7,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
@@ -15,6 +16,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -225,6 +227,14 @@ public class ModBlockStateProvider extends BlockStateProvider
         });
 
         simpleBlockItem(crucible, heatModels[0]);
+
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_LIMONITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_LIMONITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.LIMONITE_ORE.getId() //block texture
+            )
+        );
         // ============================================= //
         return;
     }
@@ -265,5 +275,24 @@ public class ModBlockStateProvider extends BlockStateProvider
             TextureProvider.generateHeatedTexture(baseCrucibleContent, outputTex, i, ErosionConfig.CRUCIBLE_SECONDS);
         }
         return;
+    }
+    // Helper metoda za generisanje 3D modela kamenčića
+    public BlockModelBuilder createRockModel(String modelName, String texturePath)
+    {
+        return models().withExistingParent(modelName, mcLoc("block/block"))
+            .texture("particle", modLoc("block/" + texturePath))
+            .texture("texture", modLoc("block/" + texturePath))
+            
+            .element()
+                .from(RockBlock.MIN_XZ, RockBlock.Y_MIN, RockBlock.MIN_XZ)
+                .to(RockBlock.MAX_XZ, RockBlock.Y_MID, RockBlock.MAX_XZ)
+                .allFaces((direction, builder) -> builder.texture("#texture"))
+                .end()
+                
+            .element()
+                .from(RockBlock.INNER_MIN_XZ, RockBlock.Y_MID, RockBlock.INNER_MIN_XZ)
+                .to(RockBlock.INNER_MAX_XZ, RockBlock.Y_MAX, RockBlock.INNER_MAX_XZ)
+                .allFaces((direction, builder) -> builder.texture("#texture"))
+                .end();
     }
 }

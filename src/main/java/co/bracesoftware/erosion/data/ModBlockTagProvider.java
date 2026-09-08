@@ -48,6 +48,8 @@ public class ModBlockTagProvider extends BlockTagsProvider
 
         createSimpleDirt(provider, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
+        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_LIMONITE.get());
+
         //MACHINES
         // ============================================= //
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
@@ -79,6 +81,13 @@ public class ModBlockTagProvider extends BlockTagsProvider
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
         tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravels"))).add(b);
         tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravel"))).add(b);
+        return;
+    }
+
+    public void createSimpleRock(HolderLookup.Provider p, Block b)
+    {
+        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rock"))).add(b);
+        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rocks"))).add(b);
         return;
     }
 

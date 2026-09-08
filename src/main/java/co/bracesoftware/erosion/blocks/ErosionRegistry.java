@@ -225,6 +225,11 @@ public class ErosionRegistry
             )
         );
 
+        public static final DeferredBlock<Block> RAW_LIMONITE = BLOCKS.register(
+            RawRegistry.RAW_LIMONITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
     }
     public static class Items
     {
@@ -323,7 +328,9 @@ public class ErosionRegistry
         );
 
         public static final DeferredItem<Item> RAW_LIMONITE = ITEMS.register(
-            RawRegistry.RAW_LIMONITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+            RawRegistry.RAW_LIMONITE.getId(), () -> new BlockItem(
+                Blocks.RAW_LIMONITE.get(), new Item.Properties().stacksTo(32)
+            )
         );
         public static final DeferredItem<Item> RAW_MAGNETITE = ITEMS.register(
             RawRegistry.RAW_MAGNETITE.getId(), () -> new Item(new Item.Properties().stacksTo(32))

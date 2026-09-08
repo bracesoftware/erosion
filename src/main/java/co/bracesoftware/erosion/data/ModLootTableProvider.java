@@ -94,6 +94,8 @@ public class ModLootTableProvider extends LootTableProvider
 
             dropSelf(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
+            dropSelf(ErosionRegistry.Blocks.RAW_LIMONITE.get());
+
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
             dropSelf(ErosionRegistry.Blocks.CRUCIBLE.get());
@@ -124,6 +126,8 @@ public class ModLootTableProvider extends LootTableProvider
                 ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
                 ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
                 ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+
+                ErosionRegistry.Blocks.RAW_LIMONITE.get(),
 
                 // MACHINES
                 ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),
