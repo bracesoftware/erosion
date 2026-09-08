@@ -1237,7 +1237,7 @@ public class ErosionCore
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
             );
         }
-        if(currentItem == ErosionRegistry.Items.CRUCIBLE.get())
+        else if(currentItem == ErosionRegistry.Items.CRUCIBLE.get())
         {
             desc.add(
                 Component.literal("A piece of pottery used to melt eligible materials into their raw forms.")
@@ -1246,6 +1246,13 @@ public class ErosionCore
             desc.add(
                 Component.literal("Can be placed only if there is a heat source under it such as Lava or Campfire.")
                 .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+            );
+        }
+        else if(currentItem == ErosionRegistry.Items.DEBRIS.get())
+        {
+            desc.add(
+                Component.literal("Product of a failed material modification process")
+                .withStyle(ChatFormatting.DARK_RED)
             );
         }
 
