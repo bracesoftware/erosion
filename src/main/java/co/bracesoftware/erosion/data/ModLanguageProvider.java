@@ -61,9 +61,6 @@ public class ModLanguageProvider extends LanguageProvider
         add(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(), ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getName());
         add(ErosionRegistry.Blocks.SPHALERITE_ORE.get(), ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName());
 
-        //rocks
-        add(ErosionRegistry.Blocks.RAW_LIMONITE.get(), ErosionRegistry.RawRegistry.RAW_LIMONITE.getName());
-
         //MACHINES
         add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());
         add(ErosionRegistry.Blocks.CRUCIBLE.get(), ErosionRegistry.RawRegistry.CRUCIBLE.getName());
