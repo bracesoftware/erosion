@@ -1259,7 +1259,7 @@ public class ErosionCore
                 Integer sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
                 desc.add(
                     Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal(sr.toString())
+                    .append(Component.literal(sr.toString() + "%")
                     .withStyle(CrucibleCatalyst.getSRColor(sr)))
                     .append(Component.literal(" success rate.").withStyle(ChatFormatting.GRAY))
                 );
@@ -1417,12 +1417,16 @@ public class ErosionCore
             {
                 catalysts = Component.literal("");
             }
-            for(var s : catalystListLmao)
+            for(int i = 0; i < catalystListLmao.size(); i++)
             {
+                var s = catalystListLmao.get(i);
                 catalysts.append(
                     Component.literal(s).withStyle(ChatFormatting.DARK_PURPLE)
-                    .append(Component.literal(", ").withStyle(ChatFormatting.GRAY))
                 );
+                if(!(i + 1 >= catalystListLmao.size()))
+                {
+                    catalysts.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
+                }
             }
             desc.add(
                 Component.literal("- Compatible catalyst(s): ").withStyle(ChatFormatting.GRAY)
