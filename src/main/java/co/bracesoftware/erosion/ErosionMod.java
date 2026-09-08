@@ -75,6 +75,7 @@ public final class ErosionMod
     @SubscribeEvent 
     public static void onServerStart(ServerAboutToStartEvent e)
     {
+        ErosionRetrogen.Load();
         ErosionMod.LoadMod();
         ErosionConfig.ServerConfig.LoadModConfig();
         
@@ -93,6 +94,8 @@ public final class ErosionMod
             s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId(), 
             ErosionRegistry.DataAttachments.RETROGEN_DATA
         );
+
+        ErosionRetrogen.Unload();
     }
 
     @SubscribeEvent 

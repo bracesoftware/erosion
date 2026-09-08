@@ -45,6 +45,7 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 
 public class ErosionRetrogen
 {
+    private static Boolean LOADED = false;
     public static class RetrogenFeature
     {
         public static final Integer MAX_REPLACEMENTS_PER_CHUNK = 10;
@@ -72,6 +73,15 @@ public class ErosionRetrogen
             
             this.toReplace = this.toReplaceSupplier.get();
             this.toPlace = this.toPlaceSupplier.get();
+            return;
+        }
+
+        public void discard()
+        {
+            ErosionUtils.Log("Discarding retrogen feature: " + this.name);
+            
+            this.toReplace.clear();
+            this.toPlace.clear();
             return;
         }
 
@@ -112,13 +122,35 @@ public class ErosionRetrogen
         PLACE_ROCKS
     );
 
-    public static void Setup()
+    public static void Load()
     {
+        if(LOADED)
+        {
+            ErosionUtils.Log("Retrogen has to be loaded only once.");
+            return;
+        }
+        LOADED = true;
         ErosionUtils.Log(ErosionMod.WELCOME_ASCII);
         ErosionUtils.Log("Setting up Erosion retrogen module...");
         for(var r : RETROGEN_FEATURES)
         {
             r.setup();
+        }
+        return;
+    }
+    public static void Unload()
+    {
+        if(!LOADED)
+        {
+            ErosionUtils.Log("Retrogen has to be unloaded only once.");
+            return;
+        }
+        LOADED = false;
+        ErosionUtils.Log(ErosionMod.WELCOME_ASCII);
+        ErosionUtils.Log("Unloading the Erosion retrogen module...");
+        for(var r : RETROGEN_FEATURES)
+        {
+            r.discard();
         }
         return;
     }
@@ -151,6 +183,10 @@ public class ErosionRetrogen
 
     public static void applyFeatureToChunk(ServerLevel l, BlockPos p, RetrogenFeature f)
     {
+        if(!LOADED)
+        {
+            return;
+        }
         long cp = ChunkPos.asLong(p.getX() >> 4, p.getZ() >> 4);
         var m = ErosionRegistry.DataAttachments.RETROGEN_DATA;
 
@@ -199,6 +235,11 @@ public class ErosionRetrogen
     {
         public static void saveRetrogenData(MinecraftServer server, String filename, Long2ObjectMap<List<String>> data)
         {
+            if(!LOADED)
+            {
+                return;
+            }
+
             Path dataDir = server.getWorldPath(LevelResource.ROOT).resolve("data");
             File file = dataDir.resolve(filename + ".json").toFile();
 
@@ -216,6 +257,11 @@ public class ErosionRetrogen
         public static Long2ObjectMap<List<String>> loadRetrogenData(MinecraftServer server, String filename)
         {
             Long2ObjectMap<List<String>> result = new Long2ObjectOpenHashMap<>();
+
+            if(!LOADED)
+            {
+                return result;
+            }
 
             Path dataDir = server.getWorldPath(LevelResource.ROOT).resolve("data");
             File file = dataDir.resolve(filename + ".json").toFile();

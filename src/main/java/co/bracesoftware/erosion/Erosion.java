@@ -25,10 +25,4 @@ public class Erosion
     {
         ErosionMod.SetupRegistry(modEventBus);
     }
-
-    @SubscribeEvent 
-    public void onSetup(FMLCommonSetupEvent e)
-    {
-        ErosionRetrogen.Setup();
-    }
 }
