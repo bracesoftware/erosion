@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.Erosion.SML.ModSides;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -75,39 +76,24 @@ public final class ErosionMod
     @SubscribeEvent 
     public static void onServerStart(ServerAboutToStartEvent e)
     {
-        ErosionRetrogen.Load();
-        ErosionMod.LoadMod();
-        ErosionConfig.ServerConfig.LoadModConfig();
-        
-        MinecraftServer s = e.getServer();
-        ErosionRegistry.DataAttachments.RETROGEN_DATA = ErosionRetrogen.RetrogenDataManager.loadRetrogenData(
-            s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId()
-        );
+        Erosion.SML.LoadModFor(Erosion.SML.ModSides.SERVER);
     }
     @SubscribeEvent 
     public static void onServerStop(ServerStoppingEvent e)
     {
-        ErosionMod.UnloadMod();
-        ErosionConfig.ServerConfig.SaveModConfig();
-        MinecraftServer s = e.getServer();
-        RetrogenDataManager.saveRetrogenData(
-            s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId(), 
-            ErosionRegistry.DataAttachments.RETROGEN_DATA
-        );
-
-        ErosionRetrogen.Unload();
+        Erosion.SML.UnloadModFor(Erosion.SML.ModSides.SERVER);
     }
 
     @SubscribeEvent 
     public static void onLogin(ClientPlayerNetworkEvent.LoggingIn e)
     {
-        ErosionMod.LoadMod();
+        Erosion.SML.LoadModFor(Erosion.SML.ModSides.CLIENT);
     }
 
     @SubscribeEvent 
     public static void onLogout(ClientPlayerNetworkEvent.LoggingOut e)
     {
-        ErosionMod.UnloadMod();
+        Erosion.SML.UnloadModFor(Erosion.SML.ModSides.CLIENT);
     }
 
     @SubscribeEvent
