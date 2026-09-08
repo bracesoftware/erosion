@@ -99,11 +99,11 @@ public class ErosionRetrogen
 
     public static final RetrogenFeature PLACE_ROCKS = new RetrogenFeature(
         "place_rocks", "Place rocks around the chunk",
-        () -> List.of(
+        () -> new ArrayList<>(List.of(
             Blocks.SHORT_GRASS,
             Blocks.FERN
-        ),
-        () -> List.of(
+        )),
+        () -> new ArrayList<>(List.of(
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
             ErosionRegistry.Blocks.RAW_LIMONITE.get(),
             ErosionRegistry.Blocks.RAW_MAGNETITE.get(),
@@ -115,7 +115,7 @@ public class ErosionRetrogen
             ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
             ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
             ErosionRegistry.Blocks.RAW_SPHALERITE.get()
-        )
+        ))
     );
 
     public static final List<RetrogenFeature> RETROGEN_FEATURES = List.of(
