@@ -99,7 +99,7 @@
     }
   ],
   "textures": {
-    "particle": "erosion:block/limonite_ore",
-    "texture": "erosion:block/limonite_ore"
+    "particle": "erosion:block/cassiterite_deposit",
+    "texture": "erosion:block/cassiterite_deposit"
   }
 }

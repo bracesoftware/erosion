@@ -99,7 +99,7 @@
     }
   ],
   "textures": {
-    "particle": "erosion:block/limonite_ore",
-    "texture": "erosion:block/limonite_ore"
+    "particle": "erosion:block/bismuthinite_ore",
+    "texture": "erosion:block/bismuthinite_ore"
   }
 }

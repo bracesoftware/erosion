@@ -99,7 +99,7 @@
     }
   ],
   "textures": {
-    "particle": "erosion:block/limonite_ore",
-    "texture": "erosion:block/limonite_ore"
+    "particle": "erosion:block/native_gold_deposit",
+    "texture": "erosion:block/native_gold_deposit"
   }
 }

@@ -1,5 +1,13 @@
 {
   "values": [
-    "erosion:raw_limonite"
+    "erosion:raw_limonite",
+    "erosion:raw_hematite",
+    "erosion:raw_magnetite",
+    "erosion:raw_malachite",
+    "erosion:native_gold",
+    "erosion:native_silver",
+    "erosion:raw_bismuthinite",
+    "erosion:raw_cassiterite",
+    "erosion:raw_sphalerite"
   ]
 }
