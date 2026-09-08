@@ -43,7 +43,6 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 
-@EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionRetrogen
 {
     public static class RetrogenFeature
