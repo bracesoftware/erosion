@@ -1141,10 +1141,16 @@ public class ErosionCore
             }
             return;
         }
+
+        var b = setupItemDescription(currentItem);
+        for(var c : b)
+        {
+            tooltip.add(c);
+        }
         return;
     }
 
-    public static void setupItemDescription(Item currentItem)
+    public static List<Component> setupItemDescription(Item currentItem)
     {
         List<Component> desc = new ArrayList<>();
 
@@ -1442,18 +1448,7 @@ public class ErosionCore
             ITEM_DESCRIPTIONS.put(currentItem, desc);
             ErosionUtils.Log("Successfully set description of item: " + currentItem.getDescription().getString());
         }
-        return;
-    }
-
-    public static void SetupOnFML()
-    {
-        Load();
-        for(Item i : BuiltInRegistries.ITEM)
-        {
-            setupItemDescription(i.asItem());
-        }
-        Unload();
-        return;
+        return desc;
     }
 
     // =================================================== //

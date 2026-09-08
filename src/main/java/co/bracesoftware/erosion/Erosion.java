@@ -25,10 +25,4 @@ public class Erosion
     {
         ErosionMod.SetupRegistry(modEventBus);
     }
-
-    @SubscribeEvent 
-    public void onServerSetup(FMLCommonSetupEvent e)
-    {
-        ErosionCore.SetupOnFML();
-    }
 }
