@@ -178,8 +178,8 @@ public class ErosionCore
         }
     }
 
-    public static final AlterationPacketList PENDING = new AlterationPacketList(ErosionConfig.MAX_PENDING_SIZE * 2);
-    public static final AlterationPacketList PENDING_FAST = new AlterationPacketList(ErosionConfig.MAX_PENDING_FAST_SIZE * 2);
+    public static final AlterationPacketList PENDING = new AlterationPacketList(ErosionConfig.MAX_PENDING_SIZE);
+    public static final AlterationPacketList PENDING_FAST = new AlterationPacketList(ErosionConfig.MAX_PENDING_FAST_SIZE);
 
     public static final Map<Item, List<Component>> ITEM_DESCRIPTIONS = new HashMap<>();
 
