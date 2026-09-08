@@ -1,6 +1,11 @@
 package co.bracesoftware.erosion.blocks;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
+
+import com.mojang.serialization.Codec;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
@@ -27,11 +32,13 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
 public class ErosionRegistry
 {
@@ -39,6 +46,9 @@ public class ErosionRegistry
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
         Registries.BLOCK_ENTITY_TYPE, Erosion.MODID
+    );
+    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(
+        NeoForgeRegistries.ATTACHMENT_TYPES, Erosion.MODID
     );
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
@@ -122,6 +132,21 @@ public class ErosionRegistry
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
+
+        //DATA ATTACHMENTS
+        public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
+    }
+
+    public static class DataAttachments
+    {
+        public static final Supplier<AttachmentType<Set<String>>> RETROGEN_DATA = ATTACHMENT_TYPES.register(
+            RawRegistry.RETROGEN_DATA.getId(), () -> {
+                AttachmentType<Set<String>> type = AttachmentType.builder(() -> (Set<String>) new HashSet<String>())
+                    .serialize(Codec.STRING.listOf().xmap(HashSet::new, ArrayList::new))
+                    .build();
+                return type;
+            }
+        );
     }
 
     public static class Blocks

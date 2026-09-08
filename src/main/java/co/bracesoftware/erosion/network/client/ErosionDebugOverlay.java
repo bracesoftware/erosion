@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.network.client;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.ErosionRetrogen;
 import co.bracesoftware.libs.minecraft_text_formatter.*;
 
 import net.minecraft.network.chat.Component;
@@ -38,5 +39,12 @@ public class ErosionDebugOverlay
                 )
             )
         );
+        event.getLeft().add(
+            MAIN_STYLE +
+            "Retrogen blocks generated: " + 
+            Text.Format(Text.Col.GOLD) +
+            ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED.toString()
+        );
+        return;
     }
 }

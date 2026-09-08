@@ -11,7 +11,8 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ErosionStatusSyncPacket(
     int pending, long performed, int pendingfast, long performed2,
-    boolean agal
+    boolean agal,
+    int retrogen
 ) implements CustomPacketPayload
 {
     public static final Type<ErosionStatusSyncPacket> TYPE = new Type<>(
@@ -24,6 +25,7 @@ public record ErosionStatusSyncPacket(
         ByteBufCodecs.INT, ErosionStatusSyncPacket::pendingfast,
         ByteBufCodecs.VAR_LONG, ErosionStatusSyncPacket::performed2,
         ByteBufCodecs.BOOL, ErosionStatusSyncPacket::agal,
+        ByteBufCodecs.INT, ErosionStatusSyncPacket::retrogen,
         ErosionStatusSyncPacket::new
     );
 
@@ -41,7 +43,8 @@ public record ErosionStatusSyncPacket(
                 data.performed(),
                 data.pendingfast(),
                 data.performed2(),
-                data.agal()
+                data.agal(),
+                data.retrogen()
             );
         });
     }

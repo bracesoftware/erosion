@@ -203,7 +203,8 @@ public final class ErosionMod
                 ErosionCore.getPerformedAlterations(),
                 ErosionCore.getPendingFastSize(),
                 ErosionCore.getPerformedAlterationsPriority(),
-                ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.get()
+                ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.get(),
+                ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
             );
 
             for(var player : e.getServer().getPlayerList().getPlayers())

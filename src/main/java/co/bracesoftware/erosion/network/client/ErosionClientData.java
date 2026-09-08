@@ -2,19 +2,25 @@ package co.bracesoftware.erosion.network.client;
 
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionRetrogen;
 
 public class ErosionClientData
 {
-    public static String CACHED_STATUS_STRING = "Pending: 0/0 (0.00 MB RAM) | Performed: 0";
+    public static String CACHED_STATUS_STRING = "No data yet!";
     public static class ConfigFromServer
     {
         public static Boolean AGGRESIVE_GEOCHEMICAL_ALTERATION = false;
     }
 
-    public static void update(int pending, long performed, int pendingfast, long performed2, boolean agal)
+    public static void update(
+        int pending, long performed, int pendingfast, long performed2,
+        boolean agal,
+        int retrogen
+    )
     {
         CACHED_STATUS_STRING = formatModStatusString(pending, performed, pendingfast, performed2);
         ConfigFromServer.AGGRESIVE_GEOCHEMICAL_ALTERATION = agal;
+        ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED = retrogen;
     }
 
     public static String formatModStatusString(int pending, long performed, int pendingfast, long performed2)
