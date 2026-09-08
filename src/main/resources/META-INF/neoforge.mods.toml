@@ -1,0 +1,27 @@
+modLoader="javafml"
+loaderVersion="[1,)"
+license="MIT"
+
+[[mods]]
+modId="erosion"
+version="1"
+displayName="Erosion"
+authors="DEntisT"
+logoFile="Erosion.png"
+description='''
+Adds simple geological chemistry to your world.
+'''
+
+[[dependencies.erosion]]
+    modId="neoforge"
+    type="required"
+    versionRange="[21.1.0,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.erosion]]
+    modId="minecraft"
+    type="required"
+    versionRange="[1.21.1]"
+    ordering="NONE"
+    side="BOTH"

@@ -1,0 +1,244 @@
+{
+  "variants": {
+    "facing=east,finished=false,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 90
+    },
+    "facing=east,finished=false,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 90
+    },
+    "facing=east,finished=true,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 90
+    },
+    "facing=north,finished=false,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_off"
+    },
+    "facing=north,finished=false,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_off"
+    },
+    "facing=north,finished=false,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_off"
+    },
+    "facing=north,finished=false,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_off"
+    },
+    "facing=north,finished=false,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_off"
+    },
+    "facing=north,finished=false,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_off"
+    },
+    "facing=north,finished=false,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_off"
+    },
+    "facing=north,finished=false,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_off"
+    },
+    "facing=north,finished=true,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_on"
+    },
+    "facing=north,finished=true,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_on"
+    },
+    "facing=north,finished=true,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_on"
+    },
+    "facing=north,finished=true,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_on"
+    },
+    "facing=north,finished=true,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_on"
+    },
+    "facing=north,finished=true,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_on"
+    },
+    "facing=north,finished=true,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_on"
+    },
+    "facing=north,finished=true,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_on"
+    },
+    "facing=south,finished=false,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 180
+    },
+    "facing=south,finished=false,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 180
+    },
+    "facing=south,finished=true,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 180
+    },
+    "facing=west,finished=false,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 270
+    },
+    "facing=west,finished=false,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_off",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=0,working=false": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=0,working=true": {
+      "model": "erosion:block/material_purifier_fuel_0_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=1,working=false": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=1,working=true": {
+      "model": "erosion:block/material_purifier_fuel_1_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=2,working=false": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=2,working=true": {
+      "model": "erosion:block/material_purifier_fuel_2_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=3,working=false": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 270
+    },
+    "facing=west,finished=true,fuel=3,working=true": {
+      "model": "erosion:block/material_purifier_fuel_3_on",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "erosion:block/material_purifier_bottom",
+    "front": "erosion:block/generated/material_purifier_front_fuel_0_on",
+    "side": "erosion:block/material_purifier_side",
+    "top": "erosion:block/material_purifier_top"
+  }
+}

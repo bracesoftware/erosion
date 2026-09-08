@@ -1,0 +1,9 @@
+{
+  "values": [
+    "erosion:dried_dirt",
+    "erosion:quartz_gravel",
+    "erosion:native_gold_deposit",
+    "erosion:cassiterite_deposit",
+    "erosion:native_silver_deposit"
+  ]
+}

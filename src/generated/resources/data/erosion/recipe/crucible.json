@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "item": "erosion:kaolinized_granite"
+    }
+  },
+  "pattern": [
+    "G G",
+    "G G",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "erosion:crucible"
+  }
+}

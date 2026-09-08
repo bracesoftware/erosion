@@ -1,0 +1,16 @@
+{
+  "values": [
+    "erosion:kaolinized_granite",
+    "erosion:albitized_granite",
+    "erosion:propylitized_diorite",
+    "erosion:cracked_calcite",
+    "erosion:magnetite_ore",
+    "erosion:hematite_ore",
+    "erosion:calcite_malachite_ore",
+    "erosion:limonite_ore",
+    "erosion:bismuthinite_ore",
+    "erosion:sphalerite_ore",
+    "erosion:material_purifier",
+    "erosion:crucible"
+  ]
+}

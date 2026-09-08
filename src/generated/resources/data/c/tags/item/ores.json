@@ -1,0 +1,17 @@
+{
+  "values": [
+    "erosion:raw_hematite",
+    "erosion:raw_limonite",
+    "erosion:raw_magnetite",
+    "erosion:raw_malachite",
+    "erosion:native_gold",
+    "erosion:raw_cassiterite",
+    "erosion:tin_chunk",
+    "erosion:silver_chunk",
+    "erosion:native_silver",
+    "erosion:raw_bismuthinite",
+    "erosion:bismuth_chunk",
+    "erosion:raw_sphalerite",
+    "erosion:zinc_chunk"
+  ]
+}
