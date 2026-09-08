@@ -1,5 +1,5 @@
 <div align="center">
-    <img height="300" src="Erosion.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/Erosion.png">
 </div>
 
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
@@ -7,33 +7,33 @@ Although this mod is called `Erosion`, it is focused on all kinds of geochemical
 Each item this mod adds or modifies gets its nicely described tooltip like this, so you cannot get lost!
 
 <div align="center">
-    <img height="300" src="gallery/tooltips.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/tooltips.png">
 </div>
 
 Creative tab:
 <div align="center">
-    <img height="300" src="gallery/all_items.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/all_items.png">
 </div>
 
 As you can see blocks can be altered by lava or water present.
 
 <div align="center">
-    <img height="300" src="gallery/cliff_erosion.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/cliff_erosion.png">
 </div>
 
 <div align="center">
-    <img height="300" src="gallery/lava2.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/lava2.png">
 </div>
 
 <div align="center">
-    <img height="300" src="gallery/river1.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/river1.png">
 </div>
 
 There are nice minerals that spawn in real-time as your rivers erode the soil.
 This mod adds malachite, limonite, magnetite, hematite, bismuthinite, cassiterite, and more!
 
 <div align="center">
-    <img height="300" src="gallery/malachite.png">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/malachite.png">
 </div>
 
 ## Compatible mods
@@ -62,3 +62,5 @@ Download now!
 
 Join Discord server to give new ideas! 
 Link: https://discord.gg/gFvUagQbBd
+
+View more on Github: https://github.com/bracesoftware/erosion
