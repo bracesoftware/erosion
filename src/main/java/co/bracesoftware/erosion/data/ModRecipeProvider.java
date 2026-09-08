@@ -51,7 +51,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ).requires(ErosionRegistry.Items.FELDSPAR_POWDER.get())
         .unlockedBy("has_feldspar_powder", has(ErosionRegistry.Items.FELDSPAR_POWDER.get()))
         .save(output);
-        
+
         ShapelessRecipeBuilder.shapeless(
             RecipeCategory.MISC, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get()
         ).requires(Items.EGG)
@@ -62,6 +62,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
             RecipeCategory.MISC, Items.BONE_MEAL
         ).requires(ErosionRegistry.Items.CRACKED_CALCITE.get())
         .unlockedBy("has_cracked_calcite", has(ErosionRegistry.Items.CRACKED_CALCITE.get()))
+        .save(output);
+
+        ShapelessRecipeBuilder.shapeless(
+            RecipeCategory.MISC, Items.BONE_MEAL
+        ).requires(ErosionRegistry.Items.DEBRIS.get())
+        .unlockedBy("has_debris", has(ErosionRegistry.Items.DEBRIS.get()))
         .save(output);
 
         //MOD COMPAT!!

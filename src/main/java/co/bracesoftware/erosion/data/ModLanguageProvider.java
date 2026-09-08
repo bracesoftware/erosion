@@ -20,6 +20,7 @@ public class ModLanguageProvider extends LanguageProvider
         
         //SIMPLE ITEMS
         add(ErosionRegistry.Items.FLUX.get(), ErosionRegistry.RawRegistry.FLUX.getName());
+        add(ErosionRegistry.Items.DEBRIS.get(), ErosionRegistry.RawRegistry.DEBRIS.getName());
         add(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName());
         add(ErosionRegistry.Items.FELDSPAR_POWDER.get(), ErosionRegistry.RawRegistry.FELDSPAR_POWDER.getName());
 

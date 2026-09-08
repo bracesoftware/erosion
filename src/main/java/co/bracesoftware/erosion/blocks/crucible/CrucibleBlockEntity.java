@@ -77,8 +77,10 @@ public class CrucibleBlockEntity extends BlockEntity
                 be.progress = 0;
 
                 var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
-                be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
-
+                int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
+                boolean s = ErosionUtils.Misc.randomWithChanceToBe(true, sr);
+                if(s) be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
+                else be.storedItem = new ItemStack(ErosionRegistry.Items.DEBRIS.get());
                 be.catalyst = ItemStack.EMPTY;
 
                 level.getLightEngine().checkBlock(pos);
