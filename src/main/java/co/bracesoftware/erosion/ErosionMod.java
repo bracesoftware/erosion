@@ -1,6 +1,9 @@
 package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.ErosionCore;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.mojang.brigadier.CommandDispatcher;
 
 import net.minecraft.commands.CommandSourceStack;
@@ -8,6 +11,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
@@ -40,6 +44,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.bracesoftware.erosion.ErosionConfig.*;
 import co.bracesoftware.erosion.ErosionCore.CommandRegistry;
+import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 
@@ -61,20 +66,33 @@ public final class ErosionMod
     Text.Format(Text.Col.GRAY);
 
     private static final List<ChunkPos> LOADED_CHUNKS = new ArrayList<>();
+
+    //Objects for working whatever
+    public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final RandomSource RANDOM = RandomSource.create();
 
     //setup
     @SubscribeEvent 
-    public static void onServerStart(ServerAboutToStartEvent event)
+    public static void onServerStart(ServerAboutToStartEvent e)
     {
         ErosionMod.LoadMod();
         ErosionConfig.ServerConfig.LoadModConfig();
+        
+        MinecraftServer s = e.getServer();
+        ErosionRegistry.DataAttachments.RETROGEN_DATA = ErosionRetrogen.RetrogenDataManager.loadRetrogenData(
+            s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId()
+        );
     }
     @SubscribeEvent 
-    public static void onServerStop(ServerStoppingEvent event)
+    public static void onServerStop(ServerStoppingEvent e)
     {
         ErosionMod.UnloadMod();
         ErosionConfig.ServerConfig.SaveModConfig();
+        MinecraftServer s = e.getServer();
+        RetrogenDataManager.saveRetrogenData(
+            s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId(), 
+            ErosionRegistry.DataAttachments.RETROGEN_DATA
+        );
     }
 
     @SubscribeEvent 

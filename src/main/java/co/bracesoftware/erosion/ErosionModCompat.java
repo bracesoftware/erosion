@@ -109,9 +109,7 @@ public class ErosionModCompat
     );
 
     public static class JsonRecipeGenerator
-    {
-        public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-        
+    {   
         public static String getItemNameFromNamespaceAndPath(String namespace, String path)
         {
             //dummy func for better look
@@ -166,7 +164,7 @@ public class ErosionModCompat
                 java.nio.file.Files.createDirectories(path.getParent());
                 try(FileWriter writer = new FileWriter(path.toFile()))
                 {
-                    GSON.toJson(recipeJson, writer);
+                    ErosionMod.GSON.toJson(recipeJson, writer);
                 }
             }
             catch (IOException e)

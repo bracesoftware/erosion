@@ -1,7 +1,10 @@
 package co.bracesoftware.erosion.blocks;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
@@ -16,13 +19,15 @@ import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
-
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ColoredFallingBlock;
 import net.minecraft.world.level.block.FallingBlock;
@@ -46,9 +51,6 @@ public class ErosionRegistry
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
         Registries.BLOCK_ENTITY_TYPE, Erosion.MODID
-    );
-    public static final DeferredRegister<AttachmentType<?>> ATTACHMENT_TYPES = DeferredRegister.create(
-        NeoForgeRegistries.ATTACHMENT_TYPES, Erosion.MODID
     );
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
@@ -139,14 +141,8 @@ public class ErosionRegistry
 
     public static class DataAttachments
     {
-        public static final Supplier<AttachmentType<Set<String>>> RETROGEN_DATA = ATTACHMENT_TYPES.register(
-            RawRegistry.RETROGEN_DATA.getId(), () -> {
-                AttachmentType<Set<String>> type = AttachmentType.builder(() -> (Set<String>) new HashSet<String>())
-                    .serialize(Codec.STRING.listOf().xmap(HashSet::new, ArrayList::new))
-                    .build();
-                return type;
-            }
-        );
+        //nothin yet
+        public static Long2ObjectMap<List<String>> RETROGEN_DATA = new Long2ObjectOpenHashMap<>();
     }
 
     public static class Blocks

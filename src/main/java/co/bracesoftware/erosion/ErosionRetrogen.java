@@ -3,10 +3,32 @@ package co.bracesoftware.erosion;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import com.google.gson.reflect.TypeToken;
+
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.NbtIo;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.world.level.storage.LevelResource;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.io.Writer;
+import java.io.Reader;
+
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -16,6 +38,7 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.RetryOptions;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.level.ChunkEvent;
@@ -25,7 +48,7 @@ public class ErosionRetrogen
 {
     public static class RetrogenFeature
     {
-        public static final Integer MAX_REPLACEMENTS_PER_CHUNK = 100;
+        public static final Integer MAX_REPLACEMENTS_PER_CHUNK = 10;
         public static Integer RETROGEN_PERFORMED = 0;
 
         private String id;
@@ -69,7 +92,7 @@ public class ErosionRetrogen
         "place_rocks", "Place rocks around the chunk",
         () -> List.of(
             Blocks.SHORT_GRASS,
-            Blocks.TALL_GRASS
+            Blocks.FERN
         ),
         () -> List.of(
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
@@ -101,68 +124,65 @@ public class ErosionRetrogen
         return;
     }
 
-    @SubscribeEvent 
-    public static void onChunkLoad(ChunkEvent.Load e)
+    private static List<BlockPos> getRandomSurfacePositionsAround(Level level, BlockPos center, int radius, int count, RandomSource random)
     {
-        if(!(e.getLevel() instanceof ServerLevel level)) return;
+        List<BlockPos> positions = new ArrayList<>();
 
-        ChunkAccess chunk = e.getChunk();
-        Set<String> appliedFeatures = chunk.getData(ErosionRegistry.DataAttachments.RETROGEN_DATA.get());
+        int minX = (center.getX() >> 4) << 4;
+        int maxX = minX + 15;
+        int minZ = (center.getZ() >> 4) << 4;
+        int maxZ = minZ + 15;
 
-        boolean chunkModified = false;
-
-        for(RetrogenFeature f : RETROGEN_FEATURES)
+        for (int i = 0; i < count; i++)
         {
-            if(appliedFeatures.contains(f.getId())) continue;
-            boolean a = applyFeatureToChunk(level, chunk, f);
-            if(a)
-            {
-                appliedFeatures.add(f.getId());
-                chunkModified = true;
-            }
+            int dx = random.nextInt(-radius, radius + 1);
+            int dz = random.nextInt(-radius, radius + 1);
+
+            int targetX = Math.max(minX, Math.min(maxX, center.getX() + dx));
+            int targetZ = Math.max(minZ, Math.min(maxZ, center.getZ() + dz));
+
+            // Pronalazi visinu gornjeg bloka terena na ovim X, Z koordinatama
+            int surfaceY = level.getHeight(Heightmap.Types.WORLD_SURFACE, targetX, targetZ) - 1;
+
+            positions.add(new BlockPos(targetX, surfaceY, targetZ));
         }
 
-        if(chunkModified)
-        {
-            chunk.setUnsaved(true);
-        }
-        return;
+        return positions;
     }
 
-    private static boolean applyFeatureToChunk(ServerLevel l, ChunkAccess c, RetrogenFeature f)
+    public static void applyFeatureToChunk(ServerLevel l, BlockPos p, RetrogenFeature f)
     {
-        int minX = c.getPos().getMinBlockX();
-        int minZ = c.getPos().getMinBlockZ();
+        long cp = ChunkPos.asLong(p.getX() >> 4, p.getZ() >> 4);
+        var m = ErosionRegistry.DataAttachments.RETROGEN_DATA;
 
-        List<BlockPos> v = new ArrayList<>();
-
-        for(int x = 0; x < 16; x++)
+        if(m.containsKey(cp))
         {
-            for(int z = 0; z < 16; z++)
+            var k = m.get(cp);
+            if(k.contains(f.getId()))
             {
-                int worldX = minX + x;
-                int worldZ = minZ + z;
+                return;
+            }
+        }
+        List<BlockPos> v = new ArrayList<>();
+        List<BlockPos> v2 = getRandomSurfacePositionsAround(
+            l, p, 4, RetrogenFeature.MAX_REPLACEMENTS_PER_CHUNK, ErosionMod.RANDOM
+        );
 
-                int surfaceY = l.getHeight(Heightmap.Types.WORLD_SURFACE, worldX, worldZ) - 1;
-                BlockPos pos = new BlockPos(worldX, surfaceY, worldZ);
-                BlockState state = l.getBlockState(pos);
-
-                if(f.toReplace.contains(state.getBlock()))
-                {
-                    v.add(pos);
-                }
+        for(var pos : v2)
+        {
+            BlockState state = l.getBlockState(pos);
+            if(f.toReplace.contains(state.getBlock()))
+            {
+                v.add(pos);
             }
         }
 
         if(v.isEmpty())
         {
-            return false;
+            return;
         }
 
-        Collections.shuffle(v);
-        int countToReplace = Math.min(v.size(), RetrogenFeature.MAX_REPLACEMENTS_PER_CHUNK);
-
-        for(int i = 0; i < countToReplace; i++)
+        for(int i = 0; i < v.size(); i++)
         {
             BlockPos pos = v.get(i);
             Block randomRock = f.toPlace.get(ErosionMod.RANDOM.nextInt(f.toPlace.size()));
@@ -170,6 +190,58 @@ public class ErosionRetrogen
             RetrogenFeature.RETROGEN_PERFORMED++;
         }
 
-        return true;
+        m.computeIfAbsent(
+            cp, k -> new ArrayList<>()
+        ).add(f.getId());
+        return;
+    }
+    
+    public static class RetrogenDataManager
+    {
+        public static void saveRetrogenData(MinecraftServer server, String filename, Long2ObjectMap<List<String>> data)
+        {
+            Path dataDir = server.getWorldPath(LevelResource.ROOT).resolve("data");
+            File file = dataDir.resolve(filename + ".json").toFile();
+
+            try(Writer writer = new FileWriter(file))
+            {
+                ErosionMod.GSON.toJson(data, writer);
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+        public static Long2ObjectMap<List<String>> loadRetrogenData(MinecraftServer server, String filename)
+        {
+            Long2ObjectMap<List<String>> result = new Long2ObjectOpenHashMap<>();
+
+            Path dataDir = server.getWorldPath(LevelResource.ROOT).resolve("data");
+            File file = dataDir.resolve(filename + ".json").toFile();
+
+            if(!file.exists())
+            {
+                return result;
+            }
+
+            try(Reader reader = new FileReader(file))
+            {
+                var type = new TypeToken<Map<Long, List<String>>>() {}.getType();
+                Map<Long, List<String>> rawMap = ErosionMod.GSON.fromJson(reader, type);
+
+                if(rawMap != null)
+                {
+                    result.putAll(rawMap);
+                }
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            return result;
+        }
     }
 }

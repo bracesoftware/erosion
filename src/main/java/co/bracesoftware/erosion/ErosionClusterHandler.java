@@ -32,7 +32,6 @@ public class ErosionClusterHandler
 
     private static void selectVeinErosionAroundPlayer(ServerLevel level, BlockPos playerPos, int maxRadius)
     {
-        RandomSource random = level.getRandom();
         int minRadiusSq = ErosionConfig.Clusters.MIN_SPAWN_DISTANCE * ErosionConfig.Clusters.MIN_SPAWN_DISTANCE;
         int maxRadiusSq = maxRadius * maxRadius;
         int clusterRadius = ErosionConfig.Clusters.SIZE / 2;
@@ -44,15 +43,15 @@ public class ErosionClusterHandler
             int attempts = 0;
 
             do {
-                baseOffsetX = random.nextInt(maxRadius * 2 + 1) - maxRadius;
-                baseOffsetZ = random.nextInt(maxRadius * 2 + 1) - maxRadius;
+                baseOffsetX = ErosionMod.RANDOM.nextInt(maxRadius * 2 + 1) - maxRadius;
+                baseOffsetZ = ErosionMod.RANDOM.nextInt(maxRadius * 2 + 1) - maxRadius;
                 distanceSq = baseOffsetX * baseOffsetX + baseOffsetZ * baseOffsetZ;
                 attempts++;
             } while ((distanceSq < minRadiusSq || distanceSq > maxRadiusSq) && attempts < 15);
 
             if(attempts >= 15) continue;
 
-            int baseOffsetY = random.nextInt(ErosionConfig.CHUNK_SIZE * 2) - ErosionConfig.CHUNK_SIZE;
+            int baseOffsetY = ErosionMod.RANDOM.nextInt(ErosionConfig.CHUNK_SIZE * 2) - ErosionConfig.CHUNK_SIZE;
             BlockPos clusterCenter = playerPos.offset(baseOffsetX, baseOffsetY, baseOffsetZ);
 
             for(int x = -clusterRadius; x <= clusterRadius; x++)
@@ -64,6 +63,10 @@ public class ErosionClusterHandler
                         if(x * x + y * y + z * z <= clusterRadiusSq)
                         {
                             BlockPos targetPos = clusterCenter.offset(x, y, z);
+                            for(var f : ErosionRetrogen.RETROGEN_FEATURES)
+                            {
+                                ErosionRetrogen.applyFeatureToChunk(level, targetPos, f);
+                            }
                             ErosionCore.addCandidatePriority(level, targetPos);
                         }
                     }
