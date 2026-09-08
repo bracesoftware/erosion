@@ -35,7 +35,7 @@ public class Erosion
     }
 
     @SubscribeEvent 
-    public void onSetup(FMLCommonSetupEvent e)
+    public static void onSetup(FMLCommonSetupEvent e)
     {
         ErosionUtils.Log("Common setup event called.");
     }
