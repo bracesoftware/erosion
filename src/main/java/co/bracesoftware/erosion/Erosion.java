@@ -34,6 +34,12 @@ public class Erosion
         ErosionMod.SetupRegistry(modEventBus);
     }
 
+    @SubscribeEvent 
+    public void onSetup(FMLCommonSetupEvent e)
+    {
+        ErosionUtils.Log("Common setup event called.");
+    }
+
     public static class SML
     {
         public static class ModSide
