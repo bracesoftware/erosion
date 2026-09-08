@@ -34,6 +34,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.neoforge.event.level.ChunkEvent.Unload;
 import net.minecraft.core.BlockPos;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -1131,8 +1132,6 @@ public class ErosionCore
         Item currentItem = e.getItemStack().getItem();
         var tooltip = e.getToolTip();
 
-        List<Component> desc = new ArrayList<>();
-
         if(ITEM_DESCRIPTIONS.containsKey(currentItem))
         {
             var a = ITEM_DESCRIPTIONS.get(currentItem);
@@ -1142,6 +1141,12 @@ public class ErosionCore
             }
             return;
         }
+        return;
+    }
+
+    public static void setupItemDescription(Item currentItem)
+    {
+        List<Component> desc = new ArrayList<>();
 
         if(currentItem == ErosionRegistry.Items.MATERIAL_PURIFIER.get())
         {
@@ -1149,16 +1154,19 @@ public class ErosionCore
                 Component.literal("A machine fueled with redstone powder.").withStyle(ChatFormatting.BLUE)
             );
             desc.add(
-                Component.literal("Used to refine eroded or chemically modified materials.").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+                Component.literal("Used to refine eroded or chemically modified materials.")
+                .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
             );
         }
         if(currentItem == ErosionRegistry.Items.CRUCIBLE.get())
         {
             desc.add(
-                Component.literal("A piece of pottery used to melt eligible materials into their raw forms.").withStyle(ChatFormatting.GOLD)
+                Component.literal("A piece of pottery used to melt eligible materials into their raw forms.")
+                .withStyle(ChatFormatting.GOLD)
             );
             desc.add(
-                Component.literal("Can be placed only if there is a heat source under it such as Lava or Campfire.").withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
+                Component.literal("Can be placed only if there is a heat source under it such as Lava or Campfire.")
+                .withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
             );
         }
 
@@ -1255,7 +1263,7 @@ public class ErosionCore
                         Component.literal(factor).withStyle(ChatFormatting.BLUE)
                     ).append(
                         Component.literal(" can alter this block’s composition and transform it into:").withStyle(ChatFormatting.GRAY)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
                 for(int i = 0; i < products.size(); i++)
                 {
@@ -1263,7 +1271,7 @@ public class ErosionCore
                         Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                         .append(
                             Component.literal(products.get(i)).withStyle(ChatFormatting.YELLOW)
-                        )
+                        ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                     );
                 }
             }
@@ -1280,11 +1288,11 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(refinesIntoNames.get(i)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
             }
             desc.add(
-                Component.literal("- Can be refined into: ").withStyle(ChatFormatting.GRAY)
+                Component.literal("- Can be refined into: ").withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1304,11 +1312,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(meltsIntoNames.get(i)).withStyle(ChatFormatting.GRAY, ChatFormatting.ITALIC)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
             }
             desc.add(
-                Component.literal("- Can be crucible-molten into:").withStyle(ChatFormatting.GRAY)
+                Component.literal("- Can be crucible-molten into:")
+                .withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1318,7 +1327,7 @@ public class ErosionCore
                 Component.literal("- Compatible catalyst: ").withStyle(ChatFormatting.GRAY)
                 .append(
                     Component.literal(catalyst).withStyle(ChatFormatting.DARK_PURPLE)
-                )
+                ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
         }
 
@@ -1365,11 +1374,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByErodingNames.get(i)).withStyle(ChatFormatting.YELLOW)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
             }
             desc.add(
-                Component.literal("- Made when environmental factors alter the composition of:").withStyle(ChatFormatting.GRAY)
+                Component.literal("- Made when environmental factors alter the composition of:")
+                .withStyle(ChatFormatting.GRAY).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1389,11 +1399,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByRefiningNames.get(i)).withStyle(ChatFormatting.YELLOW, ChatFormatting.ITALIC)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
             }
             desc.add(
                 Component.literal("- Made by refining:").withStyle(ChatFormatting.GRAY)
+                .withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1412,11 +1423,12 @@ public class ErosionCore
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(madeByMelting.get(i)).withStyle(ChatFormatting.RED)
-                    )
+                    ).withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
                 );
             }
             desc.add(
                 Component.literal("- Made by crucible-melting: ").withStyle(ChatFormatting.GRAY)
+                .withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
             );
             for(int i = 0; i < list.size(); i++)
             {
@@ -1425,11 +1437,22 @@ public class ErosionCore
         }
 
         //cache item descriptions
-        ITEM_DESCRIPTIONS.put(currentItem, desc);
-        for(var component : desc)
+        if(!desc.isEmpty())
         {
-            tooltip.add(component);
+            ITEM_DESCRIPTIONS.put(currentItem, desc);
+            ErosionUtils.Log("Successfully set description of item: " + currentItem.getDescription().getString());
         }
+        return;
+    }
+
+    public static void SetupOnFML()
+    {
+        Load();
+        for(Item i : BuiltInRegistries.ITEM)
+        {
+            setupItemDescription(i.asItem());
+        }
+        Unload();
         return;
     }
 

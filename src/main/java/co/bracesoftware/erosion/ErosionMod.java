@@ -43,22 +43,22 @@ import co.bracesoftware.erosion.ErosionCore.CommandRegistry;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 
-import co.bracesoftware.libs.*;
+import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
 @EventBusSubscriber(modid = Erosion.MODID)
 public final class ErosionMod
 {
-    public static final String WELCOME_ASCII = MinecraftTextFormat.Format(MinecraftTextFormat.Col.DARK_RED) + """
+    public static final String WELCOME_ASCII = Text.Format(Text.Col.DARK_RED) + """
 
         ▄▄▄▄▄▄▄                                   
       ███▀▀▀▀▀                    ▀▀ 
       ███▄▄     ████▄ ▄███▄ ▄█▀▀▀ ██  ▄███▄ ████▄ 
       ███       ██ ▀▀ ██ ██ ▀███▄ ██  ██ ██ ██ ██ 
        ▀███████ ██    ▀███▀ ▄▄▄█▀ ██▄ ▀███▀ ██ ██ """+
-    MinecraftTextFormat.Format(MinecraftTextFormat.Col.RED)+"v"+Erosion.BUILD+"\n"+
-    MinecraftTextFormat.Format(MinecraftTextFormat.Col.GOLD) +
+    Text.Format(Text.Col.RED)+"v"+Erosion.BUILD+"\n"+
+    Text.Format(Text.Col.GOLD) +
      "         Geological Chemistry for Minecraft" +
-    MinecraftTextFormat.Format(MinecraftTextFormat.Col.GRAY);
+    Text.Format(Text.Col.GRAY);
 
     private static final List<ChunkPos> LOADED_CHUNKS = new ArrayList<>();
     public static final RandomSource RANDOM = RandomSource.create();

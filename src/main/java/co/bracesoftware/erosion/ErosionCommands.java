@@ -5,7 +5,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
-import co.bracesoftware.libs.MinecraftTextFormat;
+import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
 public class ErosionCommands
 {

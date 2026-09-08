@@ -7,6 +7,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 
+import net.minecraft.resources.ResourceLocation;
+
 public final class ErosionConfig
 {
     public static final Integer MAX_PENDING_SIZE = 30000;
@@ -18,6 +20,8 @@ public final class ErosionConfig
     public static final Integer PURIFIER_SECONDS = 10;
     public static final Integer CRUCIBLE_SECONDS = 15;
     public static final Integer CHUNK_SIZE = 16;
+
+    public static final ResourceLocation MINI_FONT = ResourceLocation.withDefaultNamespace("uniform");
 
     public static final class Clusters
     {

@@ -9,6 +9,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 
 @Mod(Erosion.MODID)
@@ -23,5 +24,11 @@ public class Erosion
     public Erosion(IEventBus modEventBus, ModContainer modContainer)
     {
         ErosionMod.SetupRegistry(modEventBus);
+    }
+
+    @SubscribeEvent 
+    public void onServerSetup(FMLCommonSetupEvent e)
+    {
+        ErosionCore.SetupOnFML();
     }
 }

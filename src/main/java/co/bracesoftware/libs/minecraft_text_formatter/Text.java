@@ -1,9 +1,9 @@
-package co.bracesoftware.libs;
+package co.bracesoftware.libs.minecraft_text_formatter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MinecraftTextFormat
+public class Text
 {
     private static class Const
     {
