@@ -54,6 +54,8 @@ Although geochemical alteration of blocks and spawning of mineral rocks is a liv
 - This mod was written for NeoForge 1.21.1 purely as a hobby project. No AI-generated content.
 - I have no plans to port this to anything else whatsoever.
 - You are free to use this in any modpack.
+- This mod is in early development stage, so its code is being heavily refactored and reworked on a daily basis - so no pull requests please!
+- May receive new updates very often.
 
 Wanna give it a try?
 Download now!
