@@ -197,7 +197,7 @@ public class ErosionCore
         public static final Integer CRUCIBLE = 2;
     }
 
-    public static class ErosionDynamicItem
+    public static abstract class ErosionDynamicItem
     {
         public String name;
         private static List<String> DO_NOT_USE = null;
