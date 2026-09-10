@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class ComponentWordWrap
 {
-    public static List<Component> Format(Component i, int maxWordsPerComponent)
+    public static List<Component> Format(Component i, int m)
     {
         List<StyledWord> a = new ArrayList<>();
 
@@ -52,7 +52,7 @@ public class ComponentWordWrap
             {
                 iss = false;
             }
-            if(!ww && w >= maxWordsPerComponent)
+            if(!ww && w >= m)
             {
                 result.add(cc);
                 cc = Component.empty();
@@ -67,11 +67,7 @@ public class ComponentWordWrap
             cc.append(Component.literal(sw.text).setStyle(sw.style));
             if(!ww) w++;
         }
-
-        if(!cc.getString().isEmpty())
-        {
-            result.add(cc);
-        }
+        if(!cc.getString().isEmpty()) result.add(cc);
 
         return result;
     }
@@ -81,7 +77,7 @@ public class ComponentWordWrap
         String text;
         Style style;
 
-        //now i can preserve all the shi
+        //now i can preserve all the shi :D
         public StyledWord(String text, Style style)
         {
             this.text = text;
