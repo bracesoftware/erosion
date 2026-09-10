@@ -1444,7 +1444,7 @@ public class ErosionCore
                         ruleNames.append(ll.get(j).name);
                         if(j < ll.size() - 1)
                         {
-                            if(i == ll.size() - 2) ruleNames.append(" combined with ");
+                            if(j == ll.size() - 2) ruleNames.append(" combined with ");
                             else ruleNames.append(", ");
                         }
                     }
