@@ -4,6 +4,7 @@ import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -1764,11 +1765,11 @@ public class ErosionCore
 
         if(!isAlterable(state)) return;
         var l = ALTERATION_INVERTED.get(state.getBlock());
-        var ALTERATION_PATHS = l.paths.size();
-        int SEED = ErosionMod.RANDOM.nextInt(ALTERATION_PATHS);
-        for(int i = 0; i < ALTERATION_PATHS + SEED; ++i)
+        var ALTERATION_PATHS = new ArrayList<>(l.paths);
+
+        Collections.shuffle(ALTERATION_PATHS);
+        for(var p : ALTERATION_PATHS)
         {
-            var p = l.paths.get(ErosionMod.RANDOM.nextInt(ALTERATION_PATHS));
             if(p.rules.checkIfAllConditionsAreMet(level, pos))
             {
                 if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
