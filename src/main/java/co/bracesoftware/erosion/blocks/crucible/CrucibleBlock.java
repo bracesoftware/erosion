@@ -233,60 +233,22 @@ public class CrucibleBlock extends BaseEntityBlock
                 if(!be.working && be.finished && !be.storedItem.isEmpty())
                 {
                     player.getInventory().placeItemBackInInventory(be.storedItem);
-                    var f = ErosionCore.BlockEntityRecipes.Crucible.COPRODUCTS;
-                    if(f.isEmpty())
-                    {
-                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
-                            "NO COPRODUCTS FOUND!"
-                        );
-                    }
-                    var kk = f.containsKey(be.storedItem.getItem());
-                    if(!kk)
-                    {
-                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG)
-                        {
-                            ErosionUtils.Log(
-                                "COPRODUCTS DOES NOT CONTAIN -> " + be.storedItem.getItem().getDescription().getString()
-                            );
-                            for(var b : f.entrySet())
-                            {
-                                var lmao = b.getValue();
-                                String items = new String();
-                                for(var ff : lmao)
-                                {
-                                    items += ff.getDescription().getString() + "|";
-                                }
-                                ErosionUtils.Log(
-                                    "COPRODUCTS MAP -> " + b.getKey().getDescription().getString() + " :: " + items
-                                );
-                            }
-                        }
-                    }
-                    if(kk)
-                    {
-                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
-                            "COPRODUCTS CONTAINS -> " + be.storedItem.getItem().getDescription().getString()
-                        );
-                        for(var it : f.get(be.storedItem.getItem()))
-                        {
-                            if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
-                                "ATTEMPTING TO GIVE -> " + it.getDescription().getString()
-                            );
-                            if(ErosionUtils.Misc.randomWithChanceToBe(true, be.lastChance))
-                            {
-                                if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
-                                    "COPRODUCT DROPPED " + it.getDescription().getString()
-                                );
-                                ItemStack s = new ItemStack(it, 1);
-                                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), s);
-                                ErosionUtils.displayMessage(player, "Crucible dropped coproduct(s)");
-                            }
-                        }
-                    }
                     be.storedItem = ItemStack.EMPTY;
                     be.setChanged();
                     level.getLightEngine().checkBlock(pos);
                     level.setBlock(pos, state.setValue(FINISHED, be.finished).setValue(WORKING, be.working), Block.UPDATE_ALL);
+
+                    if(be.coproducts != null && !be.coproducts.isEmpty())
+                    {
+                        ErosionUtils.displayMessage(player, "Crucible dropped coproduct(s)");
+                        for(var it : be.coproducts)
+                        {
+                            Containers.dropItemStack(
+                                level, pos.getX(), pos.getY(), pos.getZ(), it.copy()
+                            );
+                        }
+                        be.coproducts = null;
+                    }
                     return ItemInteractionResult.CONSUME;
                 }
                 //if crucible isn't working and is finished then take the catalyst out

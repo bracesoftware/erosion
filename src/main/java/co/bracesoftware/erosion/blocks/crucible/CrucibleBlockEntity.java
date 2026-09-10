@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.blocks.crucible;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -14,7 +15,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.ReloadableServerRegistries.Holder;
+import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -34,8 +37,7 @@ public class CrucibleBlockEntity extends BlockEntity
     public boolean finished = true;
     public ItemStack storedItem = ItemStack.EMPTY;
     public int progress = 0;
-
-    public int lastChance = 0;
+    public List<ItemStack> coproducts = null;
 
     public static class DataRawName
     {
@@ -44,7 +46,7 @@ public class CrucibleBlockEntity extends BlockEntity
         public static final String FINISHED = "finished";
         public static final String STORED_ITEM = "stored";
         public static final String PROGRESS = "progress"; 
-        public static final String LAST_CHANCE = "lc";
+        public static final String COPRODUCT_LIST = "cpl";
         public static final String HEAT = "heat"; 
     }
 
@@ -81,10 +83,64 @@ public class CrucibleBlockEntity extends BlockEntity
 
                 var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
                 int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
-                be.lastChance = sr;
+
                 boolean s = ErosionUtils.Misc.randomWithChanceToBe(true, sr);
+
+                var f = ErosionCore.BlockEntityRecipes.Crucible.COPRODUCTS;
+                if(f.isEmpty())
+                {
+                    if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                        "COPRODUCTS MAP IS EMPTY!!"
+                    );
+                }
+                var kk = f.containsKey(be.storedItem.getItem());
+                if(!kk)
+                {
+                    if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG)
+                    {
+                        ErosionUtils.Log(
+                            "COPRODUCTS DOES NOT CONTAIN -> " + be.storedItem.getItem().getDescription().getString()
+                        );
+                        for(var b : f.entrySet())
+                        {
+                            var lmao = b.getValue();
+                            String items = new String();
+                            for(var ff : lmao)
+                            {
+                                items += ff.getDescription().getString() + "|";
+                            }
+                            ErosionUtils.Log(
+                                "COPRODUCTS MAP -> " + b.getKey().getDescription().getString() + " :: " + items
+                            );
+                        }
+                    }
+                }
+                if(kk)
+                {
+                    be.coproducts = new ArrayList<>();
+                    if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                        "COPRODUCTS CONTAINS -> " + be.storedItem.getItem().getDescription().getString()
+                    );
+                    for(var it : f.get(be.storedItem.getItem()))
+                    {
+                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                            "ATTEMPTING TO GIVE -> " + it.getDescription().getString()
+                        );
+                        if(ErosionUtils.Misc.randomWithChanceToBe(true, sr))
+                        {
+                            if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                                "COPRODUCT ADDED TO COPRODUCT LIST -> " + it.getDescription().getString()
+                            );
+
+                            be.coproducts.add(new ItemStack(it, 1));
+                            continue;
+                        }
+                    }
+                }
+
                 if(s) be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
                 else be.storedItem = new ItemStack(ErosionRegistry.Items.DEBRIS.get());
+
                 be.catalyst = ItemStack.EMPTY;
 
                 level.getLightEngine().checkBlock(pos);
@@ -110,7 +166,6 @@ public class CrucibleBlockEntity extends BlockEntity
         t.putBoolean(DataRawName.WORKING, working);
         t.putBoolean(DataRawName.FINISHED, finished);
         t.putInt(DataRawName.PROGRESS, progress);
-        t.putInt(DataRawName.LAST_CHANCE, lastChance);
         if(!this.storedItem.isEmpty())
         {
             t.put(DataRawName.STORED_ITEM, this.storedItem.save(r));
@@ -129,7 +184,6 @@ public class CrucibleBlockEntity extends BlockEntity
         this.working = t.getBoolean(DataRawName.WORKING);
         this.finished = t.getBoolean(DataRawName.FINISHED);
         this.progress = t.getInt(DataRawName.PROGRESS);
-        this.lastChance = t.getInt(DataRawName.LAST_CHANCE);
         if(t.contains(DataRawName.STORED_ITEM))
         {
             this.storedItem = ItemStack.parse(r, t.getCompound(DataRawName.STORED_ITEM)).orElse(ItemStack.EMPTY);
