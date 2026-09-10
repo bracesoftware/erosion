@@ -1760,7 +1760,11 @@ public class ErosionCore
             Pending = PENDING_FAST;
         }
 
-        if(Pending.contains(pos.asLong())) return;
+        if(Pending.contains(pos.asLong()))
+        {
+            processPendingCore(level, ErosionMod.RANDOM.nextInt(ErosionConfig.MAX_EROSIONS_PER_TICK), priority);
+            return;
+        }
         BlockState state = level.getBlockState(pos);
 
         if(!isAlterable(state)) return;
