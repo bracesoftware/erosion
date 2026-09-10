@@ -3,18 +3,16 @@ package co.bracesoftware.libs.minecraft_text_formatter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-//not working yet! \n's aren't supported in components ;(
 public class ComponentWordWrap
 {
-    public static Component Format(Component i, int m)
+    public static List<Component> Format(Component i, int maxWordsPerComponent)
     {
-        List<StyledWord> ALL_WORDS = new ArrayList<>();
-        
+        List<StyledWord> a = new ArrayList<>();
+
         i.visit(
             (style, text) -> {
                 String[] split = text.split("(?<=\\s)|(?=\\s)");
@@ -22,7 +20,7 @@ public class ComponentWordWrap
                 {
                     if(!part.isEmpty())
                     {
-                        ALL_WORDS.add(new StyledWord(part, style));
+                        a.add(new StyledWord(part, style));
                     }
                 }
                 return Optional.empty();
@@ -30,33 +28,49 @@ public class ComponentWordWrap
             Style.EMPTY
         );
 
-        MutableComponent result = Component.empty();
-        int w = 0;
-        boolean f = true;
-
-        for(StyledWord sw : ALL_WORDS)
+        List<Component> result = new ArrayList<>();
+        if(a.isEmpty())
         {
-            if(w == 0 && sw.text.trim().isEmpty())
+            return result;
+        }
+
+        MutableComponent cc = Component.empty();
+        int w = 0;
+        boolean iss = true;
+
+        for(var sw : a)
+        {
+            boolean ww = sw.text.isBlank();
+
+            if(ww && iss)
             {
+                cc.append(Component.literal(sw.text).setStyle(sw.style));
                 continue;
             }
 
-            if(w >= m && !sw.text.trim().isEmpty())
+            if(!ww)
             {
-                if(!f)
-                {
-                    result.append(Component.literal("\n"));
-                }
+                iss = false;
+            }
+            if(!ww && w >= maxWordsPerComponent)
+            {
+                result.add(cc);
+                cc = Component.empty();
                 w = 0;
-                f = false;
+                iss = true;
+                if(sw.text.isBlank())
+                {
+                    cc.append(Component.literal(sw.text).setStyle(sw.style));
+                    continue;
+                }
             }
+            cc.append(Component.literal(sw.text).setStyle(sw.style));
+            if(!ww) w++;
+        }
 
-            result.append(Component.literal(sw.text).setStyle(sw.style));
-            
-            if(!sw.text.trim().isEmpty())
-            {
-                w++;
-            }
+        if(!cc.getString().isEmpty())
+        {
+            result.add(cc);
         }
 
         return result;
@@ -67,7 +81,7 @@ public class ComponentWordWrap
         String text;
         Style style;
 
-        //now i can preserve all the shi :D
+        //now i can preserve all the shi
         public StyledWord(String text, Style style)
         {
             this.text = text;

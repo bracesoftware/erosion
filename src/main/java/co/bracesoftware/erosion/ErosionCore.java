@@ -1348,10 +1348,13 @@ public class ErosionCore
             for(int i = 0; i < a.size(); i++)
             {
                 Component c = a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
-                Component f = ErosionConfig.Libs.COMPONENT_WORD_WRAP ? ComponentWordWrap.Format(
+                List<Component> f = ErosionConfig.Libs.COMPONENT_WORD_WRAP ? ComponentWordWrap.Format(
                     c, ErosionConfig.Libs.MAX_WORDS_PER_COMPONENT_LINE
-                ) : c;
-                tooltip.add(f);
+                ) : List.of(c);
+                for(var p : f)
+                {
+                    tooltip.add(p);
+                }
             }
             return;
         }
