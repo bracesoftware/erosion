@@ -1790,10 +1790,6 @@ public class ErosionCore
     
     public static void addCandidate(ServerLevel l, BlockPos p)
     {
-        if(PENDING.size() >= ErosionConfig.MAX_PENDING_SIZE)
-        {
-            return;
-        }
         addCandidateMain(l, p, false);
     }
 
