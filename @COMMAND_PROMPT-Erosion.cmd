@@ -1,10 +1,11 @@
 @echo off
-title ELECRAFT Mod Builder
+title Erosion Mod Builder
 :start
+cls
+echo Writing changes to the code...
 git add .
 git commit -m update
 git push
-cls
 echo Generating data...
 call gradlew clean processResources
 call gradlew runData -stacktrace --no-configuration-cache
