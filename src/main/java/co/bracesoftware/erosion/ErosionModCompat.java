@@ -103,9 +103,20 @@ public class ErosionModCompat
             }
         )
     );
+    public static final CompatibleMod BUTCHERY = new CompatibleMod(
+        "butchery", "Butchery Mod", List.of(
+            () -> {
+                ErosionUtils.Log("Added compatibility for SILVER ORES.");
+                return;
+            },
+            () -> {
+                return;
+            }
+        )
+    );
     /////////////////////////////////////////////////////////////////
     public static final List<CompatibleMod> COMPATIBLE_MODS = List.of(
-        CREATE, OREGANIZED
+        CREATE, OREGANIZED, BUTCHERY
     );
 
     public static class JsonRecipeGenerator

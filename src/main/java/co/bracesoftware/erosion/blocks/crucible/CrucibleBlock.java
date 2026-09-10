@@ -233,6 +233,19 @@ public class CrucibleBlock extends BaseEntityBlock
                 if(!be.working && be.finished && !be.storedItem.isEmpty())
                 {
                     player.getInventory().placeItemBackInInventory(be.storedItem);
+                    var f = ErosionCore.BlockEntityRecipes.Crucible.COPRODUCTS;
+                    if(f.containsKey(be.storedItem.getItem()))
+                    {
+                        for(var it : f.get(be.storedItem.getItem()))
+                        {
+                            if(ErosionUtils.Misc.randomWithChanceToBe(true, be.lastChance))
+                            {
+                                ItemStack s = new ItemStack(it, 1);
+                                Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), s);
+                                ErosionUtils.displayMessage(player, "Crucible dropped coproduct(s)");
+                            }
+                        }
+                    }
                     be.storedItem = ItemStack.EMPTY;
                     be.setChanged();
                     level.getLightEngine().checkBlock(pos);

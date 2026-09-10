@@ -10,6 +10,8 @@
     "erosion:limonite_ore",
     "erosion:bismuthinite_ore",
     "erosion:sphalerite_ore",
+    "erosion:azurite_ore",
+    "erosion:tetrahedrite_ore",
     "erosion:material_purifier",
     "erosion:crucible"
   ]

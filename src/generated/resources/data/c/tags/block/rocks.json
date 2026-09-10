@@ -8,6 +8,8 @@
     "erosion:native_silver",
     "erosion:raw_bismuthinite",
     "erosion:raw_cassiterite",
-    "erosion:raw_sphalerite"
+    "erosion:raw_sphalerite",
+    "erosion:raw_azurite",
+    "erosion:raw_tetrahedrite"
   ]
 }

@@ -35,6 +35,8 @@ public class CrucibleBlockEntity extends BlockEntity
     public ItemStack storedItem = ItemStack.EMPTY;
     public int progress = 0;
 
+    public int lastChance = 0;
+
     public static class DataRawName
     {
         public static final String CATALYST = "catalyst";
@@ -42,6 +44,7 @@ public class CrucibleBlockEntity extends BlockEntity
         public static final String FINISHED = "finished";
         public static final String STORED_ITEM = "stored";
         public static final String PROGRESS = "progress"; 
+        public static final String LAST_CHANCE = "lc";
         public static final String HEAT = "heat"; 
     }
 
@@ -78,6 +81,7 @@ public class CrucibleBlockEntity extends BlockEntity
 
                 var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
                 int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
+                be.lastChance = sr;
                 boolean s = ErosionUtils.Misc.randomWithChanceToBe(true, sr);
                 if(s) be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
                 else be.storedItem = new ItemStack(ErosionRegistry.Items.DEBRIS.get());
@@ -106,6 +110,7 @@ public class CrucibleBlockEntity extends BlockEntity
         t.putBoolean(DataRawName.WORKING, working);
         t.putBoolean(DataRawName.FINISHED, finished);
         t.putInt(DataRawName.PROGRESS, progress);
+        t.putInt(DataRawName.LAST_CHANCE, lastChance);
         if(!this.storedItem.isEmpty())
         {
             t.put(DataRawName.STORED_ITEM, this.storedItem.save(r));
@@ -124,6 +129,7 @@ public class CrucibleBlockEntity extends BlockEntity
         this.working = t.getBoolean(DataRawName.WORKING);
         this.finished = t.getBoolean(DataRawName.FINISHED);
         this.progress = t.getInt(DataRawName.PROGRESS);
+        this.lastChance = t.getInt(DataRawName.LAST_CHANCE);
         if(t.contains(DataRawName.STORED_ITEM))
         {
             this.storedItem = ItemStack.parse(r, t.getCompound(DataRawName.STORED_ITEM)).orElse(ItemStack.EMPTY);

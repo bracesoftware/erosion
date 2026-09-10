@@ -103,6 +103,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 )
             )
         );
+        ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
+            "sulfur_from_sulfur_slag", 
+            ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                ErosionModCompat.BUTCHERY.getModId(), "sulfur"
+            ),
+            List.of(
+                "XXX",
+                "XXX",
+                "XXX"
+            ),
+            Map.of(
+                "X", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                    Erosion.MODID, ErosionRegistry.RawRegistry.SULFUR_SLAG.getId()
+                )
+            )
+        );
 
         return;
     }

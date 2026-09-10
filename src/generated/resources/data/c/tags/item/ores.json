@@ -12,6 +12,8 @@
     "erosion:raw_bismuthinite",
     "erosion:bismuth_chunk",
     "erosion:raw_sphalerite",
-    "erosion:zinc_chunk"
+    "erosion:zinc_chunk",
+    "erosion:raw_azurite",
+    "erosion:raw_tetrahedrite"
   ]
 }

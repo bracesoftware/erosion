@@ -114,7 +114,10 @@ public class ErosionRetrogen
 
             ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
             ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
-            ErosionRegistry.Blocks.RAW_SPHALERITE.get()
+            ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
+
+            ErosionRegistry.Blocks.RAW_AZURITE.get(),
+            ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get()
         ))
     );
 

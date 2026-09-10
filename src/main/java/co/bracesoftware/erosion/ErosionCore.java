@@ -378,12 +378,14 @@ public class ErosionCore
     {
         public Supplier<Item> material;
         public Supplier<List<Item>> product;
+        public Supplier<List<Item>> coproduct;
         public Integer recipeCategory = null;
 
         public Item materialItem = null;
         public List<Item> productItem = null;
 
         public List<CrucibleCatalyst> catalyst = null;
+        public List<Item> coproductItem = null;
 
         public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i)
         {
@@ -395,13 +397,17 @@ public class ErosionCore
             this.antiDuplicator = new ArrayList<>();
         }
 
-        public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i, List<CrucibleCatalyst> c)
+        // constructor for crucible melting
+        public RefinableMaterial(
+            String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i,
+            List<CrucibleCatalyst> c, Supplier<List<Item>> g)
         {
             this.name = n;
             this.material = m;
             this.product = p;
             this.recipeCategory = i;
             this.catalyst = c;
+            this.coproduct = g;
 
             this.antiDuplicator = new ArrayList<>();
         }
@@ -414,10 +420,11 @@ public class ErosionCore
             
             this.materialItem = this.material.get();
             this.productItem = this.product.get();
+            this.coproductItem = this.coproduct.get();
             
             if(
-                this.recipeCategory < BlockEntityRecipeRegistries.MATERIAL_PURIFIER ||
-                this.recipeCategory > BlockEntityRecipeRegistries.CRUCIBLE
+                this.recipeCategory != BlockEntityRecipeRegistries.MATERIAL_PURIFIER &&
+                this.recipeCategory != BlockEntityRecipeRegistries.CRUCIBLE
             )
             {
                 throw new RuntimeException("Invalid recipe category -> " + this.name);
@@ -443,6 +450,15 @@ public class ErosionCore
                     }
                     BlockEntityRecipes.Crucible.CATALYSTS.putIfAbsent(materialItem, L_);
                 }
+
+                if(this.coproduct == null || this.coproductItem == null)
+                {
+                    throw new RuntimeException("Missing a list of coproducts for recipe: " + this.name);
+                }
+                else
+                {
+                    BlockEntityRecipes.Crucible.COPRODUCTS.putIfAbsent(materialItem, this.coproductItem);
+                }
             }
             return;
         }
@@ -454,6 +470,7 @@ public class ErosionCore
             BlockEntityRecipes.MaterialPurifier.RECIPES.clear();
             BlockEntityRecipes.Crucible.RECIPES.clear();
             BlockEntityRecipes.Crucible.CATALYSTS.clear();
+            BlockEntityRecipes.Crucible.COPRODUCTS.clear();
             this.discardDuplicationPreventionSys(antiDuplicator);
             return;
         }
@@ -998,7 +1015,7 @@ public class ErosionCore
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MAGNETITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),
@@ -1007,7 +1024,7 @@ public class ErosionCore
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
     public static final RefinableMaterial RAW_HEMATITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_HEMATITE.getName(),
@@ -1016,7 +1033,7 @@ public class ErosionCore
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MALACHITE = new RefinableMaterial(
         ErosionRegistry.RawRegistry.RAW_MALACHITE.getName(),
@@ -1025,7 +1042,7 @@ public class ErosionCore
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
 
     public static final RefinableMaterial NATIVE_GOLD = new RefinableMaterial(
@@ -1035,7 +1052,7 @@ public class ErosionCore
             Items.GOLD_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
 
     public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial(
@@ -1092,7 +1109,7 @@ public class ErosionCore
             ErosionRegistry.Items.TIN_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX
-        )
+        ), () -> List.of()
     );
     public static final RefinableMaterial NATIVE_SILVER = new RefinableMaterial(
         ErosionRegistry.RawRegistry.NATIVE_SILVER.getName(),
@@ -1101,7 +1118,7 @@ public class ErosionCore
             ErosionRegistry.Items.SILVER_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX
-        )
+        ), () -> List.of()
     );
 
     public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial(
@@ -1120,6 +1137,8 @@ public class ErosionCore
             ErosionRegistry.Items.BISMUTH_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
+        ), () -> List.of(
+            ErosionRegistry.Items.SULFUR_SLAG.get()
         )
     );
 
@@ -1140,7 +1159,7 @@ public class ErosionCore
             ErosionRegistry.Items.ZINC_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1160,7 +1179,7 @@ public class ErosionCore
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
-        )
+        ), () -> List.of()
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1180,6 +1199,8 @@ public class ErosionCore
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL
+        ), () -> List.of(
+            ErosionRegistry.Items.SULFUR_SLAG.get()
         )
     );
 
@@ -1400,18 +1421,57 @@ public class ErosionCore
 
         List<String> meltsIntoNames = new java.util.ArrayList<>();
         List<String> catalystListLmao = new ArrayList<>();
+        List<String> coproductOfNames = new ArrayList<>();
+        Boolean hasCoproducts = false;
         for(RefinableMaterial m : REFINABLE_MATERIALS_LIST)
         {
-            if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE) if(m.materialItem == currentItem)
+            if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE)
             {
-                for(var c : m.catalyst)
+                for(var cpl : m.coproductItem)
                 {
-                    catalystListLmao.add(c.name);
+                    if(cpl == currentItem)
+                    {
+                        coproductOfNames.add(m.materialItem.getDescription().getString());
+                    }
                 }
-                for (Item prodItem : m.productItem)
-                { 
-                    meltsIntoNames.add(prodItem.getDescription().getString());
+                if(m.materialItem == currentItem)
+                {
+                    for(var c : m.catalyst)
+                    {
+                        catalystListLmao.add(c.name);
+                    }
+                    for (Item prodItem : m.productItem)
+                    { 
+                        meltsIntoNames.add(prodItem.getDescription().getString());
+                    }
+                    if(!m.coproductItem.isEmpty())
+                    {
+                        hasCoproducts = true;
+                    }
                 }
+            }
+        }
+
+        if(!coproductOfNames.isEmpty())
+        {
+            desc.add(Component.literal(""));
+            desc.add(Component.literal("Coproduct of crucible melting").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.UNDERLINE));
+            List<Component> list = new ArrayList<>();
+            for(int i = 0; i < coproductOfNames.size(); i++)
+            {
+                list.add(
+                    Component.literal("  * ").withStyle(ChatFormatting.GRAY)
+                    .append(
+                        Component.literal(coproductOfNames.get(i)).withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC)
+                    )
+                );
+            }
+            desc.add(
+                Component.literal("- Can be obtained by crucible-melting: ").withStyle(ChatFormatting.GRAY)
+            );
+            for(int i = 0; i < list.size(); i++)
+            {
+                desc.add(list.get(i));
             }
         }
 
@@ -1512,6 +1572,13 @@ public class ErosionCore
                     catalysts
                 )
             );
+            if(hasCoproducts)
+            {
+                desc.add(
+                    Component.literal("- Has potential coproducts!")
+                    .withStyle(ChatFormatting.GRAY)
+                );
+            }
         }
 
         List<String> madeByErodingNames = new ArrayList<>();
@@ -1651,12 +1718,11 @@ public class ErosionCore
                 var r = p.rules.getRules().get(j);
                 if(r.check(level, pos))
                 {
-                    Pending.add(pos, p.product.get(ErosionMod.RANDOM.nextInt(p.product.size())));
-
                     if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
                     {
                         Pending.remove(0);
                     }
+                    Pending.add(pos, p.product.get(ErosionMod.RANDOM.nextInt(p.product.size())));
                     if(ErosionConfig.isDebugOn()) ErosionUtils.Log("Added candidate: " + pos);
                     return;
                 }
@@ -1875,6 +1941,7 @@ public class ErosionCore
         {
             public static Map<Item, List<Item>> RECIPES = new HashMap<>();
             public static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
+            public static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
         }
     }
     public static class Extra
