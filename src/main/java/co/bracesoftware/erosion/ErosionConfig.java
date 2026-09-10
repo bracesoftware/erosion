@@ -11,6 +11,8 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class ErosionConfig
 {
+    public static final boolean CRUCIBLE_COPRODUCT_DEBUG = true;
+
     public static final Integer MAX_PENDING_SIZE = 30000;
     public static final Integer MAX_PENDING_FAST_SIZE = 20000;
     private static final Boolean DEBUG_MODE = false;

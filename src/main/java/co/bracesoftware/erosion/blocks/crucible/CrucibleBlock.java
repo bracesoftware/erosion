@@ -234,12 +234,27 @@ public class CrucibleBlock extends BaseEntityBlock
                 {
                     player.getInventory().placeItemBackInInventory(be.storedItem);
                     var f = ErosionCore.BlockEntityRecipes.Crucible.COPRODUCTS;
+                    if(f.isEmpty())
+                    {
+                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                            "NO COPRODUCTS FOUND!"
+                        );
+                    }
                     if(f.containsKey(be.storedItem.getItem()))
                     {
+                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                            "COPRODUCTS CONTAINS -> " + be.storedItem.getItem().getDescription().getString()
+                        );
                         for(var it : f.get(be.storedItem.getItem()))
                         {
+                            if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                                "ATTEMPTING TO GIVE -> " + it.getDescription().getString()
+                            );
                             if(ErosionUtils.Misc.randomWithChanceToBe(true, be.lastChance))
                             {
+                                if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
+                                    "COPRODUCT DROPPED " + it.getDescription().getString()
+                                );
                                 ItemStack s = new ItemStack(it, 1);
                                 Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), s);
                                 ErosionUtils.displayMessage(player, "Crucible dropped coproduct(s)");
