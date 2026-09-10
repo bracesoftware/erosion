@@ -20,6 +20,7 @@ public class ModLanguageProvider extends LanguageProvider
         
         //SIMPLE ITEMS
         add(ErosionRegistry.Items.FLUX.get(), ErosionRegistry.RawRegistry.FLUX.getName());
+        add(ErosionRegistry.Items.RUBY.get(), ErosionRegistry.RawRegistry.RUBY.getName());
         add(ErosionRegistry.Items.SULFUR_SLAG.get(), ErosionRegistry.RawRegistry.SULFUR_SLAG.getName());
         add(ErosionRegistry.Items.DEBRIS.get(), ErosionRegistry.RawRegistry.DEBRIS.getName());
         add(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName());
@@ -67,6 +68,7 @@ public class ModLanguageProvider extends LanguageProvider
         add(ErosionRegistry.Blocks.SPHALERITE_ORE.get(), ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName());
         add(ErosionRegistry.Blocks.AZURITE_ORE.get(), ErosionRegistry.RawRegistry.AZURITE_ORE.getName());
         add(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(), ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName());
+        add(ErosionRegistry.Blocks.RUBY_ORE.get(), ErosionRegistry.RawRegistry.RUBY_ORE.getName());
 
         //MACHINES
         add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());

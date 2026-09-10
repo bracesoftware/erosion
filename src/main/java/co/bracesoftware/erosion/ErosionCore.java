@@ -1,6 +1,8 @@
 package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -276,6 +278,10 @@ public class ErosionCore
         public static final AlterationRule CONTACT_WITH_LAVA = new AlterationRule(
             "Contact with lava",
             ErosionCore::hasLavaNearby
+        );
+        public static final AlterationRule HIGH_PRESSURE = new AlterationRule(
+            "High lithostatic pressure",
+            ErosionCore::highPressure
         );
         
         // =========================================== //
@@ -782,6 +788,20 @@ public class ErosionCore
         )
     );
 
+    public static final AlterableMaterial.AlterationPath GEMSTONE_GEN = new AlterableMaterial.AlterationPath(
+        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_HEAT_AND_PRESSURE,
+        () -> List.of(
+            ErosionRegistry.Blocks.RUBY_ORE.get()
+        ),
+        () -> List.of(
+            ErosionRegistry.Items.RUBY.get()
+        ),
+        new AlterationRules(List.of(
+            AlterationRules.CONTACT_WITH_LAVA,
+            AlterationRules.HIGH_PRESSURE
+        ))
+    );
+
     public static final AlterableMaterial STONE = new AlterableMaterial(
         Blocks.STONE.getName().getString(),
         () -> Blocks.STONE, () -> Items.STONE,
@@ -813,7 +833,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            )
+            ), GEMSTONE_GEN
         )
     );
 
@@ -840,7 +860,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            )
+            ), GEMSTONE_GEN
         )
     );
 
@@ -1220,6 +1240,13 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
+    public static final RefinableMaterial RUBY_ORE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.RUBY_ORE.getName(),
+        () -> ErosionRegistry.Items.RUBY_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RUBY.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
 
     public static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
@@ -1229,7 +1256,7 @@ public class ErosionCore
         CASSITERITE_DEPOSIT, RAW_CASSITERITE, NATIVE_SILVER,
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
-        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE
+        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE
     );
 
     // =====================================
@@ -1307,7 +1334,10 @@ public class ErosionCore
             var a = ITEM_DESCRIPTIONS.get(currentItem);
             for(int i = 0; i < a.size(); i++)
             {
-                Component f = a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
+                Component f = ComponentWordWrap.Format(
+                    a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT)),
+                    ErosionConfig.Libs.MAX_WORDS_PER_COMPONENT_LINE
+                );
                 tooltip.add(f);
             }
             return;
@@ -1401,6 +1431,10 @@ public class ErosionCore
                         if(!(j + 1 >= p.rules.rules.size()))
                         {
                             ruleNames += ", ";
+                        }
+                        else
+                        {
+                            ruleNames += " combined with ";
                         }
                     }
 
@@ -1596,7 +1630,8 @@ public class ErosionCore
                 var p = m.paths.get(i);
                 if(p.productItem.contains(currentItem))
                 {
-                    madeByErodingNames.add(m.materialItem.getDescription().getString());
+                    String f = m.materialItem.getDescription().getString();
+                    if(!madeByErodingNames.contains(f)) madeByErodingNames.add(f);
                 }
             }
         }
@@ -1720,9 +1755,10 @@ public class ErosionCore
         for(int i = 0; i < l.paths.size(); ++i)
         {
             var p = l.paths.get(i);
-            for(int j = 0; j < p.rules.getRules().size(); ++j)
+            var ALTERATION_PATHS = p.rules.getRules().size();
+            for(int j = 0; j < ALTERATION_PATHS; ++j)
             {
-                var r = p.rules.getRules().get(j);
+                var r = p.rules.getRules().get(ErosionMod.RANDOM.nextInt(ALTERATION_PATHS));
                 if(r.check(level, pos))
                 {
                     if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
@@ -1853,6 +1889,13 @@ public class ErosionCore
             }
         }
 
+        return false;
+    }
+
+    public static boolean highPressure(ServerLevel l, BlockPos p)
+    {
+        //simple as that lmao
+        if(p.getY() < 20) return true;
         return false;
     }
 

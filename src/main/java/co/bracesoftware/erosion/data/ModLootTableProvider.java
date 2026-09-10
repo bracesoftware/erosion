@@ -102,6 +102,12 @@ public class ModLootTableProvider extends LootTableProvider
                 )
             );
 
+            add(ErosionRegistry.Blocks.RUBY_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RUBY.get()
+                )
+            );
+
             dropSelf(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
             dropSelf(ErosionRegistry.Blocks.RAW_LIMONITE.get());
@@ -166,6 +172,7 @@ public class ModLootTableProvider extends LootTableProvider
 
                 ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
                 ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
+                ErosionRegistry.Blocks.RUBY_ORE.get(),
 
                 // MACHINES
                 ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),

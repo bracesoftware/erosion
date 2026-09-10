@@ -32,6 +32,11 @@ public final class ErosionConfig
         public static final Integer COUNT_PER_TICK = 5;
     }
 
+    public static final class Libs
+    {
+        public static final Integer MAX_WORDS_PER_COMPONENT_LINE = 6;
+    }
+
     public static final class ServerConfig
     {
         public static final String CONFIG_FOLDER = "erosion_config/";

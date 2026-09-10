@@ -61,6 +61,7 @@ public class ErosionRegistry
     {
         public static final String ALTERATION_BY_WATER = "Alteration by water";
         public static final String ALTERATION_BY_LAVA = "Alteration by lava";
+        public static final String ALTERATION_BY_HEAT_AND_PRESSURE = "Alteration by heat and lithostatic pressure";
     }
     // ===================================================== //
     public static class RawRegistry
@@ -90,7 +91,7 @@ public class ErosionRegistry
 
         //SIMPLE BLOCKS
         public static final IRawRegistry DRIED_DIRT = new IRawRegistry("dried_dirt", "Dried Dirt");
-
+        public static final IRawRegistry MINERAL_RICH_DIRT = new IRawRegistry("mineral_rich_dirt", "Mineral-rich Soil");
         public static final IRawRegistry KAOLINIZED_GRANITE = new IRawRegistry("kaolinized_granite", "Kaolinized Granite");
         public static final IRawRegistry ALBITIZED_GRANITE = new IRawRegistry("albitized_granite", "Albitized Granite");
         public static final IRawRegistry QUARTZ_GRAVEL = new IRawRegistry("quartz_gravel", "Quartz Gravel");
@@ -112,6 +113,7 @@ public class ErosionRegistry
         public static final IRawRegistry AZURITE_ORE = new IRawRegistry("azurite_ore", "Azurite Ore");
         public static final IRawRegistry TETRAHEDRITE_ORE = new IRawRegistry("tetrahedrite_ore", "Tetrahedrite Ore");
 
+        public static final IRawRegistry RUBY_ORE = new IRawRegistry("ruby_ore", "Ruby Ore");
 
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
@@ -137,9 +139,8 @@ public class ErosionRegistry
         public static final IRawRegistry ZINC_CHUNK = new IRawRegistry("zinc_chunk", "Zinc Chunk");
 
         public static final IRawRegistry RAW_AZURITE = new IRawRegistry("raw_azurite", "Raw Azurite");
+        public static final IRawRegistry RUBY = new IRawRegistry("ruby", "Ruby");
         public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
-
-        public static final IRawRegistry MINERAL_RICH_DIRT = new IRawRegistry("mineral_rich_dirt", "Mineral-rich Soil");
 
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
@@ -262,6 +263,11 @@ public class ErosionRegistry
         );
         public static final DeferredBlock<Block> TETRAHEDRITE_ORE = BLOCKS.register(
             RawRegistry.TETRAHEDRITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RUBY_ORE = BLOCKS.register(
+            RawRegistry.RUBY_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
@@ -399,6 +405,11 @@ public class ErosionRegistry
                 Blocks.TETRAHEDRITE_ORE.get(), new Item.Properties()
             )
         );
+        public static final DeferredItem<Item> RUBY_ORE = ITEMS.register(
+            RawRegistry.RUBY_ORE.getId(), () -> new BlockItem(
+                Blocks.RUBY_ORE.get(), new Item.Properties()
+            )
+        );
         public static final DeferredItem<Item> CALCITE_MALACHITE_ORE = ITEMS.register(
             RawRegistry.CALCITE_MALACHITE_ORE.getId(), () -> new BlockItem(
                 Blocks.CALCITE_MALACHITE_ORE.get(), new Item.Properties()
@@ -426,6 +437,9 @@ public class ErosionRegistry
         );
         public static final DeferredItem<Item> FLUX = ITEMS.register(
             RawRegistry.FLUX.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
+        public static final DeferredItem<Item> RUBY = ITEMS.register(
+            RawRegistry.RUBY.getId(), () -> new Item(new Item.Properties().stacksTo(64))
         );
         public static final DeferredItem<Item> SULFUR_SLAG = ITEMS.register(
             RawRegistry.SULFUR_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
@@ -575,9 +589,11 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.AZURITE_ORE.get());
             output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.get());
             output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
+            output.accept(ErosionRegistry.Items.RUBY_ORE.get());
 
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());
+            output.accept(ErosionRegistry.Items.RUBY.get());
             output.accept(ErosionRegistry.Items.SULFUR_SLAG.get());
             output.accept(ErosionRegistry.Items.DEBRIS.get());
             output.accept(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());

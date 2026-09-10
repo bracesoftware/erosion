@@ -26,11 +26,11 @@ public class ErosionClusterHandler
 
         for(ServerPlayer player : overworld.players())
         {
-            selectVeinErosionAroundPlayer(overworld, player.blockPosition(), maxRadius);
+            selectVein(overworld, player.blockPosition(), maxRadius);
         }
     }
 
-    private static void selectVeinErosionAroundPlayer(ServerLevel level, BlockPos playerPos, int maxRadius)
+    private static void selectVein(ServerLevel level, BlockPos playerPos, int maxRadius)
     {
         int minRadiusSq = ErosionConfig.Clusters.MIN_SPAWN_DISTANCE * ErosionConfig.Clusters.MIN_SPAWN_DISTANCE;
         int maxRadiusSq = maxRadius * maxRadius;
