@@ -420,7 +420,14 @@ public class ErosionCore
             
             this.materialItem = this.material.get();
             this.productItem = this.product.get();
-            this.coproductItem = this.coproduct.get();
+
+            if(this.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE)
+            {
+                if(this.coproduct != null)
+                {
+                    this.coproductItem = this.coproduct.get();
+                }
+            }
             
             if(
                 this.recipeCategory != BlockEntityRecipeRegistries.MATERIAL_PURIFIER &&

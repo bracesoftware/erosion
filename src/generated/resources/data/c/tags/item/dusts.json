@@ -2,6 +2,7 @@
   "values": [
     "erosion:feldspar_powder",
     "erosion:flux",
+    "erosion:sulfur_slag",
     "erosion:debris",
     "erosion:crushed_egg_shell"
   ]
