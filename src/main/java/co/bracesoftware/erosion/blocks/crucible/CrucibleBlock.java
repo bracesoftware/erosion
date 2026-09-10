@@ -240,7 +240,29 @@ public class CrucibleBlock extends BaseEntityBlock
                             "NO COPRODUCTS FOUND!"
                         );
                     }
-                    if(f.containsKey(be.storedItem.getItem()))
+                    var kk = f.containsKey(be.storedItem.getItem());
+                    if(!kk)
+                    {
+                        if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG)
+                        {
+                            ErosionUtils.Log(
+                                "COPRODUCTS DOES NOT CONTAIN -> " + be.storedItem.getItem().getDescription().getString()
+                            );
+                            for(var b : f.entrySet())
+                            {
+                                var lmao = b.getValue();
+                                String items = new String();
+                                for(var ff : lmao)
+                                {
+                                    items += ff.getDescription().getString() + "|";
+                                }
+                                ErosionUtils.Log(
+                                    "COPRODUCTS MAP -> " + b.getKey().getDescription().getString() + " :: " + items
+                                );
+                            }
+                        }
+                    }
+                    if(kk)
                     {
                         if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
                             "COPRODUCTS CONTAINS -> " + be.storedItem.getItem().getDescription().getString()
