@@ -44,6 +44,7 @@ public class ModBlockTagProvider extends BlockTagsProvider
         createSimpleOre(provider, ErosionRegistry.Blocks.AZURITE_ORE.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.RUBY_ORE.get());
+        createSimpleOre(provider, ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
 
         createSimpleGravel(provider, ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
         createSimpleGravel(provider, ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());

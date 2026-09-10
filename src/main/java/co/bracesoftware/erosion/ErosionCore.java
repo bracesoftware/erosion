@@ -804,10 +804,14 @@ public class ErosionCore
     public static final AlterableMaterial.AlterationPath GEMSTONE_GEN = new AlterableMaterial.AlterationPath(
         ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_HEAT_AND_PRESSURE,
         () -> List.of(
-            ErosionRegistry.Blocks.RUBY_ORE.get()
+            ErosionRegistry.Blocks.RUBY_ORE.get(),
+            Blocks.EMERALD_ORE,
+            ErosionRegistry.Blocks.SAPPHIRE_ORE.get()
         ),
         () -> List.of(
-            ErosionRegistry.Items.RUBY.get()
+            ErosionRegistry.Items.RUBY.get(),
+            Items.EMERALD,
+            ErosionRegistry.Items.SAPPHIRE.get()
         ),
         new AlterationRules(List.of(
             AlterationRules.CONTACT_WITH_LAVA,
@@ -946,7 +950,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            )
+            ), GEMSTONE_GEN
         )
     );
 
@@ -988,7 +992,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            )
+            ), GEMSTONE_GEN
         )
     );
 
@@ -1260,6 +1264,13 @@ public class ErosionCore
             ErosionRegistry.Items.RUBY.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
+    public static final RefinableMaterial SAPPHIRE_ORE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName(),
+        () -> ErosionRegistry.Items.SAPPHIRE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.SAPPHIRE.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
 
     public static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
@@ -1269,7 +1280,7 @@ public class ErosionCore
         CASSITERITE_DEPOSIT, RAW_CASSITERITE, NATIVE_SILVER,
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
-        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE
+        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE
     );
 
     // =====================================

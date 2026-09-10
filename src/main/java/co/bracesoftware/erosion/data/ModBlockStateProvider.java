@@ -105,6 +105,10 @@ public class ModBlockStateProvider extends BlockStateProvider
             ErosionRegistry.Blocks.RUBY_ORE.get(),
             cubeAll(ErosionRegistry.Blocks.RUBY_ORE.get())
         );
+        simpleBlockWithItem(
+            ErosionRegistry.Blocks.SAPPHIRE_ORE.get(),
+            cubeAll(ErosionRegistry.Blocks.SAPPHIRE_ORE.get())
+        );
 
         simpleBlockWithItem(
             ErosionRegistry.Blocks.SPHALERITE_ORE.get(),

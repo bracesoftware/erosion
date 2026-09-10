@@ -114,6 +114,7 @@ public class ErosionRegistry
         public static final IRawRegistry TETRAHEDRITE_ORE = new IRawRegistry("tetrahedrite_ore", "Tetrahedrite Ore");
 
         public static final IRawRegistry RUBY_ORE = new IRawRegistry("ruby_ore", "Ruby Ore");
+        public static final IRawRegistry SAPPHIRE_ORE = new IRawRegistry("sapphire_ore", "Sapphire Ore");
 
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
@@ -140,6 +141,7 @@ public class ErosionRegistry
 
         public static final IRawRegistry RAW_AZURITE = new IRawRegistry("raw_azurite", "Raw Azurite");
         public static final IRawRegistry RUBY = new IRawRegistry("ruby", "Ruby");
+        public static final IRawRegistry SAPPHIRE = new IRawRegistry("sapphire", "Sapphire");
         public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
 
         //MACHINES
@@ -268,6 +270,11 @@ public class ErosionRegistry
         );
         public static final DeferredBlock<Block> RUBY_ORE = BLOCKS.register(
             RawRegistry.RUBY_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> SAPPHIRE_ORE = BLOCKS.register(
+            RawRegistry.SAPPHIRE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
@@ -410,6 +417,11 @@ public class ErosionRegistry
                 Blocks.RUBY_ORE.get(), new Item.Properties()
             )
         );
+        public static final DeferredItem<Item> SAPPHIRE_ORE = ITEMS.register(
+            RawRegistry.SAPPHIRE_ORE.getId(), () -> new BlockItem(
+                Blocks.SAPPHIRE_ORE.get(), new Item.Properties()
+            )
+        );
         public static final DeferredItem<Item> CALCITE_MALACHITE_ORE = ITEMS.register(
             RawRegistry.CALCITE_MALACHITE_ORE.getId(), () -> new BlockItem(
                 Blocks.CALCITE_MALACHITE_ORE.get(), new Item.Properties()
@@ -440,6 +452,9 @@ public class ErosionRegistry
         );
         public static final DeferredItem<Item> RUBY = ITEMS.register(
             RawRegistry.RUBY.getId(), () -> new Item(new Item.Properties().stacksTo(64))
+        );
+        public static final DeferredItem<Item> SAPPHIRE = ITEMS.register(
+            RawRegistry.SAPPHIRE.getId(), () -> new Item(new Item.Properties().stacksTo(64))
         );
         public static final DeferredItem<Item> SULFUR_SLAG = ITEMS.register(
             RawRegistry.SULFUR_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
@@ -590,10 +605,12 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.get());
             output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
             output.accept(ErosionRegistry.Items.RUBY_ORE.get());
+            output.accept(ErosionRegistry.Items.SAPPHIRE_ORE.get());
 
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());
             output.accept(ErosionRegistry.Items.RUBY.get());
+            output.accept(ErosionRegistry.Items.SAPPHIRE.get());
             output.accept(ErosionRegistry.Items.SULFUR_SLAG.get());
             output.accept(ErosionRegistry.Items.DEBRIS.get());
             output.accept(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
