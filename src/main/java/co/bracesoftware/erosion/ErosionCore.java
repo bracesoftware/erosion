@@ -1435,19 +1435,17 @@ public class ErosionCore
                 for(int i = 0; i < m.paths.size(); i++)
                 {
                     var p = m.paths.get(i);
-                    String ruleNames = "";
+                    StringBuilder ruleNames = new StringBuilder();
                     List<String> productNames = new ArrayList<>();
 
-                    for(int j = 0; j < p.rules.rules.size(); j++)
+                    var ll = p.rules.rules;
+                    for(int j = 0; j < ll.size(); j++)
                     {
-                        ruleNames += p.rules.rules.get(j).name;
-                        if(!(j + 2 >= p.rules.rules.size()))
+                        ruleNames.append(ll.get(j).name);
+                        if(j < ll.size() - 1)
                         {
-                            ruleNames += ", ";
-                        }
-                        else
-                        {
-                            ruleNames += " combined with ";
+                            if(i == ll.size() - 2) ruleNames.append(" combined with ");
+                            else ruleNames.append(", ");
                         }
                     }
 
@@ -1456,7 +1454,7 @@ public class ErosionCore
                         productNames.add(p.productItem.get(j).getDescription().getString());
                     }
                     
-                    alterationInfo.add(new AlterationInfo(ruleNames, productNames));
+                    alterationInfo.add(new AlterationInfo(ruleNames.toString(), productNames));
                 }
             }
         }
