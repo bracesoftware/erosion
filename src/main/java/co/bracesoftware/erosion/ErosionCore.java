@@ -1432,7 +1432,7 @@ public class ErosionCore
                         {
                             ruleNames += ", ";
                         }
-                        else
+                        if(j == p.rules.rules.size() - 2)
                         {
                             ruleNames += " combined with ";
                         }
