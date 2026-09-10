@@ -1813,7 +1813,7 @@ public class ErosionCore
 
         for(int i = Pending.size() - 1; i >= 0 && processedThisTick < count; i--)
         {
-            gpos = Pending.get(i);
+            gpos = Pending.getAndRemove(i);
             tryAlterBlock(level, gpos, priority);
             processedThisTick++;
         }
