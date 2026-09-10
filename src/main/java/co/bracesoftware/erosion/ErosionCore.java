@@ -771,7 +771,9 @@ public class ErosionCore
                     ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
                     ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
                     ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get()
+                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                    ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
                 ),
                 () -> List.of(
                     Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
@@ -780,7 +782,9 @@ public class ErosionCore
                     ErosionRegistry.Items.RAW_MAGNETITE.get(),
                     ErosionRegistry.Items.NATIVE_SILVER.get(),
                     ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get()
+                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                    ErosionRegistry.Items.RAW_AZURITE.get(),
+                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
                 ),
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
@@ -799,13 +803,15 @@ public class ErosionCore
                     Blocks.COBBLED_DEEPSLATE,
                     ErosionRegistry.Blocks.LIMONITE_ORE.get(),
                     ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get()
+                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                    ErosionRegistry.Blocks.AZURITE_ORE.get()
                 ),
                 () -> List.of(
                     Items.COBBLED_DEEPSLATE,
                     ErosionRegistry.Items.RAW_LIMONITE.get(),
                     ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get()
+                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                    ErosionRegistry.Items.RAW_AZURITE.get()
                 ),
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
@@ -849,13 +855,15 @@ public class ErosionCore
                     ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get(),
                     ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
                     ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get()
+                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                    ErosionRegistry.Blocks.AZURITE_ORE.get()
                 ),
                 () -> List.of(
                     ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
                     ErosionRegistry.Items.RAW_MAGNETITE.get(),
                     ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get()
+                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                    ErosionRegistry.Items.RAW_AZURITE.get()
                 ),
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
@@ -906,10 +914,31 @@ public class ErosionCore
         )
     );
 
+    public static final AlterableMaterial ANDESITE = new AlterableMaterial(
+        Blocks.ANDESITE.getName().getString(),
+        () -> Blocks.ANDESITE, () -> Items.ANDESITE,
+        List.of(
+            new AlterableMaterial.AlterationPath(
+                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                () -> List.of(
+                    ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
+                ),
+                () -> List.of(
+                    ErosionRegistry.Items.RAW_AZURITE.get(),
+                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+                ),
+                new AlterationRules(List.of(
+                    AlterationRules.CONTACT_WITH_WATER
+                ))
+            )
+        )
+    );
+
     public static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = List.of(
         GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
         STONE, DEEPSLATE, GRANITE, DIORITE,
-        TUFF, CALCITE, GRAVEL, MUD
+        TUFF, CALCITE, GRAVEL, MUD, ANDESITE
     );
 
     // ============================== CRUCIBLE CATALYSTS
@@ -1123,6 +1152,47 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
+    //turn mined ore into pure ore
+    public static final RefinableMaterial RAW_AZURITE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.RAW_AZURITE.getName(),
+        () -> ErosionRegistry.Items.RAW_AZURITE.get(),
+        () -> List.of(
+            Items.RAW_COPPER
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
+    );
+
+    //turn block into its raw ore if mined with silk touch
+    public static final RefinableMaterial AZURITE_ORE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.AZURITE_ORE.getName(),
+        () -> ErosionRegistry.Items.AZURITE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_AZURITE.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
+
+    //turn mined ore into pure ore
+    public static final RefinableMaterial RAW_TETRAHEDRITE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName(),
+        () -> ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+        () -> List.of(
+            Items.RAW_COPPER
+        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+            FLUX, CRUSHED_EGG_SHELL
+        )
+    );
+
+    //turn block into its raw ore if mined with silk touch
+    public static final RefinableMaterial TETRAHEDRITE_ORE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName(),
+        () -> ErosionRegistry.Items.TETRAHEDRITE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
+
+
     public static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
         PROPYLITIZED_DIORITE, RAW_LIMONITE, RAW_HEMATITE,
@@ -1130,7 +1200,8 @@ public class ErosionCore
         CALCITE_MALACHITE_ORE, MAGNETITE_ORE, HEMATITE_ORE, LIMONITE_ORE,
         CASSITERITE_DEPOSIT, RAW_CASSITERITE, NATIVE_SILVER,
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
-        RAW_SPHALERITE, SPHALERITE_ORE
+        RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
+        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE
     );
 
     // =====================================

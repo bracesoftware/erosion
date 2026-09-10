@@ -91,6 +91,16 @@ public class ModLootTableProvider extends LootTableProvider
                     b, ErosionRegistry.Items.RAW_SPHALERITE.get()
                 )
             );
+            add(ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RAW_AZURITE.get()
+                )
+            );
+            add(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+                )
+            );
 
             dropSelf(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
@@ -105,6 +115,8 @@ public class ModLootTableProvider extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.RAW_SPHALERITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_CASSITERITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_AZURITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
 
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
@@ -149,6 +161,11 @@ public class ModLootTableProvider extends LootTableProvider
                 ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
                 ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
 
+                ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                ErosionRegistry.Blocks.RAW_AZURITE.get(),
+
+                ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
+                ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
 
                 // MACHINES
                 ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),

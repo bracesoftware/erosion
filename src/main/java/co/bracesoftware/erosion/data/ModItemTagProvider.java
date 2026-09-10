@@ -47,6 +47,9 @@ public class ModItemTagProvider extends ItemTagsProvider {
         createSimpleRawOre(provider, ErosionRegistry.Items.RAW_SPHALERITE.get());
         createSimpleRawOre(provider, ErosionRegistry.Items.ZINC_CHUNK.get());
 
+        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_AZURITE.get());
+        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
+
         return;
     }
 

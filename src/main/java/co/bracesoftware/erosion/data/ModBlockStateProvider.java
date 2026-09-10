@@ -93,6 +93,14 @@ public class ModBlockStateProvider extends BlockStateProvider
             ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
             cubeAll(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get())
         );
+        simpleBlockWithItem(
+            ErosionRegistry.Blocks.AZURITE_ORE.get(),
+            cubeAll(ErosionRegistry.Blocks.AZURITE_ORE.get())
+        );
+        simpleBlockWithItem(
+            ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
+            cubeAll(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get())
+        );
 
         simpleBlockWithItem(
             ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
@@ -291,6 +299,21 @@ public class ModBlockStateProvider extends BlockStateProvider
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_SPHALERITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.SPHALERITE_ORE.getId() //block texture
+            )
+        );
+
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_AZURITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_AZURITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.AZURITE_ORE.getId() //block texture
+            )
+        );
+        simpleBlock(
+            ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
+            createRockModel(
+                ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getId() //block texture
             )
         );
 

@@ -109,6 +109,10 @@ public class ErosionRegistry
         public static final IRawRegistry BISMUTHINITE_ORE = new IRawRegistry("bismuthinite_ore", "Bismuthinite Ore");
         public static final IRawRegistry SPHALERITE_ORE = new IRawRegistry("sphalerite_ore", "Sphalerite Ore");
 
+        public static final IRawRegistry AZURITE_ORE = new IRawRegistry("azurite_ore", "Azurite Ore");
+        public static final IRawRegistry TETRAHEDRITE_ORE = new IRawRegistry("tetrahedrite_ore", "Tetrahedrite Ore");
+
+
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
         public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
@@ -130,6 +134,9 @@ public class ErosionRegistry
 
         public static final IRawRegistry RAW_SPHALERITE = new IRawRegistry("raw_sphalerite", "Raw Sphalerite");
         public static final IRawRegistry ZINC_CHUNK = new IRawRegistry("zinc_chunk", "Zinc Chunk");
+
+        public static final IRawRegistry RAW_AZURITE = new IRawRegistry("raw_azurite", "Raw Azurite");
+        public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
 
         public static final IRawRegistry MINERAL_RICH_DIRT = new IRawRegistry("mineral_rich_dirt", "Mineral-rich Soil");
 
@@ -247,6 +254,16 @@ public class ErosionRegistry
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
+        public static final DeferredBlock<Block> AZURITE_ORE = BLOCKS.register(
+            RawRegistry.AZURITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> TETRAHEDRITE_ORE = BLOCKS.register(
+            RawRegistry.TETRAHEDRITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
 
         public static final DeferredBlock<Block> RAW_LIMONITE = BLOCKS.register(
             RawRegistry.RAW_LIMONITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
@@ -290,6 +307,16 @@ public class ErosionRegistry
         );
         public static final DeferredBlock<Block> RAW_CASSITERITE = BLOCKS.register(
             RawRegistry.RAW_CASSITERITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_AZURITE = BLOCKS.register(
+            RawRegistry.RAW_AZURITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_TETRAHEDRITE = BLOCKS.register(
+            RawRegistry.RAW_TETRAHEDRITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
@@ -359,6 +386,16 @@ public class ErosionRegistry
         public static final DeferredItem<Item> MAGNETITE_ORE = ITEMS.register(
             RawRegistry.MAGNETITE_ORE.getId(), () -> new BlockItem(
                 Blocks.MAGNETITE_ORE.get(), new Item.Properties()
+            )
+        );
+        public static final DeferredItem<Item> AZURITE_ORE = ITEMS.register(
+            RawRegistry.AZURITE_ORE.getId(), () -> new BlockItem(
+                Blocks.AZURITE_ORE.get(), new Item.Properties()
+            )
+        );
+        public static final DeferredItem<Item> TETRAHEDRITE_ORE = ITEMS.register(
+            RawRegistry.TETRAHEDRITE_ORE.getId(), () -> new BlockItem(
+                Blocks.TETRAHEDRITE_ORE.get(), new Item.Properties()
             )
         );
         public static final DeferredItem<Item> CALCITE_MALACHITE_ORE = ITEMS.register(
@@ -456,6 +493,17 @@ public class ErosionRegistry
         public static final DeferredItem<Item> ZINC_CHUNK = ITEMS.register(
             RawRegistry.ZINC_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
+
+        public static final DeferredItem<Item> RAW_AZURITE = ITEMS.register(
+            RawRegistry.RAW_AZURITE.getId(), () -> new BlockItem(
+                Blocks.RAW_AZURITE.get(), new Item.Properties().stacksTo(32)
+            )
+        );
+        public static final DeferredItem<Item> RAW_TETRAHEDRITE = ITEMS.register(
+            RawRegistry.RAW_TETRAHEDRITE.getId(), () -> new BlockItem(
+                Blocks.RAW_TETRAHEDRITE.get(), new Item.Properties().stacksTo(32)
+            )
+        );
     }
 
     public class BlockEntities
@@ -518,6 +566,11 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.SPHALERITE_ORE.get());
             output.accept(ErosionRegistry.Items.RAW_SPHALERITE.get());
             output.accept(ErosionRegistry.Items.MINERAL_RICH_DIRT.get());
+
+            output.accept(ErosionRegistry.Items.RAW_AZURITE.get());
+            output.accept(ErosionRegistry.Items.AZURITE_ORE.get());
+            output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.get());
+            output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
 
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());

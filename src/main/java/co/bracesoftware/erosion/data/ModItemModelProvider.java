@@ -38,6 +38,9 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ErosionRegistry.Items.RAW_SPHALERITE.get());
         basicItem(ErosionRegistry.Items.ZINC_CHUNK.get());
 
+        basicItem(ErosionRegistry.Items.RAW_AZURITE.get());
+        basicItem(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
+
         return;
     }
 }

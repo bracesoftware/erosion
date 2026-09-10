@@ -41,6 +41,8 @@ public class ModLanguageProvider extends LanguageProvider
 
         add(ErosionRegistry.Items.ZINC_CHUNK.get(), ErosionRegistry.RawRegistry.ZINC_CHUNK.getName());
         add(ErosionRegistry.Items.RAW_SPHALERITE.get(), ErosionRegistry.RawRegistry.RAW_SPHALERITE.getName());
+        add(ErosionRegistry.Items.RAW_AZURITE.get(), ErosionRegistry.RawRegistry.RAW_AZURITE.getName());
+        add(ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName());
 
         //SIMPLE BLOCKS
         add(ErosionRegistry.Blocks.DRIED_DIRT.get(), ErosionRegistry.RawRegistry.DRIED_DIRT.getName());
@@ -62,6 +64,8 @@ public class ModLanguageProvider extends LanguageProvider
         add(ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(), ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getName());
         add(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(), ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getName());
         add(ErosionRegistry.Blocks.SPHALERITE_ORE.get(), ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName());
+        add(ErosionRegistry.Blocks.AZURITE_ORE.get(), ErosionRegistry.RawRegistry.AZURITE_ORE.getName());
+        add(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(), ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName());
 
         //MACHINES
         add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());
