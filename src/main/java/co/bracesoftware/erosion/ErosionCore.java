@@ -296,6 +296,18 @@ public class ErosionCore
         {
             return this.rules;
         }
+
+        public boolean checkIfAllConditionsAreMet(ServerLevel l, BlockPos p)
+        {
+            for(var r : this.rules)
+            {
+                if(!r.check(l, p))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     public static class CrucibleCatalyst extends ErosionDynamicItem
@@ -1752,23 +1764,20 @@ public class ErosionCore
 
         if(!isAlterable(state)) return;
         var l = ALTERATION_INVERTED.get(state.getBlock());
-        for(int i = 0; i < l.paths.size(); ++i)
+        var ALTERATION_PATHS = l.paths.size();
+        int SEED = ErosionMod.RANDOM.nextInt(ALTERATION_PATHS);
+        for(int i = 0; i < ALTERATION_PATHS + SEED; ++i)
         {
-            var p = l.paths.get(i);
-            var ALTERATION_PATHS = p.rules.getRules().size();
-            for(int j = 0; j < ALTERATION_PATHS; ++j)
+            var p = l.paths.get(ErosionMod.RANDOM.nextInt(ALTERATION_PATHS));
+            if(p.rules.checkIfAllConditionsAreMet(level, pos))
             {
-                var r = p.rules.getRules().get(ErosionMod.RANDOM.nextInt(ALTERATION_PATHS));
-                if(r.check(level, pos))
+                if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
                 {
-                    if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
-                    {
-                        Pending.remove(0);
-                    }
-                    Pending.add(pos, p.product.get(ErosionMod.RANDOM.nextInt(p.product.size())));
-                    if(ErosionConfig.isDebugOn()) ErosionUtils.Log("Added candidate: " + pos);
-                    return;
+                    Pending.remove(0);
                 }
+                Pending.add(pos, p.product.get(ErosionMod.RANDOM.nextInt(p.product.size())));
+                if(ErosionConfig.isDebugOn()) ErosionUtils.Log("Added candidate: " + pos);
+                return;
             }
         }
         return;
