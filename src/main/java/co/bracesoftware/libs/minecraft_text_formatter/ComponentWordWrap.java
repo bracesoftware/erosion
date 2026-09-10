@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//not working yet! \n's aren't supported in components ;(
 public class ComponentWordWrap
 {
     public static Component Format(Component i, int m)

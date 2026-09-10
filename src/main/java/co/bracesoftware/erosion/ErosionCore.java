@@ -1334,10 +1334,10 @@ public class ErosionCore
             var a = ITEM_DESCRIPTIONS.get(currentItem);
             for(int i = 0; i < a.size(); i++)
             {
-                Component f = ComponentWordWrap.Format(
-                    a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT)),
-                    ErosionConfig.Libs.MAX_WORDS_PER_COMPONENT_LINE
-                );
+                Component c = a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
+                Component f = ErosionConfig.Libs.COMPONENT_WORD_WRAP ? ComponentWordWrap.Format(
+                    c, ErosionConfig.Libs.MAX_WORDS_PER_COMPONENT_LINE
+                ) : c;
                 tooltip.add(f);
             }
             return;
@@ -1428,11 +1428,11 @@ public class ErosionCore
                     for(int j = 0; j < p.rules.rules.size(); j++)
                     {
                         ruleNames += p.rules.rules.get(j).name;
-                        if(!(j + 1 >= p.rules.rules.size()))
+                        if(!(j + 2 >= p.rules.rules.size()))
                         {
                             ruleNames += ", ";
                         }
-                        if(j == p.rules.rules.size() - 2)
+                        else
                         {
                             ruleNames += " combined with ";
                         }

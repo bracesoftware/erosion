@@ -35,6 +35,7 @@ public final class ErosionConfig
     public static final class Libs
     {
         public static final Integer MAX_WORDS_PER_COMPONENT_LINE = 6;
+        public static final Boolean COMPONENT_WORD_WRAP = false;
     }
 
     public static final class ServerConfig
