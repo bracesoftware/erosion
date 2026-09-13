@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/ruby_ore"
-    }
+    "": [
+      {
+        "model": "erosion:block/ruby_ore"
+      },
+      {
+        "model": "erosion:block/ruby_ore",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/ruby_ore",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/ruby_ore",
+        "y": 270
+      }
+    ]
   }
 }

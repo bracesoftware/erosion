@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/cassiterite_deposit"
-    }
+    "": [
+      {
+        "model": "erosion:block/cassiterite_deposit"
+      },
+      {
+        "model": "erosion:block/cassiterite_deposit",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/cassiterite_deposit",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/cassiterite_deposit",
+        "y": 270
+      }
+    ]
   }
 }

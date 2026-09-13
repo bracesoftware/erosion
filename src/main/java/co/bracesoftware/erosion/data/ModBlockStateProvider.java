@@ -30,21 +30,6 @@ public class ModBlockStateProvider extends BlockStateProvider
         super(output, Erosion.MODID, exFileHelper);
     }
 
-    public void generateRandomRotations(Block b)
-    {
-        var model = cubeAll(b);
-        getVariantBuilder(b)
-        .forAllStates(
-            s -> new ConfiguredModel[] {
-                new ConfiguredModel(model, 0, 0, false),
-                new ConfiguredModel(model, 0, 90, false),
-                new ConfiguredModel(model, 0, 180, false),
-                new ConfiguredModel(model, 0, 270, false)
-            }
-        );
-        simpleBlockItem(b, model);
-    }
-
     @Override
     protected void registerStatesAndModels() 
     {
@@ -196,9 +181,9 @@ public class ModBlockStateProvider extends BlockStateProvider
             ModelFile model = heatModels[safeHeat];
 
             return ConfiguredModel.builder()
-                .modelFile(model)
-                .rotationY(((int) d.toYRot() + 180) % 360)
-                .build();
+            .modelFile(model)
+            .rotationY(((int) d.toYRot() + 180) % 360)
+            .build();
         });
 
         simpleBlockItem(crucible, heatModels[0]);
@@ -325,29 +310,44 @@ public class ModBlockStateProvider extends BlockStateProvider
         }
         return;
     }
-    // Helper metoda za generisanje 3D modela kamenčića
-    public BlockModelBuilder createRockModel(String modelName, String texturePath)
+
+    private BlockModelBuilder createRockModel(String modelName, String texturePath)
     {
         return models().withExistingParent(modelName, mcLoc("block/block"))
-            .texture("particle", modLoc("block/" + texturePath))
-            .texture("texture", modLoc("block/" + texturePath))
-            
-            .element()
-            .from(RockBlock.SHAPE_FIRSTDIM_X1, RockBlock.SHAPE_FIRSTDIM_Y1, RockBlock.SHAPE_FIRSTDIM_Z1)
-            .to(RockBlock.SHAPE_FIRSTDIM_X2, RockBlock.SHAPE_FIRSTDIM_Y2, RockBlock.SHAPE_FIRSTDIM_Z2)
-            .allFaces((direction, builder) -> builder.texture("#texture"))
-            .end()
+        .texture("particle", modLoc("block/" + texturePath))
+        .texture("texture", modLoc("block/" + texturePath))
+        
+        .element()
+        .from(RockBlock.SHAPE_FIRSTDIM_X1, RockBlock.SHAPE_FIRSTDIM_Y1, RockBlock.SHAPE_FIRSTDIM_Z1)
+        .to(RockBlock.SHAPE_FIRSTDIM_X2, RockBlock.SHAPE_FIRSTDIM_Y2, RockBlock.SHAPE_FIRSTDIM_Z2)
+        .allFaces((direction, builder) -> builder.texture("#texture"))
+        .end()
 
-            .element()
-            .from(RockBlock.SHAPE_SECONDDIM_X1, RockBlock.SHAPE_SECONDDIM_Y1, RockBlock.SHAPE_SECONDDIM_Z1)
-            .to(RockBlock.SHAPE_SECONDDIM_X2, RockBlock.SHAPE_SECONDDIM_Y2, RockBlock.SHAPE_SECONDDIM_Z2)
-            .allFaces((direction, builder) -> builder.texture("#texture"))
-            .end()
+        .element()
+        .from(RockBlock.SHAPE_SECONDDIM_X1, RockBlock.SHAPE_SECONDDIM_Y1, RockBlock.SHAPE_SECONDDIM_Z1)
+        .to(RockBlock.SHAPE_SECONDDIM_X2, RockBlock.SHAPE_SECONDDIM_Y2, RockBlock.SHAPE_SECONDDIM_Z2)
+        .allFaces((direction, builder) -> builder.texture("#texture"))
+        .end()
 
-            .element()
-            .from(RockBlock.SHAPE_THIRDDIM_X1, RockBlock.SHAPE_THIRDDIM_Y1, RockBlock.SHAPE_THIRDDIM_Z1)
-            .to(RockBlock.SHAPE_THIRDDIM_X2, RockBlock.SHAPE_THIRDDIM_Y2, RockBlock.SHAPE_THIRDDIM_Z2)
-            .allFaces((direction, builder) -> builder.texture("#texture"))
-            .end();
+        .element()
+        .from(RockBlock.SHAPE_THIRDDIM_X1, RockBlock.SHAPE_THIRDDIM_Y1, RockBlock.SHAPE_THIRDDIM_Z1)
+        .to(RockBlock.SHAPE_THIRDDIM_X2, RockBlock.SHAPE_THIRDDIM_Y2, RockBlock.SHAPE_THIRDDIM_Z2)
+        .allFaces((direction, builder) -> builder.texture("#texture"))
+        .end();
+    }
+
+    private void generateRandomRotations(Block b)
+    {
+        var model = cubeAll(b);
+        getVariantBuilder(b)
+        .forAllStates(
+            s -> new ConfiguredModel[] {
+                new ConfiguredModel(model, 0, 0, false),
+                new ConfiguredModel(model, 0, 90, false),
+                new ConfiguredModel(model, 0, 180, false),
+                new ConfiguredModel(model, 0, 270, false)
+            }
+        );
+        simpleBlockItem(b, model);
     }
 }

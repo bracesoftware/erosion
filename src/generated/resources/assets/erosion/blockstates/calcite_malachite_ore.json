@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/calcite_malachite_ore"
-    }
+    "": [
+      {
+        "model": "erosion:block/calcite_malachite_ore"
+      },
+      {
+        "model": "erosion:block/calcite_malachite_ore",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/calcite_malachite_ore",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/calcite_malachite_ore",
+        "y": 270
+      }
+    ]
   }
 }

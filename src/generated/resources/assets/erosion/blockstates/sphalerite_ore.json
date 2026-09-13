@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/sphalerite_ore"
-    }
+    "": [
+      {
+        "model": "erosion:block/sphalerite_ore"
+      },
+      {
+        "model": "erosion:block/sphalerite_ore",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/sphalerite_ore",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/sphalerite_ore",
+        "y": 270
+      }
+    ]
   }
 }
