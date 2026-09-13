@@ -17,7 +17,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-def computedVersion=1789294207857079900
+def computedVersion=!!NEOFORGE_MOD_VERSION!!
 version = computedVersion
 group = mod_group_id
 
