@@ -30,6 +30,7 @@ public class ModBlockTagProvider extends BlockTagsProvider
         createSimpleGravel(provider, ErosionRegistry.Blocks.DRIED_DIRT.get());
 
         createSimpleStone(provider, ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
+        createSimpleStone(provider, ErosionRegistry.Blocks.CRACKED_STONE.get());
         createSimpleGravel(provider, ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
         createSimpleStone(provider, ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
         createSimpleStone(provider, ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());

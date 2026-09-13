@@ -42,6 +42,10 @@ public class ModBlockStateProvider extends BlockStateProvider
             cubeAll(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get())
         );
         simpleBlockWithItem(
+            ErosionRegistry.Blocks.CRACKED_STONE.get(),
+            cubeAll(ErosionRegistry.Blocks.CRACKED_STONE.get())
+        );
+        simpleBlockWithItem(
             ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(),
             cubeAll(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get())
         );

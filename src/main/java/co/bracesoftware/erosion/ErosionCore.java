@@ -819,6 +819,25 @@ public class ErosionCore
         ))
     );
 
+    public static final AlterableMaterial COBBLESTONE = new AlterableMaterial(
+        Blocks.COBBLESTONE.getName().getString(),
+        () -> Blocks.COBBLESTONE, () -> Items.COBBLESTONE,
+        List.of(
+            new AlterableMaterial.AlterationPath(
+                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                () -> List.of(
+                    ErosionRegistry.Blocks.CRACKED_STONE.get()
+                ),
+                () -> List.of(
+                    ErosionRegistry.Items.CRACKED_STONE.get()
+                ),
+                new AlterationRules(List.of(
+                    AlterationRules.CONTACT_WITH_LAVA
+                ))
+            )
+        )
+    );
+
     public static final AlterableMaterial STONE = new AlterableMaterial(
         Blocks.STONE.getName().getString(),
         () -> Blocks.STONE, () -> Items.STONE,
@@ -854,10 +873,12 @@ public class ErosionCore
             new AlterableMaterial.AlterationPath(
                 ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
                 () -> List.of(
-                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get()
+                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
+                    ErosionRegistry.Blocks.CRACKED_STONE.get()
                 ),
                 () -> List.of(
-                    ErosionRegistry.Items.BORAX.get()
+                    ErosionRegistry.Items.BORAX.get(),
+                    ErosionRegistry.Items.CRACKED_STONE.get()
                 ), new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
@@ -1021,7 +1042,8 @@ public class ErosionCore
     public static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = List.of(
         GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
         STONE, DEEPSLATE, GRANITE, DIORITE,
-        TUFF, CALCITE, GRAVEL, MUD, ANDESITE
+        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
+        COBBLESTONE
     );
 
     // ============================== CRUCIBLE CATALYSTS
@@ -1076,6 +1098,30 @@ public class ErosionCore
             ErosionRegistry.Items.RAW_MAGNETITE.get(),
             ErosionRegistry.Items.RAW_MALACHITE.get(),
             ErosionRegistry.Items.CRACKED_CALCITE.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
+
+    public static final RefinableMaterial CRACKED_STONE = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.CRACKED_STONE.getName(),
+        () -> ErosionRegistry.Items.CRACKED_STONE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.BORAX.get(),
+            ErosionRegistry.Items.DEBRIS.get(),
+            ErosionRegistry.Items.FELDSPAR_POWDER.get(),
+            
+            ErosionRegistry.Items.RAW_LIMONITE.get(),
+            ErosionRegistry.Items.RAW_MAGNETITE.get(),
+            ErosionRegistry.Items.RAW_MAGNETITE.get(),
+            ErosionRegistry.Items.RAW_MALACHITE.get(),
+            ErosionRegistry.Items.RAW_AZURITE.get(),
+            ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+
+            ErosionRegistry.Items.NATIVE_SILVER.get(),
+            ErosionRegistry.Items.NATIVE_GOLD.get(),
+
+            ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+            ErosionRegistry.Items.RAW_CASSITERITE.get(),
+            ErosionRegistry.Items.RAW_SPHALERITE.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
@@ -1316,7 +1362,7 @@ public class ErosionCore
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
         RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
-        BORAX
+        BORAX, CRACKED_STONE
     );
 
     // =====================================

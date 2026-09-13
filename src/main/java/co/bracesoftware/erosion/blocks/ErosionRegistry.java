@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.blocks.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
@@ -107,6 +108,7 @@ public class ErosionRegistry
         public static final IRawRegistry SAPPHIRE_ORE = new IRawRegistry("sapphire_ore", "Sapphire Ore");
 
         public static final IRawRegistry BORAX_DEPOSIT = new IRawRegistry("borax_deposit", "Borax Deposit");
+        public static final IRawRegistry CRACKED_STONE = new IRawRegistry("cracked_stone", "Cracked Stone");
 
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
@@ -195,6 +197,11 @@ public class ErosionRegistry
 
         public static final DeferredBlock<Block> KAOLINIZED_GRANITE = BLOCKS.register(
             RawRegistry.KAOLINIZED_GRANITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> CRACKED_STONE = BLOCKS.register(
+            RawRegistry.CRACKED_STONE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
@@ -370,6 +377,9 @@ public class ErosionRegistry
 
         public static final DeferredItem<Item> KAOLINIZED_GRANITE = ITEMS.register(
             RawRegistry.KAOLINIZED_GRANITE.getId(), () -> new BlockItem(Blocks.KAOLINIZED_GRANITE.get(), new Item.Properties())
+        );
+        public static final DeferredItem<Item> CRACKED_STONE = ITEMS.register(
+            RawRegistry.CRACKED_STONE.getId(), () -> new BlockItem(Blocks.CRACKED_STONE.get(), new Item.Properties())
         );
         public static final DeferredItem<Item> ALBITIZED_GRANITE = ITEMS.register(
             RawRegistry.ALBITIZED_GRANITE.getId(), () -> new BlockItem(Blocks.ALBITIZED_GRANITE.get(), new Item.Properties())
@@ -581,6 +591,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.DRIED_DIRT.get());
 
             output.accept(ErosionRegistry.Items.KAOLINIZED_GRANITE.get());
+            output.accept(ErosionRegistry.Items.CRACKED_STONE.get());
             output.accept(ErosionRegistry.Items.ALBITIZED_GRANITE.get());
             output.accept(ErosionRegistry.Items.QUARTZ_GRAVEL.get());
             output.accept(ErosionRegistry.Items.PROPYLITIZED_DIORITE.get());

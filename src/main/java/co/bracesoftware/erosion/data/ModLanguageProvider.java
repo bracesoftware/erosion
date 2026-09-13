@@ -54,6 +54,7 @@ public class ModLanguageProvider extends LanguageProvider
         add(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get(), ErosionRegistry.RawRegistry.MINERAL_RICH_DIRT.getName());
 
         add(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(), ErosionRegistry.RawRegistry.KAOLINIZED_GRANITE.getName());
+        add(ErosionRegistry.Blocks.CRACKED_STONE.get(), ErosionRegistry.RawRegistry.CRACKED_STONE.getName());
         add(ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(), ErosionRegistry.RawRegistry.QUARTZ_GRAVEL.getName());
         add(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(), ErosionRegistry.RawRegistry.ALBITIZED_GRANITE.getName());
         add(ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get(), ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getName());
