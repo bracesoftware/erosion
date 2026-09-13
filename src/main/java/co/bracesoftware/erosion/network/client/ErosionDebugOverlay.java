@@ -5,7 +5,6 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionRetrogen;
 import co.bracesoftware.libs.minecraft_text_formatter.*;
 
-import net.minecraft.network.chat.Component;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -22,6 +21,13 @@ public class ErosionDebugOverlay
     @SubscribeEvent
     public static void onDebugText(CustomizeGuiOverlayEvent.DebugText event)
     {
+        event.getRight().add("");
+        event.getRight().add(
+            MAIN_STYLE + 
+            Text.Format(Text.Col.DARK_GREEN) +
+            "Installed: build " + Erosion.BUILD
+        );
+
         event.getLeft().add("");
         event.getLeft().add(
             MAIN_STYLE +
