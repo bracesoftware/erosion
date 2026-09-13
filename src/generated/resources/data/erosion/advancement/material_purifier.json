@@ -1,5 +1,5 @@
 {
-  "parent": "erosion:crucible",
+  "parent": "erosion:erosion",
   "criteria": {
     "has_item": {
       "conditions": {

@@ -90,14 +90,14 @@ public class ModAdvancementProvider extends AdvancementProvider
             this.k = s;
 
             //GENERATE
-            var ra = generateParentAdvancement();
+            var root = generateParentAdvancement();
             
             var crucible = generateAdvancement(
                 "A cook!",
                 "Craft a Crucible.",
                 ErosionRegistry.Items.CRUCIBLE.get(),
                 ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
-                ra
+                root
             );
 
             var purifier = generateAdvancement(
@@ -105,7 +105,7 @@ public class ModAdvancementProvider extends AdvancementProvider
                 "Craft a Material Purifier.",
                 ErosionRegistry.Items.MATERIAL_PURIFIER.get(),
                 ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId(),
-                ra
+                root
             );
             return;
         }

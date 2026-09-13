@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "tick": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
+    "description": "Welcome to the geochemically accurate Minecraft!",
+    "icon": {
+      "count": 1,
+      "id": "erosion:kaolinized_granite"
+    },
+    "title": "Erosion"
+  },
+  "requirements": [
+    [
+      "tick"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

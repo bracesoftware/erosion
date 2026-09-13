@@ -101,7 +101,8 @@ public class ErosionRetrogen
         "place_rocks", "Place rocks around the chunk",
         () -> new ArrayList<>(List.of(
             Blocks.SHORT_GRASS,
-            Blocks.FERN
+            Blocks.FERN,
+            Blocks.DEAD_BUSH
         )),
         () -> new ArrayList<>(List.of(
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
