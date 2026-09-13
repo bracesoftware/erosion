@@ -7,6 +7,7 @@ git add .
 git commit -m update
 git push
 echo Generating data...
+call gradlew clean build
 call gradlew clean processResources
 call gradlew runData -stacktrace --no-configuration-cache
 echo Building...
