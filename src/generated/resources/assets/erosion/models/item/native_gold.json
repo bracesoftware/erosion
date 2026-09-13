@@ -1,3 +1,6 @@
 {
-  "parent": "erosion:block/native_gold"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "erosion:item/native_gold"
+  }
 }

@@ -23,6 +23,8 @@ public final class ErosionConfig
     public static final Integer CRUCIBLE_SECONDS = 15;
     public static final Integer CHUNK_SIZE = 16;
 
+    public static final Boolean SOMETHING_WENT_WRONG = false;
+
     public static final ResourceLocation MINI_FONT = ResourceLocation.withDefaultNamespace("uniform");
 
     public static final class Clusters

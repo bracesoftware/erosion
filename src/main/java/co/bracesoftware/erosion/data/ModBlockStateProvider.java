@@ -7,6 +7,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks;
 import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
@@ -376,18 +377,31 @@ public class ModBlockStateProvider extends BlockStateProvider
         simpleBlockItem(b, model);
         return;
     }
-    private void generateRockWithRandomRotations(Item it, Block b, BlockModelBuilder model)
+    private void generateRockWithRandomRotations(Item it, Block b, BlockModelBuilder m)
     {
-        getVariantBuilder(b)
+        if(ErosionConfig.SOMETHING_WENT_WRONG) getVariantBuilder(b)
         .forAllStates(
             s -> new ConfiguredModel[] {
-                new ConfiguredModel(model, 0, 0, false),
-                new ConfiguredModel(model, 0, 90, false),
-                new ConfiguredModel(model, 0, 180, false),
-                new ConfiguredModel(model, 0, 270, false)
+                new ConfiguredModel(m, 0, 0, false),
+                new ConfiguredModel(m, 0, 90, false),
+                new ConfiguredModel(m, 0, 180, false),
+                new ConfiguredModel(m, 0, 270, false)
             }
         );
-        simpleBlockItem(b, model);
+
+        getVariantBuilder(b)
+        .forAllStates(
+            s -> {
+                Direction d = s.getValue(ErosionSimpleBlocks.RockBlock.FACING);
+                int y = (int) d.toYRot();
+                return ConfiguredModel.builder()
+                .modelFile(m)
+                .rotationY((y + 180) % 360)
+                .build();
+            }
+        );
+
+        simpleBlockItem(b, m);
         itemModels().basicItem(it);
         return;
     }

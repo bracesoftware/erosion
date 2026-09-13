@@ -1,6 +1,11 @@
 package co.bracesoftware.erosion.blocks;
 
+import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.GravelBlock;
+
+import java.util.EnumMap;
+import java.util.Map;
+
 import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
@@ -11,12 +16,17 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.level.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.Util;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
@@ -90,6 +100,8 @@ public class ErosionSimpleBlocks
 
     public static class RockBlock extends Block
     {
+        public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+
         public static final Integer SHAPE_FIRSTDIM_X1 = 5;
         public static final Integer SHAPE_FIRSTDIM_Y1 = 0;
         public static final Integer SHAPE_FIRSTDIM_Z1 = 4;
@@ -111,7 +123,7 @@ public class ErosionSimpleBlocks
         public static final Integer SHAPE_THIRDDIM_Y2 = 3;
         public static final Integer SHAPE_THIRDDIM_Z2 = 8;
 
-        private static final VoxelShape SHAPE = Shapes.or(
+        private static final VoxelShape OLD_SHAPE_IF_SOMETHING_GOES_WRONG = Shapes.or(
             Block.box(
                 SHAPE_FIRSTDIM_X1, SHAPE_FIRSTDIM_Y1, SHAPE_FIRSTDIM_Z1,
                 SHAPE_FIRSTDIM_X2, SHAPE_FIRSTDIM_Y2, SHAPE_FIRSTDIM_Z2
@@ -122,9 +134,40 @@ public class ErosionSimpleBlocks
             ),
             Block.box(
                 SHAPE_THIRDDIM_X1, SHAPE_THIRDDIM_Y1, SHAPE_THIRDDIM_Z1,
-                SHAPE_THIRDDIM_X1, SHAPE_THIRDDIM_Y2, SHAPE_THIRDDIM_Z2
+                SHAPE_THIRDDIM_X2, SHAPE_THIRDDIM_Y2, SHAPE_THIRDDIM_Z2
             )
         );
+
+        private static final VoxelShape NORTH_SHAPE = Shapes.or(
+            Block.box(SHAPE_FIRSTDIM_X1, SHAPE_FIRSTDIM_Y1, SHAPE_FIRSTDIM_Z1, SHAPE_FIRSTDIM_X2, SHAPE_FIRSTDIM_Y2, SHAPE_FIRSTDIM_Z2),
+            Block.box(SHAPE_SECONDDIM_X1, SHAPE_SECONDDIM_Y1, SHAPE_SECONDDIM_Z1, SHAPE_SECONDDIM_X2, SHAPE_SECONDDIM_Y2, SHAPE_SECONDDIM_Z2),
+            Block.box(SHAPE_THIRDDIM_X1, SHAPE_THIRDDIM_Y1, SHAPE_THIRDDIM_Z1, SHAPE_THIRDDIM_X2, SHAPE_THIRDDIM_Y2, SHAPE_THIRDDIM_Z2)
+        );
+
+        private static final Map<Direction, VoxelShape> SHAPES = Util.make(
+            new EnumMap<>(Direction.class), map -> {
+                map.put(Direction.NORTH, NORTH_SHAPE);
+                map.put(Direction.SOUTH, rotateShape(NORTH_SHAPE, 2));
+                map.put(Direction.WEST,  rotateShape(NORTH_SHAPE, 3));
+                map.put(Direction.EAST,  rotateShape(NORTH_SHAPE, 1));
+            }
+        );
+
+        private static VoxelShape rotateShape(VoxelShape shape, int times)
+        {
+            VoxelShape[] b = new VoxelShape[]{shape, Shapes.empty()};
+            for(int i = 0; i < times; i++)
+            {
+                b[0].forAllBoxes(
+                    (minX, minY, minZ, maxX, maxY, maxZ) -> b[1] = Shapes.or(
+                        b[1], Shapes.box(1 - maxZ, minY, minX, 1 - minZ, maxY, maxX)
+                    )
+                );
+                b[0] = b[1];
+                b[1] = Shapes.empty();
+            }
+            return b[0];
+        }
 
         public static BlockBehaviour.Properties getDefaultBlockProperties()
         {
@@ -134,11 +177,29 @@ public class ErosionSimpleBlocks
                 .mapColor(MapColor.DEEPSLATE);
         }
 
+        public static BlockBehaviour.Properties getProperties()
+        {
+            return null;
+        }
+
         public RockBlock(Properties p)
         {
             super(p);
+            this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        }
+        @Override
+        protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
+        {
+            b.add(FACING);
+            return;
         }
 
+        @Override
+        public BlockState getStateForPlacement(BlockPlaceContext c)
+        {
+            Direction r = Direction.Plane.HORIZONTAL.getRandomDirection(c.getLevel().getRandom());
+            return this.defaultBlockState().setValue(FACING, r);
+        }
         @Override 
         public VoxelShape getShape(
             BlockState bs,
@@ -147,7 +208,8 @@ public class ErosionSimpleBlocks
             CollisionContext c
         )
         {
-            return SHAPE;
+            if(ErosionConfig.SOMETHING_WENT_WRONG) return OLD_SHAPE_IF_SOMETHING_GOES_WRONG;
+            return SHAPES.getOrDefault(bs.getValue(FACING), NORTH_SHAPE);
         }
         @Override
         protected InteractionResult useWithoutItem(
