@@ -124,7 +124,7 @@ int main()
 {
     copyTemplates(EXCLUDED_DIR, ROOT_DIR);
 
-    static const std::string searchStr = "1789294207857079900";
+    static const std::string searchStr = "1789294273453441900";
     static std::string v = getHash();
     std::cout << "Version generated: " << v << std::endl;
 
