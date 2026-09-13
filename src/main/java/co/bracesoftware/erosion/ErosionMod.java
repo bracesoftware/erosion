@@ -186,11 +186,11 @@ public final class ErosionMod
     }
 
     @SubscribeEvent
-    public static void registerPayloads(RegisterPayloadHandlersEvent event)
+    public static void regPayloads(RegisterPayloadHandlersEvent event)
     {
         event.registrar("1")
         .playToClient(
-            ErosionStatusSyncPacket.TYPE,
+            ErosionRegistry.DataPackets.MOD_STATUS_SYNC,
             ErosionStatusSyncPacket.STREAM_CODEC,
             ErosionStatusSyncPacket::handleData
         );
@@ -203,7 +203,7 @@ public final class ErosionMod
         int tick = e.getServer().getTickCount();
         ErosionCore.processPendingPriority(e.getServer().getLevel(Level.OVERWORLD));
         
-        if (tick % 20 == 0)
+        if(tick % 20 == 0)
         {
             ErosionStatusSyncPacket packet = new ErosionStatusSyncPacket(
                 ErosionCore.getPendingSize(),
@@ -214,9 +214,10 @@ public final class ErosionMod
                 ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
             );
 
-            for(var player : e.getServer().getPlayerList().getPlayers())
+            var pl = e.getServer().getPlayerList().getPlayers();
+            for(var p : pl)
             {
-                PacketDistributor.sendToPlayer(player, packet);
+                PacketDistributor.sendToPlayer(p, packet);
             }
         }
         return;

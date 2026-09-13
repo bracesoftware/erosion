@@ -1,52 +1,42 @@
 package co.bracesoftware.erosion.blocks;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.util.function.Supplier;
-
-import com.mojang.serialization.Codec;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
-import co.bracesoftware.erosion.ErosionMod;
-import co.bracesoftware.erosion.blocks.ErosionRegistry.Blocks;
-import co.bracesoftware.erosion.blocks.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
+import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ColoredFallingBlock;
-import net.minecraft.world.level.block.FallingBlock;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 
 public class ErosionRegistry
 {
+    public static class DataPackets
+    {
+        public static final Type<ErosionStatusSyncPacket> MOD_STATUS_SYNC = new Type<>(
+            ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "status_sync")
+        );
+    }
+
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Erosion.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(

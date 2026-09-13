@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.network.server;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -15,10 +16,6 @@ public record ErosionStatusSyncPacket(
     int retrogen
 ) implements CustomPacketPayload
 {
-    public static final Type<ErosionStatusSyncPacket> TYPE = new Type<>(
-        ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "status_sync")
-    );
-
     public static final StreamCodec<RegistryFriendlyByteBuf, ErosionStatusSyncPacket> STREAM_CODEC = StreamCodec.composite(
         ByteBufCodecs.INT, ErosionStatusSyncPacket::pending,
         ByteBufCodecs.VAR_LONG, ErosionStatusSyncPacket::performed,
@@ -32,7 +29,7 @@ public record ErosionStatusSyncPacket(
     @Override
     public Type<ErosionStatusSyncPacket> type()
     {
-        return TYPE;
+        return ErosionRegistry.DataPackets.MOD_STATUS_SYNC;
     }
 
     public static void handleData(ErosionStatusSyncPacket data, IPayloadContext context)
