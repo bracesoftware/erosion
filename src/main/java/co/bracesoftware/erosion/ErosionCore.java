@@ -1568,10 +1568,12 @@ public class ErosionCore
                 "Titanium and iron-doped corundum"
             ))),
             Map.entry(ErosionRegistry.Items.NATIVE_GOLD.get(), new ChemicalInfo(List.of(
-                "Native elemental gold (Au)"
+                "Native elemental gold (Au)",
+                "Contains impurities"
             ))),
             Map.entry(ErosionRegistry.Items.NATIVE_SILVER.get(), new ChemicalInfo(List.of(
-                "Native elemental silver (Ag)"
+                "Native elemental silver (Ag)",
+                "Contains impurities"
             ))),
             Map.entry(ErosionRegistry.Items.TIN_CHUNK.get(), new ChemicalInfo(List.of(
                 "Elemental tin chunk (Sn)"

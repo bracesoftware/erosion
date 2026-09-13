@@ -1,0 +1,77 @@
+package co.bracesoftware.erosion.data;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
+
+import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.common.data.AdvancementProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
+public class ModAdvancementProvider extends AdvancementProvider
+{
+    public ModAdvancementProvider(
+        PackOutput o, CompletableFuture<HolderLookup.Provider> r,
+        ExistingFileHelper efh
+    )
+    {
+        super(o, r, efh, List.of(new Generator()));
+    }
+
+    private static class Generator implements AdvancementProvider.AdvancementGenerator
+    {
+        private ExistingFileHelper efh = null;
+        private Consumer<AdvancementHolder> k = null;
+
+        private void generateAdvancement(String title, String desc, Item it, String id)
+        {
+            Advancement.Builder.advancement()
+            .display(
+                it,//icon
+                Component.literal(title),//title
+                Component.literal(desc),//desc
+                null,
+                AdvancementType.TASK,
+                true,
+                true,
+                false
+            )
+            .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(it))
+            .save(this.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), this.efh);
+            return;
+        }
+        @Override
+        public void generate(HolderLookup.Provider r, Consumer<AdvancementHolder> s, ExistingFileHelper efh)
+        {
+            //DO NOT TOUCH
+            this.efh = efh;
+            this.k = s;
+
+            //GENERATE
+            generateAdvancement(
+                "A cook!",
+                "Craft a Crucible.",
+                ErosionRegistry.Items.CRUCIBLE.get(),
+                ErosionRegistry.RawRegistry.CRUCIBLE.getId()
+            );
+
+            generateAdvancement(
+                "Purifying Dirt",
+                "Craft a Material Purifier.",
+                ErosionRegistry.Items.MATERIAL_PURIFIER.get(),
+                ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId()
+            );
+            return;
+        }
+    }
+}
