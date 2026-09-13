@@ -1,21 +1,19 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "erosion:block/raw_tetrahedrite"
-      },
-      {
-        "model": "erosion:block/raw_tetrahedrite",
-        "y": 90
-      },
-      {
-        "model": "erosion:block/raw_tetrahedrite",
-        "y": 180
-      },
-      {
-        "model": "erosion:block/raw_tetrahedrite",
-        "y": 270
-      }
-    ]
+    "facing=east": {
+      "model": "erosion:block/raw_tetrahedrite",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "erosion:block/raw_tetrahedrite"
+    },
+    "facing=south": {
+      "model": "erosion:block/raw_tetrahedrite",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "erosion:block/raw_tetrahedrite",
+      "y": 270
+    }
   }
 }

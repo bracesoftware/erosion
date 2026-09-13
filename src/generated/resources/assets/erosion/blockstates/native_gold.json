@@ -1,21 +1,19 @@
 {
   "variants": {
-    "": [
-      {
-        "model": "erosion:block/native_gold"
-      },
-      {
-        "model": "erosion:block/native_gold",
-        "y": 90
-      },
-      {
-        "model": "erosion:block/native_gold",
-        "y": 180
-      },
-      {
-        "model": "erosion:block/native_gold",
-        "y": 270
-      }
-    ]
+    "facing=east": {
+      "model": "erosion:block/native_gold",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "erosion:block/native_gold"
+    },
+    "facing=south": {
+      "model": "erosion:block/native_gold",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "erosion:block/native_gold",
+      "y": 270
+    }
   }
 }

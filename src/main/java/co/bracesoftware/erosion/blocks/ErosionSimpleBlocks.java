@@ -258,5 +258,23 @@ public class ErosionSimpleBlocks
             }
             return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
         }
+
+        @Override
+        public void onPlace(
+            BlockState s, Level l, BlockPos p, 
+            BlockState o, boolean m
+        )
+        {
+            if(!l.isClientSide && s.getBlock() == o.getBlock())
+            {
+                return;
+            }
+
+            if(!l.isClientSide && s.getValue(FACING) == Direction.NORTH && l.random.nextFloat() < 0.75f)
+            { 
+                Direction r = Direction.Plane.HORIZONTAL.getRandomDirection(l.random);
+                l.setBlock(p, s.setValue(FACING, r), 2);
+            }
+        }
     }
 }
