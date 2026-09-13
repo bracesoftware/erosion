@@ -1494,7 +1494,6 @@ public class ErosionCore
             );
         }
         
-
         final class ChemicalInfo
         {
             private List<String> info;
@@ -1509,52 +1508,80 @@ public class ErosionCore
                 return this.info;
             }
         }
-        final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.of(
-            ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
+        final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.ofEntries(
+            Map.entry(ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
                 "Sodium-tetraborate decahydrate"
-            )),
-            ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
                 "Anhydrous sodium-tetraborate"
-            )),
-            ErosionRegistry.Items.RAW_MAGNETITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_MAGNETITE.get(), new ChemicalInfo(List.of(
                 "Iron(II, III)-oxide"
-            )),
-            ErosionRegistry.Items.RAW_HEMATITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_HEMATITE.get(), new ChemicalInfo(List.of(
                 "Iron(III)-oxide"
-            )),
-            ErosionRegistry.Items.RAW_LIMONITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_LIMONITE.get(), new ChemicalInfo(List.of(
                 "Hydrated iron(III) oxide-hydroxide"
-            )),
-            ErosionRegistry.Items.RAW_MALACHITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_MALACHITE.get(), new ChemicalInfo(List.of(
                 "Copper(II) carbonate-hydroxide",
                 "Basic copper(II)-carbonate"
-            )),
-            ErosionRegistry.Items.RAW_AZURITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_AZURITE.get(), new ChemicalInfo(List.of(
                 "Basic copper(II)-carbonate",
                 "Dicopper(II)-carbonate dihydroxi-copper(II)-carbonate"
-            )),
-            ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), new ChemicalInfo(List.of(
                 "Copper-antimony thioantimonite",
                 "Copper-antimony sulfide"
-            )),
-            ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
                 "Tin(IV)-oxide"
-            )),
-            ErosionRegistry.Items.RAW_SPHALERITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_SPHALERITE.get(), new ChemicalInfo(List.of(
                 "Zinc-sulfide"
-            )),
-            ErosionRegistry.Items.RAW_BISMUTHINITE.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_BISMUTHINITE.get(), new ChemicalInfo(List.of(
                 "Bismuth(II)-sulfide"
-            )),
-            ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
-                "Anhydrous sodium-tetraborate"
-            )),
-            ErosionRegistry.Items.FLUX.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.FLUX.get(), new ChemicalInfo(List.of(
                 "Natural silicate flux rich in alkali and alkaline earth metal oxides"
-            )),
-            ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), new ChemicalInfo(List.of(
+            ))),
+            Map.entry(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), new ChemicalInfo(List.of(
                 "Rich in calcium-carbonate"
-            ))
+            ))),
+            Map.entry(ErosionRegistry.Items.FELDSPAR_POWDER.get(), new ChemicalInfo(List.of(
+                "Potassium-sodium-aluminum silicate",
+                "May contain traces of calcium"
+            ))),
+            Map.entry(ErosionRegistry.Items.SULFUR_SLAG.get(), new ChemicalInfo(List.of(
+                "Iron sulfide matrix rich in sulfur impurities",
+                "Industrial metallurgical byproduct"
+            ))),
+            Map.entry(ErosionRegistry.Items.RUBY.get(), new ChemicalInfo(List.of(
+                "Aluminium-oxide",
+                "Chromium-doped corundum"
+            ))),
+            Map.entry(ErosionRegistry.Items.SAPPHIRE.get(), new ChemicalInfo(List.of(
+                "Aluminium-oxide",
+                "Titanium and iron-doped corundum"
+            ))),
+            Map.entry(ErosionRegistry.Items.NATIVE_GOLD.get(), new ChemicalInfo(List.of(
+                "Native elemental gold (Au)"
+            ))),
+            Map.entry(ErosionRegistry.Items.NATIVE_SILVER.get(), new ChemicalInfo(List.of(
+                "Native elemental silver (Ag)"
+            ))),
+            Map.entry(ErosionRegistry.Items.TIN_CHUNK.get(), new ChemicalInfo(List.of(
+                "Elemental tin chunk (Sn)"
+            ))),
+            Map.entry(ErosionRegistry.Items.BISMUTH_CHUNK.get(), new ChemicalInfo(List.of(
+                "Elemental bismuth chunk (Bi)"
+            ))),
+            Map.entry(ErosionRegistry.Items.ZINC_CHUNK.get(), new ChemicalInfo(List.of(
+                "Elemental zinc chunk (Zn)"
+            )))
         );
 
         for(var h : CHEMICAL_ITEM_INFO.entrySet())
