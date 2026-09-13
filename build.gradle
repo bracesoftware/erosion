@@ -17,7 +17,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-def computedVersion = generateHash(System.currentTimeMillis().toString())
+def computedVersion = 2
 version = computedVersion
 group = mod_group_id
 

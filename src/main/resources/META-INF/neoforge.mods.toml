@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="erosion"
-version="${mod_version}"
+version="2"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"
