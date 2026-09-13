@@ -12,6 +12,7 @@
     }
   },
   "display": {
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png",
     "description": "Craft a Crucible.",
     "icon": {
       "count": 1,

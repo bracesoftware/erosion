@@ -33,6 +33,30 @@ public class ModAdvancementProvider extends AdvancementProvider
         private ExistingFileHelper efh = null;
         private Consumer<AdvancementHolder> k = null;
 
+        private static Boolean PARENT_ADVANCEMENT_CREATED = false;
+
+        private AdvancementHolder generateParentAdvancement()
+        {
+            if(PARENT_ADVANCEMENT_CREATED)
+            {
+                throw new RuntimeException("Parent advancement is already generated!");
+            }
+            PARENT_ADVANCEMENT_CREATED = true;
+            return Advancement.Builder.advancement()
+            .display(
+                ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
+                Component.literal(Erosion.MODNAME),
+                Component.literal("Welcome to the geochemically accurate Minecraft!"),
+                ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                AdvancementType.TASK,
+                true,
+                true,
+                false
+            )
+            .addCriterion("tick", net.minecraft.advancements.critereon.PlayerTrigger.TriggerInstance.tick())
+            .save(this.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, Erosion.MODID), this.efh);
+        }
+
         private AdvancementHolder generateAdvancement(
             String title, String desc, Item it, String id,
             AdvancementHolder a
@@ -66,20 +90,22 @@ public class ModAdvancementProvider extends AdvancementProvider
             this.k = s;
 
             //GENERATE
-            var g = generateAdvancement(
+            var ra = generateParentAdvancement();
+            
+            var crucible = generateAdvancement(
                 "A cook!",
                 "Craft a Crucible.",
                 ErosionRegistry.Items.CRUCIBLE.get(),
                 ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
-                null
+                ra
             );
 
-            generateAdvancement(
+            var purifier = generateAdvancement(
                 "Purifying Dirt",
                 "Craft a Material Purifier.",
                 ErosionRegistry.Items.MATERIAL_PURIFIER.get(),
                 ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId(),
-                g
+                ra
             );
             return;
         }
