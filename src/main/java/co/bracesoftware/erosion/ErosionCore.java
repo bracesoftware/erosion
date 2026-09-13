@@ -1602,8 +1602,9 @@ public class ErosionCore
         {
             if(currentItem == c.catalystItem)
             {
+                desc.add(Component.literal(""));
                 desc.add(
-                    Component.literal("Used as a crucible catalyst").withStyle(ChatFormatting.GOLD)
+                    Component.literal("Used as a crucible catalyst").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
                 );
                 Integer sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
                 desc.add(

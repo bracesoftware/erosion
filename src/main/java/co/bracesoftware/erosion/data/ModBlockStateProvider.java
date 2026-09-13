@@ -345,7 +345,19 @@ public class ModBlockStateProvider extends BlockStateProvider
                 new ConfiguredModel(model, 0, 0, false),
                 new ConfiguredModel(model, 0, 90, false),
                 new ConfiguredModel(model, 0, 180, false),
-                new ConfiguredModel(model, 0, 270, false)
+                new ConfiguredModel(model, 0, 270, false),
+                new ConfiguredModel(model, 90, 0, false),
+                new ConfiguredModel(model, 90, 90, false),
+                new ConfiguredModel(model, 90, 180, false),
+                new ConfiguredModel(model, 90, 270, false),
+                new ConfiguredModel(model, 180, 0, false),
+                new ConfiguredModel(model, 180, 90, false),
+                new ConfiguredModel(model, 180, 180, false),
+                new ConfiguredModel(model, 180, 270, false),
+                new ConfiguredModel(model, 270, 0, false),
+                new ConfiguredModel(model, 270, 90, false),
+                new ConfiguredModel(model, 270, 180, false),
+                new ConfiguredModel(model, 270, 270, false)
             }
         );
         simpleBlockItem(b, model);
