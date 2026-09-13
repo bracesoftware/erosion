@@ -1,7 +1,21 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/propylitized_diorite"
-    }
+    "": [
+      {
+        "model": "erosion:block/propylitized_diorite"
+      },
+      {
+        "model": "erosion:block/propylitized_diorite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/propylitized_diorite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/propylitized_diorite",
+        "y": 270
+      }
+    ]
   }
 }

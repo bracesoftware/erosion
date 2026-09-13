@@ -36,10 +36,10 @@ public class ModBlockStateProvider extends BlockStateProvider
         getVariantBuilder(b)
         .forAllStates(
             s -> new ConfiguredModel[] {
-                ConfiguredModel.builder().modelFile(model).rotationY(0).build()[0],
-                ConfiguredModel.builder().modelFile(model).rotationY(90).build()[0],
-                ConfiguredModel.builder().modelFile(model).rotationY(180).build()[0],
-                ConfiguredModel.builder().modelFile(model).rotationY(270).build()[0]
+                new ConfiguredModel(model, 0, 0, false),
+                new ConfiguredModel(model, 0, 90, false),
+                new ConfiguredModel(model, 0, 180, false),
+                new ConfiguredModel(model, 0, 270, false)
             }
         );
         simpleBlockItem(b, model);
@@ -48,6 +48,7 @@ public class ModBlockStateProvider extends BlockStateProvider
     @Override
     protected void registerStatesAndModels() 
     {
+        //SIMPLE BLOCKS
         //RANDOMIZED ROTATION
         generateRandomRotations(ErosionRegistry.Blocks.CRACKED_STONE.get());
         generateRandomRotations(ErosionRegistry.Blocks.DRIED_DIRT.get());
@@ -56,75 +57,26 @@ public class ModBlockStateProvider extends BlockStateProvider
         generateRandomRotations(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
         generateRandomRotations(ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
 
-        //SIMPLE BLOCKS
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.CRACKED_CALCITE.get(),
-            cubeAll(ErosionRegistry.Blocks.CRACKED_CALCITE.get())
-        );
+        generateRandomRotations(ErosionRegistry.Blocks.CRACKED_CALCITE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.MAGNETITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.HEMATITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.LIMONITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
 
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.LIMONITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.LIMONITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.MAGNETITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.HEMATITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.HEMATITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
-            cubeAll(ErosionRegistry.Blocks.BORAX_DEPOSIT.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get())
-        );
+        generateRandomRotations(ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
+        generateRandomRotations(ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get());
+        generateRandomRotations(ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());
 
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
-            cubeAll(ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-            cubeAll(ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-            cubeAll(ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get())
-        );
+        generateRandomRotations(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.AZURITE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
 
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.AZURITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.AZURITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.RUBY_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.RUBY_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.SAPPHIRE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.SAPPHIRE_ORE.get())
-        );
+        generateRandomRotations(ErosionRegistry.Blocks.RUBY_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
+        generateRandomRotations(ErosionRegistry.Blocks.SPHALERITE_ORE.get());
 
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
-            cubeAll(ErosionRegistry.Blocks.SPHALERITE_ORE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get(),
-            cubeAll(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get())
-        );
         //MACHINES
         // ============================================= //
         generateCustomTextures();
