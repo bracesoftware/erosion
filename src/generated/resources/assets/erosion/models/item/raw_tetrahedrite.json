@@ -1,6 +1,3 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "erosion:item/raw_tetrahedrite"
-  }
+  "parent": "erosion:block/raw_tetrahedrite"
 }

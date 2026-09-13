@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_azurite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_azurite"
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_azurite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

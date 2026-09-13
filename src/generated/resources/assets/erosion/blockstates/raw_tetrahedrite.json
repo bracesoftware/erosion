@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_tetrahedrite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_tetrahedrite"
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_tetrahedrite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

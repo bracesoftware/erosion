@@ -190,6 +190,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         ////////////////////////////////////////////////////////////
 
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_LIMONITE.get(),
             ErosionRegistry.Blocks.RAW_LIMONITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_LIMONITE.getId(), //item for texture
@@ -197,6 +198,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_HEMATITE.get(),
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_HEMATITE.getId(), //item for texture
@@ -204,6 +206,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_MAGNETITE.get(),
             ErosionRegistry.Blocks.RAW_MAGNETITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_MAGNETITE.getId(), //item for texture
@@ -211,6 +214,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_MALACHITE.get(),
             ErosionRegistry.Blocks.RAW_MALACHITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_MALACHITE.getId(), //item for texture
@@ -218,6 +222,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.NATIVE_GOLD.get(),
             ErosionRegistry.Blocks.NATIVE_GOLD.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.NATIVE_GOLD.getId(), //item for texture
@@ -225,6 +230,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.NATIVE_SILVER.get(),
             ErosionRegistry.Blocks.NATIVE_SILVER.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.NATIVE_SILVER.getId(), //item for texture
@@ -233,6 +239,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         );
 
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_CASSITERITE.get(),
             ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_CASSITERITE.getId(), //item for texture
@@ -241,6 +248,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         );
 
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
             ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getId(), //item for texture
@@ -248,6 +256,7 @@ public class ModBlockStateProvider extends BlockStateProvider
             )
         );
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_SPHALERITE.get(),
             ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_SPHALERITE.getId(), //item for texture
@@ -256,6 +265,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         );
 
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_AZURITE.get(),
             ErosionRegistry.Blocks.RAW_AZURITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_AZURITE.getId(), //item for texture
@@ -264,6 +274,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         );
 
         generateRockWithRandomRotations(
+            ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
             ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
             createRockModel(
                 ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getId(), //item for texture
@@ -365,7 +376,7 @@ public class ModBlockStateProvider extends BlockStateProvider
         simpleBlockItem(b, model);
         return;
     }
-    private void generateRockWithRandomRotations(Block b, BlockModelBuilder model)
+    private void generateRockWithRandomRotations(Item it, Block b, BlockModelBuilder model)
     {
         getVariantBuilder(b)
         .forAllStates(
@@ -373,22 +384,11 @@ public class ModBlockStateProvider extends BlockStateProvider
                 new ConfiguredModel(model, 0, 0, false),
                 new ConfiguredModel(model, 0, 90, false),
                 new ConfiguredModel(model, 0, 180, false),
-                new ConfiguredModel(model, 0, 270, false),
-                new ConfiguredModel(model, 90, 0, false),
-                new ConfiguredModel(model, 90, 90, false),
-                new ConfiguredModel(model, 90, 180, false),
-                new ConfiguredModel(model, 90, 270, false),
-                new ConfiguredModel(model, 180, 0, false),
-                new ConfiguredModel(model, 180, 90, false),
-                new ConfiguredModel(model, 180, 180, false),
-                new ConfiguredModel(model, 180, 270, false),
-                new ConfiguredModel(model, 270, 0, false),
-                new ConfiguredModel(model, 270, 90, false),
-                new ConfiguredModel(model, 270, 180, false),
-                new ConfiguredModel(model, 270, 270, false)
+                new ConfiguredModel(model, 0, 270, false)
             }
         );
         simpleBlockItem(b, model);
+        itemModels().basicItem(it);
         return;
     }
 }

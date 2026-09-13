@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_limonite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_limonite"
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_limonite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

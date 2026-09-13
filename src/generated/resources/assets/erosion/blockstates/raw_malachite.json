@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_malachite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_malachite"
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_malachite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_hematite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_hematite"
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_hematite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

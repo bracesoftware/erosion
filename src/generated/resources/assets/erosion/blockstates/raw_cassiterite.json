@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/raw_cassiterite"
-    }
+    "": [
+      {
+        "model": "erosion:block/raw_cassiterite"
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/raw_cassiterite",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }

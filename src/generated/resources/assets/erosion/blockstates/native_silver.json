@@ -1,7 +1,78 @@
 {
   "variants": {
-    "": {
-      "model": "erosion:block/native_silver"
-    }
+    "": [
+      {
+        "model": "erosion:block/native_silver"
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/native_silver",
+        "x": 270,
+        "y": 270
+      }
+    ]
   }
 }
