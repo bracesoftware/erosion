@@ -14,6 +14,7 @@ import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEn
 
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
@@ -29,35 +30,33 @@ public class ModBlockStateProvider extends BlockStateProvider
         super(output, Erosion.MODID, exFileHelper);
     }
 
+    public void generateRandomRotations(Block b)
+    {
+        var model = cubeAll(b);
+        getVariantBuilder(b)
+        .forAllStates(
+            s -> new ConfiguredModel[] {
+                ConfiguredModel.builder().modelFile(model).rotationY(0).build()[0],
+                ConfiguredModel.builder().modelFile(model).rotationY(90).build()[0],
+                ConfiguredModel.builder().modelFile(model).rotationY(180).build()[0],
+                ConfiguredModel.builder().modelFile(model).rotationY(270).build()[0]
+            }
+        );
+        simpleBlockItem(b, model);
+    }
+
     @Override
     protected void registerStatesAndModels() 
     {
-        //SIMPLE BLOCKS
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.DRIED_DIRT.get(),
-            cubeAll(ErosionRegistry.Blocks.DRIED_DIRT.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
-            cubeAll(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.CRACKED_STONE.get(),
-            cubeAll(ErosionRegistry.Blocks.CRACKED_STONE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(),
-            cubeAll(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get())
-        );
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
-            cubeAll(ErosionRegistry.Blocks.QUARTZ_GRAVEL.get())
-        );
+        //RANDOMIZED ROTATION
+        generateRandomRotations(ErosionRegistry.Blocks.CRACKED_STONE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.DRIED_DIRT.get());
+        generateRandomRotations(ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
+        generateRandomRotations(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
+        generateRandomRotations(ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
 
-        simpleBlockWithItem(
-            ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get(),
-            cubeAll(ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get())
-        );
+        //SIMPLE BLOCKS
         simpleBlockWithItem(
             ErosionRegistry.Blocks.CRACKED_CALCITE.get(),
             cubeAll(ErosionRegistry.Blocks.CRACKED_CALCITE.get())
