@@ -1493,6 +1493,83 @@ public class ErosionCore
                 .withStyle(ChatFormatting.DARK_RED)
             );
         }
+        
+
+        final class ChemicalInfo
+        {
+            private List<String> info;
+
+            public ChemicalInfo(List<String> l)
+            {
+                this.info = l;
+            }
+
+            public List<String> getInfo()
+            {
+                return this.info;
+            }
+        }
+        final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.of(
+            ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
+                "Sodium-tetraborate decahydrate"
+            )),
+            ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
+                "Anhydrous sodium-tetraborate"
+            )),
+            ErosionRegistry.Items.RAW_MAGNETITE.get(), new ChemicalInfo(List.of(
+                "Iron(II, III)-oxide"
+            )),
+            ErosionRegistry.Items.RAW_HEMATITE.get(), new ChemicalInfo(List.of(
+                "Iron(III)-oxide"
+            )),
+            ErosionRegistry.Items.RAW_LIMONITE.get(), new ChemicalInfo(List.of(
+                "Hydrated iron(III) oxide-hydroxide"
+            )),
+            ErosionRegistry.Items.RAW_MALACHITE.get(), new ChemicalInfo(List.of(
+                "Copper(II) carbonate-hydroxide",
+                "Basic copper(II)-carbonate"
+            )),
+            ErosionRegistry.Items.RAW_AZURITE.get(), new ChemicalInfo(List.of(
+                "Basic copper(II)-carbonate",
+                "Dicopper(II)-carbonate dihydroxi-copper(II)-carbonate"
+            )),
+            ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), new ChemicalInfo(List.of(
+                "Copper-antimony thioantimonite",
+                "Copper-antimony sulfide"
+            )),
+            ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
+                "Tin(IV)-oxide"
+            )),
+            ErosionRegistry.Items.RAW_SPHALERITE.get(), new ChemicalInfo(List.of(
+                "Zinc-sulfide"
+            )),
+            ErosionRegistry.Items.RAW_BISMUTHINITE.get(), new ChemicalInfo(List.of(
+                "Bismuth(II)-sulfide"
+            )),
+            ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
+                "Anhydrous sodium-tetraborate"
+            )),
+            ErosionRegistry.Items.FLUX.get(), new ChemicalInfo(List.of(
+                "Natural silicate flux rich in alkali and alkaline earth metal oxides"
+            )),
+            ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), new ChemicalInfo(List.of(
+                "Rich in calcium-carbonate"
+            ))
+        );
+
+        for(var h : CHEMICAL_ITEM_INFO.entrySet())
+        {
+            var it = h.getKey();
+            var ci = h.getValue();
+
+            if(currentItem == it)
+            {
+                for(var op : ci.getInfo()) desc.add(
+                    Component.literal(op)
+                    .withStyle(ChatFormatting.BOLD, ChatFormatting.DARK_AQUA)
+                );
+            }
+        }
 
         for(CrucibleCatalyst c : CRUCIBLE_CATALYST_LIST)
         {
@@ -1567,7 +1644,7 @@ public class ErosionCore
             }
         }
 
-        List<String> meltsIntoNames = new java.util.ArrayList<>();
+        List<String> meltsIntoNames = new ArrayList<>();
         List<String> catalystListLmao = new ArrayList<>();
         List<String> coproductOfNames = new ArrayList<>();
         Boolean hasCoproducts = false;
