@@ -72,6 +72,10 @@ public class ModBlockStateProvider extends BlockStateProvider
             cubeAll(ErosionRegistry.Blocks.HEMATITE_ORE.get())
         );
         simpleBlockWithItem(
+            ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
+            cubeAll(ErosionRegistry.Blocks.BORAX_DEPOSIT.get())
+        );
+        simpleBlockWithItem(
             ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(),
             cubeAll(ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get())
         );
