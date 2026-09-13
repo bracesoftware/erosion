@@ -12,7 +12,7 @@ public class ErosionClientData
         public static Boolean AGGRESIVE_GEOCHEMICAL_ALTERATION = false;
     }
 
-    public static void update(
+    public static void updateModStatus(
         int pending, long performed, int pendingfast, long performed2,
         boolean agal,
         int retrogen

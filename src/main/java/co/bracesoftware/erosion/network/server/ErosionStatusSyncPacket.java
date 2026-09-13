@@ -35,7 +35,7 @@ public record ErosionStatusSyncPacket(
     public static void handleData(ErosionStatusSyncPacket data, IPayloadContext context)
     {
         context.enqueueWork(() -> {
-            ErosionClientData.update(
+            ErosionClientData.updateModStatus(
                 data.pending(),
                 data.performed(),
                 data.pendingfast(),
