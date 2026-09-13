@@ -36,6 +36,7 @@ public class ModLootTableProvider extends LootTableProvider
         {
             //SIMPLE BLOCKS
             dropSelf(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
+            dropSelf(ErosionRegistry.Blocks.CRACKED_STONE.get());
             dropSelf(ErosionRegistry.Blocks.DRIED_DIRT.get());
             dropSelf(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
             dropSelf(ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
@@ -146,6 +147,7 @@ public class ModLootTableProvider extends LootTableProvider
             return List.of(
                 //SIMPLE BLOCKS
                 ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
+                ErosionRegistry.Blocks.CRACKED_STONE.get(),
 
                 ErosionRegistry.Blocks.DRIED_DIRT.get(),
                 ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get(),
