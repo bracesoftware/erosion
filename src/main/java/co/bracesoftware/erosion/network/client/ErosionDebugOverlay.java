@@ -7,6 +7,7 @@ import co.bracesoftware.libs.minecraft_text_formatter.*;
 
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 
@@ -26,6 +27,10 @@ public class ErosionDebugOverlay
             MAIN_STYLE + 
             Text.Format(Text.Col.DARK_GREEN) +
             "Installed: build " + Erosion.BUILD
+        );
+        event.getRight().add(
+            MAIN_STYLE + Text.Format(Text.Col.DARK_AQUA) +
+            "Snapshot: " + ModList.get().getModFileById(Erosion.MODID).versionString()
         );
 
         event.getLeft().add("");

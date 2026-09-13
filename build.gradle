@@ -5,11 +5,18 @@ plugins {
     id 'idea'
 }
 
+import java.security.MessageDigest
+def generateHash = { String input ->
+    def digest = MessageDigest.getInstance("MD5")
+    def bytes = digest.digest(input.bytes)
+    return bytes.encodeHex().toString().substring(0, 6)
+}
+
 tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
+version = generateHash(System.currentTimeMillis().toString())
 group = mod_group_id
 
 sourceSets.main.resources {
@@ -91,7 +98,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : mod_id,
             mod_name               : mod_name,
             mod_license            : mod_license,
-            mod_version            : mod_version,
+            mod_version            : version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties
