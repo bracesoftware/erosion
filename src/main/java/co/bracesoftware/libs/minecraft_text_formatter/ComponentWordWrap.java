@@ -12,6 +12,10 @@ public class ComponentWordWrap
     public static List<Component> Format(Component i, int m)
     {
         List<StyledWord> a = new ArrayList<>();
+        if(i.getString().isBlank() || i.getString().isEmpty())
+        {
+            return new ArrayList<>(List.of(Component.literal(" ")));
+        }
 
         i.visit(
             (style, text) -> {
