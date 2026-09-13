@@ -6,6 +6,7 @@ plugins {
 }
 
 import java.security.MessageDigest
+
 def generateHash = { String input ->
     def digest = MessageDigest.getInstance("MD5")
     def bytes = digest.digest(input.bytes)
@@ -16,12 +17,12 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = generateHash(System.currentTimeMillis().toString())
+def computedVersion = generateHash(System.currentTimeMillis().toString())
+version = computedVersion
 group = mod_group_id
 
 sourceSets.main.resources {
     srcDir('src/generated/resources')
-
     exclude("src/generated/**/.cache")
 }
 
@@ -31,9 +32,11 @@ repositories {
 base {
     archivesName = "Erosion-neoforge"
 }
+
 tasks.withType(Jar).configureEach {
     archiveVersion = ""
 }
+
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 neoForge {
@@ -68,7 +71,6 @@ neoForge {
 
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
-
             logLevel = org.slf4j.event.Level.DEBUG
         }
     }
@@ -79,9 +81,11 @@ neoForge {
         }
     }
 }
+
 tasks.named('processResources', ProcessResources) {
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
+
 configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
@@ -91,20 +95,21 @@ dependencies {
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
-            neo_version            : neo_version,
-            loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
-            mod_version            : version,
+            minecraft_version       : minecraft_version,
+            minecraft_version_range : minecraft_version_range,
+            neo_version             : neo_version,
+            loader_version_range    : loader_version_range,
+            mod_id                  : mod_id,
+            mod_name                : mod_name,
+            mod_license             : mod_license,
+            mod_version             : computedVersion,
     ]
     inputs.properties replaceProperties
     expand replaceProperties
     from "src/main/templates"
     into "build/generated/sources/modMetadata"
 }
+
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
