@@ -33,14 +33,23 @@ public class ModAdvancementProvider extends AdvancementProvider
         private ExistingFileHelper efh = null;
         private Consumer<AdvancementHolder> k = null;
 
-        private void generateAdvancement(String title, String desc, Item it, String id)
+        private AdvancementHolder generateAdvancement(
+            String title, String desc, Item it, String id,
+            AdvancementHolder a
+        )
         {
-            Advancement.Builder.advancement()
-            .display(
+            var b = Advancement.Builder.advancement();
+            ResourceLocation bb = (a == null) 
+            ? ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")
+            : null;
+
+            if(a != null) b.parent(a);
+
+            return b.display(
                 it,//icon
                 Component.literal(title),//title
                 Component.literal(desc),//desc
-                null,
+                bb,
                 AdvancementType.TASK,
                 true,
                 true,
@@ -48,7 +57,6 @@ public class ModAdvancementProvider extends AdvancementProvider
             )
             .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(it))
             .save(this.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), this.efh);
-            return;
         }
         @Override
         public void generate(HolderLookup.Provider r, Consumer<AdvancementHolder> s, ExistingFileHelper efh)
@@ -58,18 +66,20 @@ public class ModAdvancementProvider extends AdvancementProvider
             this.k = s;
 
             //GENERATE
-            generateAdvancement(
+            var g = generateAdvancement(
                 "A cook!",
                 "Craft a Crucible.",
                 ErosionRegistry.Items.CRUCIBLE.get(),
-                ErosionRegistry.RawRegistry.CRUCIBLE.getId()
+                ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
+                null
             );
 
             generateAdvancement(
                 "Purifying Dirt",
                 "Craft a Material Purifier.",
                 ErosionRegistry.Items.MATERIAL_PURIFIER.get(),
-                ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId()
+                ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId(),
+                g
             );
             return;
         }
