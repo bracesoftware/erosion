@@ -61,6 +61,7 @@ public class TextureProvider
             System.err.println("Could not generate: " + outputFile.getName());
             e.printStackTrace();
         }
+        return;
     }
 
     private static BufferedImage removeWhiteBackground(BufferedImage img)
