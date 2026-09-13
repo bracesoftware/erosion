@@ -21,6 +21,8 @@ public class ModLanguageProvider extends LanguageProvider
         //SIMPLE ITEMS
         add(ErosionRegistry.Items.FLUX.get(), ErosionRegistry.RawRegistry.FLUX.getName());
         add(ErosionRegistry.Items.RUBY.get(), ErosionRegistry.RawRegistry.RUBY.getName());
+        add(ErosionRegistry.Items.BORAX.get(), ErosionRegistry.RawRegistry.BORAX.getName());
+        add(ErosionRegistry.Items.DEHYDRATED_BORAX.get(), ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName());
         add(ErosionRegistry.Items.SAPPHIRE.get(), ErosionRegistry.RawRegistry.SAPPHIRE.getName());
         add(ErosionRegistry.Items.SULFUR_SLAG.get(), ErosionRegistry.RawRegistry.SULFUR_SLAG.getName());
         add(ErosionRegistry.Items.DEBRIS.get(), ErosionRegistry.RawRegistry.DEBRIS.getName());
@@ -60,6 +62,7 @@ public class ModLanguageProvider extends LanguageProvider
         add(ErosionRegistry.Blocks.MAGNETITE_ORE.get(), ErosionRegistry.RawRegistry.MAGNETITE_ORE.getName());
         add(ErosionRegistry.Blocks.LIMONITE_ORE.get(), ErosionRegistry.RawRegistry.LIMONITE_ORE.getName());
         add(ErosionRegistry.Blocks.HEMATITE_ORE.get(), ErosionRegistry.RawRegistry.HEMATITE_ORE.getName());
+        add(ErosionRegistry.Blocks.BORAX_DEPOSIT.get(), ErosionRegistry.RawRegistry.BORAX_DEPOSIT.getName());
         add(ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(), ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getName());
 
         add(ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(), ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getName());

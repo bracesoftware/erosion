@@ -37,6 +37,7 @@ public class ModBlockTagProvider extends BlockTagsProvider
 
         createSimpleOre(provider, ErosionRegistry.Blocks.MAGNETITE_ORE.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.HEMATITE_ORE.get());
+        createSimpleOre(provider, ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.LIMONITE_ORE.get());
         createSimpleOre(provider, ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());

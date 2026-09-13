@@ -46,6 +46,7 @@ public final class ErosionConfig
         {
             public String name;
             public String id;
+            
             public BasicConfig(String i, String n)
             {
                 this.id = i;

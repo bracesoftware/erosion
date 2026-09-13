@@ -52,6 +52,12 @@ public class ModLootTableProvider extends LootTableProvider
                     b, ErosionRegistry.Items.RAW_HEMATITE.get()
                 )
             );
+            add(
+                ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.BORAX.get()
+                )
+            );
             add(ErosionRegistry.Blocks.LIMONITE_ORE.get(),
                 b -> createOreDrop(
                     b, ErosionRegistry.Items.RAW_LIMONITE.get()
@@ -151,6 +157,7 @@ public class ModLootTableProvider extends LootTableProvider
 
                 ErosionRegistry.Blocks.LIMONITE_ORE.get(),
                 ErosionRegistry.Blocks.HEMATITE_ORE.get(),
+                ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
                 ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
                 ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(),
 

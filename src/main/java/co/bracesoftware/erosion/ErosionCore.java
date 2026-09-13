@@ -850,7 +850,18 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            ), GEMSTONE_GEN
+            ), GEMSTONE_GEN,
+            new AlterableMaterial.AlterationPath(
+                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                () -> List.of(
+                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get()
+                ),
+                () -> List.of(
+                    ErosionRegistry.Items.BORAX.get()
+                ), new AlterationRules(List.of(
+                    AlterationRules.CONTACT_WITH_LAVA
+                ))
+            )
         )
     );
 
@@ -877,7 +888,18 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            ), GEMSTONE_GEN
+            ), GEMSTONE_GEN,
+            new AlterableMaterial.AlterationPath(
+                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                () -> List.of(
+                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get()
+                ),
+                () -> List.of(
+                    ErosionRegistry.Items.BORAX.get()
+                ), new AlterationRules(List.of(
+                    AlterationRules.CONTACT_WITH_LAVA
+                ))
+            )
         )
     );
 
@@ -1014,8 +1036,13 @@ public class ErosionCore
         () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 20
     );
 
+    public static final CrucibleCatalyst DEHYDRATED_BORAX = new CrucibleCatalyst(
+        ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName(),
+        () -> ErosionRegistry.Items.DEHYDRATED_BORAX.get(), 80
+    );
+
     public static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = List.of(
-        FLUX, CRUSHED_EGG_SHELL
+        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
     );
 
     // ========================== REFINABLE MATERIALS
@@ -1058,7 +1085,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MAGNETITE = new RefinableMaterial(
@@ -1067,7 +1094,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_HEMATITE = new RefinableMaterial(
@@ -1076,7 +1103,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MALACHITE = new RefinableMaterial(
@@ -1085,7 +1112,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of()
     );
 
@@ -1095,7 +1122,7 @@ public class ErosionCore
         () -> List.of(
             Items.GOLD_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of()
     );
 
@@ -1152,7 +1179,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.TIN_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX
+            FLUX,DEHYDRATED_BORAX
         ), () -> List.of()
     );
     public static final RefinableMaterial NATIVE_SILVER = new RefinableMaterial(
@@ -1161,7 +1188,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.SILVER_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX
+            FLUX,DEHYDRATED_BORAX
         ), () -> List.of()
     );
 
@@ -1180,7 +1207,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.BISMUTH_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
         )
@@ -1202,7 +1229,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.ZINC_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of()
     );
 
@@ -1222,7 +1249,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of()
     );
 
@@ -1242,7 +1269,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
         )
@@ -1272,6 +1299,14 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
+    public static final RefinableMaterial BORAX = new RefinableMaterial(
+        ErosionRegistry.RawRegistry.BORAX.getName(),
+        () -> ErosionRegistry.Items.BORAX.get(),
+        () -> List.of(
+            ErosionRegistry.Items.DEHYDRATED_BORAX.get()
+        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
+
     public static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
         PROPYLITIZED_DIORITE, RAW_LIMONITE, RAW_HEMATITE,
@@ -1280,7 +1315,8 @@ public class ErosionCore
         CASSITERITE_DEPOSIT, RAW_CASSITERITE, NATIVE_SILVER,
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
-        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE
+        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
+        BORAX
     );
 
     // =====================================

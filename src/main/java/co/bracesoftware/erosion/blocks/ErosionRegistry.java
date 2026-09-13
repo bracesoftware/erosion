@@ -116,6 +116,8 @@ public class ErosionRegistry
         public static final IRawRegistry RUBY_ORE = new IRawRegistry("ruby_ore", "Ruby Ore");
         public static final IRawRegistry SAPPHIRE_ORE = new IRawRegistry("sapphire_ore", "Sapphire Ore");
 
+        public static final IRawRegistry BORAX_DEPOSIT = new IRawRegistry("borax_deposit", "Borax Deposit");
+
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
         public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
@@ -143,6 +145,9 @@ public class ErosionRegistry
         public static final IRawRegistry RUBY = new IRawRegistry("ruby", "Ruby");
         public static final IRawRegistry SAPPHIRE = new IRawRegistry("sapphire", "Sapphire");
         public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
+
+        public static final IRawRegistry BORAX = new IRawRegistry("borax", "Borax");
+        public static final IRawRegistry DEHYDRATED_BORAX = new IRawRegistry("dehydrated_borax", "Dehydrated Borax");
 
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
@@ -188,6 +193,12 @@ public class ErosionRegistry
 
         public static final DeferredBlock<Block> PROPYLITIZED_DIORITE = BLOCKS.register(
             ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+
+        public static final DeferredBlock<Block> BORAX_DEPOSIT = BLOCKS.register(
+            ErosionRegistry.RawRegistry.BORAX_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
@@ -397,6 +408,13 @@ public class ErosionRegistry
                 Blocks.HEMATITE_ORE.get(), new Item.Properties()
             )
         );
+
+        public static final DeferredItem<Item> BORAX_DEPOSIT = ITEMS.register(
+            RawRegistry.BORAX_DEPOSIT.getId(), () -> new BlockItem(
+                Blocks.BORAX_DEPOSIT.get(), new Item.Properties()
+            )
+        );
+
         public static final DeferredItem<Item> MAGNETITE_ORE = ITEMS.register(
             RawRegistry.MAGNETITE_ORE.getId(), () -> new BlockItem(
                 Blocks.MAGNETITE_ORE.get(), new Item.Properties()
@@ -464,6 +482,13 @@ public class ErosionRegistry
         );
         public static final DeferredItem<Item> CRUSHED_EGG_SHELL = ITEMS.register(
             RawRegistry.CRUSHED_EGG_SHELL.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
+
+        public static final DeferredItem<Item> BORAX = ITEMS.register(
+            RawRegistry.BORAX.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        );
+        public static final DeferredItem<Item> DEHYDRATED_BORAX = ITEMS.register(
+            RawRegistry.DEHYDRATED_BORAX.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
 
         public static final DeferredItem<Item> RAW_LIMONITE = ITEMS.register(
@@ -574,6 +599,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.LIMONITE_ORE.get());
             output.accept(ErosionRegistry.Items.CALCITE_MALACHITE_ORE.get());
             output.accept(ErosionRegistry.Items.HEMATITE_ORE.get());
+            output.accept(ErosionRegistry.Items.BORAX_DEPOSIT.get());
             output.accept(ErosionRegistry.Items.MAGNETITE_ORE.get());
 
             output.accept(ErosionRegistry.Items.RAW_HEMATITE.get());
@@ -610,6 +636,8 @@ public class ErosionRegistry
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());
             output.accept(ErosionRegistry.Items.RUBY.get());
+            output.accept(ErosionRegistry.Items.BORAX.get());
+            output.accept(ErosionRegistry.Items.DEHYDRATED_BORAX.get());
             output.accept(ErosionRegistry.Items.SAPPHIRE.get());
             output.accept(ErosionRegistry.Items.SULFUR_SLAG.get());
             output.accept(ErosionRegistry.Items.DEBRIS.get());

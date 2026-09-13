@@ -18,6 +18,8 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ErosionRegistry.Items.FELDSPAR_POWDER.get());
         basicItem(ErosionRegistry.Items.FLUX.get());
         basicItem(ErosionRegistry.Items.RUBY.get());
+        basicItem(ErosionRegistry.Items.BORAX.get());
+        basicItem(ErosionRegistry.Items.DEHYDRATED_BORAX.get());
         basicItem(ErosionRegistry.Items.SAPPHIRE.get());
         basicItem(ErosionRegistry.Items.SULFUR_SLAG.get());
         basicItem(ErosionRegistry.Items.DEBRIS.get());
