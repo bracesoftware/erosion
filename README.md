@@ -64,3 +64,23 @@ Join Discord server to give new ideas!
 Link: https://discord.gg/gFvUagQbBd
 
 View more on Github: https://github.com/bracesoftware/erosion
+
+
+### Developer info
+Want to make a compatibility layer with Erosion?
+Erosion got its own event bus! Use this:
+
+```java
+@ErosionEvents.ErosionEventSubscribe
+public static void EventName(ErosionEvents.ErosionBlockEntityRecipeRegistration e)
+{
+    //do smth
+    return;
+}
+```
+
+Register your class:
+
+```java
+ErosionEventBus.registerListeners(NAME.class);
+```
