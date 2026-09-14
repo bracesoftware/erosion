@@ -12,8 +12,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.level.*;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -33,6 +36,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.neoforged.neoforge.common.ItemAbilities;
 
 public class ErosionSimpleBlocks
 {
@@ -83,6 +87,27 @@ public class ErosionSimpleBlocks
         @Override
         protected MapCodec<? extends FallingBlock> codec() {
             return CODEC;
+        }
+
+        @Override 
+        protected ItemInteractionResult useItemOn(
+            ItemStack is, BlockState bs,
+            Level l, BlockPos bp, Player p,
+            InteractionHand ih, BlockHitResult bhr
+        )
+        {
+            if(l.isClientSide()) return ItemInteractionResult.SUCCESS;
+
+            if(is.canPerformAction(ItemAbilities.HOE_TILL))
+            {
+                l.setBlockAndUpdate(bp, Blocks.FARMLAND.defaultBlockState());
+                var s = (ih == InteractionHand.MAIN_HAND) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+                is.hurtAndBreak(1, p, s);
+                l.playSound(null, bp, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+                return ItemInteractionResult.SUCCESS;
+            }
+
+            return super.useItemOn(is, bs, l, bp, p, ih, bhr);
         }
 
         public static BlockBehaviour.Properties getDefaultBlockProperties()

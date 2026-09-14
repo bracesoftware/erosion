@@ -1,7 +1,9 @@
 {
   "values": [
+    "erosion:dried_dirt",
     "erosion:kaolinized_granite",
     "erosion:cracked_stone",
+    "erosion:quartz_gravel",
     "erosion:albitized_granite",
     "erosion:propylitized_diorite",
     "erosion:cracked_calcite",
@@ -16,6 +18,9 @@
     "erosion:tetrahedrite_ore",
     "erosion:ruby_ore",
     "erosion:sapphire_ore",
+    "erosion:native_gold_deposit",
+    "erosion:cassiterite_deposit",
+    "erosion:native_silver_deposit",
     "erosion:material_purifier",
     "erosion:crucible"
   ]

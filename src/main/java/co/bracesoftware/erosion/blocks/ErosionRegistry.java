@@ -178,7 +178,7 @@ public class ErosionRegistry
 
         //SIMPLE BLOCKS
         public static final DeferredBlock<Block> DRIED_DIRT = BLOCKS.register(
-            ErosionRegistry.RawRegistry.DRIED_DIRT.getId(), () -> new ErosionSimpleBlocks.DirtBlock(
+            ErosionRegistry.RawRegistry.DRIED_DIRT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
@@ -247,17 +247,17 @@ public class ErosionRegistry
             )
         );
         public static final DeferredBlock<Block> NATIVE_GOLD_DEPOSIT = BLOCKS.register(
-            RawRegistry.NATIVE_GOLD_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.DirtBlock(
+            RawRegistry.NATIVE_GOLD_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
         public static final DeferredBlock<Block> NATIVE_SILVER_DEPOSIT = BLOCKS.register(
-            RawRegistry.NATIVE_SILVER_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.DirtBlock(
+            RawRegistry.NATIVE_SILVER_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
         public static final DeferredBlock<Block> CASSITERITE_DEPOSIT = BLOCKS.register(
-            RawRegistry.CASSITERITE_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.DirtBlock(
+            RawRegistry.CASSITERITE_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
