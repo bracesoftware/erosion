@@ -3,7 +3,7 @@ title Erosion Mod Builder
 :start
 cls
 echo Generating project version...
-g++ vermgr.cpp -o vermgr
+g++ vermgr.cpp -o vermgr -v -static
 call vermgr
 echo Writing changes to the code...
 git add .

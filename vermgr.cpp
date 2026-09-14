@@ -147,6 +147,19 @@ namespace vermgr
 
             return std::to_string(h);
         }
+
+        inline std::string removeCharsFromString(std::string s, char c)
+        {
+            std::string r;
+            for(size_t i = 0; i < s.size(); ++i)
+            {
+                if(s.at(i) != c)
+                {
+                    r.append(s.at(i));
+                }
+            }
+            return r;
+        }
     }
 }
 
@@ -154,11 +167,11 @@ int main()
 {
     copyTemplates(EXCLUDED_DIR, ROOT_DIR);
 
-    static const std::string searchStr = "!\!NEOFORGE_MOD_VERSION!!";
+    static const std::string searchStr = "!@!NEOFORGE_MOD_VERSION!!";
     static std::string v = vermgr::util::getHash();
     std::cout << "Version generated: " << v << std::endl;
 
-    processDirectory(ROOT_DIR, searchStr, v);
+    processDirectory(ROOT_DIR, vermgr::util::removeCharsFromString(searchStr, '@'), v);
 
     std::cout << "Version manager finished." << std::endl;
     return 0;
