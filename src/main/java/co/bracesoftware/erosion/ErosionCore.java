@@ -1560,6 +1560,9 @@ public class ErosionCore
             Map.entry(Items.IRON_NUGGET, new ChemicalInfo(List.of(
                 "Elemental iron chunk (Fe)"
             ))),
+            Map.entry(Items.GOLD_NUGGET, new ChemicalInfo(List.of(
+                "Elemental gold chunk (Au)"
+            ))),
             //мод ајтемс
             Map.entry(ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
                 "Sodium-tetraborate decahydrate"
