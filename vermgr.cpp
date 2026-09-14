@@ -4,6 +4,8 @@
 #include <string>
 #include <filesystem>
 #include <chrono>
+#include <thread>
+#include <random>
 
 #define ROOT_DIR "."
 #define EXCLUDED_DIR "config_template"
@@ -120,7 +122,7 @@ namespace vermgr
             x *= 0x94d049bb133111ebULL;
             return x ^ (x >> 31);
         }
-        
+
         inline std::string getHash()
         {
             auto now = std::chrono::high_resolution_clock::now();
