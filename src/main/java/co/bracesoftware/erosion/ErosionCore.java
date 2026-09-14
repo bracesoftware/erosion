@@ -1503,12 +1503,28 @@ public class ErosionCore
                 this.info = l;
             }
 
+            public ChemicalInfo()
+            {
+                this.info = List.of(
+                    "No geochemical information"
+                );
+            }
+
             public List<String> getInfo()
             {
                 return this.info;
             }
         }
+
         final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.ofEntries(
+            //ванила ајтеми хаахахаха
+            Map.entry(Items.RAW_COPPER, new ChemicalInfo(List.of(
+                "Elemental copper chunk (Cu)"
+            ))),
+            Map.entry(Items.IRON_NUGGET, new ChemicalInfo(List.of(
+                "Elemental iron chunk (Fe)"
+            ))),
+            //мод ајтемс
             Map.entry(ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
                 "Sodium-tetraborate decahydrate"
             ))),
