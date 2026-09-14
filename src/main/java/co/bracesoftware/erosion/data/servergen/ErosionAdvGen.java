@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.ErosionAdvancement;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -44,6 +45,7 @@ public class ErosionAdvGen extends AdvancementProvider
             //GENERATE
             var root = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateParentAdvancement(this);
             
+            //------------------------- CRUCIBLE ADVANCEMENTS ---------------------------
             var crucible = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
                 this, "A cook!",
                 "Craft a Crucible.",
@@ -51,6 +53,32 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
                 root
             );
+
+            var crushed_eggz = ErosionAdvancement.generateAdvancement(
+                this, "Crushing Eggs",
+                "Acquire Crushed Egg Shell.",
+                ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(),
+                ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getId(),
+                crucible
+            );
+
+            var flux = ErosionAdvancement.generateAdvancement(
+                this, "Getting Flux",
+                "Acquire Flux.",
+                ErosionRegistry.Items.FLUX.get(),
+                ErosionRegistry.RawRegistry.FLUX.getId(),
+                crushed_eggz
+            );
+
+            var borax = ErosionAdvancement.generateAdvancement(
+                this, "Better than Flux?",
+                "Acquire Borax.",
+                ErosionRegistry.Items.BORAX.get(),
+                ErosionRegistry.RawRegistry.BORAX.getId(),
+                flux
+            );
+
+            //------------------------- MATERIAL PURIFIER ADVANCEMENTS ---------------------------
 
             var purifier = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
                 this, "Purifying Dirt",
