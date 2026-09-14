@@ -1388,6 +1388,7 @@ public class ErosionCore
     public static void BE(ErosionEvents.ErosionBlockEntityRecipeRegistration e)
     {
         ErosionUtils.Log("Event called -> " + e.getClass().getName());
+        
         return;
     }
 
