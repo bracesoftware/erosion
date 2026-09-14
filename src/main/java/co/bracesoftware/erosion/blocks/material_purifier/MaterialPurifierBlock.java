@@ -133,41 +133,56 @@ public class MaterialPurifierBlock extends BaseEntityBlock
         BlockHitResult hitResult
     )
     {
-        if(level.isClientSide())
-        {
-            return ItemInteractionResult.SUCCESS;
-        }
-
         if(level.getBlockEntity(pos) instanceof MaterialPurifierBlockEntity be)
         {
             if(stack.is(Items.REDSTONE) && be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
             {
-                be.fuel++;
-                stack.shrink(1);
-                
-                if(!be.finished && !be.working && be.fuel > 0)
+                if(!level.isClientSide())
                 {
-                    be.fuel--;
-                    be.working = true;
+                    be.fuel++;
+                    stack.shrink(1);
+                    
+                    if(!be.finished && !be.working && be.fuel > 0)
+                    {
+                        be.fuel--;
+                        be.working = true;
+                    }
+                    
+                    be.setChanged();
+                    level.setBlock(
+                        pos, 
+                        state
+                        .setValue(FUEL, be.fuel)
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working), 
+                        Block.UPDATE_ALL
+                    );
+                    ErosionUtils.displayMessage(player, "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL);
                 }
-                
-                be.setChanged();
-                level.setBlock(pos, state.setValue(FUEL, be.fuel).setValue(FINISHED, be.finished).setValue(WORKING, be.working), Block.UPDATE_ALL);
-                ErosionUtils.displayMessage(player, "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL);
-                return ItemInteractionResult.CONSUME;
+                return ItemInteractionResult.sidedSuccess(level.isClientSide());
             }
 
             if(stack.isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
             {
-                player.getInventory().placeItemBackInInventory(be.storedItem);
-                be.storedItem = ItemStack.EMPTY;
-                be.setChanged();
-                level.setBlock(pos, state.setValue(FUEL, be.fuel).setValue(FINISHED, be.finished).setValue(WORKING, be.working), Block.UPDATE_ALL);
-                return ItemInteractionResult.CONSUME;
+                if(!level.isClientSide())
+                {
+                    player.getInventory().placeItemBackInInventory(be.storedItem);
+                    be.storedItem = ItemStack.EMPTY;
+                    be.setChanged();
+                    level.setBlock(
+                        pos,
+                        state
+                        .setValue(FUEL, be.fuel)
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working),
+                        Block.UPDATE_ALL
+                    );
+                }
+                return ItemInteractionResult.sidedSuccess(level.isClientSide());
             }
         }
 
-        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
     }
 
     @Override

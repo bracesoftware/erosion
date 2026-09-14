@@ -96,15 +96,16 @@ public class ErosionSimpleBlocks
             InteractionHand ih, BlockHitResult bhr
         )
         {
-            if(l.isClientSide()) return ItemInteractionResult.SUCCESS;
-
             if(is.canPerformAction(ItemAbilities.HOE_TILL))
             {
-                l.setBlockAndUpdate(bp, Blocks.FARMLAND.defaultBlockState());
-                var s = (ih == InteractionHand.MAIN_HAND) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
-                is.hurtAndBreak(1, p, s);
-                l.playSound(null, bp, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
-                return ItemInteractionResult.SUCCESS;
+                if(!l.isClientSide())
+                {
+                    l.setBlockAndUpdate(bp, Blocks.FARMLAND.defaultBlockState());
+                    var s = (ih == InteractionHand.MAIN_HAND) ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND;
+                    is.hurtAndBreak(1, p, s);
+                    l.playSound(null, bp, SoundEvents.HOE_TILL, SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+                return ItemInteractionResult.sidedSuccess(l.isClientSide());
             }
 
             return super.useItemOn(is, bs, l, bp, p, ih, bhr);
