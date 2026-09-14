@@ -54,10 +54,12 @@ public class ErosionEventBus
             ErosionEvents.ErosionBlockEntityRecipeRegistration p
         ) throws RuntimeException
         {
+            if(EROSION_RECIPE_REG_LISTENERS.isEmpty()) return;
             for(var e : EROSION_RECIPE_REG_LISTENERS)
             {
                 if(p.cancelled)
                 {
+                    p.cancelled = false;
                     break;
                 }
                 e.accept(p);
