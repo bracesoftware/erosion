@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
@@ -6,9 +6,9 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ModItemModelProvider extends ItemModelProvider {
+public class ErosionItemModelGen extends ItemModelProvider {
 
-    public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {
+    public ErosionItemModelGen(PackOutput output, ExistingFileHelper existingFileHelper) {
         super(output, Erosion.MODID, existingFileHelper);
     }
 

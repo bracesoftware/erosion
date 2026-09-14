@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBlockTagProvider extends BlockTagsProvider 
+public class ErosionBlockTagGen extends BlockTagsProvider 
 {
-    public ModBlockTagProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) 
+    public ErosionBlockTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) 
     {
         super(output, lookupProvider, Erosion.MODID, existingFileHelper);
     }

@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
@@ -15,9 +15,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
-public class ModLootTableProvider extends LootTableProvider 
+public class ErosionLootGen extends LootTableProvider 
 {
-    public ModLootTableProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) 
+    public ErosionLootGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) 
     {
         super(output, Set.of(), List.of(
             new SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK)

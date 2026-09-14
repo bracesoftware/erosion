@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
@@ -6,9 +6,9 @@ import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 
-public class ModLanguageProvider extends LanguageProvider 
+public class ErosionLang extends LanguageProvider 
 {
-    public ModLanguageProvider(PackOutput output) 
+    public ErosionLang(PackOutput output) 
     {
         super(output, Erosion.MODID, "en_us");
     }
@@ -79,5 +79,6 @@ public class ModLanguageProvider extends LanguageProvider
         //MACHINES
         add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());
         add(ErosionRegistry.Blocks.CRUCIBLE.get(), ErosionRegistry.RawRegistry.CRUCIBLE.getName());
+        return;
     }
 }

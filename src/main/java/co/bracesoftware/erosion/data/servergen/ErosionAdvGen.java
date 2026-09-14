@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.servergen;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -18,9 +18,9 @@ import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ModAdvancementProvider extends AdvancementProvider
+public class ErosionAdvGen extends AdvancementProvider
 {
-    public ModAdvancementProvider(
+    public ErosionAdvGen(
         PackOutput o, CompletableFuture<HolderLookup.Provider> r,
         ExistingFileHelper efh
     )

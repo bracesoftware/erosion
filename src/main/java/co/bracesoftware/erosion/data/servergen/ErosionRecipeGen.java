@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionMod;
@@ -17,9 +17,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
+public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilder {
 
-    public ModRecipeProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
+    public ErosionRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries);
     }
 

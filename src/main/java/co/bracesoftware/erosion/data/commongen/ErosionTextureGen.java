@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.commongen;
 
 import javax.imageio.ImageIO;
 
@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class TextureProvider
+public class ErosionTextureGen
 {
     public static void combine(File baseFile, List<File> layerFiles, File outputFile)
     {
@@ -56,7 +56,7 @@ public class TextureProvider
             ErosionUtils.Log("Sucessfully created: " + outputFile.getName());
 
         }
-        catch (IOException e)
+        catch(IOException e)
         {
             System.err.println("Could not generate: " + outputFile.getName());
             e.printStackTrace();

@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.data;
+package co.bracesoftware.erosion.data.clientgen;
 
 import java.io.File;
 import java.util.List;
@@ -11,22 +11,21 @@ import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks;
 import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
-import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
-
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
+import co.bracesoftware.erosion.data.commongen.ErosionTextureGen;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-public class ModBlockStateProvider extends BlockStateProvider 
+public class ErosionBlockStateGen extends BlockStateProvider 
 {
-    public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) 
+    public ErosionBlockStateGen(PackOutput output, ExistingFileHelper exFileHelper) 
     {
         super(output, Erosion.MODID, exFileHelper);
     }
@@ -36,36 +35,63 @@ public class ModBlockStateProvider extends BlockStateProvider
     {
         //SIMPLE BLOCKS
         //RANDOMIZED ROTATION
-        generateRandomRotations(ErosionRegistry.Blocks.CRACKED_STONE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.DRIED_DIRT.get());
-        generateRandomRotations(ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
-        generateRandomRotations(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.CRACKED_STONE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.DRIED_DIRT.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.QUARTZ_GRAVEL.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.ALBITIZED_GRANITE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
 
-        generateRandomRotations(ErosionRegistry.Blocks.CRACKED_CALCITE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.MAGNETITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.HEMATITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.LIMONITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.CRACKED_CALCITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.MAGNETITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.HEMATITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.LIMONITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
 
-        generateRandomRotations(ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
-        generateRandomRotations(ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get());
-        generateRandomRotations(ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());
 
-        generateRandomRotations(ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.AZURITE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.AZURITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
 
-        generateRandomRotations(ErosionRegistry.Blocks.RUBY_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
-        generateRandomRotations(ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
-        generateRandomRotations(ErosionRegistry.Blocks.SPHALERITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.RUBY_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.SAPPHIRE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.SPHALERITE_ORE.get());
 
         //MACHINES
         // ============================================= //
-        generateCustomTextures();
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
         ModelFile[][][] purifierModels = new ModelFile[ErosionConfig.MAX_PURIFIER_FUEL + 1][2][];
         getVariantBuilder(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()).forAllStates(s -> {
             Direction d = s.getValue(MaterialPurifierBlock.FACING);
@@ -190,94 +216,116 @@ public class ModBlockStateProvider extends BlockStateProvider
         simpleBlockItem(crucible, heatModels[0]);
         ////////////////////////////////////////////////////////////
 
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_LIMONITE.get(),
             ErosionRegistry.Blocks.RAW_LIMONITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_LIMONITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.LIMONITE_ORE.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_HEMATITE.get(),
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_HEMATITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.HEMATITE_ORE.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_MAGNETITE.get(),
             ErosionRegistry.Blocks.RAW_MAGNETITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_MAGNETITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.MAGNETITE_ORE.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_MALACHITE.get(),
             ErosionRegistry.Blocks.RAW_MALACHITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_MALACHITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.NATIVE_GOLD.get(),
             ErosionRegistry.Blocks.NATIVE_GOLD.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.NATIVE_GOLD.getId(), //item for texture
                 ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.NATIVE_SILVER.get(),
             ErosionRegistry.Blocks.NATIVE_SILVER.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.NATIVE_SILVER.getId(), //item for texture
                 ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getId() //block texture
             )
         );
 
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_CASSITERITE.get(),
             ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_CASSITERITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.CASSITERITE_DEPOSIT.getId() //block texture
             )
         );
 
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
             ErosionRegistry.Blocks.RAW_BISMUTHINITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getId() //block texture
             )
         );
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_SPHALERITE.get(),
             ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_SPHALERITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.SPHALERITE_ORE.getId() //block texture
             )
         );
 
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_AZURITE.get(),
             ErosionRegistry.Blocks.RAW_AZURITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_AZURITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.AZURITE_ORE.getId() //block texture
             )
         );
 
-        generateRockWithRandomRotations(
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
             ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
-            createRockModel(
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
                 ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getId() //block texture
             )
@@ -287,122 +335,5 @@ public class ModBlockStateProvider extends BlockStateProvider
         return;
     }
 
-    private void generateCustomTextures()
-    {
-        String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
-        String resourcePath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/";
-        //String generatedPath = "../src/generated/resources/assets/" + Erosion.MODID + "/textures/block/";
-        File baseFile = new File(resourcePath + BLOCKID + "_front.png");
-
-        for(int fuel = 0; fuel <= ErosionConfig.MAX_PURIFIER_FUEL; fuel++)
-        {
-            for(boolean finished : new boolean[]{false, true})
-            {
-                String status = finished ? "on" : "off";
-
-                File fuelLayer = new File(resourcePath + "layers/fuel_" + fuel + ".png");
-                File lampLayer = new File(resourcePath + "layers/lamp_" + status + ".png");
-                
-                List<File> layers = List.of(
-                    fuelLayer,
-                    lampLayer
-                );
-
-                File outputFile = new File(resourcePath + "generated/" + BLOCKID + "_front_fuel_" + fuel + "_" + status + ".png");
-
-                TextureProvider.combine(baseFile, layers, outputFile);
-            }
-        }
-
-        BLOCKID = ErosionRegistry.RawRegistry.CRUCIBLE.getId();
-        File baseCrucibleContent = new File(resourcePath + BLOCKID + ".png");
-
-        for(int i = 1; i <= ErosionConfig.CRUCIBLE_SECONDS; i++)
-        {
-            File outputTex = new File(resourcePath + "generated/" + BLOCKID + "_heat_" + i + ".png");
-            TextureProvider.generateHeatedTexture(baseCrucibleContent, outputTex, i, ErosionConfig.CRUCIBLE_SECONDS);
-        }
-        return;
-    }
-
-    private BlockModelBuilder createRockModel(String modelName, String texturePath)
-    {
-        return models().withExistingParent(modelName, mcLoc("block/block"))
-        .texture("particle", modLoc("block/" + texturePath))
-        .texture("texture", modLoc("block/" + texturePath))
-        
-        .element()
-        .from(RockBlock.SHAPE_FIRSTDIM_X1, RockBlock.SHAPE_FIRSTDIM_Y1, RockBlock.SHAPE_FIRSTDIM_Z1)
-        .to(RockBlock.SHAPE_FIRSTDIM_X2, RockBlock.SHAPE_FIRSTDIM_Y2, RockBlock.SHAPE_FIRSTDIM_Z2)
-        .allFaces((direction, builder) -> builder.texture("#texture"))
-        .end()
-
-        .element()
-        .from(RockBlock.SHAPE_SECONDDIM_X1, RockBlock.SHAPE_SECONDDIM_Y1, RockBlock.SHAPE_SECONDDIM_Z1)
-        .to(RockBlock.SHAPE_SECONDDIM_X2, RockBlock.SHAPE_SECONDDIM_Y2, RockBlock.SHAPE_SECONDDIM_Z2)
-        .allFaces((direction, builder) -> builder.texture("#texture"))
-        .end()
-
-        .element()
-        .from(RockBlock.SHAPE_THIRDDIM_X1, RockBlock.SHAPE_THIRDDIM_Y1, RockBlock.SHAPE_THIRDDIM_Z1)
-        .to(RockBlock.SHAPE_THIRDDIM_X2, RockBlock.SHAPE_THIRDDIM_Y2, RockBlock.SHAPE_THIRDDIM_Z2)
-        .allFaces((direction, builder) -> builder.texture("#texture"))
-        .end();
-    }
-
-    private void generateRandomRotations(Block b)
-    {
-        var model = cubeAll(b);
-        getVariantBuilder(b)
-        .forAllStates(
-            s -> new ConfiguredModel[] {
-                new ConfiguredModel(model, 0, 0, false),
-                new ConfiguredModel(model, 0, 90, false),
-                new ConfiguredModel(model, 0, 180, false),
-                new ConfiguredModel(model, 0, 270, false),
-                new ConfiguredModel(model, 90, 0, false),
-                new ConfiguredModel(model, 90, 90, false),
-                new ConfiguredModel(model, 90, 180, false),
-                new ConfiguredModel(model, 90, 270, false),
-                new ConfiguredModel(model, 180, 0, false),
-                new ConfiguredModel(model, 180, 90, false),
-                new ConfiguredModel(model, 180, 180, false),
-                new ConfiguredModel(model, 180, 270, false),
-                new ConfiguredModel(model, 270, 0, false),
-                new ConfiguredModel(model, 270, 90, false),
-                new ConfiguredModel(model, 270, 180, false),
-                new ConfiguredModel(model, 270, 270, false)
-            }
-        );
-        simpleBlockItem(b, model);
-        return;
-    }
-    private void generateRockWithRandomRotations(Item it, Block b, BlockModelBuilder m)
-    {
-        if(ErosionConfig.SOMETHING_WENT_WRONG) getVariantBuilder(b)
-        .forAllStates(
-            s -> new ConfiguredModel[] {
-                new ConfiguredModel(m, 0, 0, false),
-                new ConfiguredModel(m, 0, 90, false),
-                new ConfiguredModel(m, 0, 180, false),
-                new ConfiguredModel(m, 0, 270, false)
-            }
-        );
-
-        getVariantBuilder(b)
-        .forAllStates(
-            s -> {
-                Direction d = s.getValue(ErosionSimpleBlocks.RockBlock.FACING);
-                int y = (int) d.toYRot();
-                return ConfiguredModel.builder()
-                .modelFile(m)
-                .rotationY((y + 180) % 360)
-                .build();
-            }
-        );
-
-        simpleBlockItem(b, m);
-        itemModels().basicItem(it);
-        return;
-    }
+    
 }
