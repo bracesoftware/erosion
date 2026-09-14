@@ -98,7 +98,8 @@ public class ErosionRetrogen
     }
 
     public static final RetrogenFeature PLACE_ROCKS = new RetrogenFeature(
-        "place_rocks", "Place rocks around the chunk",
+        ErosionRegistry.RawRegistry.ErosionRetrogenFeatures.PLACE_ROCKS.getId(),
+        ErosionRegistry.RawRegistry.ErosionRetrogenFeatures.PLACE_ROCKS.getName(),
         () -> new ArrayList<>(List.of(
             Blocks.SHORT_GRASS,
             Blocks.FERN,

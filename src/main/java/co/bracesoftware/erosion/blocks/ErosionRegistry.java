@@ -79,6 +79,11 @@ public class ErosionRegistry
         }
 
         //raw registry
+        //RETROGEN FEATURES
+        public static class ErosionRetrogenFeatures
+        {
+            public static final IRawRegistry PLACE_ROCKS = new IRawRegistry("place_rocks", "Place rocks around the chunk");
+        }
 
         //SIMPLE BLOCKS
         public static final IRawRegistry DRIED_DIRT = new IRawRegistry("dried_dirt", "Dried Dirt");
