@@ -150,12 +150,12 @@ namespace vermgr
 
         inline std::string removeCharsFromString(std::string s, char c)
         {
-            std::string r;
+            std::string r = "";
             for(size_t i = 0; i < s.size(); ++i)
             {
                 if(s.at(i) != c)
                 {
-                    r += std::string(s.at(i));
+                    r += s.at(i);
                 }
             }
             return r;
