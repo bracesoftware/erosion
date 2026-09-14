@@ -19,11 +19,14 @@ public class ErosionEventBus
         for(var m : c.getDeclaredMethods())
         {
             if(
-                Modifier.isStatic(m.getModifiers()) &&
                 m.getParameterCount() == 1 &&
                 m.isAnnotationPresent(ErosionEvents.ErosionEventSubscribe.class)
             )
             {
+                if(!Modifier.isStatic(m.getModifiers()))
+                {
+                    throw new RuntimeException("Event subscriber has to be a static method.");
+                }
                 var par = m.getParameterTypes()[0];
                 //BLOCK ENTITY RECIPE REGISTRATION
                 if(par == ErosionEvents.ErosionBlockEntityRecipeRegistration.class)
