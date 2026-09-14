@@ -135,31 +135,42 @@ public class MaterialPurifierBlock extends BaseEntityBlock
     {
         if(level.getBlockEntity(pos) instanceof MaterialPurifierBlockEntity be)
         {
-            if(stack.is(Items.REDSTONE) && be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
+            if(stack.is(Items.REDSTONE)) 
             {
-                if(!level.isClientSide())
+                if(be.fuel == ErosionConfig.MAX_PURIFIER_FUEL)
                 {
-                    be.fuel++;
-                    stack.shrink(1);
-                    
-                    if(!be.finished && !be.working && be.fuel > 0)
+                    if(!level.isClientSide())
                     {
-                        be.fuel--;
-                        be.working = true;
+                        ErosionUtils.displayMessage(player, "Fuel tank is full (3/3)");
                     }
-                    
-                    be.setChanged();
-                    level.setBlock(
-                        pos, 
-                        state
-                        .setValue(FUEL, be.fuel)
-                        .setValue(FINISHED, be.finished)
-                        .setValue(WORKING, be.working), 
-                        Block.UPDATE_ALL
-                    );
-                    ErosionUtils.displayMessage(player, "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL);
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
                 }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                if(be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
+                {
+                    if(!level.isClientSide())
+                    {
+                        be.fuel++;
+                        stack.shrink(1);
+                        
+                        if(!be.finished && !be.working && be.fuel > 0)
+                        {
+                            be.fuel--;
+                            be.working = true;
+                        }
+                        
+                        be.setChanged();
+                        level.setBlock(
+                            pos, 
+                            state
+                            .setValue(FUEL, be.fuel)
+                            .setValue(FINISHED, be.finished)
+                            .setValue(WORKING, be.working), 
+                            Block.UPDATE_ALL
+                        );
+                        ErosionUtils.displayMessage(player, "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL);
+                    }
+                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                }
             }
 
             if(stack.isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
