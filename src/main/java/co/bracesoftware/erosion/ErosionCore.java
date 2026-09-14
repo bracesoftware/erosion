@@ -1369,6 +1369,19 @@ public class ErosionCore
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
 
+    public static void add(RefinableMaterial e)
+    {
+        REFINABLE_MATERIALS_LIST.add(e);
+    }
+    public static void add(AlterableMaterial e)
+    {
+        ALTERABLE_MATERIALS_LIST.add(e);
+    }
+    public static void add(CrucibleCatalyst e)
+    {
+        CRUCIBLE_CATALYST_LIST.add(e);
+    }
+
     // =====================================
 
     @ErosionEvents.ErosionEventSubscribe

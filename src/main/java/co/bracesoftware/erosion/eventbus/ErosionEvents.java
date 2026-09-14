@@ -28,17 +28,17 @@ public class ErosionEvents
     {
         public void registerRefinableMaterial(ErosionCore.RefinableMaterial rm)
         {
-            //do smth
+            ErosionCore.add(rm);
         }
 
         public void registerAlterableMaterial(ErosionCore.AlterableMaterial am)
         {
-            //do smth
+            ErosionCore.add(am);
         }
-        
+
         public void registerCrucibleCatalyst(ErosionCore.CrucibleCatalyst cc)
         {
-            //do smth
+            ErosionCore.add(cc);
         }
     }
 }
