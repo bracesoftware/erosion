@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:crucible",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:crushed_egg_shell"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire Crushed Egg Shell.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:crushed_egg_shell"
+    },
+    "title": "Crushing Eggs"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

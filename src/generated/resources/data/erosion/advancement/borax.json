@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:flux",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:borax"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire Borax.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:borax"
+    },
+    "title": "Better than Flux?"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

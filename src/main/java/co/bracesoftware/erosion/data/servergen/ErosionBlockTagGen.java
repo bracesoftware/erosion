@@ -97,6 +97,7 @@ public class ErosionBlockTagGen extends BlockTagsProvider
     public void createSimpleGravel(HolderLookup.Provider p, Block b)
     {
         tag(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
         tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravels"))).add(b);
         tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravel"))).add(b);
         return;

@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:crushed_egg_shell",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:flux"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire Flux.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:flux"
+    },
+    "title": "Getting Flux"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
