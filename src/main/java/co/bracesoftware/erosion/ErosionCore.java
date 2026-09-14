@@ -1,9 +1,11 @@
 package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.eventbus.*;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -1039,13 +1041,6 @@ public class ErosionCore
         )
     );
 
-    public static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = List.of(
-        GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
-        STONE, DEEPSLATE, GRANITE, DIORITE,
-        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
-        COBBLESTONE
-    );
-
     // ============================== CRUCIBLE CATALYSTS
 
     public static final CrucibleCatalyst FLUX = new CrucibleCatalyst(
@@ -1061,10 +1056,6 @@ public class ErosionCore
     public static final CrucibleCatalyst DEHYDRATED_BORAX = new CrucibleCatalyst(
         ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName(),
         () -> ErosionRegistry.Items.DEHYDRATED_BORAX.get(), 80
-    );
-
-    public static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = List.of(
-        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
     );
 
     // ========================== REFINABLE MATERIALS
@@ -1353,7 +1344,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = List.of(
+    private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST_ORIGINAL = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
         PROPYLITIZED_DIORITE, RAW_LIMONITE, RAW_HEMATITE,
         RAW_MAGNETITE, RAW_MALACHITE, NATIVE_GOLD, NATIVE_GOLD_DEPOSIT,
@@ -1364,8 +1355,28 @@ public class ErosionCore
         RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
         BORAX, CRACKED_STONE
     );
+    private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST_ORIGINAL = List.of(
+        GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
+        STONE, DEEPSLATE, GRANITE, DIORITE,
+        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
+        COBBLESTONE
+    );
+    private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
+        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
+    );
+
+    private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
+    private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
+    private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
 
     // =====================================
+
+    @ErosionEvents.ErosionEventSubscribe
+    public static void BE(ErosionEvents.ErosionBlockEntityRecipeRegistration e)
+    {
+        ErosionUtils.Log("Event called -> " + e.getClass().getName());
+        return;
+    }
 
     public static void Load()
     {
@@ -1375,11 +1386,23 @@ public class ErosionCore
         PERFORMED = 0;
         PERFORMED_FAST = 0;
 
+        REFINABLE_MATERIALS_LIST.clear();
+        ALTERABLE_MATERIALS_LIST.clear();
+        CRUCIBLE_CATALYST_LIST.clear();
+
+        REFINABLE_MATERIALS_LIST.addAll(REFINABLE_MATERIALS_LIST_ORIGINAL);
+        ALTERABLE_MATERIALS_LIST.addAll(ALTERABLE_MATERIALS_LIST_ORIGINAL);
+        CRUCIBLE_CATALYST_LIST.addAll(CRUCIBLE_CATALYST_LIST_ORIGINAL);
+
         for(int i = 0; i < ErosionModCompat.COMPATIBLE_MODS.size(); ++i)
         {
             var m = ErosionModCompat.COMPATIBLE_MODS.get(i);
             m.setupCompat();
         }
+
+        ErosionEventBus.ErosionEventInvocation.CALL_BE_RECIPE_REG(
+            new ErosionEvents.ErosionBlockEntityRecipeRegistration()
+        );
 
         for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
         {

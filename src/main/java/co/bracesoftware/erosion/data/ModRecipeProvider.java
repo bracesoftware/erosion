@@ -74,7 +74,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
             "raw_zinc_from_chunks", 
             ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
-                ErosionModCompat.CREATE.getModId(), "raw_zinc"
+                ErosionModCompat.CompatibleMods.CREATE.getModId(), "raw_zinc"
             ),
             List.of(
                 "XXX",
@@ -90,7 +90,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
             "raw_silver_from_chunks", 
             ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
-                ErosionModCompat.OREGANIZED.getModId(), "raw_silver"
+                ErosionModCompat.CompatibleMods.OREGANIZED.getModId(), "raw_silver"
             ),
             List.of(
                 "XXX",
@@ -106,7 +106,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
             "sulfur_from_sulfur_slag", 
             ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
-                ErosionModCompat.BUTCHERY.getModId(), "sulfur"
+                ErosionModCompat.CompatibleMods.BUTCHERY.getModId(), "sulfur"
             ),
             List.of(
                 "XXX",

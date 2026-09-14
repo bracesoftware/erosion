@@ -1,0 +1,64 @@
+package co.bracesoftware.erosion.eventbus;
+
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionUtils;
+
+public class ErosionEventBus
+{
+    private static final List<Consumer<ErosionEvents.ErosionBlockEntityRecipeRegistration>> EROSION_RECIPE_REG_LISTENERS = new ArrayList<>();
+
+    public static void registerListeners(Class<?> c) throws RuntimeException
+    {
+        for(var m : c.getDeclaredMethods())
+        {
+            if(
+                Modifier.isStatic(m.getModifiers()) &&
+                m.getParameterCount() == 1 &&
+                m.isAnnotationPresent(ErosionEvents.ErosionEventSubscribe.class)
+            )
+            {
+                var par = m.getParameterTypes()[0];
+                //BLOCK ENTITY RECIPE REGISTRATION
+                if(par == ErosionEvents.ErosionBlockEntityRecipeRegistration.class)
+                {
+                    EROSION_RECIPE_REG_LISTENERS.add(
+                        p -> {
+                            try { m.invoke(null, p); }
+                            catch(Exception e)
+                            {
+                                e.printStackTrace();
+                            }
+                            ErosionUtils.Log("Successfully subscribed method to `" + par.getName() + "`: " + m.getName());
+                        }
+                    );
+                    continue;
+                }                
+            }
+        }
+        return;
+    }
+
+    public static class ErosionEventInvocation
+    {
+        public static void CALL_BE_RECIPE_REG(
+            ErosionEvents.ErosionBlockEntityRecipeRegistration p
+        ) throws RuntimeException
+        {
+            for(var e : EROSION_RECIPE_REG_LISTENERS)
+            {
+                if(p.cancelled)
+                {
+                    break;
+                }
+                e.accept(p);
+            }
+            return;
+        }
+    }
+}

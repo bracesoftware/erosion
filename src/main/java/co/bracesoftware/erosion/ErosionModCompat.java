@@ -31,6 +31,8 @@ public class ErosionModCompat
         public Runnable setup;
         public Runnable discard;
 
+        private Boolean present = false;
+
         public CompatibleMod(String m, String n, List<Runnable> l)
         {
             this.modid = m;
@@ -62,6 +64,7 @@ public class ErosionModCompat
                 ErosionUtils.Log("Compatible mod `" + this.name + "` not found.");
                 return;
             }
+            this.present = true;
             this.setup.run();
             ErosionUtils.Log("Compatible mod `" + this.name + "` found. Setup finished.");
             return;
@@ -79,44 +82,54 @@ public class ErosionModCompat
             ErosionUtils.Log("Compatible mod `" + this.name + "` found. Discard finished.");
             return;
         }
+
+        public Boolean isPresent()
+        {
+            return this.present;
+        }
     }
     /////////////////////////////////////////////////////////////////
-    public static final CompatibleMod CREATE = new CompatibleMod(
-        "create", "Create Mod", List.of(
-            () -> {
-                ErosionUtils.Log("Added compatibility for ZINC ORES.");
-                return;
-            },
-            () -> {
-                return;
-            }
-        )
-    );
-    public static final CompatibleMod OREGANIZED = new CompatibleMod(
-        "oreganized", "Oreganized: Blacksmith Mod", List.of(
-            () -> {
-                ErosionUtils.Log("Added compatibility for SILVER ORES.");
-                return;
-            },
-            () -> {
-                return;
-            }
-        )
-    );
-    public static final CompatibleMod BUTCHERY = new CompatibleMod(
-        "butchery", "Butchery Mod", List.of(
-            () -> {
-                ErosionUtils.Log("Added compatibility for SILVER ORES.");
-                return;
-            },
-            () -> {
-                return;
-            }
-        )
-    );
+    public static class CompatibleMods
+    {
+        public static final CompatibleMod CREATE = new CompatibleMod(
+            "create", "Create Mod", List.of(
+                () -> {
+                    ErosionUtils.Log("Added compatibility for ZINC ORES.");
+                    return;
+                },
+                () -> {
+                    return;
+                }
+            )
+        );
+        public static final CompatibleMod OREGANIZED = new CompatibleMod(
+            "oreganized", "Oreganized: Blacksmith Mod", List.of(
+                () -> {
+                    ErosionUtils.Log("Added compatibility for SILVER ORES.");
+                    return;
+                },
+                () -> {
+                    return;
+                }
+            )
+        );
+        public static final CompatibleMod BUTCHERY = new CompatibleMod(
+            "butchery", "Butchery Mod", List.of(
+                () -> {
+                    ErosionUtils.Log("Added compatibility for SILVER ORES.");
+                    return;
+                },
+                () -> {
+                    return;
+                }
+            )
+        );
+    }
     /////////////////////////////////////////////////////////////////
     public static final List<CompatibleMod> COMPATIBLE_MODS = List.of(
-        CREATE, OREGANIZED, BUTCHERY
+        CompatibleMods.CREATE,
+        CompatibleMods.OREGANIZED,
+        CompatibleMods.BUTCHERY
     );
 
     public static class JsonRecipeGenerator
