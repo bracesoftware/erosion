@@ -133,7 +133,7 @@ namespace vermgr
             auto tid = std::hash<std::thread::id>{}(std::this_thread::get_id());
 
             int stack_var = 0;
-            uintptr_t mem_entropy = reinterpret_2_uintptr(&stack_var); // ili standardni reinterpret_cast
+            uintptr_t mem_entropy = reinterpret_cast<uintptr_t>(&stack_var);
 
             static std::atomic<uint64_t> counter{14695981039346656037ULL};
             uint64_t seq = counter.fetch_add(0x9e3779b97f4a7c15ULL, std::memory_order_relaxed);
