@@ -2,69 +2,70 @@ package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ErosionItemTagGen extends ItemTagsProvider {
-
-    public ErosionItemTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, 
-                              CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.ErosionTaggable<Item>
+{
+    public ErosionItemTagGen(
+        PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, 
+        CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper
+    )
+    {
         super(output, lookupProvider, blockTags, Erosion.MODID, existingFileHelper);
+    }
+
+    public IntrinsicHolderTagsProvider.IntrinsicTagAppender<Item> tagz(TagKey<Item> e)
+    {
+        return this.tag(e);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
         //SIMPLE ITEMS
-        createSimplePowder(provider, ErosionRegistry.Items.FELDSPAR_POWDER.get());
-        createSimplePowder(provider, ErosionRegistry.Items.FLUX.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RUBY.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.BORAX.get());
-        createSimplePowder(provider, ErosionRegistry.Items.DEHYDRATED_BORAX.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.SAPPHIRE.get());
-        createSimplePowder(provider, ErosionRegistry.Items.SULFUR_SLAG.get());
-        createSimplePowder(provider, ErosionRegistry.Items.DEBRIS.get());
-        createSimplePowder(provider, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FELDSPAR_POWDER.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FLUX.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RUBY.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.BORAX.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.DEHYDRATED_BORAX.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.SAPPHIRE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.SULFUR_SLAG.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.DEBRIS.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_HEMATITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_LIMONITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_MAGNETITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_MALACHITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_HEMATITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_LIMONITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_MAGNETITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_MALACHITE.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.NATIVE_GOLD.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_CASSITERITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.TIN_CHUNK.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.NATIVE_GOLD.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_CASSITERITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.TIN_CHUNK.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.SILVER_CHUNK.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.NATIVE_SILVER.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.SILVER_CHUNK.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.NATIVE_SILVER.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_BISMUTHINITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.BISMUTH_CHUNK.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_BISMUTHINITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.BISMUTH_CHUNK.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_SPHALERITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.ZINC_CHUNK.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_SPHALERITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.ZINC_CHUNK.get());
 
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_AZURITE.get());
-        createSimpleRawOre(provider, ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_AZURITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
 
         return;
-    }
-
-    public void createSimpleRawOre(HolderLookup.Provider p, Item i)
-    {
-        tag(Tags.Items.ORES).add(i);
-    }
-
-    public void createSimplePowder(HolderLookup.Provider p, Item i)
-    {
-        tag(Tags.Items.DUSTS).add(i);
     }
 }

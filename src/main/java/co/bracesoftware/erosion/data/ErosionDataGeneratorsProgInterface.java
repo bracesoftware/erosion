@@ -14,20 +14,90 @@ import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.commongen.ErosionTextureGen;
 import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
+import co.bracesoftware.erosion.data.servergen.ErosionBlockTagGen;
+import co.bracesoftware.erosion.data.servergen.ErosionItemTagGen;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.common.Tags;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 
 public class ErosionDataGeneratorsProgInterface
 {
+    public static class ErosionTags
+    {
+        public abstract interface ErosionTaggable<T>
+        {
+            public abstract IntrinsicHolderTagsProvider.IntrinsicTagAppender<T> tagz(TagKey<T> e);
+        }
+        public static class Items
+        {
+            public static void createSimpleRawOre(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
+            {
+                t.tagz(Tags.Items.ORES).add(i);
+            }
+
+            public static void createSimplePowder(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
+            {
+                t.tagz(Tags.Items.DUSTS).add(i);
+            }
+        }
+        public static class Blocks
+        {
+            public static void createSimpleStone(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "stones"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "stone"))).add(b);
+                return;
+            }
+
+            public static void createSimpleOre(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
+                t.tagz(BlockTags.NEEDS_STONE_TOOL).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ore"))).add(b);
+                return;
+            }
+
+            public static void createSimpleGravel(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
+                t.tagz(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravels"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravel"))).add(b);
+                return;
+            }
+
+            public static void createSimpleRock(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rock"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rocks"))).add(b);
+                return;
+            }
+
+            public static void createSimpleDirt(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
+                t.tagz(BlockTags.DIRT).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirts"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirt"))).add(b);
+                return;
+            }
+        }
+    }
     public static class ErosionAdvancement
     {
         private static Boolean PARENT_ADVANCEMENT_CREATED = false;

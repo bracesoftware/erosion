@@ -2,11 +2,15 @@ package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
@@ -16,57 +20,62 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ErosionBlockTagGen extends BlockTagsProvider 
+public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags.ErosionTaggable<Block>
 {
     public ErosionBlockTagGen(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable ExistingFileHelper existingFileHelper) 
     {
         super(output, lookupProvider, Erosion.MODID, existingFileHelper);
     }
 
+    public IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> tagz(TagKey<Block> e)
+    {
+        return this.tag(e);
+    }
+
     @Override
     protected void addTags(HolderLookup.Provider provider) 
     {
         //SIMPLE BLOCKS
-        createSimpleGravel(provider, ErosionRegistry.Blocks.DRIED_DIRT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.DRIED_DIRT.get());
 
-        createSimpleStone(provider, ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
-        createSimpleStone(provider, ErosionRegistry.Blocks.CRACKED_STONE.get());
-        createSimpleGravel(provider, ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
-        createSimpleStone(provider, ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
-        createSimpleStone(provider, ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
-        createSimpleStone(provider, ErosionRegistry.Blocks.CRACKED_CALCITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleStone(this, provider, ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleStone(this, provider, ErosionRegistry.Blocks.CRACKED_STONE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.QUARTZ_GRAVEL.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleStone(this, provider, ErosionRegistry.Blocks.ALBITIZED_GRANITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleStone(this, provider, ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleStone(this, provider, ErosionRegistry.Blocks.CRACKED_CALCITE.get());
 
-        createSimpleOre(provider, ErosionRegistry.Blocks.MAGNETITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.HEMATITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.LIMONITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.SPHALERITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.AZURITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.RUBY_ORE.get());
-        createSimpleOre(provider, ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.MAGNETITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.HEMATITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.BORAX_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.LIMONITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.BISMUTHINITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.SPHALERITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.AZURITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.RUBY_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
 
-        createSimpleGravel(provider, ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
-        createSimpleGravel(provider, ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());
-        createSimpleGravel(provider, ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get());
 
-        createSimpleDirt(provider, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleDirt(this, provider, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get());
 
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_LIMONITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_HEMATITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_MAGNETITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_MALACHITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_LIMONITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_HEMATITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_MAGNETITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_MALACHITE.get());
 
-        createSimpleRock(provider, ErosionRegistry.Blocks.NATIVE_GOLD.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.NATIVE_SILVER.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.NATIVE_GOLD.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.NATIVE_SILVER.get());
 
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_CASSITERITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_SPHALERITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_AZURITE.get());
-        createSimpleRock(provider, ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_CASSITERITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_SPHALERITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_AZURITE.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
 
         //MACHINES
         // ============================================= //
@@ -75,47 +84,5 @@ public class ErosionBlockTagGen extends BlockTagsProvider
         tag(BlockTags.NEEDS_STONE_TOOL).add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
 
         tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ErosionRegistry.Blocks.CRUCIBLE.get());
-    }
-
-    public void createSimpleStone(HolderLookup.Provider p, Block b)
-    {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "stones"))).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "stone"))).add(b);
-        return;
-    }
-
-    public void createSimpleOre(HolderLookup.Provider p, Block b)
-    {
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
-        tag(BlockTags.NEEDS_STONE_TOOL).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ores"))).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "ore"))).add(b);
-        return;
-    }
-
-    public void createSimpleGravel(HolderLookup.Provider p, Block b)
-    {
-        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravels"))).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "gravel"))).add(b);
-        return;
-    }
-
-    public void createSimpleRock(HolderLookup.Provider p, Block b)
-    {
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rock"))).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "rocks"))).add(b);
-        return;
-    }
-
-    public void createSimpleDirt(HolderLookup.Provider p, Block b)
-    {
-        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(b);
-        tag(BlockTags.DIRT).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirts"))).add(b);
-        tag(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirt"))).add(b);
-        return;
     }
 }
