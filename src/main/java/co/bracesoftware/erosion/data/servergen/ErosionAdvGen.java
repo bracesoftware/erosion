@@ -6,6 +6,7 @@ import java.util.function.Consumer;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
@@ -28,60 +29,11 @@ public class ErosionAdvGen extends AdvancementProvider
         super(o, r, efh, List.of(new Generator()));
     }
 
-    private static class Generator implements AdvancementProvider.AdvancementGenerator
+    public static class Generator implements AdvancementProvider.AdvancementGenerator
     {
-        private ExistingFileHelper efh = null;
-        private Consumer<AdvancementHolder> k = null;
+        public ExistingFileHelper efh = null;
+        public Consumer<AdvancementHolder> k = null;
 
-        private static Boolean PARENT_ADVANCEMENT_CREATED = false;
-
-        private AdvancementHolder generateParentAdvancement()
-        {
-            if(PARENT_ADVANCEMENT_CREATED)
-            {
-                throw new RuntimeException("Parent advancement is already generated!");
-            }
-            PARENT_ADVANCEMENT_CREATED = true;
-            return Advancement.Builder.advancement()
-            .display(
-                ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
-                Component.literal(Erosion.MODNAME),
-                Component.literal("Welcome to the geochemically accurate Minecraft!"),
-                ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
-                AdvancementType.TASK,
-                true,
-                true,
-                false
-            )
-            .addCriterion("tick", net.minecraft.advancements.critereon.PlayerTrigger.TriggerInstance.tick())
-            .save(this.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, Erosion.MODID), this.efh);
-        }
-
-        private AdvancementHolder generateAdvancement(
-            String title, String desc, Item it, String id,
-            AdvancementHolder a
-        )
-        {
-            var b = Advancement.Builder.advancement();
-            ResourceLocation bb = (a == null) 
-            ? ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")
-            : null;
-
-            if(a != null) b.parent(a);
-
-            return b.display(
-                it,//icon
-                Component.literal(title),//title
-                Component.literal(desc),//desc
-                bb,
-                AdvancementType.TASK,
-                true,
-                true,
-                false
-            )
-            .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(it))
-            .save(this.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), this.efh);
-        }
         @Override
         public void generate(HolderLookup.Provider r, Consumer<AdvancementHolder> s, ExistingFileHelper efh)
         {
@@ -90,18 +42,18 @@ public class ErosionAdvGen extends AdvancementProvider
             this.k = s;
 
             //GENERATE
-            var root = generateParentAdvancement();
+            var root = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateParentAdvancement(this);
             
-            var crucible = generateAdvancement(
-                "A cook!",
+            var crucible = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
+                this, "A cook!",
                 "Craft a Crucible.",
                 ErosionRegistry.Items.CRUCIBLE.get(),
                 ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
                 root
             );
 
-            var purifier = generateAdvancement(
-                "Purifying Dirt",
+            var purifier = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
+                this, "Purifying Dirt",
                 "Craft a Material Purifier.",
                 ErosionRegistry.Items.MATERIAL_PURIFIER.get(),
                 ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId(),

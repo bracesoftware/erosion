@@ -13,7 +13,14 @@ import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks;
 import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.commongen.ErosionTextureGen;
+import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
@@ -21,6 +28,59 @@ import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 
 public class ErosionDataGeneratorsProgInterface
 {
+    public static class ErosionAdvancement
+    {
+        private static Boolean PARENT_ADVANCEMENT_CREATED = false;
+
+        public static AdvancementHolder generateParentAdvancement(ErosionAdvGen.Generator t)
+        {
+            if(PARENT_ADVANCEMENT_CREATED)
+            {
+                throw new RuntimeException("Parent advancement is already generated!");
+            }
+            PARENT_ADVANCEMENT_CREATED = true;
+            return Advancement.Builder.advancement()
+            .display(
+                ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
+                Component.literal(Erosion.MODNAME),
+                Component.literal("Welcome to the geochemically accurate Minecraft!"),
+                ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
+                AdvancementType.TASK,
+                true,
+                true,
+                false
+            )
+            .addCriterion("tick", net.minecraft.advancements.critereon.PlayerTrigger.TriggerInstance.tick())
+            .save(t.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, Erosion.MODID), t.efh);
+        }
+
+        public static AdvancementHolder generateAdvancement(
+            ErosionAdvGen.Generator t,
+            String title, String desc, Item it, String id,
+            AdvancementHolder a
+        )
+        {
+            var b = Advancement.Builder.advancement();
+            ResourceLocation bb = (a == null) 
+            ? ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")
+            : null;
+
+            if(a != null) b.parent(a);
+
+            return b.display(
+                it,//icon
+                Component.literal(title),//title
+                Component.literal(desc),//desc
+                bb,
+                AdvancementType.TASK,
+                true,
+                true,
+                false
+            )
+            .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(it))
+            .save(t.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), t.efh);
+        }
+    }
     public static class ErosionRecipe
     {
         public static void generateRecipe(
