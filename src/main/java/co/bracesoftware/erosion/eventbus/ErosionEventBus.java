@@ -15,6 +15,7 @@ public class ErosionEventBus
 
     public static void registerListeners(Class<?> c) throws RuntimeException
     {
+        ErosionUtils.Log("Registering class -> " + c.getName());
         for(var m : c.getDeclaredMethods())
         {
             if(

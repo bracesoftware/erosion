@@ -10,6 +10,7 @@ import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.IEventBus;
+import co.bracesoftware.erosion.eventbus.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
@@ -25,12 +26,13 @@ public class Erosion
 {
     public static final String MODID = "erosion";
     public static final String MODNAME = "Erosion";
-    public static final Integer BUILD = 2;
+    public static final Integer BUILD = 3;
     
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public Erosion(IEventBus modEventBus, ModContainer modContainer)
     {
+        ErosionEventBus.registerListeners(ErosionCore.class);
         ErosionMod.SetupRegistry(modEventBus);
     }
 
