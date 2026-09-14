@@ -155,7 +155,7 @@ namespace vermgr
             {
                 if(s.at(i) != c)
                 {
-                    r.append(s.at(i));
+                    r += std::string(s.at(i));
                 }
             }
             return r;
