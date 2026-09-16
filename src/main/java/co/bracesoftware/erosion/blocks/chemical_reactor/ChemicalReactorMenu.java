@@ -97,6 +97,11 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
         this.reactants = r;
         this.products = p;
 
+        if(r instanceof SimpleContainer sc)
+        {
+            sc.addListener(this::slotsChanged);
+        }
+
         reactants.startOpen(pinv.player);
         products.startOpen(pinv.player);
 

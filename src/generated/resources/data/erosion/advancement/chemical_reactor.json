@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:erosion",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:chemical_reactor"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Craft a Chemical Reactor.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:chemical_reactor"
+    },
+    "title": "Breaking Bad!"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

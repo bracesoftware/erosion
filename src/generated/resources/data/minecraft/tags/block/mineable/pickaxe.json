@@ -22,6 +22,7 @@
     "erosion:cassiterite_deposit",
     "erosion:native_silver_deposit",
     "erosion:material_purifier",
-    "erosion:crucible"
+    "erosion:crucible",
+    "erosion:chemical_reactor"
   ]
 }

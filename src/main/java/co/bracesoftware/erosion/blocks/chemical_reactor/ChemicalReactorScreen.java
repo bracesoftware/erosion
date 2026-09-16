@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.blocks.chemical_reactor;
 
+import co.bracesoftware.erosion.Erosion;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
@@ -11,7 +12,7 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
     private static final ResourceLocation BURN_PROGRESS_SPRITE = ResourceLocation
         .withDefaultNamespace("container/furnace/burn_progress");
     private static final ResourceLocation WINDOW_BG = ResourceLocation
-        .withDefaultNamespace("textures/gui/container/dispenser.png");
+        .fromNamespaceAndPath(Erosion.MODID, "textures/gui/container/chemical_reactor.png");
     private static final ResourceLocation SLOT_SPRITE = ResourceLocation
         .withDefaultNamespace("container/slot");
 
@@ -19,7 +20,7 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
     {
         super(m,pinv,t);
         this.imageWidth = 176;
-        this.imageHeight = 166;
+        this.imageHeight = 190;
     }
 
     @Override
