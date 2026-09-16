@@ -23,6 +23,8 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Items.RUBY.get(), ErosionRegistry.RawRegistry.RUBY.getName());
         add(ErosionRegistry.Items.BORAX.get(), ErosionRegistry.RawRegistry.BORAX.getName());
         add(ErosionRegistry.Items.DEHYDRATED_BORAX.get(), ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName());
+        add(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(), ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getName());
+        add(ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get(), ErosionRegistry.RawRegistry.BUCKET_OF_SULFURIC_ACID.getName());
         add(ErosionRegistry.Items.SAPPHIRE.get(), ErosionRegistry.RawRegistry.SAPPHIRE.getName());
         add(ErosionRegistry.Items.SULFUR_SLAG.get(), ErosionRegistry.RawRegistry.SULFUR_SLAG.getName());
         add(ErosionRegistry.Items.DEBRIS.get(), ErosionRegistry.RawRegistry.DEBRIS.getName());

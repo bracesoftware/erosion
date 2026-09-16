@@ -97,6 +97,14 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(),
                 root
             );
+
+            var boric_acid = ErosionAdvancement.generateAdvancement(
+                this, "Is that crystal?!",
+                "Synthesize Boric Acid crystals.",
+                ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(),
+                ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getId(),
+                reactor
+            );
             return;
         }
     }

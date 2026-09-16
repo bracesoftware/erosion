@@ -24,6 +24,7 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -156,10 +157,28 @@ public class ErosionRegistry
         public static final IRawRegistry BORAX = new IRawRegistry("borax", "Borax");
         public static final IRawRegistry DEHYDRATED_BORAX = new IRawRegistry("dehydrated_borax", "Dehydrated Borax");
 
+        public static final IRawRegistry BUCKET_OF_SULFURIC_ACID = new IRawRegistry("sulfuric_acid_bucket", "Bucket of Sulfuric Acid");
+        public static final IRawRegistry BORIC_ACID_CRYSTAL = new IRawRegistry("boric_acid_crystal", "Boric Acid Crystal");
+
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
         public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
+
+        //CHEMICAL REACTIONS
+
+        public static class ChemicalReactions
+        {
+            public static final IRawRegistry SULFURIC_ACID_SYNTHESIS = new IRawRegistry(
+                "sulfuric_acid_synth", "Sulfuric Acid Synthesis"
+            );
+            public static final IRawRegistry BORIC_ACID_SYNTHESIS = new IRawRegistry(
+                "boric_acid_synth", "Boric Acid Synthesis"
+            );
+            public static final IRawRegistry DIRT_HYDRATION = new IRawRegistry(
+                "dirt_hydration", "Dirt Hydration"
+            );
+        }
 
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
@@ -532,6 +551,14 @@ public class ErosionRegistry
             RawRegistry.DEHYDRATED_BORAX.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
 
+        public static final DeferredItem<Item> BUCKET_OF_SULFURIC_ACID = ITEMS.register(
+            RawRegistry.BUCKET_OF_SULFURIC_ACID.getId(), () -> new Item(new Item.Properties().stacksTo(1))
+        );
+
+        public static final DeferredItem<Item> BORIC_ACID_CRYSTAL = ITEMS.register(
+            RawRegistry.BORIC_ACID_CRYSTAL.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        );
+
         public static final DeferredItem<Item> RAW_LIMONITE = ITEMS.register(
             RawRegistry.RAW_LIMONITE.getId(), () -> new BlockItem(
                 Blocks.RAW_LIMONITE.get(), new Item.Properties().stacksTo(32)
@@ -680,6 +707,8 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.RUBY.get());
             output.accept(ErosionRegistry.Items.BORAX.get());
             output.accept(ErosionRegistry.Items.DEHYDRATED_BORAX.get());
+            output.accept(ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get());
+            output.accept(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get());
             output.accept(ErosionRegistry.Items.SAPPHIRE.get());
             output.accept(ErosionRegistry.Items.SULFUR_SLAG.get());
             output.accept(ErosionRegistry.Items.DEBRIS.get());

@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
+import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 
@@ -318,15 +319,18 @@ public class ErosionCore
     {
         public Supplier<List<Item>> reactant;
         public Supplier<List<Item>> product;
+        public Supplier<List<Item>> mainProduct;
 
         public List<Item> reactantItems;
         public List<Item> productItems;
+        public List<Item> mainProductItems;
 
-        public ChemicalReaction(String n, Supplier<List<Item>> r, Supplier<List<Item>> p)
+        public ChemicalReaction(String n, Supplier<List<Item>> r, Supplier<List<Item>> p, Supplier<List<Item>> k)
         {
             this.name = n;
             this.reactant = r;
             this.product = p;
+            this.mainProduct = k;
 
             this.antiDuplicator = new ArrayList<>();
         }
@@ -342,6 +346,8 @@ public class ErosionCore
             p = new ArrayList<>(this.reactant.get());
             p.sort(ChemicalReactorMenu.itemComparator);
             this.reactantItems = p;
+
+            this.mainProductItems = this.mainProduct.get();
 
             this.preventDuplication(this.antiDuplicator);
 
@@ -1117,6 +1123,11 @@ public class ErosionCore
         () -> ErosionRegistry.Items.DEHYDRATED_BORAX.get(), 80
     );
 
+    public static final CrucibleCatalyst BORIC_ACID_CRYSTAL = new CrucibleCatalyst(
+        ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getName(),
+        () -> ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(), 95
+    );
+
     // ========================== REFINABLE MATERIALS
 
     public static final RefinableMaterial KAOLINIZED_GRANITE = new RefinableMaterial(
@@ -1181,7 +1192,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MAGNETITE = new RefinableMaterial(
@@ -1190,7 +1201,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_HEMATITE = new RefinableMaterial(
@@ -1199,7 +1210,7 @@ public class ErosionCore
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
     public static final RefinableMaterial RAW_MALACHITE = new RefinableMaterial(
@@ -1208,7 +1219,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
 
@@ -1218,7 +1229,7 @@ public class ErosionCore
         () -> List.of(
             Items.GOLD_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
 
@@ -1275,7 +1286,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.TIN_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX,DEHYDRATED_BORAX
+            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
     public static final RefinableMaterial NATIVE_SILVER = new RefinableMaterial(
@@ -1284,7 +1295,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.SILVER_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX,DEHYDRATED_BORAX
+            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
 
@@ -1303,7 +1314,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.BISMUTH_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
         )
@@ -1325,7 +1336,7 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.ZINC_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
 
@@ -1345,7 +1356,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of()
     );
 
@@ -1365,7 +1376,7 @@ public class ErosionCore
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX
+            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
         )
@@ -1404,13 +1415,36 @@ public class ErosionCore
     );
     // ========================== CHEMICAL REACTIONS
 
-    public static final ChemicalReaction DIRT_INTO_MUD = new ChemicalReaction(
-        Blocks.DIRT.getName().getString(),
+    public static final ChemicalReaction DIRT_HYDRATION = new ChemicalReaction(
+        ErosionRegistry.RawRegistry.ChemicalReactions.DIRT_HYDRATION.getName(),
         () -> List.of(
             Items.DIRT, Items.WATER_BUCKET
         ), () -> List.of(
             Items.MUD, Items.BUCKET
-        )
+        ),
+        () -> List.of(Items.MUD)
+    );
+
+    public static final ChemicalReaction SULFURIC_ACID_SYNTHESIS = new ChemicalReaction(
+        ErosionRegistry.RawRegistry.ChemicalReactions.SULFURIC_ACID_SYNTHESIS.getName(),
+        () -> List.of(
+            ErosionRegistry.Items.SULFUR_SLAG.get(),
+            Items.WATER_BUCKET
+        ), () -> List.of(
+            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+        ),
+        () -> List.of(ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get())
+    );
+
+    public static final ChemicalReaction BORIC_ACID_SYNTHESIS = new ChemicalReaction(
+        ErosionRegistry.RawRegistry.ChemicalReactions.BORIC_ACID_SYNTHESIS.getName(),
+        () -> List.of(
+            ErosionRegistry.Items.BORAX.get(),
+            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+        ), () -> List.of(
+            ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(),
+            Items.BUCKET
+        ), () -> List.of(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get())
     );
 
     // ========================== REGISTRY
@@ -1433,11 +1467,11 @@ public class ErosionCore
         COBBLESTONE
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
-        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
+        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
     );
 
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST_ORIGINAL = List.of(
-        DIRT_INTO_MUD
+        DIRT_HYDRATION, BORIC_ACID_SYNTHESIS, SULFURIC_ACID_SYNTHESIS
     );
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
@@ -1629,6 +1663,13 @@ public class ErosionCore
                 .withStyle(ChatFormatting.DARK_RED)
             );
         }
+        else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR.get())
+        {
+            desc.add(
+                Component.literal("A versatile container designed to safely sustain chemical reactions.")
+                .withStyle(ChatFormatting.DARK_PURPLE)
+            );
+        }
         
         final class ChemicalInfo
         {
@@ -1666,6 +1707,9 @@ public class ErosionCore
             //мод ајтемс
             Map.entry(ErosionRegistry.Items.BORAX.get(), new ChemicalInfo(List.of(
                 "Sodium-tetraborate decahydrate"
+            ))),
+            Map.entry(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(), new ChemicalInfo(List.of(
+                "Crystallised boric acid"
             ))),
             Map.entry(ErosionRegistry.Items.DEHYDRATED_BORAX.get(), new ChemicalInfo(List.of(
                 "Anhydrous sodium-tetraborate"
@@ -1755,7 +1799,7 @@ public class ErosionCore
             }
         }
 
-        for(CrucibleCatalyst c : CRUCIBLE_CATALYST_LIST)
+        for(var c : CRUCIBLE_CATALYST_LIST)
         {
             if(currentItem == c.catalystItem)
             {
@@ -1786,7 +1830,7 @@ public class ErosionCore
         }
         
         List<AlterationInfo> alterationInfo = new ArrayList<>();
-        for (AlterableMaterial m : ALTERABLE_MATERIALS_LIST)
+        for(var m : ALTERABLE_MATERIALS_LIST)
         {
             if(m.materialItem == currentItem)
             {
@@ -1818,7 +1862,7 @@ public class ErosionCore
         }
 
         List<String> refinesIntoNames = new java.util.ArrayList<>();
-        for (RefinableMaterial m : REFINABLE_MATERIALS_LIST)
+        for(var m : REFINABLE_MATERIALS_LIST)
         {
             if(m.recipeCategory == BlockEntityRecipeRegistries.MATERIAL_PURIFIER) if(m.materialItem == currentItem)
             {
@@ -1833,7 +1877,7 @@ public class ErosionCore
         List<String> catalystListLmao = new ArrayList<>();
         List<String> coproductOfNames = new ArrayList<>();
         Boolean hasCoproducts = false;
-        for(RefinableMaterial m : REFINABLE_MATERIALS_LIST)
+        for(var m : REFINABLE_MATERIALS_LIST)
         {
             if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE)
             {
@@ -1862,6 +1906,99 @@ public class ErosionCore
             }
         }
 
+        final class SynthFromData
+        {
+            public String reactionName;
+            public List<String> from;
+
+            public SynthFromData(String n, List<String> f)
+            {
+                this.reactionName = n;
+                this.from = f;
+            }
+        }
+    
+        List<SynthFromData> synthFrom = new ArrayList<>();
+        List<String> usedIn = new ArrayList<>();
+        for(var p : CHEMICAL_REACTION_LIST)
+        {
+            if(p.reactantItems.contains(currentItem))
+            {
+                usedIn.add(p.name);
+            }
+            if(p.mainProductItems.contains(currentItem))
+            {
+                var l = new ArrayList<String>();
+                for(var k : p.mainProductItems)
+                {
+                    l.add(k.getDescription().getString());
+                }
+                synthFrom.add(new SynthFromData(p.name, l));
+            }
+        }
+
+        final String TAB = "  * ";
+
+        if(
+            !(usedIn.isEmpty()) ||
+            !(synthFrom.isEmpty())
+        )
+        {
+            desc.add(Component.literal(""));
+            desc.add(
+                Component.literal("Chemical reactor information").
+                withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.UNDERLINE)
+            );
+        }
+        if(!usedIn.isEmpty())
+        {
+            desc.add(
+                Component.literal("- Used as a reactant in following chemical reactions:")
+                .withStyle(ChatFormatting.GRAY)
+            );
+            for(var s : usedIn)
+            {
+                desc.add(
+                    Component.literal(TAB).withStyle(ChatFormatting.GRAY)
+                    .append(
+                        Component.literal(s).withStyle(ChatFormatting.BLUE, ChatFormatting.BOLD)
+                    )
+                );
+            }
+        }
+        if(!synthFrom.isEmpty())
+        {
+            desc.add(
+                Component.literal("- Can be obtained in following chemical reactions:")
+                .withStyle(ChatFormatting.GRAY)
+            );
+            for(var s : synthFrom)
+            {
+                desc.add(
+                    Component.literal(TAB).withStyle(ChatFormatting.GRAY)
+                    .append(
+                        Component.literal(s.reactionName).withStyle(ChatFormatting.YELLOW)
+                    ).append(
+                        Component.literal(" using:").withStyle(ChatFormatting.GRAY)
+                    )
+                );
+                String v = new String("      ");
+                var ll = s.from;
+                for(int i = 0; i < ll.size(); i++)
+                {
+                    v += ll.get(i);
+                    if(i < ll.size() - 1)
+                    {
+                        if(i == ll.size() - 2) v += " and ";
+                        else v += ", ";
+                    }
+                }
+                desc.add(
+                    Component.literal(v).withStyle(ChatFormatting.YELLOW)
+                );
+            }
+        }
+
         if(!coproductOfNames.isEmpty())
         {
             desc.add(Component.literal(""));
@@ -1870,7 +2007,7 @@ public class ErosionCore
             for(int i = 0; i < coproductOfNames.size(); i++)
             {
                 list.add(
-                    Component.literal("  * ").withStyle(ChatFormatting.GRAY)
+                    Component.literal(TAB).withStyle(ChatFormatting.GRAY)
                     .append(
                         Component.literal(coproductOfNames.get(i)).withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.ITALIC)
                     )

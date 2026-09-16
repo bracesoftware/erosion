@@ -4,6 +4,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -115,6 +116,23 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
             Map.of(
                 "X", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
                     Erosion.MODID, ErosionRegistry.RawRegistry.SILVER_CHUNK.getId()
+                )
+            )
+        );
+        ErosionDataGeneratorsProgInterface.ErosionRecipe.generateRecipe(
+            "sulfuric_acid_bucket_from_bottle",
+            ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                Erosion.MODID, ErosionRegistry.RawRegistry.BUCKET_OF_SULFURIC_ACID.getId()
+            ),
+            List.of(
+                "AB"
+            ),
+            Map.of(
+                "A", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                    ErosionModCompat.CompatibleMods.BUTCHERY.getModId(), "sulfuric_acid"
+                ),
+                "B", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                    ResourceLocation.DEFAULT_NAMESPACE, Items.BUCKET.getDescription().getString()
                 )
             )
         );
