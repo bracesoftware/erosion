@@ -26,5 +26,6 @@ Adds simple geological chemistry to your world.
     ordering="NONE"
     side="BOTH"
 
-[[mixins]]
-config = "erosion.mixins.json"
+mixins = [
+    "erosion.mixins.json"
+]

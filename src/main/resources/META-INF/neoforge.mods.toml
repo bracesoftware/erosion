@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="erosion"
-version="16699714296350894163"
+version="14923590094705750731"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"
@@ -26,5 +26,6 @@ Adds simple geological chemistry to your world.
     ordering="NONE"
     side="BOTH"
 
-[[mixins]]
-config = "erosion.mixins.json"
+mixins = [
+    "erosion.mixins.json"
+]
