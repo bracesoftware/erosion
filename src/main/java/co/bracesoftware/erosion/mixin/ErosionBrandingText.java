@@ -18,7 +18,7 @@ public class ErosionBrandingText
     @Inject(method = "getBrandings", at = @At("RETURN"), cancellable = true)
     private static void onGetBrandings(boolean i, boolean o, CallbackInfoReturnable<List<String>> cir)
     {
-        var org = new ArrayList<>(cir.getReturnValue());
+        var org = cir.getReturnValue();
         if(org == null) return;
 
         List<String> b = new ArrayList<>(org);
