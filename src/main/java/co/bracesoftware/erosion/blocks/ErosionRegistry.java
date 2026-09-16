@@ -5,6 +5,7 @@ import java.util.function.Supplier;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorBlock;
 import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
@@ -30,6 +31,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredBlock;
@@ -745,5 +747,11 @@ public class ErosionRegistry
         {
             e.printStackTrace();
         }
+    }
+
+    @SubscribeEvent 
+    public static void setup(FMLClientSetupEvent e)
+    {
+        ErosionUtils.Log("We're in the registry.");
     }
 }
