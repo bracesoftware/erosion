@@ -16,7 +16,10 @@ import net.neoforged.neoforge.internal.BrandingControl;
 public class ErosionBrandingText
 {
     @Inject(method = "getBrandings", at = @At("RETURN"), cancellable = true)
-    private static void onGetBrandings(boolean i, boolean o, CallbackInfoReturnable<List<String>> cir)
+    private static void onGetBrandings(
+        boolean i, boolean o,
+        CallbackInfoReturnable<List<String>> cir
+    ) throws RuntimeException
     {
         var org = cir.getReturnValue();
         if(org == null) return;
@@ -24,6 +27,10 @@ public class ErosionBrandingText
         List<String> b = new ArrayList<>(org);
         b.add(0, "Erosion build " + Erosion.BUILD.toString());
         cir.setReturnValue(b);
+        if(true)
+        {
+            throw new RuntimeException("HELLLOOO???");
+        }
         return;
     }
 }
