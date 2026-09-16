@@ -7,7 +7,7 @@ config = "erosion.mixins.json"
 
 [[mods]]
 modId="erosion"
-version="15726672088612675733"
+version="3962967227582438283"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"
