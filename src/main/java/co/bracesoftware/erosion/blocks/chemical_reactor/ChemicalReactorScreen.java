@@ -18,7 +18,9 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
     {
         super(m,pinv,t);
         this.imageWidth = 176;
-        this.imageHeight = 190;
+        this.imageHeight = 184;
+
+        this.inventoryLabelY = this.imageHeight - 94;
     }
 
     @Override
