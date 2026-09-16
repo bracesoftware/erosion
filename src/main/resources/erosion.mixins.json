@@ -1,8 +1,9 @@
 {
   "required": true,
+  "minVersion": "0.8",
   "package": "co.bracesoftware.erosion.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": [
+  "mixins": [
     "ErosionBrandingText"
   ],
   "injectors": {

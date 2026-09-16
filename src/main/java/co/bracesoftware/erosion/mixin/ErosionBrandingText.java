@@ -27,10 +27,7 @@ public class ErosionBrandingText
         List<String> b = new ArrayList<>(org);
         b.add(0, "Erosion build " + Erosion.BUILD.toString());
         cir.setReturnValue(b);
-        if(true)
-        {
-            throw new RuntimeException("HELLLOOO???");
-        }
+        
         return;
     }
 }

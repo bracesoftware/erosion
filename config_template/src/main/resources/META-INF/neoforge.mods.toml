@@ -2,9 +2,8 @@ modLoader="javafml"
 loaderVersion="[1,)"
 license="MIT"
 
-mixins = [
-    "erosion.mixins.json"
-]
+[[mixins]]
+config = "erosion.mixins.json"
 
 [[mods]]
 modId="erosion"
