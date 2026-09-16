@@ -1,5 +1,11 @@
 {
-    "client": [
-        "ErosionBrandingText"
-    ]
+  "required": true,
+  "package": "co.bracesoftware.erosion.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+    "ErosionBrandingText"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
 }

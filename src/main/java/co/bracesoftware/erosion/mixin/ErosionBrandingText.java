@@ -18,8 +18,12 @@ public class ErosionBrandingText
     @Inject(method = "getBrandings", at = @At("RETURN"), cancellable = true)
     private static void onGetBrandings(boolean i, boolean o, CallbackInfoReturnable<List<String>> cir)
     {
-        List<String> brandings = new ArrayList<>(cir.getReturnValue());
-        brandings.add("Erosion build " + Erosion.BUILD.toString());
-        cir.setReturnValue(brandings);
+        var org = new ArrayList<>(cir.getReturnValue());
+        if(org == null) return;
+
+        List<String> b = new ArrayList<>(org);
+        b.add(0, "Erosion build " + Erosion.BUILD.toString());
+        cir.setReturnValue(b);
+        return;
     }
 }
