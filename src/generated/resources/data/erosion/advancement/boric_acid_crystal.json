@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:chemical_reactor",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:boric_acid_crystal"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Synthesize Boric Acid crystals.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:boric_acid_crystal"
+    },
+    "title": "Is that crystal?!"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

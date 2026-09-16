@@ -1929,7 +1929,7 @@ public class ErosionCore
             if(p.mainProductItems.contains(currentItem))
             {
                 var l = new ArrayList<String>();
-                for(var k : p.mainProductItems)
+                for(var k : p.reactantItems)
                 {
                     l.add(k.getDescription().getString());
                 }

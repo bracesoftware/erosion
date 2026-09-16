@@ -38,6 +38,7 @@
   "creativetab.erosion.erosion_tab": "Erosion",
   "item.erosion.bismuth_chunk": "Bismuth Chunk",
   "item.erosion.borax": "Borax",
+  "item.erosion.boric_acid_crystal": "Boric Acid Crystal",
   "item.erosion.crushed_egg_shell": "Crushed Egg Shell",
   "item.erosion.debris": "Debris",
   "item.erosion.dehydrated_borax": "Dehydrated Borax",
@@ -47,6 +48,7 @@
   "item.erosion.sapphire": "Sapphire",
   "item.erosion.silver_chunk": "Silver Chunk",
   "item.erosion.sulfur_slag": "Sulfur Slag",
+  "item.erosion.sulfuric_acid_bucket": "Bucket of Sulfuric Acid",
   "item.erosion.tin_chunk": "Tin Chunk",
   "item.erosion.zinc_chunk": "Zinc Chunk"
 }

@@ -1,0 +1,25 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:item_exists",
+      "item": "erosion:sulfuric_acid_bucket"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    "AB"
+  ],
+  "key": {
+    "B": {
+      "item": "minecraft:Bucket"
+    },
+    "A": {
+      "item": "butchery:sulfuric_acid"
+    }
+  },
+  "result": {
+    "count": 1,
+    "id": "erosion:sulfuric_acid_bucket"
+  }
+}
