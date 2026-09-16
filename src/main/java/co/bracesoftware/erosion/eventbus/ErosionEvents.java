@@ -40,5 +40,10 @@ public class ErosionEvents
         {
             ErosionCore.add(cc);
         }
+
+        public void registerChemicalReaction(ErosionCore.ChemicalReaction cr)
+        {
+            ErosionCore.add(cr);
+        }
     }
 }

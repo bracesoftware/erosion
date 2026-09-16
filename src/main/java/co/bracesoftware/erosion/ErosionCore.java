@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
 import co.bracesoftware.erosion.eventbus.*;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 
@@ -310,6 +311,64 @@ public class ErosionCore
                 }
             }
             return true;
+        }
+    }
+
+    public static class ChemicalReaction extends ErosionDynamicItem
+    {
+        public Supplier<List<Item>> reactant;
+        public Supplier<List<Item>> product;
+
+        public List<Item> reactantItems;
+        public List<Item> productItems;
+
+        public ChemicalReaction(String n, Supplier<List<Item>> r, Supplier<List<Item>> p)
+        {
+            this.name = n;
+            this.reactant = r;
+            this.product = p;
+
+            this.antiDuplicator = new ArrayList<>();
+        }
+
+        @Override 
+        public void setup() throws RuntimeException
+        {
+            ErosionUtils.Log("Setting up chemical reaction: " + this.name);
+            var p = new ArrayList<>(this.product.get());
+            p.sort(ChemicalReactorMenu.itemComparator);
+            this.productItems = p;
+
+            p = new ArrayList<>(this.reactant.get());
+            p.sort(ChemicalReactorMenu.itemComparator);
+            this.reactantItems = p;
+
+            this.preventDuplication(this.antiDuplicator);
+
+            if(
+                (this.reactantItems.size() <= 0 || this.reactantItems.size() > ChemicalReactorMenu.ROWS * ChemicalReactorMenu.COL) ||
+                (this.productItems.size() <= 0 || this.productItems.size() > ChemicalReactorMenu.ROWS * ChemicalReactorMenu.COL)
+            )
+            {
+                throw new RuntimeException("Reactant and product lists have to be in range 0 < x <= 6 -> " + this.name);
+            }
+            return;
+        }
+
+        public List<Item> getReactants()
+        {
+            return this.reactantItems;
+        }
+        public List<Item> getProducts()
+        {
+            return this.productItems;
+        }
+
+        @Override 
+        public void discard()
+        {
+            ErosionUtils.Log("Discarding chemical reaction: " + this.name);
+            this.discardDuplicationPreventionSys(this.antiDuplicator);
         }
     }
 
@@ -1343,6 +1402,18 @@ public class ErosionCore
             ErosionRegistry.Items.DEHYDRATED_BORAX.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
+    // ========================== CHEMICAL REACTIONS
+
+    public static final ChemicalReaction DIRT_INTO_MUD = new ChemicalReaction(
+        Blocks.DIRT.getName().getString(),
+        () -> List.of(
+            Items.DIRT, Items.WATER_BUCKET
+        ), () -> List.of(
+            Items.MUD, Items.BUCKET
+        )
+    );
+
+    // ========================== REGISTRY
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST_ORIGINAL = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
@@ -1365,9 +1436,14 @@ public class ErosionCore
         FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX
     );
 
+    private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST_ORIGINAL = List.of(
+        DIRT_INTO_MUD
+    );
+
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
+    private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST = new ArrayList<>();
 
     public static void add(RefinableMaterial e)
     {
@@ -1380,6 +1456,15 @@ public class ErosionCore
     public static void add(CrucibleCatalyst e)
     {
         CRUCIBLE_CATALYST_LIST.add(e);
+    }
+    public static void add(ChemicalReaction e)
+    {
+        CHEMICAL_REACTION_LIST.add(e);
+    }
+
+    public static final List<ChemicalReaction> getChemicalReactions()
+    {
+        return Collections.unmodifiableList(CHEMICAL_REACTION_LIST);
     }
 
     // =====================================
@@ -1403,10 +1488,12 @@ public class ErosionCore
         REFINABLE_MATERIALS_LIST.clear();
         ALTERABLE_MATERIALS_LIST.clear();
         CRUCIBLE_CATALYST_LIST.clear();
+        CHEMICAL_REACTION_LIST.clear();
 
         REFINABLE_MATERIALS_LIST.addAll(REFINABLE_MATERIALS_LIST_ORIGINAL);
         ALTERABLE_MATERIALS_LIST.addAll(ALTERABLE_MATERIALS_LIST_ORIGINAL);
         CRUCIBLE_CATALYST_LIST.addAll(CRUCIBLE_CATALYST_LIST_ORIGINAL);
+        CHEMICAL_REACTION_LIST.addAll(CHEMICAL_REACTION_LIST_ORIGINAL);
 
         for(int i = 0; i < ErosionModCompat.COMPATIBLE_MODS.size(); ++i)
         {
@@ -1435,6 +1522,12 @@ public class ErosionCore
             var m = REFINABLE_MATERIALS_LIST.get(i);
             m.setup();
         }
+
+        for(int i = 0; i < CHEMICAL_REACTION_LIST.size(); ++i)
+        {
+            var m = CHEMICAL_REACTION_LIST.get(i);
+            m.setup();
+        }
         return;
     }
 
@@ -1461,6 +1554,12 @@ public class ErosionCore
         for(int i = 0; i < REFINABLE_MATERIALS_LIST.size(); ++i)
         {
             var m = REFINABLE_MATERIALS_LIST.get(i);
+            m.discard();
+        }
+
+        for(int i = 0; i < CHEMICAL_REACTION_LIST.size(); ++i)
+        {
+            var m = CHEMICAL_REACTION_LIST.get(i);
             m.discard();
         }
         return;
@@ -2259,6 +2358,10 @@ public class ErosionCore
             public static Map<Item, List<Item>> RECIPES = new HashMap<>();
             public static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
             public static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
+        }
+        public static class ChemicalReactor
+        {
+            //nvm
         }
     }
     public static class Extra

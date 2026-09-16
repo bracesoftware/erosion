@@ -87,6 +87,16 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId(),
                 root
             );
+
+            //------------------------- CHEMICAL REACTOR ADVANCEMENTS ---------------------------
+
+            var reactor = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
+                this, "Breaking Bad!",
+                "Craft a Chemical Reactor.",
+                ErosionRegistry.Items.CHEMICAL_REACTOR.get(),
+                ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(),
+                root
+            );
             return;
         }
     }

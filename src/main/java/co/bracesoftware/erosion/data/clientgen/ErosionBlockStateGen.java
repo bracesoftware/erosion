@@ -87,7 +87,9 @@ public class ErosionBlockStateGen extends BlockStateProvider
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
         );
-        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.SPHALERITE_ORE.get());
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.SPHALERITE_ORE.get()
+        );
 
         //MACHINES
         // ============================================= //
@@ -331,7 +333,18 @@ public class ErosionBlockStateGen extends BlockStateProvider
             )
         );
 
-        // ============================================= //
+        // ============================================= ////
+        //CHEMICAL REACTOR
+        var side = modLoc("block/chemical_reactor_side");
+        var bottom = modLoc("block/chemical_reactor_bottom");
+        var top = modLoc("block/chemical_reactor_top");
+
+        ModelFile crm = models().cubeBottomTop(
+            ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(),
+            side, bottom, top
+        );
+        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
+        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
         return;
     }
 

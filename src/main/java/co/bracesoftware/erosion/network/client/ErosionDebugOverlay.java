@@ -19,6 +19,7 @@ public class ErosionDebugOverlay
     ) + "[Erosion] " + Text.Format(
         Text.Col.GRAY
     );
+    
     @SubscribeEvent
     public static void onDebugText(CustomizeGuiOverlayEvent.DebugText event)
     {

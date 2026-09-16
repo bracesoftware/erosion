@@ -27,6 +27,21 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
     protected void buildRecipes(RecipeOutput output)
     {
         ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
+        )
+        .pattern("IMI")
+        .pattern("DGD")
+        .pattern("OOO")
+        .define('I', Items.IRON_INGOT)
+        .define('M', ErosionRegistry.Blocks.MATERIAL_PURIFIER.get())
+        .define('G', Items.GLASS)
+        .define('D', Items.DEEPSLATE)
+        .define('O', Items.OBSIDIAN)
+        .unlockedBy("has_purifier", has(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()))
+        .save(output);
+
+
+        ShapedRecipeBuilder.shaped(
             RecipeCategory.REDSTONE, ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
         ).pattern("I I")
         .pattern("RFR")

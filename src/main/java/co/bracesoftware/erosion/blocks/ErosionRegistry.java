@@ -6,6 +6,9 @@ import java.util.function.Supplier;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.blocks.ErosionRegistry.RawRegistry.IRawRegistry;
+import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorBlock;
+import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
+import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorScreen;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
@@ -16,6 +19,7 @@ import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -23,12 +27,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 
+@EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionRegistry
 {
     public static class DataPackets
@@ -38,6 +47,7 @@ public class ErosionRegistry
         );
     }
 
+    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Erosion.MODID);
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Erosion.MODID);
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
@@ -149,6 +159,7 @@ public class ErosionRegistry
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
+        public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
 
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
@@ -158,6 +169,15 @@ public class ErosionRegistry
     {
         //nothin yet
         public static Long2ObjectMap<List<String>> RETROGEN_DATA = new Long2ObjectOpenHashMap<>();
+    }
+
+    public static class Menus
+    {
+        public static final DeferredHolder<MenuType<?>, MenuType<ChemicalReactorMenu>> CHEMICAL_REACTOR = MENUS.register(
+            RawRegistry.CHEMICAL_REACTOR.getId(), () -> IMenuTypeExtension.create(
+                (winid, inv, data) -> new ChemicalReactorMenu(winid, inv)
+            )
+        );
     }
 
     public static class Blocks
@@ -171,6 +191,13 @@ public class ErosionRegistry
         );
         public static final DeferredBlock<Block> CRUCIBLE = BLOCKS.register(
             RawRegistry.CRUCIBLE.getId(), () -> new CrucibleBlock(
+                BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
+                .requiresCorrectToolForDrops()
+            )
+        );
+
+        public static final DeferredBlock<Block> CHEMICAL_REACTOR = BLOCKS.register(
+            RawRegistry.CHEMICAL_REACTOR.getId(), () -> new ChemicalReactorBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
@@ -352,10 +379,19 @@ public class ErosionRegistry
     {
         //MACHINES
         public static final DeferredItem<Item> MATERIAL_PURIFIER = ITEMS.register(
-            RawRegistry.MATERIAL_PURIFIER.getId(), () -> new BlockItem(Blocks.MATERIAL_PURIFIER.get(), new Item.Properties())
+            RawRegistry.MATERIAL_PURIFIER.getId(), () -> new BlockItem(
+                Blocks.MATERIAL_PURIFIER.get(), new Item.Properties()
+            )
         );
         public static final DeferredItem<Item> CRUCIBLE = ITEMS.register(
-            RawRegistry.CRUCIBLE.getId(), () -> new BlockItem(Blocks.CRUCIBLE.get(), new Item.Properties())
+            RawRegistry.CRUCIBLE.getId(), () -> new BlockItem(
+                Blocks.CRUCIBLE.get(), new Item.Properties()
+            )
+        );
+        public static final DeferredItem<Item> CHEMICAL_REACTOR = ITEMS.register(
+            RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
+                Blocks.CHEMICAL_REACTOR.get(), new Item.Properties()
+            )
         );
 
         //SIMPLEBLOCKS
@@ -653,6 +689,7 @@ public class ErosionRegistry
             //MACHINES
             output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.get());
             output.accept(ErosionRegistry.Items.CRUCIBLE.get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
         })
         .build()
     );
@@ -663,12 +700,14 @@ public class ErosionRegistry
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
+        MENUS.register(modEventBus);
 
         try
         {
             Class.forName(Blocks.class.getName());
             Class.forName(Items.class.getName());
             Class.forName(BlockEntities.class.getName());
+            Class.forName(Menus.class.getName());
         }
         catch(ClassNotFoundException e)
         {
@@ -676,4 +715,9 @@ public class ErosionRegistry
         }
     }
 
+    @SubscribeEvent
+    public static void regScreen(RegisterMenuScreensEvent event)
+    {
+        event.register(ErosionRegistry.Menus.CHEMICAL_REACTOR.get(), ChemicalReactorScreen::new);
+    }
 }

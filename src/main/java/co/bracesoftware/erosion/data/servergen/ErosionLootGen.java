@@ -138,6 +138,7 @@ public class ErosionLootGen extends LootTableProvider
 
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
+            dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get());
             dropSelf(ErosionRegistry.Blocks.CRUCIBLE.get());
         }
 
@@ -191,6 +192,7 @@ public class ErosionLootGen extends LootTableProvider
 
                 // MACHINES
                 ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),
+                ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(),
                 ErosionRegistry.Blocks.CRUCIBLE.get()
             );
         }
