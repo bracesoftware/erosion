@@ -1,33 +1,40 @@
 package co.bracesoftware.erosion.mixin;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import co.bracesoftware.erosion.Erosion;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import net.neoforged.neoforge.internal.BrandingControl;
 
 @Mixin(value = BrandingControl.class, remap = false)
 public class ErosionBrandingText
 {
-    @Inject(method = "getBrandings", at = @At("RETURN"), cancellable = true)
-    private static void onGetBrandings(
-        boolean i, boolean o,
+    @Inject(
+        method = "getBrandings(ZZ)Ljava/util/List;",
+        at = @At("RETURN"),
+        cancellable = true
+    )
+    private static void erosion$getBrandings(
+        boolean inc,
+        boolean r,
         CallbackInfoReturnable<List<String>> cir
     ) throws RuntimeException
     {
-        var org = cir.getReturnValue();
-        if(org == null) return;
+        List<String> original = cir.getReturnValue();
 
-        List<String> b = new ArrayList<>(org);
-        b.add(0, "Erosion build " + Erosion.BUILD.toString());
-        cir.setReturnValue(b);
-        
+        if(original == null || original.contains("Erosion build " + Erosion.BUILD)) return;
+
+        List<String> brandings = new ArrayList<>(original);
+
+        if(r) brandings.add(0, "Erosion build " + Erosion.BUILD);
+        else brandings.add("Erosion build " + Erosion.BUILD);
+
+        cir.setReturnValue(brandings);
         return;
     }
 }
