@@ -1382,7 +1382,8 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get()
+            ErosionRegistry.Items.SULFUR_SLAG.get(),
+            ErosionRegistry.Items.ANTIMONY_SLAG.get()
         )
     );
 
@@ -1739,6 +1740,10 @@ public class ErosionCore
             ))),
             Map.entry(ErosionRegistry.Items.SULFUR_SLAG.get(), new ChemicalInfo(List.of(
                 "Iron sulfide matrix rich in sulfur impurities",
+                "Industrial metallurgical byproduct"
+            ))),
+            Map.entry(ErosionRegistry.Items.ANTIMONY_SLAG.get(), new ChemicalInfo(List.of(
+                "Contains antimonic oxides",
                 "Industrial metallurgical byproduct"
             ))),
             Map.entry(ErosionRegistry.Items.RUBY.get(), new ChemicalInfo(List.of(

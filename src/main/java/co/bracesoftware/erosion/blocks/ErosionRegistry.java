@@ -132,6 +132,7 @@ public class ErosionRegistry
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
         public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
         public static final IRawRegistry SULFUR_SLAG = new IRawRegistry("sulfur_slag", "Sulfur Slag");
+        public static final IRawRegistry ANTIMONY_SLAG = new IRawRegistry("antimony_slag", "Antimony Slag");
         public static final IRawRegistry DEBRIS = new IRawRegistry("debris", "Debris");
         public static final IRawRegistry CRUSHED_EGG_SHELL = new IRawRegistry("crushed_egg_shell", "Crushed Egg Shell");
         public static final IRawRegistry RAW_LIMONITE = new IRawRegistry("raw_limonite", "Raw Limonite");
@@ -542,6 +543,9 @@ public class ErosionRegistry
         public static final DeferredItem<Item> SULFUR_SLAG = ITEMS.register(
             RawRegistry.SULFUR_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
+        public static final DeferredItem<Item> ANTIMONY_SLAG = ITEMS.register(
+            RawRegistry.ANTIMONY_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
         public static final DeferredItem<Item> DEBRIS = ITEMS.register(
             RawRegistry.DEBRIS.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
@@ -716,6 +720,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get());
             output.accept(ErosionRegistry.Items.SAPPHIRE.get());
             output.accept(ErosionRegistry.Items.SULFUR_SLAG.get());
+            output.accept(ErosionRegistry.Items.ANTIMONY_SLAG.get());
             output.accept(ErosionRegistry.Items.DEBRIS.get());
             output.accept(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
             output.accept(ErosionRegistry.Items.FELDSPAR_POWDER.get());

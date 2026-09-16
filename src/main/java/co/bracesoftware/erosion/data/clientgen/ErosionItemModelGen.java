@@ -24,6 +24,7 @@ public class ErosionItemModelGen extends ItemModelProvider {
         basicItem(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get());
         basicItem(ErosionRegistry.Items.SAPPHIRE.get());
         basicItem(ErosionRegistry.Items.SULFUR_SLAG.get());
+        basicItem(ErosionRegistry.Items.ANTIMONY_SLAG.get());
         basicItem(ErosionRegistry.Items.DEBRIS.get());
         basicItem(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
 
