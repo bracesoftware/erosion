@@ -47,6 +47,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.bracesoftware.erosion.ErosionConfig.*;
 import co.bracesoftware.erosion.ErosionCore.CommandRegistry;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
@@ -279,11 +280,11 @@ public final class ErosionMod
     private static final AtomicBoolean REGISTRY_SETUP = new AtomicBoolean(false);
     private static Boolean MOD_LOADED = false;
 
-    public static void SetupRegistry(IEventBus modEventBus) throws RuntimeException
+    public static void SetupRegistry(IEventBus modEventBus) throws ErosionRecipeImplException
     {
         if(!REGISTRY_SETUP.compareAndSet(false, true))
         {
-            throw new RuntimeException("Registry has to be set up only once.");
+            throw new ErosionRecipeImplException("Registry has to be set up only once.");
         }
         ErosionUtils.Log("Opening the Erosion registry...");
         ErosionRegistry.init(modEventBus);

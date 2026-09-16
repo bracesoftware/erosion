@@ -6,6 +6,7 @@ import java.util.Map;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
@@ -102,11 +103,13 @@ public class ErosionDataGeneratorsProgInterface
     {
         private static Boolean PARENT_ADVANCEMENT_CREATED = false;
 
-        public static AdvancementHolder generateParentAdvancement(ErosionAdvGen.Generator t)
+        public static AdvancementHolder generateParentAdvancement(
+            ErosionAdvGen.Generator t
+        ) throws ErosionDataGenException
         {
             if(PARENT_ADVANCEMENT_CREATED)
             {
-                throw new RuntimeException("Parent advancement is already generated!");
+                throw new ErosionDataGenException("Parent advancement is already generated!");
             }
             PARENT_ADVANCEMENT_CREATED = true;
             return Advancement.Builder.advancement()

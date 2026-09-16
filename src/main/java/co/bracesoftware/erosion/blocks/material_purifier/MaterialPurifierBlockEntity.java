@@ -6,24 +6,21 @@ import javax.annotation.Nullable;
 
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionMaterialPurifierException;
 import co.bracesoftware.erosion.ErosionMod;
-import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.ReloadableServerRegistries.Holder;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
@@ -49,7 +46,10 @@ public class MaterialPurifierBlockEntity extends BlockEntity
         super(ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), pos, state);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, MaterialPurifierBlockEntity be)
+    public static void tick(
+        Level level, BlockPos pos, BlockState state,
+        MaterialPurifierBlockEntity be
+    ) throws ErosionMaterialPurifierException
     {
         if(level.isClientSide()) return;
 
@@ -124,7 +124,7 @@ public class MaterialPurifierBlockEntity extends BlockEntity
         {
             if(ErosionConfig.PURIFIER_SECONDS < 1)
             {
-                throw new RuntimeException("Invalid `ErosionConfig.PURIFIER_SECONDS` value; must be 1 or bigger.");
+                throw new ErosionMaterialPurifierException("Invalid `ErosionConfig.PURIFIER_SECONDS` value; must be 1 or bigger.");
             }
             be.progress++;
             if(be.progress >= 20 * ErosionConfig.PURIFIER_SECONDS)

@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionCrucibleException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
@@ -55,7 +56,10 @@ public class CrucibleBlockEntity extends BlockEntity
         super(ErosionRegistry.BlockEntities.CRUCIBLE.get(), pos, state);
     }
 
-    public static void tick(Level level, BlockPos pos, BlockState state, CrucibleBlockEntity be)
+    public static void tick(
+        Level level, BlockPos pos, BlockState state,
+        CrucibleBlockEntity be
+    ) throws ErosionCrucibleException
     {
         if(level.isClientSide()) return;
 
@@ -72,7 +76,7 @@ public class CrucibleBlockEntity extends BlockEntity
         {
             if(ErosionConfig.CRUCIBLE_SECONDS < 1)
             {
-                throw new RuntimeException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");
+                throw new ErosionCrucibleException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");
             }
             be.progress++;
             if(be.progress >= 20 * ErosionConfig.CRUCIBLE_SECONDS)
