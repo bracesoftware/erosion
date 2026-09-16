@@ -14,8 +14,6 @@ import net.neoforged.neoforge.internal.BrandingControl;
 @Mixin(value = BrandingControl.class, remap = false)
 public class ErosionBrandingText
 {
-    public static final String MOD_BRANDING = "Erosion build " + Erosion.BUILD;
-
     @Inject(
         method = {"computeBranding"},
         at = {@At(value = "INVOKE",
@@ -26,6 +24,6 @@ public class ErosionBrandingText
         CallbackInfo ci, ImmutableList.Builder<String> builder
     ) throws ErosionMixinException
     {
-        builder.add(MOD_BRANDING);
+        builder.add(Erosion.MOD_BRANDING);
     }
 }
