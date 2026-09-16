@@ -129,7 +129,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
             ),
             Map.of(
                 "A", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
-                    ErosionModCompat.CompatibleMods.BUTCHERY.getModId(), "sulfuric_acid"
+                    ErosionModCompat.CompatibleMods.BUTCHERY.getModId(), "bottle_of_sulfuric_acid"
                 ),
                 "B", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
                     ResourceLocation.DEFAULT_NAMESPACE, Items.BUCKET.getDescription().getString()
