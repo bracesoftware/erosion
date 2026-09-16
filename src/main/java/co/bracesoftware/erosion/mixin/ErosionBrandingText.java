@@ -1,62 +1,30 @@
 package co.bracesoftware.erosion.mixin;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.include.com.google.common.collect.ImmutableList;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.ErosionUtils;
 import net.neoforged.neoforge.internal.BrandingControl;
 
 @Mixin(value = BrandingControl.class, remap = false)
 public class ErosionBrandingText
 {
-    @Inject(
-        method = "computeBranding",
-        at = @At("HEAD")
-    )
-    private static void test(CallbackInfo ci)
-    {
-        ErosionUtils.Log("Erosion Mixin loaded!");
-        return;
-    }
+    public static final String MOD_BRANDING = "Erosion build " + Erosion.BUILD;
 
     @Inject(
-        method = "forEachLine",
-        at = @At("HEAD")
+        method = {"computeBranding"},
+        at = {@At(value = "INVOKE",
+        target = "Lnet/neoforged/fml/ModList;get()Lnet/neoforged/fml/ModList;")},
+        locals = LocalCapture.CAPTURE_FAILHARD, require = 0
     )
-    private static void erosion$test(
-        boolean includeMC,
-        boolean reverse,
-        java.util.function.BiConsumer<Integer, String> lineConsumer,
-        CallbackInfo ci
-    ) {
-        System.out.println("=== forEachLine CALLED ===");
-    }
-
-    private static void ErosionInjectBranding(
-        boolean inc,
-        boolean r,
-        CallbackInfoReturnable<List<String>> cir
+    private static void addModernFixBranding(
+        CallbackInfo ci, ImmutableList.Builder<String> builder
     ) throws RuntimeException
     {
-        String verstr = "Erosion build " + Erosion.BUILD;
-        System.out.println("Yo wassup");
-        List<String> original = cir.getReturnValue();
-
-        if(original == null || original.contains(verstr)) return;
-
-        List<String> brandings = new ArrayList<>(original);
-
-        if(r) brandings.add(0, verstr);
-        else brandings.add(verstr);
-
-        cir.setReturnValue(brandings);
-        return;
+        builder.add(MOD_BRANDING);
     }
 }
