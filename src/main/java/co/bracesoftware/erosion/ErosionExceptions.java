@@ -61,4 +61,14 @@ public class ErosionExceptions
             }
         }
     }
+    public static class ErosionBlockExceptions
+    {
+        public static class ErosionChemicalReactorException extends ErosionException
+        {
+            public ErosionChemicalReactorException(String e)
+            {
+                super(e);
+            }
+        }
+    }
 }

@@ -2,10 +2,8 @@ package co.bracesoftware.erosion;
 
 import org.slf4j.Logger;
 
-import co.bracesoftware.erosion.Erosion.SML.ModSide;
 import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.MinecraftServer;
@@ -15,19 +13,19 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.event.lifecycle.FMLDedicatedServerSetupEvent;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
 @Mod(Erosion.MODID)
-@EventBusSubscriber
+@EventBusSubscriber(modid = Erosion.MODID)
 public class Erosion
 {
     public static final String MODID = "erosion";
     public static final String MODNAME = "Erosion";
     public static final Integer BUILD = 5;
-    public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD;
+    public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
+    public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD + " snapshot " + Erosion.SNAPSHOT;
     
     public static final Logger LOGGER = LogUtils.getLogger();
 

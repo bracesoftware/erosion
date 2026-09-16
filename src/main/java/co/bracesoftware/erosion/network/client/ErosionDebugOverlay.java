@@ -4,10 +4,8 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionRetrogen;
 import co.bracesoftware.libs.minecraft_text_formatter.*;
-import net.minecraft.client.gui.screens.TitleScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.ModList;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.CustomizeGuiOverlayEvent;
 
@@ -31,7 +29,7 @@ public class ErosionDebugOverlay
         );
         event.getRight().add(
             MAIN_STYLE + Text.Format(Text.Col.DARK_AQUA) +
-            "Snapshot: " + ModList.get().getModFileById(Erosion.MODID).versionString()
+            "Snapshot: " + Erosion.SNAPSHOT
         );
 
         event.getLeft().add("");

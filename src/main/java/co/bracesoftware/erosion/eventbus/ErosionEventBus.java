@@ -12,7 +12,9 @@ public class ErosionEventBus
 {
     private static final List<Consumer<ErosionEvents.ErosionBlockEntityRecipeRegistration>> EROSION_RECIPE_REG_LISTENERS = new ArrayList<>();
 
-    public static void registerListeners(Class<?> c) throws RuntimeException
+    public static void registerListeners(
+        Class<?> c
+    ) throws ErosionEventBusException
     {
         ErosionUtils.Log("Registering class -> " + c.getName());
         for(var m : c.getDeclaredMethods())
@@ -24,7 +26,7 @@ public class ErosionEventBus
             {
                 if(!Modifier.isStatic(m.getModifiers()))
                 {
-                    throw new RuntimeException("Event subscriber has to be a static method.");
+                    throw new ErosionEventBusException("Event subscriber has to be a static method.");
                 }
                 var par = m.getParameterTypes()[0];
                 //BLOCK ENTITY RECIPE REGISTRATION
