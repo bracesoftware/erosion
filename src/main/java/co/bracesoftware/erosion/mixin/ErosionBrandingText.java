@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import org.spongepowered.include.com.google.common.collect.ImmutableList;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionMixinException;
 import net.neoforged.neoforge.internal.BrandingControl;
 
 @Mixin(value = BrandingControl.class, remap = false)
@@ -23,7 +24,7 @@ public class ErosionBrandingText
     )
     private static void addModernFixBranding(
         CallbackInfo ci, ImmutableList.Builder<String> builder
-    ) throws RuntimeException
+    ) throws ErosionMixinException
     {
         builder.add(MOD_BRANDING);
     }

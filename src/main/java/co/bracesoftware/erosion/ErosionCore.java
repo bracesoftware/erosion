@@ -21,6 +21,7 @@ import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
 import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 import java.util.ArrayList;
 
@@ -224,12 +225,12 @@ public class ErosionCore
 
         public void discardDuplicationPreventionSys(
             List<String> l
-        ) throws RuntimeException
+        ) throws ErosionRecipeImplException
         {
             String resource = this.getClass().getSimpleName() + "::Erosion.class(\"" + this.name + "\")";
             if(!l.contains(this.name))
             {
-                throw new RuntimeException("Object was never set up, cannot be discarded -> " + resource);
+                throw new ErosionRecipeImplException("Object was never set up, cannot be discarded -> " + resource);
             }
             l.remove(this.name);
             ErosionUtils.Log("Discarding data of: " + resource);
@@ -238,12 +239,12 @@ public class ErosionCore
 
         public void preventDuplication(
             List<String> l
-        ) throws RuntimeException
+        ) throws ErosionRecipeImplException
         {
             String resource = this.getClass().getSimpleName() + "::Erosion.class(\"" + this.name + "\")";
             if(l.contains(this.name))
             {
-                throw new RuntimeException("Duplicate object -> " + resource);
+                throw new ErosionRecipeImplException("Duplicate object -> " + resource);
             }
             l.add(this.name);
             ErosionUtils.Log("Preventing duplication of: " + resource);
@@ -340,7 +341,7 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup() throws RuntimeException
+        public void setup() throws ErosionRecipeImplException
         {
             ErosionUtils.Log("Setting up chemical reaction: " + this.name);
             var p = new ArrayList<>(this.product.get());
@@ -360,7 +361,7 @@ public class ErosionCore
                 (this.productItems.size() <= 0 || this.productItems.size() > ChemicalReactorMenu.ROWS * ChemicalReactorMenu.COL)
             )
             {
-                throw new RuntimeException("Reactant and product lists have to be in range 0 < x <= 6 -> " + this.name);
+                throw new ErosionRecipeImplException("Reactant and product lists have to be in range 0 < x <= 6 -> " + this.name);
             }
             return;
         }
@@ -503,7 +504,7 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup() throws RuntimeException
+        public void setup() throws ErosionRecipeImplException
         {
             ErosionUtils.Log("Setting up refinable material item: " + this.name);
             this.preventDuplication(antiDuplicator);
@@ -524,7 +525,7 @@ public class ErosionCore
                 this.recipeCategory != BlockEntityRecipeRegistries.CRUCIBLE
             )
             {
-                throw new RuntimeException("Invalid recipe category -> " + this.name);
+                throw new ErosionRecipeImplException("Invalid recipe category -> " + this.name);
             }
             
             if(this.recipeCategory == BlockEntityRecipeRegistries.MATERIAL_PURIFIER)
@@ -536,7 +537,7 @@ public class ErosionCore
                 BlockEntityRecipes.Crucible.RECIPES.putIfAbsent(materialItem, productItem);
                 if(this.catalyst == null)
                 {
-                    throw new RuntimeException("Missing a catalyst for recipe: " + this.name);
+                    throw new ErosionRecipeImplException("Missing a catalyst for recipe: " + this.name);
                 }
                 else
                 {
@@ -550,7 +551,7 @@ public class ErosionCore
 
                 if(this.coproduct == null || this.coproductItem == null)
                 {
-                    throw new RuntimeException("Missing a list of coproducts for recipe: " + this.name);
+                    throw new ErosionRecipeImplException("Missing a list of coproducts for recipe: " + this.name);
                 }
                 else
                 {
@@ -604,7 +605,7 @@ public class ErosionCore
                 this.productItemSupplier = b;
             }
 
-            public void setup() throws RuntimeException
+            public void setup() throws ErosionRecipeImplException
             {
                 ErosionUtils.Log("Setting up alteration path: " + this.name);
                 this.product = this.productSupplier.get();
@@ -612,12 +613,12 @@ public class ErosionCore
 
                 if(this.product.size() != this.productItem.size())
                 {
-                    throw new RuntimeException("this.product.size() != this.productItem.size() -> path::(\"" + this.name + "\")");
+                    throw new ErosionRecipeImplException("this.product.size() != this.productItem.size() -> path::(\"" + this.name + "\")");
                 }
 
                 if(this.rules == null)
                 {
-                    throw new RuntimeException("Alteration rules are null for path -> " + this.name);
+                    throw new ErosionRecipeImplException("Alteration rules are null for path -> " + this.name);
                 }
                 return;
             }
@@ -641,7 +642,7 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup() throws RuntimeException
+        public void setup() throws ErosionRecipeImplException
         {
             ErosionUtils.Log("Setting up erodable material: " + this.name);
             this.preventDuplication(antiDuplicator);
