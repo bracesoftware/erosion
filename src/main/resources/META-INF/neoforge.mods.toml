@@ -2,12 +2,9 @@ modLoader="javafml"
 loaderVersion="[1,)"
 license="MIT"
 
-[[mixins]]
-config = "erosion.mixins.json"
-
 [[mods]]
 modId="erosion"
-version="15495648841049561888"
+version="3075972107741945268"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"

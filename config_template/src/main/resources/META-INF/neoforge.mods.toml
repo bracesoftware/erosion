@@ -2,9 +2,6 @@ modLoader="javafml"
 loaderVersion="[1,)"
 license="MIT"
 
-[[mixins]]
-config = "erosion.mixins.json"
-
 [[mods]]
 modId="erosion"
 version="!!NEOFORGE_MOD_VERSION!!"
