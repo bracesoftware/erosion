@@ -27,20 +27,16 @@ public class ErosionBrandingText
     }
 
     @Inject(
-        method = "getBrandings",
-        at = @At("RETURN")
+        method = "forEachLine",
+        at = @At("HEAD")
     )
-    private static void test(
+    private static void erosion$test(
         boolean includeMC,
         boolean reverse,
-        CallbackInfoReturnable<List<String>> cir
+        java.util.function.BiConsumer<Integer, String> lineConsumer,
+        CallbackInfo ci
     ) {
-        System.out.println("=== GET BRANDINGS CALLED ===");
-        System.out.println("includeMC = " + includeMC);
-        System.out.println("reverse = " + reverse);
-        System.out.println("result = " + cir.getReturnValue());
-
-        ErosionInjectBranding(includeMC, reverse, cir);
+        System.out.println("=== forEachLine CALLED ===");
     }
 
     private static void ErosionInjectBranding(
