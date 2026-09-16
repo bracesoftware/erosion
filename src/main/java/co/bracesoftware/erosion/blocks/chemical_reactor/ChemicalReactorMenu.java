@@ -164,7 +164,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
             }
         }
 
-        scanRecipez();
+        if(this.products.isEmpty()) scanRecipez();
         return;
     }
 
