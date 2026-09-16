@@ -132,7 +132,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
                     ErosionModCompat.CompatibleMods.BUTCHERY.getModId(), "bottle_of_sulfuric_acid"
                 ),
                 "B", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
-                    ResourceLocation.DEFAULT_NAMESPACE, Items.BUCKET.getDescription().getString()
+                    ResourceLocation.DEFAULT_NAMESPACE, Items.BUCKET.getDescription().getString().toLowerCase()
                 )
             )
         );
