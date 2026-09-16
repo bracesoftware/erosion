@@ -2,6 +2,10 @@ modLoader="javafml"
 loaderVersion="[1,)"
 license="MIT"
 
+mixins = [
+    "erosion.mixins.json"
+]
+
 [[mods]]
 modId="erosion"
 version="!!NEOFORGE_MOD_VERSION!!"
@@ -25,7 +29,3 @@ Adds simple geological chemistry to your world.
     versionRange="[1.21.1]"
     ordering="NONE"
     side="BOTH"
-
-mixins = [
-    "erosion.mixins.json"
-]

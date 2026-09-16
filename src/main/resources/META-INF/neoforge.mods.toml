@@ -2,9 +2,13 @@ modLoader="javafml"
 loaderVersion="[1,)"
 license="MIT"
 
+mixins = [
+    "erosion.mixins.json"
+]
+
 [[mods]]
 modId="erosion"
-version="14923590094705750731"
+version="12222951086509285119"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"
@@ -25,7 +29,3 @@ Adds simple geological chemistry to your world.
     versionRange="[1.21.1]"
     ordering="NONE"
     side="BOTH"
-
-mixins = [
-    "erosion.mixins.json"
-]
