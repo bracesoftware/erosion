@@ -178,20 +178,22 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
 
     private void addPlayerInventory(Inventory pinv)
     {
+        final int y = 102;
         for(int i = 0; i < 3; ++i)
         {
             for(int j = 0; j < 9; ++j)
             {
-                this.addSlot(new Slot(pinv, j + i * 9 + 9, 8 + j * 18, 84 + i * 18));
+                this.addSlot(new Slot(pinv, j + i * 9 + 9, 8 + j * 18, y + i * 18));
             }
         }
     }
 
     private void addPlayerHotbar(Inventory pinv)
     {
+        final int y = 160;
         for(int k = 0; k < 9; ++k)
         {
-            this.addSlot(new Slot(pinv, k, 8 + k * 18, 142));
+            this.addSlot(new Slot(pinv, k, 8 + k * 18, y));
         }
     }
 
