@@ -10,6 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionUtils;
 import net.neoforged.neoforge.internal.BrandingControl;
 
 @Mixin(value = BrandingControl.class, remap = false)
@@ -19,32 +20,45 @@ public class ErosionBrandingText
         method = "computeBranding",
         at = @At("HEAD")
     )
-    private static void test(CallbackInfo ci) {
-        System.out.println("================================");
-        System.out.println("EROSION MIXIN IS LOADED!");
-        System.out.println("================================");
+    private static void test(CallbackInfo ci)
+    {
+        ErosionUtils.Log("Erosion Mixin loaded!");
+        return;
     }
-    
+
     @Inject(
-        method = "getBrandings(ZZ)Ljava/util/List;",
-        at = @At("RETURN"),
-        cancellable = true
+        method = "getBrandings",
+        at = @At("RETURN")
     )
-    private static void idkWhatToCallThis(
+    private static void test(
+        boolean includeMC,
+        boolean reverse,
+        CallbackInfoReturnable<List<String>> cir
+    ) {
+        System.out.println("=== GET BRANDINGS CALLED ===");
+        System.out.println("includeMC = " + includeMC);
+        System.out.println("reverse = " + reverse);
+        System.out.println("result = " + cir.getReturnValue());
+
+        ErosionInjectBranding(includeMC, reverse, cir);
+    }
+
+    private static void ErosionInjectBranding(
         boolean inc,
         boolean r,
         CallbackInfoReturnable<List<String>> cir
     ) throws RuntimeException
     {
+        String verstr = "Erosion build " + Erosion.BUILD;
         System.out.println("Yo wassup");
         List<String> original = cir.getReturnValue();
 
-        if(original == null || original.contains("Erosion build " + Erosion.BUILD)) return;
+        if(original == null || original.contains(verstr)) return;
 
         List<String> brandings = new ArrayList<>(original);
 
-        if(r) brandings.add(0, "Erosion build " + Erosion.BUILD);
-        else brandings.add("Erosion build " + Erosion.BUILD);
+        if(r) brandings.add(0, verstr);
+        else brandings.add(verstr);
 
         cir.setReturnValue(brandings);
         return;
