@@ -19,12 +19,13 @@ public class ErosionBrandingText
         at = @At("RETURN"),
         cancellable = true
     )
-    private static void erosion$getBrandings(
+    private static void idkWhatToCallThis(
         boolean inc,
         boolean r,
         CallbackInfoReturnable<List<String>> cir
     ) throws RuntimeException
     {
+        System.out.println("Yo wassup");
         List<String> original = cir.getReturnValue();
 
         if(original == null || original.contains("Erosion build " + Erosion.BUILD)) return;
