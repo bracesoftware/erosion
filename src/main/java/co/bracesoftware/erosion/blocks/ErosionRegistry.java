@@ -178,6 +178,9 @@ public class ErosionRegistry
             public static final IRawRegistry DIRT_HYDRATION = new IRawRegistry(
                 "dirt_hydration", "Dirt Hydration"
             );
+            public static final IRawRegistry ANHYDROUS_BORAX_HYDRATION = new IRawRegistry(
+                "borax_hydration", "Anhydrous Borax Hydration"
+            );
         }
 
         //DATA ATTACHMENTS

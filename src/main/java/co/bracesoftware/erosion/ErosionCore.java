@@ -1447,6 +1447,16 @@ public class ErosionCore
         ), () -> List.of(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get())
     );
 
+    public static final ChemicalReaction ANHYDROUS_BORAX_HYDRATION = new ChemicalReaction(
+        ErosionRegistry.RawRegistry.ChemicalReactions.ANHYDROUS_BORAX_HYDRATION.getName(),
+        () -> List.of(
+            Items.WATER_BUCKET, ErosionRegistry.Items.DEHYDRATED_BORAX.get()
+        ), () -> List.of(
+            ErosionRegistry.Items.BORAX.get(),
+            Items.BUCKET
+        ), () -> List.of(ErosionRegistry.Items.BORAX.get())
+    );
+
     // ========================== REGISTRY
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST_ORIGINAL = List.of(
@@ -1471,7 +1481,8 @@ public class ErosionCore
     );
 
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST_ORIGINAL = List.of(
-        DIRT_HYDRATION, BORIC_ACID_SYNTHESIS, SULFURIC_ACID_SYNTHESIS
+        DIRT_HYDRATION, BORIC_ACID_SYNTHESIS, SULFURIC_ACID_SYNTHESIS,
+        ANHYDROUS_BORAX_HYDRATION
     );
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
