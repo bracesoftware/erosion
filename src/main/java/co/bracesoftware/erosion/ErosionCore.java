@@ -52,7 +52,6 @@ import net.minecraft.server.level.ServerLevel;
 
 import it.unimi.dsi.fastutil.longs.*;
 
-@EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCore
 {
     public static String CACHED_STATUS_STRING = "";
