@@ -15,20 +15,7 @@ import net.neoforged.neoforge.internal.BrandingControl;
 
 import java.util.List;
 
-@Mixin(value = BrandingControl.class, remap = false)
 public class ErosionBrandingText
 {
-    private static List<String> cachedBranding = null;
-
-    @Inject(method = "getBranding", at = @At("RETURN"), cancellable = true)
-    private static void onGetBranding(CallbackInfoReturnable<List<String>> cir)
-    {
-        if(cachedBranding == null)
-        {
-            List<String> list = new ArrayList<>(cir.getReturnValue());
-            list.add(Erosion.MOD_BRANDING);
-            cachedBranding = List.copyOf(list);
-        }
-        cir.setReturnValue(cachedBranding);
-    }
+    private static final Boolean FKTHIS = true;
 }
