@@ -9,8 +9,6 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReactorMenu>
 {
-    private static final ResourceLocation BURN_PROGRESS_SPRITE = ResourceLocation
-        .withDefaultNamespace("container/furnace/burn_progress");
     private static final ResourceLocation WINDOW_BG = ResourceLocation
         .fromNamespaceAndPath(Erosion.MODID, "textures/gui/container/chemical_reactor.png");
     private static final ResourceLocation SLOT_SPRITE = ResourceLocation
@@ -45,7 +43,6 @@ public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReact
                 g.blitSprite(SLOT_SPRITE, x + 124 + col * 18 - 1, y + 17 + row * 18 - 1, 18, 18);
             }
         }
-        g.blitSprite(BURN_PROGRESS_SPRITE, x + 82, y + 35, 24, 16);
     }
 
     @Override
