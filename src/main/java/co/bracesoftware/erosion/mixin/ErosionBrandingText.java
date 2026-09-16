@@ -19,7 +19,7 @@ public class ErosionBrandingText
     private static void onGetBrandings(boolean i, boolean o, CallbackInfoReturnable<List<String>> cir)
     {
         List<String> brandings = new ArrayList<>(cir.getReturnValue());
-        brandings.add(0, "Erosion build " + Erosion.BUILD.toString());
+        brandings.add("Erosion build " + Erosion.BUILD.toString());
         cir.setReturnValue(brandings);
     }
 }
