@@ -52,7 +52,7 @@ import net.minecraft.server.level.ServerLevel;
 
 import it.unimi.dsi.fastutil.longs.*;
 
-@EventBusSubscriber(modid = Erosion.MODID, value = Dist.CLIENT)
+@EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCore
 {
     public static String CACHED_STATUS_STRING = "";
@@ -1611,38 +1611,6 @@ public class ErosionCore
         {
             var m = CHEMICAL_REACTION_LIST.get(i);
             m.discard();
-        }
-        return;
-    }
-
-    @SubscribeEvent 
-    public static void onTooltip(ItemTooltipEvent e)
-    {
-        Item currentItem = e.getItemStack().getItem();
-        var tooltip = e.getToolTip();
-
-        if(ITEM_DESCRIPTIONS.containsKey(currentItem))
-        {
-            var a = ITEM_DESCRIPTIONS.get(currentItem);
-            for(int i = 0; i < a.size(); i++)
-            {
-                Component c = a.get(i).copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
-                List<Component> f = ErosionConfig.Libs.COMPONENT_WORD_WRAP ? ComponentWordWrap.Format(
-                    c, ErosionConfig.Libs.MAX_WORDS_PER_COMPONENT_LINE
-                ) : List.of(c);
-                for(var p : f)
-                {
-                    tooltip.add(p);
-                }
-            }
-            return;
-        }
-
-        var b = setupItemDescription(currentItem);
-        for(var c : b)
-        {
-            Component f = c.copy().withStyle(s -> s.withFont(ErosionConfig.MINI_FONT));
-            tooltip.add(f);
         }
         return;
     }

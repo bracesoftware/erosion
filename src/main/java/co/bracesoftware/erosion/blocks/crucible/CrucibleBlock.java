@@ -348,14 +348,21 @@ public class CrucibleBlock extends BaseEntityBlock
         {
             if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
             {    
-                if(!be.storedItem.isEmpty())
+                if(be.storedItem != null && !be.storedItem.isEmpty())
                 {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.storedItem);
                 }
-                if(!be.catalyst.isEmpty())
+                if(be.catalyst != null && !be.catalyst.isEmpty())
                 {
                     ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), fuelStack);
+                }
+                if(be.coproducts != null && !be.coproducts.isEmpty())
+                {
+                    for(ItemStack coproduct : be.coproducts)
+                    {
+                        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), coproduct);
+                    }
                 }
             }
 

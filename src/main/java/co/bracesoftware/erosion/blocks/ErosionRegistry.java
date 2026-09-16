@@ -746,10 +746,4 @@ public class ErosionRegistry
             e.printStackTrace();
         }
     }
-
-    @SubscribeEvent
-    public static void regScreen(RegisterMenuScreensEvent event)
-    {
-        event.register(ErosionRegistry.Menus.CHEMICAL_REACTOR.get(), ChemicalReactorScreen::new);
-    }
 }
