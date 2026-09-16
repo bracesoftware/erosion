@@ -19,9 +19,9 @@ public class ErosionBrandingText
         method = {"computeBranding"},
         at = {@At(value = "INVOKE",
         target = "Lnet/neoforged/fml/ModList;get()Lnet/neoforged/fml/ModList;")},
-        locals = LocalCapture.CAPTURE_FAILHARD, require = 0
+        locals = LocalCapture.CAPTURE_FAILHARD, require = 1
     )
-    private static void Add(
+    private static void idkWhatToCallThis(
         CallbackInfo ci, ImmutableList.Builder<String> builder
     )
     {
