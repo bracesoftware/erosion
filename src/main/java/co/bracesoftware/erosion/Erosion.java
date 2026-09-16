@@ -26,7 +26,7 @@ public class Erosion
 {
     public static final String MODID = "erosion";
     public static final String MODNAME = "Erosion";
-    public static final Integer BUILD = 4;
+    public static final Integer BUILD = 5;
     
     public static final Logger LOGGER = LogUtils.getLogger();
 

@@ -222,7 +222,9 @@ public class ErosionCore
             return;
         }
 
-        public void discardDuplicationPreventionSys(List<String> l)
+        public void discardDuplicationPreventionSys(
+            List<String> l
+        ) throws RuntimeException
         {
             String resource = this.getClass().getSimpleName() + "::Erosion.class(\"" + this.name + "\")";
             if(!l.contains(this.name))
@@ -234,7 +236,9 @@ public class ErosionCore
             return;
         }
 
-        public void preventDuplication(List<String> l)
+        public void preventDuplication(
+            List<String> l
+        ) throws RuntimeException
         {
             String resource = this.getClass().getSimpleName() + "::Erosion.class(\"" + this.name + "\")";
             if(l.contains(this.name))
@@ -499,7 +503,7 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup()
+        public void setup() throws RuntimeException
         {
             ErosionUtils.Log("Setting up refinable material item: " + this.name);
             this.preventDuplication(antiDuplicator);
@@ -600,7 +604,7 @@ public class ErosionCore
                 this.productItemSupplier = b;
             }
 
-            public void setup()
+            public void setup() throws RuntimeException
             {
                 ErosionUtils.Log("Setting up alteration path: " + this.name);
                 this.product = this.productSupplier.get();
@@ -637,7 +641,7 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup()
+        public void setup() throws RuntimeException
         {
             ErosionUtils.Log("Setting up erodable material: " + this.name);
             this.preventDuplication(antiDuplicator);

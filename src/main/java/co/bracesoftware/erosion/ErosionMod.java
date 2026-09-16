@@ -279,7 +279,7 @@ public final class ErosionMod
     private static final AtomicBoolean REGISTRY_SETUP = new AtomicBoolean(false);
     private static Boolean MOD_LOADED = false;
 
-    public static void SetupRegistry(IEventBus modEventBus)
+    public static void SetupRegistry(IEventBus modEventBus) throws RuntimeException
     {
         if(!REGISTRY_SETUP.compareAndSet(false, true))
         {

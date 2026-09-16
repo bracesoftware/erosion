@@ -4,7 +4,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionRetrogen;
 import co.bracesoftware.libs.minecraft_text_formatter.*;
-
+import net.minecraft.client.gui.screens.TitleScreen;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModList;

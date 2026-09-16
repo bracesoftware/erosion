@@ -11,11 +11,11 @@
     "AB"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:Bucket"
-    },
     "A": {
       "item": "butchery:bottle_of_sulfuric_acid"
+    },
+    "B": {
+      "item": "minecraft:bucket"
     }
   },
   "result": {
