@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import co.bracesoftware.erosion.*;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionEventBusException;
 
 public class ErosionEventBus
 {
@@ -50,7 +51,7 @@ public class ErosionEventBus
     {
         public static void CALL_BE_RECIPE_REG(
             ErosionEvents.ErosionBlockEntityRecipeRegistration p
-        ) throws RuntimeException
+        ) throws ErosionEventBusException
         {
             if(EROSION_RECIPE_REG_LISTENERS.isEmpty()) return;
             for(var e : EROSION_RECIPE_REG_LISTENERS)

@@ -36,6 +36,14 @@ public class ErosionExceptions
         }
     }
 
+    public static class ErosionEventBusException extends ErosionException
+    {
+        public ErosionEventBusException(String e)
+        {
+            super(e);
+        }
+    }
+
     public static class ErosionBlockEntityExceptions
     {
         public static class ErosionMaterialPurifierException extends ErosionException
