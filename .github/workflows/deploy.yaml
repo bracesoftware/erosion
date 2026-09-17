@@ -51,7 +51,12 @@ jobs:
         run: |
           set -e
 
-          VERSION="${GITHUB_REF_NAME#build}"
+          BUILD_VERSION="${GITHUB_REF_NAME#build}"
+          SNAPSHOT_VERSION=$(cat snapshot.txt)
+
+          VERSION="${BUILD_VERSION}.${SNAPSHOT_VERSION}"
+
+          echo "Publishing version: ${VERSION}"
 
           DATA=$(jq -n \
             --arg project_id "$MODRINTH_PROJECT_ID" \
