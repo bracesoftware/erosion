@@ -66,8 +66,10 @@ jobs:
           DATA=$(jq -n \
             --arg project_id "$MODRINTH_PROJECT_ID" \
             --arg version "$VERSION" \
+            --arg build "$BUILD_VERSION" \
+            --arg snapshot "$SNAPSHOT_VERSION" \
             '{
-              name: ("Build " + $version),
+              name: ("build " + $build + " snapshot " + $snapshot),
               version_number: $version,
               changelog: ("Automated release " + $version),
               dependencies: [],
