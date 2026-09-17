@@ -103,7 +103,8 @@ public class ErosionRetrogen
         () -> new ArrayList<>(List.of(
             Blocks.SHORT_GRASS,
             Blocks.FERN,
-            Blocks.DEAD_BUSH
+            Blocks.DEAD_BUSH,
+            Blocks.SEAGRASS
         )),
         () -> new ArrayList<>(List.of(
             ErosionRegistry.Blocks.RAW_HEMATITE.get(),
