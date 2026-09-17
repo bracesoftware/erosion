@@ -72,7 +72,6 @@ public class CrucibleBlockEntity extends BlockEntity
             level.setBlock(pos, state.setValue(CrucibleBlock.HEAT, calculatedHeat), Block.UPDATE_CLIENTS);
         }
 
-
         if(be.working)
         {
             if(ErosionConfig.CRUCIBLE_SECONDS < 1)
@@ -87,7 +86,7 @@ public class CrucibleBlockEntity extends BlockEntity
 
             if(gl != null && !gl.isEmpty())
             {
-                ErosionUtils.Log(
+                if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(
                     "Gastype list size for item -> " + gl.size() + "::" + item.getDescription().getString()
                 );
 
@@ -99,7 +98,6 @@ public class CrucibleBlockEntity extends BlockEntity
                     }
                 }
             }
-            
 
             be.progress++;
             if(be.progress >= 20 * ErosionConfig.CRUCIBLE_SECONDS)
