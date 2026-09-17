@@ -83,7 +83,10 @@ public class CrucibleBlockEntity extends BlockEntity
             int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
             var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(be.storedItem.getItem());
 
-            for(var g : gl)
+            ErosionUtils.Log(
+                "Gastype list size for item -> " + gl.size() + "::" + be.storedItem.getItem().getDescription().getString()
+            );
+            if(gl != null && !gl.isEmpty()) for(var g : gl)
             {
                 if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
                 {
