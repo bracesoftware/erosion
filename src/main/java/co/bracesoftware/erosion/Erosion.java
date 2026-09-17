@@ -26,6 +26,10 @@ public class Erosion
     public static final Integer BUILD = 5;
     public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
     public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD + " snapshot " + Erosion.SNAPSHOT;
+ 
+    static {
+        ErosionUtils.Log("Welcome to Minecraft: Erosion Edition!");
+    }
     
     public static final Logger LOGGER = LogUtils.getLogger();
 
