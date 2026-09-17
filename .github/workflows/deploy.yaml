@@ -27,7 +27,23 @@ jobs:
             --dir release
 
           echo "Downloaded:"
-          ls -lh release/
+          ls -lh release/Erosion-neoforge.jar
+
+      - name: Get Modrinth project ID
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          set -e
+
+          PROJECT_ID=$(curl --fail-with-body -s \
+            "https://api.modrinth.com/v2/project/erosion-mod" \
+            -H "Authorization: ${MODRINTH_TOKEN}" \
+            -H "User-Agent: Erosion-Mod-GitHub-Actions" \
+            | jq -r '.id')
+
+          echo "MODRINTH_PROJECT_ID=${PROJECT_ID}" >> "$GITHUB_ENV"
+
+          echo "Modrinth project ID: ${PROJECT_ID}"
 
       - name: Publish JAR to Modrinth
         env:
@@ -35,20 +51,32 @@ jobs:
         run: |
           set -e
 
+          VERSION="${GITHUB_REF_NAME#build}"
+
+          DATA=$(jq -n \
+            --arg project_id "$MODRINTH_PROJECT_ID" \
+            --arg version "$VERSION" \
+            '{
+              project_id: $project_id,
+              version_number: $version,
+              version_title: ("Build " + $version),
+              version_type: "release",
+              loaders: ["neoforge"],
+              game_versions: ["1.21.1"],
+              featured: true,
+              status: "listed",
+              file_parts: ["file"],
+              primary_file: "file"
+            }')
+
+          echo "Publishing version: ${VERSION}"
+
           curl --fail-with-body \
             --request POST \
             "https://api.modrinth.com/v2/version" \
             --header "Authorization: ${MODRINTH_TOKEN}" \
             --header "User-Agent: Erosion-Mod-GitHub-Actions" \
-            --form "data={
-              \"project_id\":\"erosion-mod\",
-              \"version_number\":\"${GITHUB_REF_NAME#build}\",
-              \"version_title\":\"${GITHUB_REF_NAME}\",
-              \"version_type\":\"release\",
-              \"loaders\":[\"neoforge\"],
-              \"game_versions\":[\"1.21.1\"],
-              \"featured\":true
-            }" \
-            --form "file=@release/Erosion-neoforge.jar"
+            --form "data=${DATA}" \
+            --form "file=@release/Erosion-neoforge.jar;type=application/java-archive"
 
-          echo "Published ${GITHUB_REF_NAME} to Modrinth."
+          echo "Successfully published ${VERSION} to Modrinth."
