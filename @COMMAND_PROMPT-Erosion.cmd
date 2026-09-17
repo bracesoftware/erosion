@@ -6,9 +6,7 @@ echo Generating project version...
 g++ vermgr.cpp -o vermgr -v -static
 call vermgr
 echo Writing changes to the code...
-git add .
-git commit -m update
-git push
+call pushtogithub
 echo Generating data...
 call gradlew clean build
 call gradlew clean processResources
