@@ -8,15 +8,21 @@ import com.google.gson.JsonObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 
 import co.bracesoftware.erosion.ErosionModCompat.CompatibleMod;
-
+import co.bracesoftware.erosion.eventbus.ErosionEvents;
+import co.bracesoftware.erosion.eventbus.ErosionEvents.ErosionEventSubscribe;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.ModList;
 
@@ -198,4 +204,30 @@ public class ErosionModCompat
             return;
         }
     }
+
+    @ErosionEvents.ErosionEventSubscribe
+    public static void DoDescriptions(ErosionEvents.ErosionItemDescription e)
+    {
+        if(CompatibleMods.CREATE.isPresent())
+        {
+            if(
+                e.whatItem() == BuiltInRegistries.ITEM.get(
+                    ResourceLocation.fromNamespaceAndPath(
+                        CompatibleMods.CREATE.getModId(),
+                        "raw_zinc"
+                    )
+                )
+            )
+            {
+                e.addItemDescription(
+                    Component.literal("Elemental zinc (Zn)").withStyle(ChatFormatting.DARK_AQUA)
+                );
+                e.addItemDescription(
+                    Component.literal("Contains impurities").withStyle(ChatFormatting.DARK_AQUA)
+                );
+            }
+        }
+        return;
+    }
+
 }

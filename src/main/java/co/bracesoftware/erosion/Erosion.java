@@ -36,7 +36,10 @@ public class Erosion
     public Erosion(IEventBus modEventBus, ModContainer modContainer)
     {
         LOGGER.info("LOGGER test.");
+        
         ErosionEventBus.registerListeners(ErosionCore.class);
+        ErosionEventBus.registerListeners(ErosionModCompat.class);
+
         ErosionMod.SetupRegistry(modEventBus);
     }
 

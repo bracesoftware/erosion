@@ -2226,6 +2226,11 @@ public class ErosionCore
             }
         }
 
+        var l = new ArrayList<Component>();
+        var e = new ErosionEvents.ErosionItemDescription(currentItem, l);
+        ErosionEventBus.ErosionEventInvocation.CALL_EVENT_LISTENERS(e);
+        desc.addAll(l);
+
         //cache item descriptions
         if(!desc.isEmpty())
         {

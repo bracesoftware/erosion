@@ -4,9 +4,12 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
 
 public class ErosionEvents
 {
@@ -30,6 +33,28 @@ public class ErosionEvents
         public void sayHi()
         {
             ErosionUtils.Log("Someone said 'Hi'!");
+        }
+    }
+
+    public static class ErosionItemDescription extends BasicErosionEvent
+    {
+        private List<Component> list = null;
+        private Item item = null;
+
+        public ErosionItemDescription(Item i, List<Component> l)
+        {
+            this.item = i;
+            this.list = list;
+        }
+
+        public Item whatItem()
+        {
+            return this.item;
+        }
+
+        public void addItemDescription(Component c)
+        {
+            this.list.add(c);
         }
     }
 
