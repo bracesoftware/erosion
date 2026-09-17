@@ -23,7 +23,7 @@ public class Erosion
 {
     public static final String MODID = "erosion";
     public static final String MODNAME = "Erosion";
-    public static final Integer BUILD = 6;
+    public static final Integer BUILD = 7;
 
     public static final String SUBTITLE = "Chemically Reimagined.";
     public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
