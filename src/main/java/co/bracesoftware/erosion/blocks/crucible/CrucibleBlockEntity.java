@@ -79,20 +79,27 @@ public class CrucibleBlockEntity extends BlockEntity
             {
                 throw new ErosionCrucibleException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");
             }
-            var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
-            int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
-            var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(be.storedItem.getItem());
 
-            ErosionUtils.Log(
-                "Gastype list size for item -> " + gl.size() + "::" + be.storedItem.getItem().getDescription().getString()
-            );
-            if(gl != null && !gl.isEmpty()) for(var g : gl)
+            var item = be.storedItem.getItem();
+            var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(item);
+            int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(item);
+            var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(item);
+
+            if(gl != null && !gl.isEmpty())
             {
-                if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
+                ErosionUtils.Log(
+                    "Gastype list size for item -> " + gl.size() + "::" + item.getDescription().getString()
+                );
+
+                for(var g : gl)
                 {
-                    Gas.createGas((ServerLevel) l, pos, g);
+                    if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
+                    {
+                        Gas.createGas((ServerLevel) l, pos, g);
+                    }
                 }
             }
+            
 
             be.progress++;
             if(be.progress >= 20 * ErosionConfig.CRUCIBLE_SECONDS)
