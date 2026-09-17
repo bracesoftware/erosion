@@ -26,11 +26,11 @@ jobs:
         run: ./gradlew build
 
       - name: Publish to Modrinth
-        uses: Kirstein/minota@v2
+        uses: modrinth/minota@v2
         with:
-          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
-          project-id: 'erosion-mod'
-          version-file: 'build/libs/Erosion-neoforge.jar'
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: 'erosion-mod'
+          files: 'build/libs/Erosion-neoforge.jar'
           game-versions: |
             1.21.1
           loaders: |
