@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Download JAR from GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -56,6 +59,8 @@ jobs:
 
           VERSION="${BUILD_VERSION}.${SNAPSHOT_VERSION}"
 
+          echo "Build version: ${BUILD_VERSION}"
+          echo "Snapshot version: ${SNAPSHOT_VERSION}"
           echo "Publishing version: ${VERSION}"
 
           DATA=$(jq -n \
@@ -75,8 +80,6 @@ jobs:
               featured: true,
               status: "listed"
             }')
-
-          echo "Publishing version: ${VERSION}"
 
           curl --fail-with-body \
             --request POST \
