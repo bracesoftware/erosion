@@ -95,7 +95,7 @@ public class CrucibleBlockEntity extends BlockEntity
                 {
                     if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
                     {
-                        Gas.createGas((ServerLevel) l, pos, g);
+                        Gas.createGas((ServerLevel) level, pos, g);
                     }
                 }
             }
