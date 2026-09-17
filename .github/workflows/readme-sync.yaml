@@ -5,22 +5,39 @@ on:
     branches:
       - main
     paths:
-      - 'README.md'
+      - README.md
+  workflow_dispatch:
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Update Modrinth Project Description
+      - name: Sync README to Modrinth
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
         run: |
-          README_CONTENT=$(cat README.md | jq -sR .)          
-          curl -X PATCH "https://api.modrinth.com/v2/project/erosion-mod" \
-            -H "Authorization: $MODRINTH_TOKEN" \
-            -H "Content-Type: application/json" \
-            -H "User-Agent: github-actions-readme-sync" \
-            -d "{\"body\": $README_CONTENT}"
+          set -euo pipefail
+
+          echo "Reading README.md..."
+
+          jq -n \
+            --rawfile body README.md \
+            '{body: $body}' \
+            > modrinth-payload.json
+
+          echo "Updating Modrinth project..."
+
+          curl --fail-with-body \
+            --request PATCH \
+            --url "https://api.modrinth.com/v2/project/erosion-mod" \
+            --header "Authorization: ${MODRINTH_TOKEN}" \
+            --header "Content-Type: application/json" \
+            --header "User-Agent: Erosion-Mod-GitHub-Actions" \
+            --data-binary @modrinth-payload.json
+
+          echo
+          echo "Modrinth description updated successfully!"
