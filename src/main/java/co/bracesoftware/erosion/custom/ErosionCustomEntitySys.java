@@ -84,7 +84,7 @@ public class ErosionCustomEntitySys
         private final BlockPos pos;
         private final GasType type;
 
-        private int remaining = 0;
+        private int remaining = 100;
 
         public Gas(ServerLevel l, BlockPos p, GasType t)
         {
@@ -140,6 +140,7 @@ public class ErosionCustomEntitySys
 
         private static void spawnGasParticles(ServerLevel l, BlockPos p, GasType t)
         {
+            ErosionUtils.Log("Spawning gas particles -> " + p);
             for(int i = 0; i < t.getGasParticleCount(); i++)
             {
                 double ox = (l.random.nextDouble() * 2.0 - 1.0) * t.getGasDiffusionRadius();
@@ -163,7 +164,11 @@ public class ErosionCustomEntitySys
     @SubscribeEvent 
     public static void tick(ServerTickEvent.Post e)
     {
-        if(GAS_LIST.isEmpty()) return;
+        if(GAS_LIST.isEmpty())
+        {
+            ErosionUtils.Log("Gas list empty.");
+            return;
+        }
 
         var s = e.getServer();
 
