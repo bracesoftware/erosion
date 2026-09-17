@@ -2,7 +2,7 @@
     <img height="150" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/Erosion.png">
 </div>
 
-> [!INFO]
+> [!NOTE]
 > Welcome to geologically accurate Minecraft!
 
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
