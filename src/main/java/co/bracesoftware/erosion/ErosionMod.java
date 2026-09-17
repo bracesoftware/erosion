@@ -64,9 +64,9 @@ public final class ErosionMod
       ███▄▄     ████▄ ▄███▄ ▄█▀▀▀ ██  ▄███▄ ████▄ 
       ███       ██ ▀▀ ██ ██ ▀███▄ ██  ██ ██ ██ ██ 
        ▀███████ ██    ▀███▀ ▄▄▄█▀ ██▄ ▀███▀ ██ ██ """+
-    Text.Format(Text.Col.RED)+" v"+Erosion.BUILD+"\n"+
+    Text.Format(Text.Col.RED) + " build " + Erosion.BUILD+"\n"+
     Text.Format(Text.Col.GOLD) +
-     "         Geological Chemistry for Minecraft" +
+     "             " + Erosion.SUBTITLE +
     Text.Format(Text.Col.GRAY);
 
     private static final List<ChunkPos> LOADED_CHUNKS = new ArrayList<>();

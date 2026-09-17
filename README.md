@@ -3,7 +3,7 @@
 </div>
 
 > [!NOTE]
-> Welcome to geologically accurate Minecraft!
+> Welcome to chemically reimagined Minecraft!
 
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
 
