@@ -598,12 +598,12 @@ public class ErosionCore
                 {
                     BlockEntityRecipes.Crucible.COPRODUCTS.putIfAbsent(materialItem, this.coproductItem);
                 }
-            }
-
-            BlockEntityRecipes.Crucible.EMITTED_GASES.putIfAbsent(materialItem, emittedGases);
-            for(var f : this.emittedGases)
-            {
-                ErosionUtils.Log("Successfully registered gas `" + f.name + "` for crucible process -> " + this.name);
+                
+                BlockEntityRecipes.Crucible.EMITTED_GASES.putIfAbsent(materialItem, emittedGases);
+                for(var f : this.emittedGases)
+                {
+                    ErosionUtils.Log("Successfully registered gas `" + f.name + "` for crucible process -> " + this.name);
+                }
             }
             return;
         }
