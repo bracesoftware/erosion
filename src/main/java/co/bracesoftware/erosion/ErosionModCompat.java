@@ -3,6 +3,7 @@ package co.bracesoftware.erosion;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import com.google.gson.JsonObject;
 import com.google.gson.Gson;
@@ -15,6 +16,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.io.FileWriter;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import co.bracesoftware.erosion.ErosionModCompat.CompatibleMod;
+import co.bracesoftware.erosion.ErosionModCompat.CompatibleMods;
 import co.bracesoftware.erosion.eventbus.ErosionEvents;
 import co.bracesoftware.erosion.eventbus.ErosionEvents.ErosionEventSubscribe;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -205,29 +208,63 @@ public class ErosionModCompat
             return;
         }
     }
-
-    @ErosionEvents.ErosionEventSubscribe
-    public static void DoDescriptions(ErosionEvents.ErosionItemDescription e)
-    {
-        if(CompatibleMods.CREATE.isPresent())
-        {
-            var it = BuiltInRegistries.ITEM.get(
+    
+    public static final Map<Supplier<Item>, List<Component>> COMPAT_MOD_ITEM_INFO = Map.ofEntries(
+        Map.entry(
+            () -> BuiltInRegistries.ITEM.get(
                 ResourceLocation.fromNamespaceAndPath(
                     CompatibleMods.CREATE.getModId(),
                     "raw_zinc"
                 )
-            );
-            if(it == Items.AIR)
-            {
-                ErosionUtils.Log("Create's Raw Zinc not found");
-            }
-            if(
-                e.whatItem() == it
+            ), List.of(
+                Component.literal("Compatible zinc item (Zn)").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
             )
+        ),
+        Map.entry(
+            () -> BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(
+                    CompatibleMods.OREGANIZED.getModId(),
+                    "raw_silver"
+                )
+            ), List.of(
+                Component.literal("Compatible silver item (Ag)").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
+            )
+        ),
+        Map.entry(
+            () -> BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(
+                    CompatibleMods.BUTCHERY.getModId(),
+                    "sulfur"
+                )
+            ), List.of(
+                Component.literal("Compatible sulfur item (S)").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
+            )
+        ),
+        Map.entry(
+            () -> BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(
+                    CompatibleMods.BUTCHERY.getModId(),
+                    "bottle_of_sulfuric_acid"
+                )
+            ), List.of(
+                Component.literal("Compatible sulfur item (S)").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
+            )
+        )
+    );
+    
+    @ErosionEvents.ErosionEventSubscribe
+    public static void DoDescriptions(ErosionEvents.ErosionItemDescription e)
+    {
+        for(var m : COMPAT_MOD_ITEM_INFO.entrySet())
+        {
+            var i = m.getKey().get();
+            var l = m.getValue();
+            if(i == e.whatItem())
             {
-                e.addItemDescription(
-                    Component.literal("Compatible zinc item (Zn)").withStyle(ChatFormatting.DARK_PURPLE)
-                );
+                for(var c : l)
+                {
+                    e.addItemDescription(c);
+                }
             }
         }
         return;
