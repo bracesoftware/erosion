@@ -125,6 +125,10 @@ public class ErosionCustomEntitySys
         {
             var g = new Gas(l, p, t);
             GAS_LIST.add(g);
+
+            ErosionUtils.Log(
+                "Created gas `" + t.name + "` at -> " + p
+            );
             return;
         }
 
