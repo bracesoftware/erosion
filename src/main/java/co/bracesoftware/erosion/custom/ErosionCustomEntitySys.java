@@ -183,14 +183,14 @@ public class ErosionCustomEntitySys
 
         var s = e.getServer();
 
+        ErosionUtils.Log(
+            "Processing gases; total of -> " + GAS_LIST.size()
+        );
+
         for(var g : GAS_LIST)
         {
             if(g.getRemaining() <= 0) continue;
             g.decreaseRemainingByTick();
-
-            ErosionUtils.Log(
-                "Processing gas..."
-            );
 
             var l = g.getLevel();
             var pos = g.getPos();
