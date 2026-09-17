@@ -14,9 +14,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Sync README to Modrinth
-        uses: modrinth/readme-sync@v1
-        with:
-          token: ${{ secrets.MODRINTH_TOKEN }}
-          project-id: 'erosion-mod'
-          readme-path: 'README.md'
+      - name: Update Modrinth Project Description
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: |
+          README_CONTENT=$(cat README.md | jq -sR .)          
+          curl -X PATCH "https://api.modrinth.com/v2/project/erosion-mod" \
+            -H "Authorization: $MODRINTH_TOKEN" \
+            -H "Content-Type: application/json" \
+            -H "User-Agent: github-actions-readme-sync" \
+            -d "{\"body\": $README_CONTENT}"
