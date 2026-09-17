@@ -226,10 +226,7 @@ public class ErosionModCompat
             )
             {
                 e.addItemDescription(
-                    Component.literal("Elemental zinc (Zn)").withStyle(ChatFormatting.DARK_AQUA)
-                );
-                e.addItemDescription(
-                    Component.literal("Contains impurities").withStyle(ChatFormatting.DARK_AQUA)
+                    Component.literal("Compatible zinc item (Zn)").withStyle(ChatFormatting.DARK_PURPLE)
                 );
             }
         }

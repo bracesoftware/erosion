@@ -44,7 +44,7 @@ public class ErosionEvents
         public ErosionItemDescription(Item i, List<Component> l)
         {
             this.item = i;
-            this.list = list;
+            this.list = l;
         }
 
         public Item whatItem()
