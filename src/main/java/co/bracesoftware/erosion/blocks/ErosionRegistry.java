@@ -14,9 +14,12 @@ import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
+import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
+import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -186,6 +189,9 @@ public class ErosionRegistry
             );
         }
 
+        //GASES
+        public static final IRawRegistry SULFUR_DIOXIDE = new IRawRegistry("sulfur_dioxide", "Sulfur Dioxide");
+
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
     }
@@ -194,6 +200,16 @@ public class ErosionRegistry
     {
         //nothin yet
         public static Long2ObjectMap<List<String>> RETROGEN_DATA = new Long2ObjectOpenHashMap<>();
+    }
+
+    public static class GasTypes
+    {
+        public static final GasType SULFUR_DIOXIDE = new GasType(
+            RawRegistry.SULFUR_DIOXIDE.getId(),
+            RawRegistry.SULFUR_DIOXIDE.getName(),
+            300, true, 4,
+            ParticleTypes.CAMPFIRE_COSY_SMOKE, 5
+        );
     }
 
     public static class Menus

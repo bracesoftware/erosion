@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="erosion"
-version="4901643818706660967"
+version="!!NEOFORGE_MOD_VERSION!!"
 displayName="Erosion"
 authors="DEntisT"
 logoFile="Erosion.png"

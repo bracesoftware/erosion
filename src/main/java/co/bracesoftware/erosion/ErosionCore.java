@@ -2,6 +2,7 @@ package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
+import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.eventbus.*;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 
@@ -207,7 +208,7 @@ public class ErosionCore
     public static abstract class ErosionDynamicItem
     {
         public String name;
-        private static List<String> DO_NOT_USE = null;
+        private static final List<String> DO_NOT_USE = null;
         public List<String> antiDuplicator;
 
         public void setup()
@@ -398,13 +399,18 @@ public class ErosionCore
         }
 
         @Override 
-        public void setup()
+        public void setup() throws ErosionRecipeImplException
         {
             ErosionUtils.Log("Setting up crucible catalyst: " + this.name);
             this.preventDuplication(antiDuplicator);
             this.catalystItem = this.catalyst.get();
 
             CATALYST_SUCCESS_CHANCE.put(this.catalystItem, this.successChance);
+
+            if(this.successChance <= 0 || this.successChance > 100)
+            {
+                throw new ErosionRecipeImplException("Catalyst success rate has to be greater than 0 or less or equal to 100 -> " + this.name);
+            }
         }
 
         @Override 
@@ -476,30 +482,66 @@ public class ErosionCore
 
         public List<CrucibleCatalyst> catalyst = null;
         public List<Item> coproductItem = null;
+        public List<GasType> emittedGases = null;
 
-        public RefinableMaterial(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i)
+        private RefinableMaterial() {}
+
+        public static class MaterialPurifier extends RefinableMaterial
         {
-            this.name = n;
-            this.material = m;
-            this.product = p;
-            this.recipeCategory = i;
+            public MaterialPurifier(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i)
+            {
+                this.name = n;
+                this.material = m;
+                this.product = p;
+                this.recipeCategory = i;
 
-            this.antiDuplicator = new ArrayList<>();
+                this.antiDuplicator = new ArrayList<>();
+            }
+            public MaterialPurifier(String n, Supplier<Item> m, Supplier<List<Item>> p)
+            {
+                this.name = n;
+                this.material = m;
+                this.product = p;
+                this.recipeCategory = BlockEntityRecipeRegistries.MATERIAL_PURIFIER;
+
+                this.antiDuplicator = new ArrayList<>();
+            }
         }
 
-        // constructor for crucible melting
-        public RefinableMaterial(
-            String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i,
-            List<CrucibleCatalyst> c, Supplier<List<Item>> g)
+        public static class Crucible extends RefinableMaterial
         {
-            this.name = n;
-            this.material = m;
-            this.product = p;
-            this.recipeCategory = i;
-            this.catalyst = c;
-            this.coproduct = g;
+            public Crucible(
+                String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i,
+                List<CrucibleCatalyst> c, Supplier<List<Item>> g,
+                List<GasType> gg
+            )
+            {
+                this.name = n;
+                this.material = m;
+                this.product = p;
+                this.recipeCategory = i;
+                this.catalyst = c;
+                this.coproduct = g;
+                this.emittedGases = gg;
 
-            this.antiDuplicator = new ArrayList<>();
+                this.antiDuplicator = new ArrayList<>();
+            }
+            public Crucible(
+                String n, Supplier<Item> m, Supplier<List<Item>> p,
+                List<CrucibleCatalyst> c, Supplier<List<Item>> g,
+                List<GasType> gg
+            )
+            {
+                this.name = n;
+                this.material = m;
+                this.product = p;
+                this.recipeCategory = BlockEntityRecipeRegistries.CRUCIBLE;
+                this.catalyst = c;
+                this.coproduct = g;
+                this.emittedGases = gg;
+
+                this.antiDuplicator = new ArrayList<>();
+            }
         }
 
         @Override 
@@ -557,6 +599,12 @@ public class ErosionCore
                     BlockEntityRecipes.Crucible.COPRODUCTS.putIfAbsent(materialItem, this.coproductItem);
                 }
             }
+
+            BlockEntityRecipes.Crucible.EMITTED_GASES.putIfAbsent(materialItem, emittedGases);
+            for(var f : this.emittedGases)
+            {
+                ErosionUtils.Log("Successfully registered gas `" + f.name + "` for crucible process -> " + this.name);
+            }
             return;
         }
 
@@ -568,6 +616,7 @@ public class ErosionCore
             BlockEntityRecipes.Crucible.RECIPES.clear();
             BlockEntityRecipes.Crucible.CATALYSTS.clear();
             BlockEntityRecipes.Crucible.COPRODUCTS.clear();
+            BlockEntityRecipes.Crucible.EMITTED_GASES.clear();
             this.discardDuplicationPreventionSys(antiDuplicator);
             return;
         }
@@ -1134,28 +1183,28 @@ public class ErosionCore
 
     // ========================== REFINABLE MATERIALS
 
-    public static final RefinableMaterial KAOLINIZED_GRANITE = new RefinableMaterial(
+    public static final RefinableMaterial.MaterialPurifier KAOLINIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.KAOLINIZED_GRANITE.getName(),
         () -> ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
         () -> List.of(Items.CLAY),
         BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial QUARTZ_GRAVEL = new RefinableMaterial(
+    public static final RefinableMaterial.MaterialPurifier QUARTZ_GRAVEL = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.QUARTZ_GRAVEL.getName(),
         () -> ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
         () -> List.of(Items.QUARTZ),
         BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial ALBITIZED_GRANITE = new RefinableMaterial(
+    public static final RefinableMaterial.MaterialPurifier ALBITIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.ALBITIZED_GRANITE.getName(),
         () -> ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
         () -> List.of(ErosionRegistry.Items.FELDSPAR_POWDER.get()),
         BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial PROPYLITIZED_DIORITE = new RefinableMaterial(
+    public static final RefinableMaterial.MaterialPurifier PROPYLITIZED_DIORITE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getName(),
         () -> ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
         () -> List.of(
@@ -1166,7 +1215,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial CRACKED_STONE = new RefinableMaterial(
+    public static final RefinableMaterial CRACKED_STONE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.CRACKED_STONE.getName(),
         () -> ErosionRegistry.Items.CRACKED_STONE.get(),
         () -> List.of(
@@ -1190,54 +1239,54 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial RAW_LIMONITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_LIMONITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_LIMONITE.getName(),
         () -> ErosionRegistry.Items.RAW_LIMONITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
-    public static final RefinableMaterial RAW_MAGNETITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_MAGNETITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),
         () -> ErosionRegistry.Items.RAW_MAGNETITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
-    public static final RefinableMaterial RAW_HEMATITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_HEMATITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_HEMATITE.getName(),
         () -> ErosionRegistry.Items.RAW_HEMATITE.get(),
         () -> List.of(
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
-    public static final RefinableMaterial RAW_MALACHITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_MALACHITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_MALACHITE.getName(),
         () -> ErosionRegistry.Items.RAW_MALACHITE.get(),
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
 
-    public static final RefinableMaterial NATIVE_GOLD = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible NATIVE_GOLD = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.NATIVE_GOLD.getName(),
         () -> ErosionRegistry.Items.NATIVE_GOLD.get(),
         () -> List.of(
             Items.GOLD_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
 
-    public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial(
+    public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getName(),
         () -> ErosionRegistry.Items.NATIVE_GOLD_DEPOSIT.get(),
         () -> List.of(
@@ -1245,7 +1294,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial CALCITE_MALACHITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial CALCITE_MALACHITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getName(),
         () -> ErosionRegistry.Items.CALCITE_MALACHITE_ORE.get(),
         () -> List.of(
@@ -1253,7 +1302,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial MAGNETITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial MAGNETITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.MAGNETITE_ORE.getName(),
         () -> ErosionRegistry.Items.MAGNETITE_ORE.get(),
         () -> List.of(
@@ -1261,7 +1310,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial HEMATITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial HEMATITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.HEMATITE_ORE.getName(),
         () -> ErosionRegistry.Items.HEMATITE_ORE.get(),
         () -> List.of(
@@ -1269,14 +1318,14 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial LIMONITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial LIMONITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.LIMONITE_ORE.getName(),
         () -> ErosionRegistry.Items.LIMONITE_ORE.get(),
         () -> List.of(
             ErosionRegistry.Items.RAW_LIMONITE.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
-    public static final RefinableMaterial CASSITERITE_DEPOSIT = new RefinableMaterial(
+    public static final RefinableMaterial CASSITERITE_DEPOSIT = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.CASSITERITE_DEPOSIT.getName(),
         () -> ErosionRegistry.Items.CASSITERITE_DEPOSIT.get(),
         () -> List.of(
@@ -1284,26 +1333,26 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial RAW_CASSITERITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_CASSITERITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_CASSITERITE.getName(),
         () -> ErosionRegistry.Items.RAW_CASSITERITE.get(),
         () -> List.of(
             ErosionRegistry.Items.TIN_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
-    public static final RefinableMaterial NATIVE_SILVER = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible NATIVE_SILVER = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.NATIVE_SILVER.getName(),
         () -> ErosionRegistry.Items.NATIVE_SILVER.get(),
         () -> List.of(
             ErosionRegistry.Items.SILVER_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
 
-    public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial(
+    public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getName(),
         () -> ErosionRegistry.Items.NATIVE_SILVER_DEPOSIT.get(),
         () -> List.of(
@@ -1312,7 +1361,7 @@ public class ErosionCore
     );
 
     //turn mined ore into pure ore
-    public static final RefinableMaterial RAW_BISMUTHINITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_BISMUTHINITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getName(),
         () -> ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
         () -> List.of(
@@ -1321,11 +1370,11 @@ public class ErosionCore
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
-        )
+        ), List.of()
     );
 
     //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial BISMUTHINITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial BISMUTHINITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getName(),
         () -> ErosionRegistry.Items.BISMUTHINITE_ORE.get(),
         () -> List.of(
@@ -1334,18 +1383,20 @@ public class ErosionCore
     );
 
     //turn mined ore into pure ore
-    public static final RefinableMaterial RAW_SPHALERITE = new RefinableMaterial(
+    public static final RefinableMaterial RAW_SPHALERITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_SPHALERITE.getName(),
         () -> ErosionRegistry.Items.RAW_SPHALERITE.get(),
         () -> List.of(
             ErosionRegistry.Items.ZINC_CHUNK.get()
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of(
+            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+        )
     );
 
     //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial SPHALERITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial SPHALERITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName(),
         () -> ErosionRegistry.Items.SPHALERITE_ORE.get(),
         () -> List.of(
@@ -1354,18 +1405,18 @@ public class ErosionCore
     );
 
     //turn mined ore into pure ore
-    public static final RefinableMaterial RAW_AZURITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_AZURITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_AZURITE.getName(),
         () -> ErosionRegistry.Items.RAW_AZURITE.get(),
         () -> List.of(
             Items.RAW_COPPER
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of()
+        ), () -> List.of(), List.of()
     );
 
     //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial AZURITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial AZURITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.AZURITE_ORE.getName(),
         () -> ErosionRegistry.Items.AZURITE_ORE.get(),
         () -> List.of(
@@ -1374,7 +1425,7 @@ public class ErosionCore
     );
 
     //turn mined ore into pure ore
-    public static final RefinableMaterial RAW_TETRAHEDRITE = new RefinableMaterial(
+    public static final RefinableMaterial.Crucible RAW_TETRAHEDRITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName(),
         () -> ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
         () -> List.of(
@@ -1384,11 +1435,11 @@ public class ErosionCore
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get(),
             ErosionRegistry.Items.ANTIMONY_SLAG.get()
-        )
+        ), List.of()
     );
 
     //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial TETRAHEDRITE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial TETRAHEDRITE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName(),
         () -> ErosionRegistry.Items.TETRAHEDRITE_ORE.get(),
         () -> List.of(
@@ -1396,14 +1447,14 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial RUBY_ORE = new RefinableMaterial(
+    public static final RefinableMaterial RUBY_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.RUBY_ORE.getName(),
         () -> ErosionRegistry.Items.RUBY_ORE.get(),
         () -> List.of(
             ErosionRegistry.Items.RUBY.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
-    public static final RefinableMaterial SAPPHIRE_ORE = new RefinableMaterial(
+    public static final RefinableMaterial SAPPHIRE_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName(),
         () -> ErosionRegistry.Items.SAPPHIRE_ORE.get(),
         () -> List.of(
@@ -1411,7 +1462,7 @@ public class ErosionCore
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
     );
 
-    public static final RefinableMaterial BORAX = new RefinableMaterial(
+    public static final RefinableMaterial BORAX = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.BORAX.getName(),
         () -> ErosionRegistry.Items.BORAX.get(),
         () -> List.of(
@@ -1800,11 +1851,18 @@ public class ErosionCore
                     Component.literal("Used as a crucible catalyst").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
                 );
                 Integer sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
+                Integer cteg = 100 - sr;
                 desc.add(
                     Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
                     .append(Component.literal(sr.toString() + "%")
                     .withStyle(CrucibleCatalyst.getSRColor(sr)))
                     .append(Component.literal(" success rate.").withStyle(ChatFormatting.GRAY))
+                );
+                desc.add(
+                    Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
+                    .append(Component.literal(cteg.toString() + "%")
+                    .withStyle(CrucibleCatalyst.getSRColor(cteg)))
+                    .append(Component.literal(" chance to emit coproduct gases.").withStyle(ChatFormatting.GRAY))
                 );
             }
         }
@@ -1869,6 +1927,7 @@ public class ErosionCore
         List<String> catalystListLmao = new ArrayList<>();
         List<String> coproductOfNames = new ArrayList<>();
         Boolean hasCoproducts = false;
+        List<GasType> emitsGases = new ArrayList<>();
         for(var m : REFINABLE_MATERIALS_LIST)
         {
             if(m.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE)
@@ -1886,10 +1945,11 @@ public class ErosionCore
                     {
                         catalystListLmao.add(c.name);
                     }
-                    for (Item prodItem : m.productItem)
+                    for(Item prodItem : m.productItem)
                     { 
                         meltsIntoNames.add(prodItem.getDescription().getString());
                     }
+                    if(!m.emittedGases.isEmpty()) emitsGases = m.emittedGases;
                     if(!m.coproductItem.isEmpty())
                     {
                         hasCoproducts = true;
@@ -2114,9 +2174,30 @@ public class ErosionCore
             if(hasCoproducts)
             {
                 desc.add(
-                    Component.literal("- Has potential coproducts!")
+                    Component.literal("- Has potential solid coproduct(s)!")
                     .withStyle(ChatFormatting.GRAY)
                 );
+            }
+            if(!emitsGases.isEmpty())
+            {
+                desc.add(
+                    Component.literal("- Melting this material emits potential gas coproduct(s): ")
+                    .withStyle(ChatFormatting.GRAY)
+                );
+                for(var y : emitsGases)
+                {
+                    desc.add(
+                        Component.literal("  * ").withStyle(ChatFormatting.GRAY)
+                        .append(
+                            Component.literal(y.name).withStyle(ChatFormatting.BOLD)
+                            .withStyle(
+                                y.isToxic() ?
+                                ChatFormatting.DARK_RED :
+                                ChatFormatting.GRAY
+                            )
+                        )
+                    );
+                }
             }
         }
 
@@ -2492,6 +2573,7 @@ public class ErosionCore
             public static Map<Item, List<Item>> RECIPES = new HashMap<>();
             public static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
             public static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
+            public static Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
         }
         public static class ChemicalReactor
         {

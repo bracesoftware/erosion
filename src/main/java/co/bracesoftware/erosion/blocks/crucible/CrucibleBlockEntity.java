@@ -11,11 +11,12 @@ import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.E
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.blocks.ErosionRegistry;
-
+import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.ReloadableServerRegistries.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
@@ -78,15 +79,24 @@ public class CrucibleBlockEntity extends BlockEntity
             {
                 throw new ErosionCrucibleException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");
             }
+            var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
+            int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
+            var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(be.storedItem.getItem());
+
+            for(var g : gl)
+            {
+                if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
+                {
+                    Gas.createGas((ServerLevel) l, pos, g);
+                }
+            }
+
             be.progress++;
             if(be.progress >= 20 * ErosionConfig.CRUCIBLE_SECONDS)
             {
                 be.working = false;
                 be.finished = true;
                 be.progress = 0;
-
-                var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(be.storedItem.getItem());
-                int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
 
                 boolean s = ErosionUtils.Misc.randomWithChanceToBe(true, sr);
 

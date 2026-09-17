@@ -13,8 +13,8 @@ call gradlew clean processResources
 call gradlew runData -stacktrace --no-configuration-cache
 echo Building...
 call gradlew build -stacktrace --no-configuration-cache
-echo PROCESS FINISHED.
+echo Releasing...
 call release
-echo RELEASED!!!
+echo ====== COMPLETE PROCESS FINISHED! ======
 pause
 goto start
