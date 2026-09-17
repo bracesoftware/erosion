@@ -1,11 +1,9 @@
 package co.bracesoftware.erosion;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.player.Player;
 import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
-import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
 public class ErosionCommands
 {
@@ -28,5 +26,6 @@ public class ErosionCommands
         s.sendSystemMessage(Component.literal(ErosionDebugOverlay.MAIN_STYLE + "Reloading Erosion config..."));
         ErosionConfig.ServerConfig.LoadModConfig();
         s.sendSystemMessage(Component.literal(ErosionDebugOverlay.MAIN_STYLE + "Config reloaded."));
+        return;
     }
 }
