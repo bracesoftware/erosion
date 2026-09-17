@@ -1464,6 +1464,12 @@ public class ErosionCore
 
     // ========================== REGISTRY
 
+    private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST_ORIGINAL = List.of(
+        GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
+        STONE, DEEPSLATE, GRANITE, DIORITE,
+        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
+        COBBLESTONE
+    );
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST_ORIGINAL = List.of(
         KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
         PROPYLITIZED_DIORITE, RAW_LIMONITE, RAW_HEMATITE,
@@ -1474,12 +1480,6 @@ public class ErosionCore
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
         RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
         BORAX, CRACKED_STONE
-    );
-    private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST_ORIGINAL = List.of(
-        GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
-        STONE, DEEPSLATE, GRANITE, DIORITE,
-        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
-        COBBLESTONE
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
         FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL

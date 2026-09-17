@@ -79,12 +79,14 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
 
         //MACHINES
         // ============================================= //
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
-        tag(BlockTags.MINEABLE_WITH_AXE).add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
-        tag(BlockTags.NEEDS_STONE_TOOL).add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
-
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ErosionRegistry.Blocks.CRUCIBLE.get());
-
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleMachine(
+            this,provider,ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleMachine(
+            this,provider,ErosionRegistry.Blocks.CRUCIBLE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleMachine(
+            this,provider,ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
+        );
     }
 }

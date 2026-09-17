@@ -6,6 +6,7 @@ import java.util.Map;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.ErosionUtils;
@@ -95,6 +96,18 @@ public class ErosionDataGeneratorsProgInterface
                 t.tagz(BlockTags.DIRT).add(b);
                 t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirts"))).add(b);
                 t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "dirt"))).add(b);
+                return;
+            }
+
+            public static void createSimpleMachine(ErosionBlockTagGen t, HolderLookup.Provider p, Block b)
+            {
+                t.tagz(BlockTags.MINEABLE_WITH_PICKAXE).add(b);
+                t.tagz(BlockTags.MINEABLE_WITH_AXE).add(b);
+
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "functional_blocks"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "functional_block"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "crafting_tables"))).add(b);
+                t.tagz(BlockTags.create(ResourceLocation.fromNamespaceAndPath("c", "crafting_table"))).add(b);
                 return;
             }
         }
