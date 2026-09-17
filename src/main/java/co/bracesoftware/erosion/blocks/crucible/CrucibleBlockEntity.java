@@ -81,7 +81,7 @@ public class CrucibleBlockEntity extends BlockEntity
 
             var item = be.storedItem.getItem();
             var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(item);
-            int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(item);
+            int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
             var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(item);
 
             if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG)
