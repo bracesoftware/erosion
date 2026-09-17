@@ -15,6 +15,7 @@ import net.minecraft.data.CachedOutput;
 import net.minecraft.data.PackOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Items;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -210,13 +211,18 @@ public class ErosionModCompat
     {
         if(CompatibleMods.CREATE.isPresent())
         {
-            if(
-                e.whatItem() == BuiltInRegistries.ITEM.get(
-                    ResourceLocation.fromNamespaceAndPath(
-                        CompatibleMods.CREATE.getModId(),
-                        "raw_zinc"
-                    )
+            var it = BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(
+                    CompatibleMods.CREATE.getModId(),
+                    "raw_zinc"
                 )
+            );
+            if(it == Items.AIR)
+            {
+                ErosionUtils.Log("Create's Raw Zinc not found");
+            }
+            if(
+                e.whatItem() == it
             )
             {
                 e.addItemDescription(
