@@ -1,8 +1,10 @@
 name: Publish to Modrinth
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'build*'
+      - 'v*'
 
 jobs:
   publish:
@@ -33,4 +35,4 @@ jobs:
             1.21.1
           loaders: |
             neoforge
-          changelog: ${{ github.event.release.body }}
+          changelog: ${{ github.event.release.body || 'Automated build release' }}

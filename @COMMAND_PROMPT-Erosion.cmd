@@ -14,5 +14,7 @@ call gradlew runData -stacktrace --no-configuration-cache
 echo Building...
 call gradlew build -stacktrace --no-configuration-cache
 echo PROCESS FINISHED.
+call release
+echo RELEASED!!!
 pause
 goto start
