@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.146'
     id 'idea'
+    id 'com.modrinth.minotaur' version '2.+'
 }
 
 import java.security.MessageDigest
@@ -31,6 +32,23 @@ repositories {
 
 base {
     archivesName = "Erosion-neoforge"
+}
+
+modrinth {
+    token = System.getenv("MODRINTH_TOKEN")
+    projectId = "erosion-mod"
+
+    versionNumber = project.version.toString()
+    versionName = "Erosion ${project.version}"
+
+    uploadFile = jar
+
+    gameVersions = ["1.21.1"]
+    loaders = ["neoforge"]
+
+    versionType = "release"
+
+    changelog = "Automated release ${project.version}"
 }
 
 tasks.withType(Jar).configureEach {
