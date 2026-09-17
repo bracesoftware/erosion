@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
@@ -126,9 +127,12 @@ public class ErosionCustomEntitySys
             var g = new Gas(l, p, t);
             GAS_LIST.add(g);
 
-            ErosionUtils.Log(
-                "Created gas `" + t.name + "` at -> " + p
-            );
+            if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
+            {
+                ErosionUtils.Log(
+                    "Created gas `" + t.name + "` at -> " + p
+                );
+            }
             return;
         }
 
@@ -140,7 +144,11 @@ public class ErosionCustomEntitySys
 
         private static void spawnGasParticles(ServerLevel l, BlockPos p, GasType t)
         {
-            ErosionUtils.Log("Spawning gas particles -> " + p);
+            if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
+            {
+                ErosionUtils.Log("Spawning gas particles -> " + p);
+            }
+            
             for(int i = 0; i < t.getGasParticleCount(); i++)
             {
                 double ox = (l.random.nextDouble() * 2.0 - 1.0) * t.getGasDiffusionRadius();
@@ -166,7 +174,10 @@ public class ErosionCustomEntitySys
     {
         if(GAS_LIST.isEmpty())
         {
-            ErosionUtils.Log("Gas list empty.");
+            if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
+            {
+                ErosionUtils.Log("Gas list empty.");
+            }
             return;
         }
 
@@ -176,6 +187,10 @@ public class ErosionCustomEntitySys
         {
             if(g.getRemaining() <= 0) continue;
             g.decreaseRemainingByTick();
+
+            ErosionUtils.Log(
+                "Processing gas..."
+            );
 
             var l = g.getLevel();
             var pos = g.getPos();
