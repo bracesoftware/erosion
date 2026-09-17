@@ -6,6 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionUtils;
 
 public class ErosionEvents
 {
@@ -21,6 +22,14 @@ public class ErosionEvents
         public void cancel()
         {
             this.cancelled = true;
+        }
+    }
+
+    public static class ErosionModLoading extends BasicErosionEvent
+    {
+        public void sayHi()
+        {
+            ErosionUtils.Log("Someone said 'Hi'!");
         }
     }
 

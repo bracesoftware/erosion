@@ -1551,7 +1551,11 @@ public class ErosionCore
             m.setupCompat();
         }
 
-        ErosionEventBus.ErosionEventInvocation.CALL_BE_RECIPE_REG(
+        ErosionEventBus.ErosionEventInvocation.CALL_EVENT_LISTENERS(
+            new ErosionEvents.ErosionModLoading()
+        );
+
+        ErosionEventBus.ErosionEventInvocation.CALL_EVENT_LISTENERS(
             new ErosionEvents.ErosionBlockEntityRecipeRegistration()
         );
 

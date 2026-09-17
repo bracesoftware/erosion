@@ -1,23 +1,31 @@
 package co.bracesoftware.erosion.eventbus;
 
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 
-import co.bracesoftware.erosion.*;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionEventBusException;
+import co.bracesoftware.erosion.eventbus.ErosionEvents.BasicErosionEvent;
 
 public class ErosionEventBus
 {
-    private static final List<Consumer<ErosionEvents.ErosionBlockEntityRecipeRegistration>> EROSION_RECIPE_REG_LISTENERS = new ArrayList<>();
+    private static final Map<
+        Class<? extends BasicErosionEvent>,
+        List<Consumer<BasicErosionEvent>
+    >> LISTENERS = new ConcurrentHashMap<>();
 
     public static void registerListeners(
         Class<?> c
     ) throws ErosionEventBusException
     {
         ErosionUtils.Log("Registering class -> " + c.getName());
-        for(var m : c.getDeclaredMethods())
+
+        for(Method m : c.getDeclaredMethods())
         {
             if(
                 m.getParameterCount() == 1 &&
@@ -26,44 +34,62 @@ public class ErosionEventBus
             {
                 if(!Modifier.isStatic(m.getModifiers()))
                 {
-                    throw new ErosionEventBusException("Event subscriber has to be a static method.");
+                    throw new ErosionEventBusException("Event subscriber has to be a static method: " + m.getName());
                 }
-                var par = m.getParameterTypes()[0];
-                //BLOCK ENTITY RECIPE REGISTRATION
-                if(par == ErosionEvents.ErosionBlockEntityRecipeRegistration.class)
+
+                Class<?> p = m.getParameterTypes()[0];
+
+                if(!BasicErosionEvent.class.isAssignableFrom(p))
                 {
-                    EROSION_RECIPE_REG_LISTENERS.add(
-                        p -> {
-                            try { m.invoke(null, p); }
-                            catch(Exception e)
-                            {
-                                e.printStackTrace();
-                            }
-                            ErosionUtils.Log("Successfully subscribed method to `" + par.getName() + "`: " + m.getName());
+                    throw new ErosionEventBusException("Parameter must extend BasicErosionEvent in method: " + m.getName());
+                }
+
+                @SuppressWarnings("unchecked")
+                Class<? extends BasicErosionEvent> ec = (Class<? extends BasicErosionEvent>) p;
+
+                m.setAccessible(true);
+
+                LISTENERS.computeIfAbsent(
+                    ec, k -> new ArrayList<>()
+                ).add(a -> {
+                        try { m.invoke(null, a); }
+                        catch(Exception e)
+                        {
+                            e.printStackTrace();
                         }
-                    );
-                    continue;
-                }                
+                    }
+                );
+
+                ErosionUtils.Log("Successfully subscribed method `" + m.getName() + "` to event `" + ec.getName() + "`");
             }
         }
-        return;
     }
 
     public static class ErosionEventInvocation
     {
-        public static void CALL_BE_RECIPE_REG(
-            ErosionEvents.ErosionBlockEntityRecipeRegistration p
+        @SuppressWarnings("unchecked")
+        public static<T extends BasicErosionEvent> void CALL_EVENT_LISTENERS(
+            T e
         ) throws ErosionEventBusException
         {
-            if(EROSION_RECIPE_REG_LISTENERS.isEmpty()) return;
-            for(var e : EROSION_RECIPE_REG_LISTENERS)
+            if(e == null) return;
+
+            List<Consumer<BasicErosionEvent>> l = LISTENERS.get(e.getClass());
+            if(l == null || l.isEmpty())
             {
-                if(p.cancelled)
+                ErosionUtils.Log("There are no listeners found for -> " + e.getClass().getName());
+                return;
+            }
+
+            for(var ll : l)
+            {
+                if(e.cancelled)
                 {
-                    p.cancelled = false;
+                    e.cancelled = false;
                     break;
                 }
-                e.accept(p);
+
+                ll.accept(e);
             }
             return;
         }
