@@ -171,6 +171,14 @@ public class ErosionRegistry
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
         public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
 
+        //MANUAL ADVANCEMENTS
+        public static class ManualAdvancements
+        {
+            public static final IRawRegistry INVISIBLE_FIRE = new IRawRegistry(
+                "invizible_fire", "Invisible Fire..."
+            );
+        }
+
         //CHEMICAL REACTIONS
 
         public static class ChemicalReactions

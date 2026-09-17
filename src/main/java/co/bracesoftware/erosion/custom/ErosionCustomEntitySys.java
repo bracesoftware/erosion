@@ -5,9 +5,12 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -19,6 +22,7 @@ import java.util.List;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.blocks.ErosionRegistry;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 
@@ -157,6 +161,21 @@ public class ErosionCustomEntitySys
             return;
         }
 
+        public static void intoxicatePlayer(ServerPlayer p, GasType ty)
+        {
+            p.addEffect(new MobEffectInstance(MobEffects.POISON, 200,0));
+            p.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200,0));
+            ErosionUtils.displayMessage(
+                p, Text.Format(Text.Col.RED) + "You're being poisoned with " + ty.name
+            );
+            ErosionUtils.Misc.grantAdvancement(
+                p, ResourceLocation.fromNamespaceAndPath(
+                    Erosion.MODID, ErosionRegistry.RawRegistry.ManualAdvancements.INVISIBLE_FIRE.getId()
+                )
+            );
+            return;
+        }
+
         private static void spawnGasParticles(ServerLevel l, BlockPos p, GasType t)
         {
             if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
@@ -222,11 +241,7 @@ public class ErosionCustomEntitySys
                     {
                         if(p.blockPosition().distSqr(pos) <= radius)
                         {
-                            p.addEffect(new MobEffectInstance(MobEffects.POISON, 200,0));
-                            p.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 200,0));
-                            ErosionUtils.displayMessage(
-                                p, Text.Format(Text.Col.RED) + "You're being poisoned with " + ty.name
-                            );
+                            Gas.intoxicatePlayer(p, ty);
                         }
                     }
                 }

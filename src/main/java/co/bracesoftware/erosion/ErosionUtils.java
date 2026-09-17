@@ -5,7 +5,10 @@ import java.util.Locale;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
 
 import net.minecraft.ChatFormatting;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public class ErosionUtils
@@ -54,6 +57,26 @@ public class ErosionUtils
         public static boolean randomWithChanceToBe(boolean res, int chance)
         {
             return res == (ErosionMod.RANDOM.nextInt(100) < chance);
+        }
+        public static void grantAdvancement(ServerPlayer p, ResourceLocation a)
+        {
+            AdvancementHolder ad = p.getServer()
+            .getAdvancements().get(a);
+
+            if(ad != null)
+            {
+                var padv = p.getAdvancements();
+                var prog = padv.getOrStartProgress(ad);
+
+                if(!prog.isDone())
+                {
+                    for(var c : prog.getRemainingCriteria())
+                    {
+                        padv.award(ad, c);
+                    }
+                }
+            }
+            return;
         }
     }
 }

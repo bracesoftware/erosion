@@ -21,6 +21,8 @@ import co.bracesoftware.erosion.data.servergen.ErosionItemTagGen;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.advancements.critereon.ImpossibleTrigger;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
@@ -125,11 +127,15 @@ public class ErosionDataGeneratorsProgInterface
                 throw new ErosionDataGenException("Parent advancement is already generated!");
             }
             PARENT_ADVANCEMENT_CREATED = true;
+            
+            ErosionUtils.Log(
+                "Generated parent advancement."
+            );
             return Advancement.Builder.advancement()
             .display(
                 ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
                 Component.literal(Erosion.MODNAME),
-                Component.literal("Welcome to the geochemically accurate Minecraft!"),
+                Component.literal(Erosion.SUBTITLE),
                 ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png"),
                 AdvancementType.TASK,
                 true,
@@ -144,7 +150,7 @@ public class ErosionDataGeneratorsProgInterface
             ErosionAdvGen.Generator t,
             String title, String desc, Item it, String id,
             AdvancementHolder a
-        )
+        ) throws ErosionDataGenException
         {
             var b = Advancement.Builder.advancement();
             ResourceLocation bb = (a == null) 
@@ -153,6 +159,9 @@ public class ErosionDataGeneratorsProgInterface
 
             if(a != null) b.parent(a);
 
+            ErosionUtils.Log(
+                "Generated advancement -> " + title
+            );
             return b.display(
                 it,//icon
                 Component.literal(title),//title
@@ -164,6 +173,38 @@ public class ErosionDataGeneratorsProgInterface
                 false
             )
             .addCriterion("has_item", InventoryChangeTrigger.TriggerInstance.hasItems(it))
+            .save(t.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), t.efh);
+        }
+
+        public static AdvancementHolder generateSimpleAdvancement(
+            ErosionAdvGen.Generator t,
+            String title, String desc, Item it, String id,
+            AdvancementHolder a
+        ) throws ErosionDataGenException
+        {
+            var b = Advancement.Builder.advancement();
+            ResourceLocation bb = (a == null) 
+            ? ResourceLocation.withDefaultNamespace("textures/gui/advancements/backgrounds/stone.png")
+            : null;
+
+            if(a != null) b.parent(a);
+
+            ErosionUtils.Log(
+                "Generated simple advancement -> " + title
+            );
+            return b.display(
+                it,
+                Component.literal(title),
+                Component.literal(desc),
+                bb,
+                AdvancementType.TASK,
+                true,
+                true,
+                false
+            )
+            .addCriterion("manual_trigger", CriteriaTriggers.IMPOSSIBLE.createCriterion(
+                new ImpossibleTrigger.TriggerInstance()
+            ))
             .save(t.k, ResourceLocation.fromNamespaceAndPath(Erosion.MODID, id), t.efh);
         }
     }

@@ -62,6 +62,14 @@ public class ErosionAdvGen extends AdvancementProvider
                 crucible
             );
 
+            var invizible_fire = ErosionAdvancement.generateSimpleAdvancement(
+                this, ErosionRegistry.RawRegistry.ManualAdvancements.INVISIBLE_FIRE.getName(),
+                "Inhale toxic gases.",
+                ErosionRegistry.Items.CRUCIBLE.get(),
+                ErosionRegistry.RawRegistry.ManualAdvancements.INVISIBLE_FIRE.getId(),
+                crucible
+            );
+
             var flux = ErosionAdvancement.generateAdvancement(
                 this, "Getting Flux",
                 "Acquire Flux.",
