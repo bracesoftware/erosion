@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffects;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import it.unimi.dsi.fastutil.longs.LongSet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
+import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 
 @EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCustomEntitySys
@@ -81,6 +83,8 @@ public class ErosionCustomEntitySys
 
     public static class Gas
     {
+        public static final LongSet USED_POSITIONS = new LongOpenHashSet();
+
         private final ServerLevel level;
         private final BlockPos pos;
         private final GasType type;
@@ -124,6 +128,10 @@ public class ErosionCustomEntitySys
         //STATIC METHODS
         public static void createGas(ServerLevel l, BlockPos p, GasType t)
         {
+            if(!USED_POSITIONS.add(p.asLong()))
+            {
+                return;
+            }
             var g = new Gas(l, p, t);
             GAS_LIST.add(g);
 
@@ -138,7 +146,14 @@ public class ErosionCustomEntitySys
 
         private static void removeFinishedGases()
         {
-            GAS_LIST.removeIf(g -> g.getRemaining() <= 0);
+            GAS_LIST.removeIf(g -> {
+                boolean what = g.getRemaining() <= 0;
+                if(what)
+                {
+                    USED_POSITIONS.remove(g.getPos().asLong());
+                }
+                return what;
+            });
             return;
         }
 
@@ -183,7 +198,7 @@ public class ErosionCustomEntitySys
 
         var s = e.getServer();
 
-        ErosionUtils.Log(
+        if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE) ErosionUtils.Log(
             "Processing gases; total of -> " + GAS_LIST.size()
         );
 
@@ -196,7 +211,7 @@ public class ErosionCustomEntitySys
             var pos = g.getPos();
             var ty = g.getType();
 
-            if(l.isLoaded(pos)) continue;
+            if(!l.isLoaded(pos)) continue;
 
             if(g.getRemaining() % 10 == 0 && ty.isToxic())
             {
