@@ -1,0 +1,22 @@
+{
+  "parent": "erosion:crucible",
+  "criteria": {
+    "manual_trigger": {
+      "trigger": "minecraft:impossible"
+    }
+  },
+  "display": {
+    "description": "Inhale toxic gases.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:crucible"
+    },
+    "title": "Invisible Fire..."
+  },
+  "requirements": [
+    [
+      "manual_trigger"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
