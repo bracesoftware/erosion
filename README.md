@@ -1,5 +1,5 @@
 <div align="center">
-    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/Erosion.png">
+    <img height="150" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/Erosion.png">
 </div>
 
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
@@ -9,10 +9,13 @@ Each item this mod adds or modifies gets its nicely described tooltip like this,
 <div align="center">
     <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/tooltips.png">
 </div>
+<div align="center">
+    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/tooltips2.png">
+</div>
 
 Creative tab:
 <div align="center">
-    <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/all_items.png">
+    <img height="150" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/all_items.png">
 </div>
 
 As you can see blocks can be altered by lava or water present.
