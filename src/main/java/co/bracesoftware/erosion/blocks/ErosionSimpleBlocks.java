@@ -24,13 +24,17 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.Util;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FallingBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -124,9 +128,10 @@ public class ErosionSimpleBlocks
         }
     }
 
-    public static class RockBlock extends Block
+    public static class RockBlock extends Block implements SimpleWaterloggedBlock
     {
         public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
+        public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
         public static final Integer SHAPE_FIRSTDIM_X1 = 5;
         public static final Integer SHAPE_FIRSTDIM_Y1 = 0;
@@ -203,7 +208,7 @@ public class ErosionSimpleBlocks
                 .mapColor(MapColor.DEEPSLATE);
         }
 
-        public static BlockBehaviour.Properties getProperties()
+        private static BlockBehaviour.Properties getPropertiesz()
         {
             return null;
         }
@@ -211,21 +216,37 @@ public class ErosionSimpleBlocks
         public RockBlock(Properties p)
         {
             super(p);
-            this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+            this.registerDefaultState(
+                this.stateDefinition.any()
+                .setValue(FACING, Direction.NORTH)
+                .setValue(WATERLOGGED, false)
+            );
         }
         @Override
         protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
         {
-            b.add(FACING);
+            b.add(FACING, WATERLOGGED);
             return;
         }
 
         @Override
         public BlockState getStateForPlacement(BlockPlaceContext c)
         {
+            FluidState f = c.getLevel().getFluidState(c.getClickedPos());
+            boolean w = f.getType() == Fluids.WATER;
             Direction r = Direction.Plane.HORIZONTAL.getRandomDirection(c.getLevel().getRandom());
-            return this.defaultBlockState().setValue(FACING, r);
+            
+            return this.defaultBlockState()
+            .setValue(FACING, r)
+            .setValue(WATERLOGGED, w);
         }
+
+        @Override
+        public FluidState getFluidState(BlockState s)
+        {
+            return s.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(s);
+        }
+
         @Override 
         public VoxelShape getShape(
             BlockState bs,
@@ -239,50 +260,58 @@ public class ErosionSimpleBlocks
         }
         @Override
         protected InteractionResult useWithoutItem(
-            BlockState state, Level level, BlockPos pos,
-            Player player, BlockHitResult hitResult
+            BlockState s, Level l, BlockPos p,
+            Player pl, BlockHitResult hitResult
         ) 
         {
-            if(!level.isClientSide())
+            if(!l.isClientSide())
             {
                 ItemStack rockStack = new ItemStack(this.asItem());
-                boolean a = player.getInventory().add(rockStack);
-                if(!a) Block.popResource(level, pos, rockStack);
+                boolean a = pl.getInventory().add(rockStack);
+                if(!a) Block.popResource(l, p, rockStack);
 
-                level.playSound(
+                l.playSound(
                     null, 
-                    pos, 
+                    p, 
                     SoundEvents.ITEM_PICKUP, 
                     SoundSource.PLAYERS, 
                     0.2F, 
-                    (level.random.nextFloat() - level.random.nextFloat()) * 0.2F + 1.0F
+                    (l.random.nextFloat() - l.random.nextFloat()) * 0.2F + 1.0F
                 );
-                level.removeBlock(pos, false);
+                
+                BlockState r = s.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
+                l.setBlock(p, r, 3);
             }
 
-            return InteractionResult.sidedSuccess(level.isClientSide());
+            return InteractionResult.sidedSuccess(l.isClientSide());
         }
         @Override
-        public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos)
+        public boolean canSurvive(BlockState s, LevelReader l, BlockPos p)
         {
-            BlockPos posBelow = pos.below();
-            BlockState stateBelow = level.getBlockState(posBelow);
+            BlockPos posBelow = p.below();
+            BlockState stateBelow = l.getBlockState(posBelow);
 
             if(stateBelow.getBlock() instanceof RockBlock) return false;
-            return stateBelow.isFaceSturdy(level, posBelow, Direction.UP);
+            return stateBelow.isFaceSturdy(l, posBelow, Direction.UP);
         }
 
         @Override
         public BlockState updateShape(
-            BlockState state, Direction facing, BlockState facingState,
-            LevelAccessor level, BlockPos currentPos, BlockPos facingPos
+            BlockState s, Direction f, BlockState fs,
+            LevelAccessor l, BlockPos p, BlockPos fp
         )
         {
-            if(facing == Direction.DOWN && !state.canSurvive(level, currentPos))
+            if(f == Direction.DOWN && !s.canSurvive(l,p))
             {
-                return Blocks.AIR.defaultBlockState();
+                return s.getValue(WATERLOGGED) ?
+                Blocks.WATER.defaultBlockState() :
+                Blocks.AIR.defaultBlockState();
             }
-            return super.updateShape(state, facing, facingState, level, currentPos, facingPos);
+            if(s.getValue(WATERLOGGED))
+            {
+                l.scheduleTick(p, Fluids.WATER, Fluids.WATER.getTickDelay(l));
+            }
+            return super.updateShape(s, f, fs, l, p, fp);
         }
 
         @Override
