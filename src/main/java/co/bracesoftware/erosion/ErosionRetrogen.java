@@ -120,7 +120,8 @@ public class ErosionRetrogen
             ErosionRegistry.Blocks.RAW_SPHALERITE.get(),
 
             ErosionRegistry.Blocks.RAW_AZURITE.get(),
-            ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get()
+            ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
+            ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get()
         ))
     );
 

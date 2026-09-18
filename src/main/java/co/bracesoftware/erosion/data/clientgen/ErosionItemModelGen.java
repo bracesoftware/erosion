@@ -48,6 +48,8 @@ public class ErosionItemModelGen extends ItemModelProvider {
 
         basicItem(ErosionRegistry.Items.RAW_AZURITE.get());
         basicItem(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
+        basicItem(ErosionRegistry.Items.RAW_ARSENOPYRITE.get());
+        basicItem(ErosionRegistry.Items.RAW_PYRITE.get());
 
         return;
     }

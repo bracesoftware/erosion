@@ -14,6 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
+import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 
@@ -920,6 +921,20 @@ public class ErosionCore
         ))
     );
 
+    public static final AlterableMaterial.AlterationPath HYDROTHERMAL_BLOCK_GEN = new AlterableMaterial.AlterationPath(
+        ErosionRegistry.DefaultAlterationPaths.HYDROTHERMAL_ALTERATION,
+        () -> List.of(
+            ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get()
+        ),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
+        ),
+        new AlterationRules(List.of(
+            AlterationRules.CONTACT_WITH_WATER,
+            AlterationRules.HIGH_PRESSURE
+        ))
+    );
+
     public static final AlterableMaterial COBBLESTONE = new AlterableMaterial(
         Blocks.COBBLESTONE.getName().getString(),
         () -> Blocks.COBBLESTONE, () -> Items.COBBLESTONE,
@@ -935,7 +950,8 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
-            )
+            ),
+            HYDROTHERMAL_BLOCK_GEN
         )
     );
 
@@ -954,7 +970,8 @@ public class ErosionCore
                     ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
                     ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
                     ErosionRegistry.Blocks.AZURITE_ORE.get(),
-                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
+                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
+                    ErosionRegistry.Blocks.PYRITE_ORE.get()
                 ),
                 () -> List.of(
                     Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
@@ -965,12 +982,13 @@ public class ErosionCore
                     ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
                     ErosionRegistry.Items.RAW_SPHALERITE.get(),
                     ErosionRegistry.Items.RAW_AZURITE.get(),
-                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+                    ErosionRegistry.Items.RAW_PYRITE.get()
                 ),
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            ), GEMSTONE_GEN,
+            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
             new AlterableMaterial.AlterationPath(
                 ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
                 () -> List.of(
@@ -1010,7 +1028,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            ), GEMSTONE_GEN,
+            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
             new AlterableMaterial.AlterationPath(
                 ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
                 () -> List.of(
@@ -1035,13 +1053,15 @@ public class ErosionCore
                     ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
                     ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(),
                     ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Blocks.HEMATITE_ORE.get()
+                    ErosionRegistry.Blocks.HEMATITE_ORE.get(),
+                    ErosionRegistry.Blocks.PYRITE_ORE.get()
                 ),
                 () -> List.of(
                     ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
                     ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
                     ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Items.RAW_HEMATITE.get()
+                    ErosionRegistry.Items.RAW_HEMATITE.get(),
+                    ErosionRegistry.Items.RAW_PYRITE.get()
                 ),
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
@@ -1073,7 +1093,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            )
+            ),HYDROTHERMAL_BLOCK_GEN
         )
     );
 
@@ -1094,7 +1114,7 @@ public class ErosionCore
                 new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_WATER
                 ))
-            ), GEMSTONE_GEN
+            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN
         )
     );
 
@@ -1351,7 +1371,9 @@ public class ErosionCore
             FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get()
-        ), List.of()
+        ), List.of(
+            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+        )
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1416,7 +1438,9 @@ public class ErosionCore
         ), () -> List.of(
             ErosionRegistry.Items.SULFUR_SLAG.get(),
             ErosionRegistry.Items.ANTIMONY_SLAG.get()
-        ), List.of()
+        ), List.of(
+            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+        )
     );
 
     //turn block into its raw ore if mined with silk touch
@@ -1426,6 +1450,55 @@ public class ErosionCore
         () -> List.of(
             ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
         ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+    );
+
+    //turn mined ore into pure ore
+    public static final RefinableMaterial.Crucible RAW_ARSENOPYRITE = new RefinableMaterial.Crucible(
+        ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getName(),
+        () -> ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+        () -> List.of(
+            Items.IRON_NUGGET
+        ), List.of(
+            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
+        ), () -> List.of(
+            ErosionRegistry.Items.SULFUR_SLAG.get()
+        ), List.of(
+            ErosionRegistry.GasTypes.SULFUR_DIOXIDE,
+            ErosionRegistry.GasTypes.ARSENIC_TRIOXIDE
+        )
+    );
+
+    //turn block into its raw ore if mined with silk touch
+    public static final RefinableMaterial ARSENOPYRITE_ORE = new RefinableMaterial.MaterialPurifier(
+        ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getName(),
+        () -> ErosionRegistry.Items.ARSENOPYRITE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
+        )
+    );
+
+    //turn mined ore into pure ore
+    public static final RefinableMaterial.Crucible RAW_PYRITE = new RefinableMaterial.Crucible(
+        ErosionRegistry.RawRegistry.RAW_PYRITE.getName(),
+        () -> ErosionRegistry.Items.RAW_PYRITE.get(),
+        () -> List.of(
+            Items.IRON_NUGGET
+        ), List.of(
+            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
+        ), () -> List.of(
+            ErosionRegistry.Items.SULFUR_SLAG.get()
+        ), List.of(
+            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+        )
+    );
+
+    //turn block into its raw ore if mined with silk touch
+    public static final RefinableMaterial PYRITE_ORE = new RefinableMaterial.MaterialPurifier(
+        ErosionRegistry.RawRegistry.PYRITE_ORE.getName(),
+        () -> ErosionRegistry.Items.PYRITE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_PYRITE.get()
+        )
     );
 
     public static final RefinableMaterial RUBY_ORE = new RefinableMaterial.MaterialPurifier(
@@ -1511,7 +1584,8 @@ public class ErosionCore
         NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
         RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
-        BORAX, CRACKED_STONE
+        BORAX, CRACKED_STONE, ARSENOPYRITE_ORE, RAW_ARSENOPYRITE,
+        PYRITE_ORE, RAW_PYRITE
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
         FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
@@ -1754,6 +1828,13 @@ public class ErosionCore
             Map.entry(ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), new ChemicalInfo(List.of(
                 "Copper-antimony thioantimonite",
                 "Copper-antimony sulfide"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_ARSENOPYRITE.get(), new ChemicalInfo(List.of(
+                "Iron arsenic sulfide",
+                "Iron(III)-sulfoarsenide"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_PYRITE.get(), new ChemicalInfo(List.of(
+                "Iron(II)-sulfide"
             ))),
             Map.entry(ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
                 "Tin(IV)-oxide"

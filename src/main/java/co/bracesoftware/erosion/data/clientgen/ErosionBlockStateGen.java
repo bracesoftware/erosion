@@ -78,7 +78,15 @@ public class ErosionBlockStateGen extends BlockStateProvider
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.AZURITE_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
-            this, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get());
+            this, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
+        );
+
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.PYRITE_ORE.get()
+        );
 
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.RUBY_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
@@ -330,6 +338,27 @@ public class ErosionBlockStateGen extends BlockStateProvider
                 this,
                 ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getId() //block texture
+            )
+        );
+
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
+            ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+            ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getId() //block texture
+            )
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
+            ErosionRegistry.Items.RAW_PYRITE.get(),
+            ErosionRegistry.Blocks.RAW_PYRITE.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_PYRITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.PYRITE_ORE.getId() //block texture
             )
         );
 

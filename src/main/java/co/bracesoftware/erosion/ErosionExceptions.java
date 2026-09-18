@@ -59,6 +59,16 @@ public class ErosionExceptions
             }
         }
     }
+    public static class ErosionCustomEntityExceptions
+    {
+        public static class ErosionGasInitException extends ErosionException
+        {
+            public ErosionGasInitException(String e)
+            {
+                super(e);
+            }
+        }
+    }
     public static class ErosionBlockExceptions
     {
         public static class ErosionChemicalReactorException extends ErosionException
