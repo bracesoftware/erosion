@@ -233,11 +233,11 @@ public class CrucibleBlock extends BaseEntityBlock
                 {
                     if(!level.isClientSide())
                     {
-                        player.getInventory().placeItemBackInInventory(be.storedItem);
                         ErosionUtils.displayMessage(
                             player, "You got " + be.storedItem.getItem().getDescription().getString(),
                             ErosionScreenMessage.Colors.DARK_AQUA
                         );
+                        player.getInventory().placeItemBackInInventory(be.storedItem);
                         be.storedItem = ItemStack.EMPTY;
                         be.setChanged();
                         level.getLightEngine().checkBlock(pos);
