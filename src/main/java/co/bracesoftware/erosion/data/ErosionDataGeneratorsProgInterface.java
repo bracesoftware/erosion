@@ -226,7 +226,7 @@ public class ErosionDataGeneratorsProgInterface
         {
             String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
             String resourcePath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/";
-            //String generatedPath = "../src/generated/resources/assets/" + Erosion.MODID + "/textures/block/";
+            String generatedResourcesPath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/" + ErosionUtils.getGeneratedFolder();
             File baseFile = new File(resourcePath + BLOCKID + "_front.png");
 
             for(int fuel = 0; fuel <= ErosionConfig.MAX_PURIFIER_FUEL; fuel++)
@@ -243,7 +243,7 @@ public class ErosionDataGeneratorsProgInterface
                         lampLayer
                     );
 
-                    File outputFile = new File(resourcePath + "generated/" + BLOCKID + "_front_fuel_" + fuel + "_" + status + ".png");
+                    File outputFile = new File(generatedResourcesPath + BLOCKID + "_front_fuel_" + fuel + "_" + status + ".png");
 
                     ErosionTextureGen.combine(baseFile, layers, outputFile);
                 }
@@ -254,7 +254,7 @@ public class ErosionDataGeneratorsProgInterface
 
             for(int i = 1; i <= ErosionConfig.CRUCIBLE_SECONDS; i++)
             {
-                File outputTex = new File(resourcePath + "generated/" + BLOCKID + "_heat_" + i + ".png");
+                File outputTex = new File(generatedResourcesPath + BLOCKID + "_heat_" + i + ".png");
                 ErosionTextureGen.generateHeatedTexture(baseCrucibleContent, outputTex, i, ErosionConfig.CRUCIBLE_SECONDS);
             }
             return;

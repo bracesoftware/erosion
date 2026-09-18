@@ -115,7 +115,7 @@ public class ErosionBlockStateGen extends BlockStateProvider
 
             ModelFile model = models().orientableWithBottom(
                 modelf, modLoc("block/" + BLOCKID + "_side"),
-                modLoc("block/generated/" + texture), modLoc("block/" + BLOCKID + "_bottom"),
+                modLoc(ErosionUtils.getGeneratedFolder() + texture), modLoc("block/" + BLOCKID + "_bottom"),
                 modLoc("block/" + BLOCKID + "_top")
             );
 
@@ -146,7 +146,7 @@ public class ErosionBlockStateGen extends BlockStateProvider
         for(int i = 0; i <= ErosionConfig.CRUCIBLE_SECONDS; i++)
         {
             String modelName = BLOCKID + (i == 0 ? "" : "_heat_" + i);
-            String texturePath = (i == 0) ? ("block/" + BLOCKID) : ("block/generated/" + BLOCKID + "_heat_" + i);
+            String texturePath = (i == 0) ? ("block/" + BLOCKID) : (ErosionUtils.getGeneratedFolder() + BLOCKID + "_heat_" + i);
 
             heatModels[i] = models().withExistingParent(modelName, mcLoc("block/block"))
                 .texture("particle", modLoc(texturePath))
@@ -366,7 +366,7 @@ public class ErosionBlockStateGen extends BlockStateProvider
         //CHEMICAL REACTOR
         var side = modLoc("block/chemical_reactor_side");
         var bottom = modLoc("block/chemical_reactor_bottom");
-        var top = modLoc("block/generated/chemical_reactor_top");
+        var top = modLoc(ErosionUtils.getGeneratedFolder() + "chemical_reactor_top");
 
         ModelFile crm = models().cubeBottomTop(
             ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(),

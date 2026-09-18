@@ -52,6 +52,11 @@ public class ErosionUtils
         return "../src/main/resources/";
     }
 
+    public static String getGeneratedFolder()
+    {
+        return "__ErosionGenerated__/";
+    }
+
     public static class Misc
     {
         public static boolean randomWithChanceToBe(boolean res, int chance)
