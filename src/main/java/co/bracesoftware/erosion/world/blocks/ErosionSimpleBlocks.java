@@ -1,7 +1,7 @@
-package co.bracesoftware.erosion.blocks;
+package co.bracesoftware.erosion.world.blocks;
 
 import co.bracesoftware.erosion.ErosionConfig;
-import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.GravelBlock;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.GravelBlock;
 
 import java.util.EnumMap;
 import java.util.Map;

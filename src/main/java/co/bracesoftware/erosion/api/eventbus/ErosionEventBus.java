@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.eventbus;
+package co.bracesoftware.erosion.api.eventbus;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionEventBusException;
-import co.bracesoftware.erosion.eventbus.ErosionEvents.BasicErosionEvent;
+import co.bracesoftware.erosion.api.eventbus.ErosionEvents.BasicErosionEvent;
 
 public class ErosionEventBus
 {

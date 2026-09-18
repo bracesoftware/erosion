@@ -27,7 +27,7 @@ import java.nio.file.Path;
 import java.io.Writer;
 import java.io.Reader;
 
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

@@ -5,7 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.ErosionAdvancement;
 import net.minecraft.advancements.Advancement;

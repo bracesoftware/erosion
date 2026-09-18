@@ -1,12 +1,11 @@
-package co.bracesoftware.erosion.blocks.chemical_reactor;
+package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.blocks.common_api.ErosionProductSlot;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -119,7 +118,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
             for(int col = 0; col < 2; ++col)
             {
                 int index = col + row * 2;
-                this.addSlot(new ErosionProductSlot(products, index, 124 + col * 18, 17 + row * 18, this::onProductTaken));
+                this.addSlot(new ChemicalReactorProductSlot(products, index, 124 + col * 18, 17 + row * 18, this::onProductTaken));
             }
         }
 

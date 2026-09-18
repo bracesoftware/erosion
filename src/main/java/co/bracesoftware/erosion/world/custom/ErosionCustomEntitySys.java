@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.custom;
+package co.bracesoftware.erosion.world.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -22,7 +22,7 @@ import java.util.List;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 

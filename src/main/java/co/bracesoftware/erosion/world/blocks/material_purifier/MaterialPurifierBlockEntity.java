@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.material_purifier;
+package co.bracesoftware.erosion.world.blocks.material_purifier;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionMaterialPurifierException;
 import co.bracesoftware.erosion.ErosionMod;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;

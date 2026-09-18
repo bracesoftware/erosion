@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks;
+package co.bracesoftware.erosion.world;
 
 import java.util.List;
 import java.util.function.Supplier;
@@ -6,17 +6,8 @@ import java.util.function.Supplier;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.blocks.ErosionRegistry.RawRegistry.IRawRegistry;
-import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorBlock;
-import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
-import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorScreen;
-import co.bracesoftware.erosion.blocks.crucible.CrucibleBlock;
-import co.bracesoftware.erosion.blocks.crucible.CrucibleBlockEntity;
-import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlock;
-import co.bracesoftware.erosion.blocks.material_purifier.MaterialPurifierBlockEntity;
-import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
-import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
+import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.core.particles.ParticleTypes;
@@ -42,6 +33,11 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
+
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
+import co.bracesoftware.erosion.world.blocks.crucible.*;
+import co.bracesoftware.erosion.world.blocks.material_purifier.*;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionRegistry

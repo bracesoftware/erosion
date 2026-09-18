@@ -3,7 +3,7 @@ package co.bracesoftware.erosion.data.servergen;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionModCompat;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;

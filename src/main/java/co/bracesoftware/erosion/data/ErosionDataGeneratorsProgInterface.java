@@ -6,13 +6,12 @@ import java.util.Map;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
-import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks;
-import co.bracesoftware.erosion.blocks.ErosionSimpleBlocks.RockBlock;
+import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.commongen.ErosionTextureGen;
 import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;

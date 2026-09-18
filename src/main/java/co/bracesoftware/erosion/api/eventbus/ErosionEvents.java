@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.eventbus;
+package co.bracesoftware.erosion.api.eventbus;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.chemical_reactor;
+package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
 import co.bracesoftware.erosion.Erosion;
 import net.minecraft.client.gui.GuiGraphics;

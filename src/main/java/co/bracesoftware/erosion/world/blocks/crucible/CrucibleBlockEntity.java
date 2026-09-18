@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.crucible;
+package co.bracesoftware.erosion.world.blocks.crucible;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,8 @@ import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionCrucibleException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.Gas;
+import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

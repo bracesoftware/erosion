@@ -1,7 +1,7 @@
 package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;

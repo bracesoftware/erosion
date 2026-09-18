@@ -3,12 +3,12 @@ package co.bracesoftware.erosion;
 import org.slf4j.Logger;
 
 import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.logging.LogUtils;
 
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.IEventBus;
-import co.bracesoftware.erosion.eventbus.*;
+import co.bracesoftware.erosion.api.eventbus.*;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;

@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.chemical_reactor;
+package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;

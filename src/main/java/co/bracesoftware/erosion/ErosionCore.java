@@ -1,33 +1,23 @@
 package co.bracesoftware.erosion;
 
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorMenu;
-import co.bracesoftware.erosion.custom.ErosionCustomEntitySys.GasType;
-import co.bracesoftware.erosion.eventbus.*;
-import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
+import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorMenu;
+import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
+import co.bracesoftware.erosion.api.eventbus.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
-import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
-import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
-import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
-import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
-import java.util.ArrayList;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,21 +25,12 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
-import net.neoforged.neoforge.event.level.ChunkEvent.Unload;
-import net.minecraft.core.BlockPos;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.minecraft.server.level.ServerLevel;
 
 import it.unimi.dsi.fastutil.longs.*;
 

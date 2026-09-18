@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.material_purifier;
+package co.bracesoftware.erosion.world.blocks.material_purifier;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -37,7 +37,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
 
 public class MaterialPurifierBlock extends BaseEntityBlock

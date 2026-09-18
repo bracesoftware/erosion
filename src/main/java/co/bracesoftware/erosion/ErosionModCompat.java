@@ -25,8 +25,8 @@ import java.nio.file.Path;
 
 import co.bracesoftware.erosion.ErosionModCompat.CompatibleMod;
 import co.bracesoftware.erosion.ErosionModCompat.CompatibleMods;
-import co.bracesoftware.erosion.eventbus.ErosionEvents;
-import co.bracesoftware.erosion.eventbus.ErosionEvents.ErosionEventSubscribe;
+import co.bracesoftware.erosion.api.eventbus.ErosionEvents;
+import co.bracesoftware.erosion.api.eventbus.ErosionEvents.ErosionEventSubscribe;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.ModList;
 

@@ -49,7 +49,7 @@ import co.bracesoftware.erosion.ErosionConfig.*;
 import co.bracesoftware.erosion.ErosionCore.CommandRegistry;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 
 import co.bracesoftware.libs.minecraft_text_formatter.Text;

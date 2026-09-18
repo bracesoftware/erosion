@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.blocks.crucible;
+package co.bracesoftware.erosion.world.blocks.crucible;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
@@ -52,7 +52,7 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
 
 public class CrucibleBlock extends BaseEntityBlock

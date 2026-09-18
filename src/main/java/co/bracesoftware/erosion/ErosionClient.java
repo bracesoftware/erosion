@@ -2,8 +2,8 @@ package co.bracesoftware.erosion;
 
 import java.util.List;
 
-import co.bracesoftware.erosion.blocks.ErosionRegistry;
-import co.bracesoftware.erosion.blocks.chemical_reactor.ChemicalReactorScreen;
+import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorScreen;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
