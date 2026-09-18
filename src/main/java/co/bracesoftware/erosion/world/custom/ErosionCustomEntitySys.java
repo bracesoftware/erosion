@@ -273,7 +273,7 @@ public class ErosionCustomEntitySys
 
             if(!l.isLoaded(pos)) continue;
 
-            if(g.getRemaining() % 10 == 0 && ty.isToxic())
+            if(g.getRemaining() % 10 == 0)
             {
                 double radius = (double) ty.getGasDiffusionRadius() * ty.getGasDiffusionRadius();
                 for(var p : l.players())
