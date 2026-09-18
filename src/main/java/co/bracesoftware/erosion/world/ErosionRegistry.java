@@ -889,6 +889,7 @@ public class ErosionRegistry
         CREATIVE_MODE_TABS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         MENUS.register(modEventBus);
+        ARMOR_MATERIALS.register(modEventBus);
 
         try
         {
@@ -896,6 +897,7 @@ public class ErosionRegistry
             Class.forName(Items.class.getName());
             Class.forName(BlockEntities.class.getName());
             Class.forName(Menus.class.getName());
+            Class.forName(ArmorMaterials.class.getName());
         }
         catch(ClassNotFoundException e)
         {
