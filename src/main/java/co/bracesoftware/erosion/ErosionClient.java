@@ -123,7 +123,7 @@ public class ErosionClient
 
                 if(MESSAGES.isEmpty()) return;
                 int cx = gg.guiWidth() / 2;
-                int start = (gg.guiHeight() / 2) + 15;
+                int start = (gg.guiHeight() / 2) + 100;
 
                 for(int i = 0; i < MESSAGES.size(); i++)
                 {
