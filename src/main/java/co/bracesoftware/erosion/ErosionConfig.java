@@ -19,7 +19,7 @@ public final class ErosionConfig
     {
         public static class ErosionTextureGen
         {
-            public static final String OUTPUT_FORMAT = "PNG";
+            public static final String OUTPUT_FORMAT = "png";
         }
     }
     public static final boolean CRUCIBLE_COPRODUCT_DEBUG = true;
