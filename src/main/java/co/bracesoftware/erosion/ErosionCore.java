@@ -1247,7 +1247,9 @@ public class ErosionCore
             Items.IRON_NUGGET
         ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
             FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
+        ), () -> List.of(), List.of(
+            ErosionRegistry.GasTypes.WATER_VAPOR
+        )
     );
     public static final RefinableMaterial.Crucible RAW_MAGNETITE = new RefinableMaterial.Crucible(
         ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),

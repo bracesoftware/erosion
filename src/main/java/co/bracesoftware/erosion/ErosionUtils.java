@@ -2,14 +2,16 @@ package co.bracesoftware.erosion;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessageColors;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
-
+import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ErosionUtils
 {
@@ -39,12 +41,24 @@ public class ErosionUtils
         nf.setMaximumFractionDigits(1);
         return nf.format(value).toLowerCase();
     }
-    public static void displayMessage(Player player, String text)
+    public static void displayMessageOld(Player player, String text)
     {
         player.displayClientMessage(
             Component.literal(text)
             .withStyle(ChatFormatting.WHITE), true
         );
+    }
+
+    public static void displayMessage(Player pl, String text, int col)
+    {
+        var pk = new ErosionScreenMessagePacket(text, col);
+        if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
+    }
+
+    public static void displayMessage(Player pl, String text)
+    {
+        var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessageColors.WHITE);
+        if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
     }
 
     public static String getResourcesFolder()

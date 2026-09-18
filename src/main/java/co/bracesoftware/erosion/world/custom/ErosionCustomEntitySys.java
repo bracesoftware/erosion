@@ -27,6 +27,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCustomEntityExceptions.ErosionGasInitException;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessageColors;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
@@ -193,7 +194,8 @@ public class ErosionCustomEntitySys
                     p.addEffect(new MobEffectInstance(f, 200, 0));
                 }
                 ErosionUtils.displayMessage(
-                    p, Text.Format(Text.Col.RED) + "You're being poisoned with " + ty.name
+                    p, "You're being poisoned with " + ty.name,
+                    ErosionScreenMessageColors.RED
                 );
 
                 ErosionUtils.Misc.grantAdvancement(
@@ -205,7 +207,8 @@ public class ErosionCustomEntitySys
             else
             {
                 ErosionUtils.displayMessage(
-                    p, Text.Format(Text.Col.YELLOW) + "You're inhaling " + ty.name
+                    p, "You're inhaling " + ty.name,
+                    ErosionScreenMessageColors.YELLOW
                 );
             }
             

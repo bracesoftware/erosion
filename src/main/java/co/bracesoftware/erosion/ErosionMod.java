@@ -36,6 +36,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
@@ -182,6 +183,12 @@ public final class ErosionMod
             ErosionRegistry.DataPackets.MOD_STATUS_SYNC,
             ErosionStatusSyncPacket.STREAM_CODEC,
             ErosionStatusSyncPacket::handleData
+        );
+        event.registrar("1")
+        .playToClient(
+            ErosionRegistry.DataPackets.SCREEN_MESSAGE_PACKET,
+            ErosionScreenMessagePacket.STREAM_CODEC,
+            ErosionScreenMessagePacket::handleData
         );
         return;
     }

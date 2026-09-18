@@ -1,8 +1,10 @@
 package co.bracesoftware.erosion.network.client;
 
+import co.bracesoftware.erosion.ErosionClient;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionRetrogen;
+import net.neoforged.api.distmarker.Dist;
 
 public class ErosionClientData
 {
@@ -10,6 +12,11 @@ public class ErosionClientData
     public static class ConfigFromServer
     {
         public static Boolean AGGRESIVE_GEOCHEMICAL_ALTERATION = false;
+    }
+
+    public static void sendMessage(String text, int col)
+    {
+        ErosionClient.ErosionScreenMessage.addMessage(text, col);
     }
 
     public static void updateModStatus(

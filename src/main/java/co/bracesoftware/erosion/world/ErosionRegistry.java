@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -49,6 +50,9 @@ public class ErosionRegistry
     {
         public static final Type<ErosionStatusSyncPacket> MOD_STATUS_SYNC = new Type<>(
             ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "status_sync")
+        );
+        public static final Type<ErosionScreenMessagePacket> SCREEN_MESSAGE_PACKET = new Type<>(
+            ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "screen_msg_packet")
         );
     }
 
@@ -203,10 +207,18 @@ public class ErosionRegistry
 
         //GASES
         public static final IRawRegistry SULFUR_DIOXIDE = new IRawRegistry("sulfur_dioxide", "Sulfur Dioxide");
+        public static final IRawRegistry WATER_VAPOR = new IRawRegistry("water_vapor", "Water Vapor");
         public static final IRawRegistry ARSENIC_TRIOXIDE = new IRawRegistry("arsenic_trioxide", "Arsenic Trioxide");
 
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
+    }
+
+    public static class ErosionRenderingElements
+    {
+        public static final ResourceLocation SCREEN_MESSAGE = ResourceLocation.fromNamespaceAndPath(
+            Erosion.MODID, "screen_message"
+        );
     }
 
     public static class DataAttachments
@@ -237,6 +249,13 @@ public class ErosionRegistry
                 MobEffects.CONFUSION,
                 MobEffects.MOVEMENT_SLOWDOWN
             )
+        );
+        public static final GasType WATER_VAPOR = new GasType(
+            RawRegistry.WATER_VAPOR.getId(),
+            RawRegistry.WATER_VAPOR.getName(),
+            100, false, 3,
+            ParticleTypes.CAMPFIRE_COSY_SMOKE, 5,
+            List.of()
         );
     }
 
