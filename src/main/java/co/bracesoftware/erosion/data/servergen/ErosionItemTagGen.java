@@ -76,6 +76,10 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
             this,provider,ErosionRegistry.Items.RAW_PYRITE.get()
         );
 
+        ErosionTags.Items.createSimpleArmorPiece(
+            this,provider,ErosionRegistry.Items.GAS_MASK.get()
+        );
+
         return;
     }
 }

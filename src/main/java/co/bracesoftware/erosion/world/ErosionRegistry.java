@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.world;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import co.bracesoftware.erosion.Erosion;
@@ -9,18 +10,24 @@ import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
+import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -65,6 +72,9 @@ public class ErosionRegistry
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
         Registries.CREATIVE_MODE_TAB, Erosion.MODID
+    );
+    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(
+        Registries.ARMOR_MATERIAL, Erosion.MODID
     );
     // ===================================================== //
     public static class DefaultAlterationPaths
@@ -210,6 +220,9 @@ public class ErosionRegistry
         public static final IRawRegistry WATER_VAPOR = new IRawRegistry("water_vapor", "Water Vapor");
         public static final IRawRegistry ARSENIC_TRIOXIDE = new IRawRegistry("arsenic_trioxide", "Arsenic Trioxide");
 
+        //COOL ITEMS
+        public static final IRawRegistry GAS_MASK = new IRawRegistry("gas_mask", "Gas Mask");
+
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
     }
@@ -218,6 +231,29 @@ public class ErosionRegistry
     {
         public static final ResourceLocation SCREEN_MESSAGE = ResourceLocation.fromNamespaceAndPath(
             Erosion.MODID, "screen_message"
+        );
+    }
+
+    public static class ArmorMaterials
+    {
+        public static final Holder<ArmorMaterial> GAS_MASK = ARMOR_MATERIALS.register(
+            ErosionRegistry.RawRegistry.GAS_MASK.getId(),
+            () -> new ArmorMaterial(
+                Map.of(
+                    ArmorItem.Type.HELMET, 2,
+                    ArmorItem.Type.CHESTPLATE, 0,
+                    ArmorItem.Type.LEGGINGS, 0,
+                    ArmorItem.Type.BOOTS, 0,
+                    ArmorItem.Type.BODY, 0
+                ),
+                10, SoundEvents.ARMOR_EQUIP_LEATHER,
+                () -> Ingredient.EMPTY,
+                List.of(
+                    new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(
+                        Erosion.MODID, ErosionRegistry.RawRegistry.GAS_MASK.getId()
+                    ))
+                ), 0f,0f
+            )
         );
     }
 
@@ -500,6 +536,11 @@ public class ErosionRegistry
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR.get(), new Item.Properties()
             )
+        );
+
+        //COOL ITEMS
+        public static final DeferredItem<Item> GAS_MASK = ITEMS.register(
+            RawRegistry.GAS_MASK.getId(), () -> ErosionSimpleItems.GasMask.newGasMaskItem()
         );
 
         //SIMPLEBLOCKS
@@ -836,6 +877,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.get());
             output.accept(ErosionRegistry.Items.CRUCIBLE.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
+            output.accept(ErosionRegistry.Items.GAS_MASK.get());
         })
         .build()
     );

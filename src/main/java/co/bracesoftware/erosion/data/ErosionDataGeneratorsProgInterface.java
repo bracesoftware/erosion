@@ -28,6 +28,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -54,6 +55,12 @@ public class ErosionDataGeneratorsProgInterface
             public static void createSimplePowder(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
             {
                 t.tagz(Tags.Items.DUSTS).add(i);
+            }
+            public static void createSimpleArmorPiece(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
+            {
+                t.tagz(Tags.Items.ARMORS).add(i);
+                t.tagz(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "armors"))).add(i);
+                t.tagz(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "armor"))).add(i);
             }
         }
         public static class Blocks
