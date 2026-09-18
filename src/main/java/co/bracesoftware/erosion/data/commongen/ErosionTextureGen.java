@@ -2,18 +2,102 @@ package co.bracesoftware.erosion.data.commongen;
 
 import javax.imageio.ImageIO;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+
 import co.bracesoftware.erosion.*;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
+
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
 public class ErosionTextureGen
 {
+    private static void combineImagesVertically(
+        List<String> l, String o
+    ) throws IOException 
+    {
+        var f = ImageIO.read(new File(l.get(0)));
+        int w = f.getWidth();
+        int h = f.getHeight();
+        int th = h * l.size();
+
+        var ci = new BufferedImage(w, th, BufferedImage.TYPE_INT_ARGB);
+        var g2d = ci.createGraphics();
+
+        g2d.drawImage(f, 0,0, null);
+
+        for(int i = 1; i < l.size(); i++) 
+        {
+            var cri = ImageIO.read(new File(l.get(i)));
+            g2d.drawImage(cri, 0, i * h, null);
+        }
+
+        g2d.dispose();
+
+        File of = new File(o);
+        
+        if(of.getParentFile() != null) of.getParentFile().mkdirs();
+
+        ImageIO.write(ci, ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT, of);
+        return;
+    }
+    public static void createAnimatedTexture(
+        String out, List<String> frames,
+        int time, boolean interpolate
+    ) throws ErosionDataGenException
+    {
+        if(frames == null || frames.isEmpty())
+        {
+            throw new ErosionDataGenException("Frame list cannot be empty -> " + out);
+        }
+        try 
+        {
+            combineImagesVertically(frames, out);
+
+            JsonObject rootJson = new JsonObject();
+            JsonObject animationDetails = new JsonObject();
+
+            animationDetails.addProperty("frametime", time);
+            animationDetails.addProperty("interpolate", interpolate);
+
+            JsonArray f = new JsonArray();
+            for(int i = 0; i < frames.size(); i++) 
+            {
+                f.add(i);
+            }
+            animationDetails.add("frames", f);
+
+            rootJson.add("animation", animationDetails);
+
+            File jsonFile = new File(out + ".mcmeta");
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+            try(FileWriter writer = new FileWriter(jsonFile))
+            {
+                gson.toJson(rootJson, writer);
+            }
+
+            System.out.println("Generated anim -> " + out);
+            System.out.println("*.mcmeta file successfully generated -> " + jsonFile.getAbsolutePath());
+
+        } 
+        catch(IOException e)
+        {
+            e.printStackTrace();
+            throw new ErosionDataGenException("Failed to generate texture animation for: " + out);
+        }
+        return;
+    }
     public static void combine(File baseFile, List<File> layerFiles, File outputFile)
     {
         if(baseFile == null || !baseFile.exists())
@@ -52,7 +136,7 @@ public class ErosionTextureGen
             {
                 outputFile.getParentFile().mkdirs();
             }
-            ImageIO.write(combinedImage, "PNG", outputFile);
+            ImageIO.write(combinedImage, ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT, outputFile);
             ErosionUtils.Log("Sucessfully created: " + outputFile.getName());
 
         }
@@ -108,7 +192,7 @@ public class ErosionTextureGen
             {
                 outputFile.getParentFile().mkdirs();
             }
-            ImageIO.write(heatedImage, "PNG", outputFile);
+            ImageIO.write(heatedImage, ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT, outputFile);
             ErosionUtils.Log("Successfully created heated variant (" + step + "/" + maxSteps + "): " + outputFile.getName());
         }
         catch (IOException e)

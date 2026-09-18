@@ -364,9 +364,24 @@ public class ErosionBlockStateGen extends BlockStateProvider
 
         // ============================================= ////
         //CHEMICAL REACTOR
+
+        final String assetsBlock = "assets/" + Erosion.MODID + "/textures/block/";
+
+        ErosionTextureGen.createAnimatedTexture(
+            ErosionUtils.getResourcesFolder() +
+            assetsBlock + "generated/chemical_reactor_top." +
+            ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
+            List.of(
+                ErosionUtils.getResourcesFolder() + assetsBlock +
+                "chemical_reactor_top_1." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
+                ErosionUtils.getResourcesFolder() + assetsBlock +
+                "chemical_reactor_top_2." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT
+            ), 40, false
+        );
+
         var side = modLoc("block/chemical_reactor_side");
         var bottom = modLoc("block/chemical_reactor_bottom");
-        var top = modLoc("block/chemical_reactor_top");
+        var top = modLoc("block/generated/chemical_reactor_top");
 
         ModelFile crm = models().cubeBottomTop(
             ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(),

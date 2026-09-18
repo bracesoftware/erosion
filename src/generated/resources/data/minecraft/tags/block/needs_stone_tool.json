@@ -9,7 +9,9 @@
     "erosion:sphalerite_ore",
     "erosion:azurite_ore",
     "erosion:tetrahedrite_ore",
+    "erosion:arsenopyrite_ore",
     "erosion:ruby_ore",
-    "erosion:sapphire_ore"
+    "erosion:sapphire_ore",
+    "erosion:pyrite_ore"
   ]
 }

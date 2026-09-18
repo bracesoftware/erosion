@@ -15,6 +15,13 @@ public final class ErosionConfig
     {
         public static final boolean CRAZY_DEBUG_MODE = false;
     }
+    public static class ErosionDataGen
+    {
+        public static class ErosionTextureGen
+        {
+            public static final String OUTPUT_FORMAT = "PNG";
+        }
+    }
     public static final boolean CRUCIBLE_COPRODUCT_DEBUG = true;
 
     public static final Integer MAX_PENDING_SIZE = 30000;
