@@ -11,7 +11,7 @@ public class ErosionDataGenInternal
     public static void generateChemicalReactorAnim()
     {
         final String assetsBlock = "assets/" + Erosion.MODID + "/textures/block/";
-        final String assetsGenerated = "assets/" + Erosion.MODID + "/" + ErosionUtils.getGeneratedFolder();
+        final String assetsGenerated = "assets/" + Erosion.MODID + "/textures/" + ErosionUtils.getGeneratedFolder();
 
         ErosionTextureGen.createAnimatedTexture(
             ErosionUtils.getResourcesFolder() +

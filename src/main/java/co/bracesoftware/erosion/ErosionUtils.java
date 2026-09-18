@@ -54,7 +54,7 @@ public class ErosionUtils
 
     public static String getGeneratedFolder()
     {
-        return "__ErosionGenerated__/";
+        return "__" + Erosion.MODID + "generated__/";
     }
 
     public static class Misc
