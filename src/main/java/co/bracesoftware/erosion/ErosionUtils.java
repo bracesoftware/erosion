@@ -2,6 +2,8 @@ package co.bracesoftware.erosion;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+import java.util.function.*;
+
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
@@ -19,6 +21,10 @@ public class ErosionUtils
     {
         System.out.println("\n\t{ErosionMod} -> System: " + text);
         return;
+    }
+    public static <T> T compute(Supplier<T> supplier)
+    {
+        return supplier.get();
     }
     public static String getStatus()
     {

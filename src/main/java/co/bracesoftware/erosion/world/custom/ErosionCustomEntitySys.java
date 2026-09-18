@@ -13,8 +13,11 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -185,31 +188,42 @@ public class ErosionCustomEntitySys
             return;
         }
 
-        public static void applyGasEffects(ServerPlayer p, GasType ty)
+        public static void applyGasEffects(LivingEntity entity, GasType ty)
         {
-            if(ty.isToxic())
+            //any entity in radius gets effect
+            if(ty.isToxic()) for(var f : ty.getGasEffects())
             {
-                for(var f : ty.getGasEffects())
+                if(entity instanceof ServerPlayer p)
                 {
-                    p.addEffect(new MobEffectInstance(f, 200, 0));
+                    if(p.isCreative() || p.isSpectator()) return;
                 }
-                ErosionUtils.displayMessage(
-                    p, "You're being poisoned with " + ty.name,
-                    ErosionScreenMessage.Colors.RED
-                );
-
-                ErosionUtils.Misc.grantAdvancement(
-                    p, ResourceLocation.fromNamespaceAndPath(
-                        Erosion.MODID, ErosionRegistry.RawRegistry.ManualAdvancements.INVISIBLE_FIRE.getId()
-                    )
-                );
+                entity.addEffect(new MobEffectInstance(f, 200, 0));
             }
-            else
+            //if it is a player, send messages to warn
+            if(entity instanceof ServerPlayer p)
             {
-                ErosionUtils.displayMessage(
-                    p, "You're inhaling " + ty.name,
-                    ErosionScreenMessage.Colors.YELLOW
-                );
+                if(p.isCreative() || p.isSpectator()) return;
+                if(ty.isToxic())
+                {
+                    ErosionUtils.displayMessage(
+                        p, "You're being poisoned with " + ty.name,
+                        ErosionScreenMessage.Colors.RED
+                    );
+
+                    ErosionUtils.Misc.grantAdvancement(
+                        p, ResourceLocation.fromNamespaceAndPath(
+                            Erosion.MODID, ErosionRegistry.RawRegistry.ManualAdvancements.INVISIBLE_FIRE.getId()
+                        )
+                    );
+                }
+                else
+                {
+                    ErosionUtils.displayMessage(
+                        p, "You're inhaling " + ty.name,
+                        ErosionScreenMessage.Colors.YELLOW
+                    );
+                }
+                return;
             }
             
             return;
@@ -275,16 +289,13 @@ public class ErosionCustomEntitySys
 
             if(g.getRemaining() % 10 == 0)
             {
-                double radius = (double) ty.getGasDiffusionRadius() * ty.getGasDiffusionRadius();
-                for(var p : l.players())
+                var ents = l.getEntitiesOfClass(
+                    LivingEntity.class,
+                    new AABB(pos).inflate(ty.getGasDiffusionRadius())
+                );
+                for(var p : ents)
                 {
-                    if(!p.isCreative() && !p.isSpectator())
-                    {
-                        if(p.blockPosition().distSqr(pos) <= radius)
-                        {
-                            Gas.applyGasEffects(p, ty);
-                        }
-                    }
+                    Gas.applyGasEffects(p, ty);
                 }
             }
             if(g.getRemaining() % 5 == 0)
