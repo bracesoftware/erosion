@@ -26,6 +26,7 @@ import net.minecraft.util.Mth;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @EventBusSubscriber(modid = Erosion.MODID, value = Dist.CLIENT)
 public class ErosionClient
@@ -63,6 +64,21 @@ public class ErosionClient
                 this.text = t;
                 this.time = System.currentTimeMillis();
             }
+
+            @Override 
+            public boolean equals(Object o)
+            {
+                if(this == o) return true;
+                if(o == null || this.getClass() != o.getClass()) return false;
+                var dat = (DisplayEntry) o;
+                return Objects.equals(this.text, dat.text);
+            }
+
+            @Override 
+            public int hashCode()
+            {
+                return Objects.hash(this.text);
+            }
         }
 
         private static final List<DisplayEntry> MESSAGES = new ArrayList<>();
@@ -73,7 +89,7 @@ public class ErosionClient
         {
             synchronized(MESSAGES)
             {
-                if(MESSAGES.contains(t))
+                if(MESSAGES.contains(new DisplayEntry(t, col)))
                 {
                     return;
                 }
