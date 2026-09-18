@@ -6,6 +6,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
@@ -210,7 +212,7 @@ public class ErosionCustomEntitySys
             return;
         }
 
-        private static void spawnGasParticles(ServerLevel l, BlockPos p, GasType t)
+        private static void renderGasParticles(ServerLevel l, BlockPos p, GasType t)
         {
             if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
             {
@@ -227,12 +229,14 @@ public class ErosionCustomEntitySys
                 double y = p.getY() + 0.5 + oy;
                 double z = p.getZ() + 0.5 + oz;
 
-                l.sendParticles(
-                    t.getParticleType(),
-                    x, y, z, 1,
-                    //whatever these numberz are xd
-                    0.0, 0.01, 0.0,0.005
+                ClientboundLevelParticlesPacket pp = new ClientboundLevelParticlesPacket(
+                    t.getParticleType(), true, x,y,z,
+                    0.0f,0.0f,0.0f,0.005f,1
                 );
+
+                l.getChunkSource().chunkMap.getPlayers(
+                    new ChunkPos(BlockPos.containing(x, y, z)), false
+                ).forEach(pl -> pl.connection.send(pp));
             }
         }
     }
@@ -282,7 +286,7 @@ public class ErosionCustomEntitySys
             }
             if(g.getRemaining() % 5 == 0)
             {
-                Gas.spawnGasParticles(l, pos, ty);
+                Gas.renderGasParticles(l, pos, ty);
             }
         }
 
