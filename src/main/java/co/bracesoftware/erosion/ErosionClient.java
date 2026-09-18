@@ -73,12 +73,17 @@ public class ErosionClient
         {
             synchronized(MESSAGES)
             {
+                if(MESSAGES.contains(t))
+                {
+                    return;
+                }
                 if(MESSAGES.size() >= 10)
                 {
                     MESSAGES.remove(0);
                 }
                 MESSAGES.add(new DisplayEntry(t, col));
             }
+            return;
         }
 
         @Override 
