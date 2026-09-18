@@ -87,8 +87,8 @@ public class ErosionTextureGen
                 gson.toJson(rootJson, writer);
             }
 
-            System.out.println("Generated anim -> " + out);
-            System.out.println("*.mcmeta file successfully generated -> " + jsonFile.getAbsolutePath());
+            ErosionUtils.Log("Generated anim -> " + out);
+            ErosionUtils.Log("*.mcmeta file successfully generated -> " + jsonFile.getAbsolutePath());
 
         } 
         catch(IOException e)
