@@ -4,6 +4,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionLang;
+import co.bracesoftware.erosion.data.commongen.ErosionDataGenInternal;
 import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
 import co.bracesoftware.erosion.data.servergen.ErosionBlockTagGen;
 import co.bracesoftware.erosion.data.servergen.ErosionItemTagGen;
@@ -23,6 +24,9 @@ public class ErosionDataGenerators
     {
         DataGenerator generator = e.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
+        
+        //other stuff
+        ErosionDataGenInternal.generateChemicalReactorAnim();
 
         //client provider
         generator.addProvider(e.includeClient(), new ErosionLang(packOutput));
