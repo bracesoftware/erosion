@@ -51,6 +51,7 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
@@ -233,6 +234,10 @@ public class CrucibleBlock extends BaseEntityBlock
                     if(!level.isClientSide())
                     {
                         player.getInventory().placeItemBackInInventory(be.storedItem);
+                        ErosionUtils.displayMessage(
+                            player, "You got " + be.storedItem.getItem().getDescription().getString(),
+                            ErosionScreenMessage.Colors.DARK_AQUA
+                        );
                         be.storedItem = ItemStack.EMPTY;
                         be.setChanged();
                         level.getLightEngine().checkBlock(pos);
@@ -250,7 +255,7 @@ public class CrucibleBlock extends BaseEntityBlock
                             be.coproducts = null;
                         }
                     }
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                    return ItemInteractionResult.SUCCESS; //i want the hand anim bruv
                 }
                 //if crucible isn't working and is finished then take the catalyst out
                 if(!be.working && be.finished && be.storedItem.isEmpty() && !be.catalyst.isEmpty())

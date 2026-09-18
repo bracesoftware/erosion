@@ -2,7 +2,7 @@ package co.bracesoftware.erosion;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessageColors;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import net.minecraft.ChatFormatting;
@@ -57,7 +57,7 @@ public class ErosionUtils
 
     public static void displayMessage(Player pl, String text)
     {
-        var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessageColors.WHITE);
+        var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessage.Colors.WHITE);
         if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
     }
 
