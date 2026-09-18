@@ -1834,7 +1834,8 @@ public class ErosionCore
                 "Iron(III)-sulfoarsenide"
             ))),
             Map.entry(ErosionRegistry.Items.RAW_PYRITE.get(), new ChemicalInfo(List.of(
-                "Iron(II)-sulfide"
+                "Iron(II)-sulfide",
+                "Also known as \"fool's gold\""
             ))),
             Map.entry(ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
                 "Tin(IV)-oxide"
