@@ -21,7 +21,7 @@ public class ErosionDataGenInternal
                 "chemical_reactor_top_1." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
                 ErosionUtils.getResourcesFolder() + assetsBlock +
                 "chemical_reactor_top_2." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT
-            ), 40, false
+            ), 20, false
         );
         return;
     }
