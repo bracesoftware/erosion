@@ -226,7 +226,7 @@ public class ErosionDataGeneratorsProgInterface
         {
             String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
             String resourcePath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/";
-            String generatedResourcesPath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/" + ErosionUtils.getGeneratedFolder();
+            String generatedResourcesPath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/" + ErosionUtils.getGeneratedFolder();
             File baseFile = new File(resourcePath + BLOCKID + "_front.png");
 
             for(int fuel = 0; fuel <= ErosionConfig.MAX_PURIFIER_FUEL; fuel++)
