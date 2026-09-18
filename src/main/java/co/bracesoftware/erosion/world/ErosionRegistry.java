@@ -221,7 +221,7 @@ public class ErosionRegistry
             RawRegistry.SULFUR_DIOXIDE.getId(),
             RawRegistry.SULFUR_DIOXIDE.getName(),
             200, true, 4,
-            ParticleTypes.CAMPFIRE_COSY_SMOKE, 5,
+            ParticleTypes.CLOUD, 5,
             List.of(
                 MobEffects.CONFUSION,
                 MobEffects.POISON
@@ -231,7 +231,7 @@ public class ErosionRegistry
             RawRegistry.ARSENIC_TRIOXIDE.getId(),
             RawRegistry.ARSENIC_TRIOXIDE.getName(),
             300, true, 6,
-            ParticleTypes.LARGE_SMOKE, 5,
+            ParticleTypes.SNEEZE, 5,
             List.of(
                 MobEffects.WITHER,
                 MobEffects.CONFUSION,

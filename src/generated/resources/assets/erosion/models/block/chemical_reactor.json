@@ -3,6 +3,6 @@
   "textures": {
     "bottom": "erosion:block/chemical_reactor_bottom",
     "side": "erosion:block/chemical_reactor_side",
-    "top": "erosion:__erosion_generated__/chemical_reactor_top"
+    "top": "erosion:block/__erosion_generated__/chemical_reactor_top"
   }
 }

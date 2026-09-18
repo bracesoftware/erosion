@@ -291,7 +291,7 @@
     }
   ],
   "textures": {
-    "particle": "erosion:__erosion_generated__/crucible_heat_12",
-    "texture": "erosion:__erosion_generated__/crucible_heat_12"
+    "particle": "erosion:block/__erosion_generated__/crucible_heat_12",
+    "texture": "erosion:block/__erosion_generated__/crucible_heat_12"
   }
 }
