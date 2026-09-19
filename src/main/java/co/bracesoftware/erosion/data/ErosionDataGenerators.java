@@ -1,6 +1,8 @@
 package co.bracesoftware.erosion.data;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionMod;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionLang;
@@ -24,6 +26,9 @@ public class ErosionDataGenerators
     {
         DataGenerator generator = e.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
+        
+        ErosionUtils.Log(ErosionMod.WELCOME_ASCII);
+        ErosionUtils.Log("Doing data gen...");
         
         //other stuff
         ErosionDataGenInternal.generateChemicalReactorAnim();
