@@ -31,7 +31,7 @@ public class ErosionModCompat
         public Runnable setup;
         public Runnable discard;
 
-        private Boolean present = false;
+        private boolean present = false;
 
         public CompatibleMod(String m, String n, List<Runnable> l)
         {
@@ -83,7 +83,7 @@ public class ErosionModCompat
             return;
         }
 
-        public Boolean isPresent()
+        public boolean isPresent()
         {
             return this.present;
         }

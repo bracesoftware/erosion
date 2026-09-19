@@ -135,14 +135,15 @@ public class ErosionCommandProcessor
             return;
         }
 
-        for(var str : args)
-        {
-            str.trim();
-        }
+        args.removeIf(str -> (
+            str == null ||
+            str.isBlank() ||
+            str.isEmpty()
+        ));
 
         for(var cmd : COMMAND_LIST)
         {
-            if(args.get(0) == cmd.name)
+            if(args.get(0).equals(cmd.name))
             {
                 args.remove(0);
                 cmd.call(s, args);
@@ -154,7 +155,6 @@ public class ErosionCommandProcessor
         return;
     }
 
-    // ====================================== //
     // ====================================== //
 
     public static void handleStatus(CommandSourceStack s, List<String> args)

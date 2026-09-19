@@ -62,7 +62,7 @@ public class ErosionCore
         {
             public static long blockToLong(Block block)
             {
-                if (block == null) return 0L;
+                if(block == null) return 0L;
                 return BuiltInRegistries.BLOCK.getId(block);
             }
 
@@ -181,13 +181,13 @@ public class ErosionCore
 
     private static Map<Block, AlterableMaterial> ALTERATION_INVERTED = new HashMap<>();
 
-    private static Integer PERFORMED = 0;
-    private static Integer PERFORMED_FAST = 0;
+    private static int PERFORMED = 0;
+    private static int PERFORMED_FAST = 0;
 
     public static class BlockEntityRecipeRegistries
     {
-        public static final Integer MATERIAL_PURIFIER = 1;
-        public static final Integer CRUCIBLE = 2;
+        public static final int MATERIAL_PURIFIER = 1;
+        public static final int CRUCIBLE = 2;
     }
 
     public static abstract class ErosionDynamicItem
@@ -372,9 +372,9 @@ public class ErosionCore
     {
         public Supplier<Item> catalyst;
         public Item catalystItem;
-        public Integer successChance;
+        public int successChance;
 
-        public CrucibleCatalyst(String n, Supplier<Item> c, Integer s)
+        public CrucibleCatalyst(String n, Supplier<Item> c, int s)
         {
             this.name = n;
             this.catalyst = c;
@@ -408,7 +408,7 @@ public class ErosionCore
             return;
         }
 
-        public static Boolean isItemCrucibleCatalyst(Item item)
+        public static boolean isItemCrucibleCatalyst(Item item)
         {
             for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
             {
@@ -421,7 +421,7 @@ public class ErosionCore
             return false;
         }
 
-        public static Integer getCatalystSuccessRate(Item item)
+        public static int getCatalystSuccessRate(Item item)
         {
             for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
             {
@@ -460,7 +460,7 @@ public class ErosionCore
         public Supplier<Item> material;
         public Supplier<List<Item>> product;
         public Supplier<List<Item>> coproduct;
-        public Integer recipeCategory = null;
+        public int recipeCategory;
 
         public Item materialItem = null;
         public List<Item> productItem = null;
@@ -473,7 +473,7 @@ public class ErosionCore
 
         public static class MaterialPurifier extends RefinableMaterial
         {
-            public MaterialPurifier(String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i)
+            public MaterialPurifier(String n, Supplier<Item> m, Supplier<List<Item>> p, int i)
             {
                 this.name = n;
                 this.material = m;
@@ -496,7 +496,7 @@ public class ErosionCore
         public static class Crucible extends RefinableMaterial
         {
             public Crucible(
-                String n, Supplier<Item> m, Supplier<List<Item>> p, Integer i,
+                String n, Supplier<Item> m, Supplier<List<Item>> p, int i,
                 List<CrucibleCatalyst> c, Supplier<List<Item>> g,
                 List<GasType> gg
             )
@@ -1937,17 +1937,17 @@ public class ErosionCore
                 desc.add(
                     Component.literal("Used as a crucible catalyst").withStyle(ChatFormatting.GOLD, ChatFormatting.UNDERLINE)
                 );
-                Integer sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
-                Integer cteg = 100 - sr;
+                int sr = CrucibleCatalyst.getCatalystSuccessRate(currentItem);
+                int cteg = 100 - sr;
                 desc.add(
                     Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal(sr.toString() + "%")
+                    .append(Component.literal(sr + "%")
                     .withStyle(CrucibleCatalyst.getSRColor(sr)))
                     .append(Component.literal(" success rate.").withStyle(ChatFormatting.GRAY))
                 );
                 desc.add(
                     Component.literal("- Has ").withStyle(ChatFormatting.GRAY)
-                    .append(Component.literal(cteg.toString() + "%")
+                    .append(Component.literal(cteg + "%")
                     .withStyle(CrucibleCatalyst.getSRColor(cteg)))
                     .append(Component.literal(" chance to emit coproduct gases.").withStyle(ChatFormatting.GRAY))
                 );
@@ -2013,7 +2013,7 @@ public class ErosionCore
         List<String> meltsIntoNames = new ArrayList<>();
         List<String> catalystListLmao = new ArrayList<>();
         List<String> coproductOfNames = new ArrayList<>();
-        Boolean hasCoproducts = false;
+        boolean hasCoproducts = false;
         List<GasType> emitsGases = new ArrayList<>();
         for(var m : REFINABLE_MATERIALS_LIST)
         {
@@ -2410,7 +2410,7 @@ public class ErosionCore
 
     // =================================================== //
 
-    private static void addCandidateMain(ServerLevel level, BlockPos pos, Boolean priority)
+    private static void addCandidateMain(ServerLevel level, BlockPos pos, boolean priority)
     {
         var Pending = PENDING;
         if(priority)
@@ -2458,7 +2458,7 @@ public class ErosionCore
 
     // =================================================== //
         
-    private static void processPendingCore(ServerLevel level, Integer count, Boolean priority)
+    private static void processPendingCore(ServerLevel level, int count, boolean priority)
     {
         var Pending = PENDING;
         if(priority)
@@ -2490,7 +2490,7 @@ public class ErosionCore
 
     // =================================================== //
 
-    private static void tryAlterBlock(ServerLevel level, AlterationPacket p, Boolean priority)
+    private static void tryAlterBlock(ServerLevel level, AlterationPacket p, boolean priority)
     {
         BlockState state = level.getBlockState(p.pos);
         if(!isAlterable(state)) return;
@@ -2595,21 +2595,21 @@ public class ErosionCore
 
     // =================================================== //
 
-    public static Integer getPendingSize()
+    public static int getPendingSize()
     {
         return PENDING.size();
     }
 
-    public static Integer getPendingFastSize()
+    public static int getPendingFastSize()
     {
         return PENDING_FAST.size();
     }
 
-    public static Integer getPerformedAlterations()
+    public static int getPerformedAlterations()
     {
         return PERFORMED;
     }
-    public static Integer getPerformedAlterationsPriority()
+    public static int getPerformedAlterationsPriority()
     {
         return PERFORMED_FAST;
     }

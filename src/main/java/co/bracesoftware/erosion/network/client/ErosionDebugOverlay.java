@@ -53,7 +53,7 @@ public class ErosionDebugOverlay
             MAIN_STYLE +
             "Retrogen blocks generated: " + 
             Text.Format(Text.Col.GOLD) +
-            ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED.toString()
+            ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
         );
         return;
     }

@@ -12,7 +12,7 @@ public class ErosionClientData
     public static String CACHED_STATUS_STRING = "No data yet!";
     public static class ConfigFromServer
     {
-        public static Boolean AGGRESIVE_GEOCHEMICAL_ALTERATION = false;
+        public static boolean AGGRESIVE_GEOCHEMICAL_ALTERATION = false;
     }
 
     public static void sendMessage(String text, int col)

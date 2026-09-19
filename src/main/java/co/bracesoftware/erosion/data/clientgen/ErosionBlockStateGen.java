@@ -102,16 +102,17 @@ public class ErosionBlockStateGen extends BlockStateProvider
         //MACHINES
         // ============================================= //
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
-        ModelFile[][][] purifierModels = new ModelFile[ErosionConfig.MAX_PURIFIER_FUEL + 1][2][];
+        //ModelFile[][][] purifierModels = new ModelFile[ErosionConfig.MAX_PURIFIER_FUEL + 1][2][];
+
         getVariantBuilder(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()).forAllStates(s -> {
             Direction d = s.getValue(MaterialPurifierBlock.FACING);
-            Integer f = s.getValue(MaterialPurifierBlock.FUEL);
-            Boolean finished = s.getValue(MaterialPurifierBlock.FINISHED);
+            int f = s.getValue(MaterialPurifierBlock.FUEL);
+            boolean finished = s.getValue(MaterialPurifierBlock.FINISHED);
             
             String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
             String suf = finished ? "on" : "off";
-            String texture = BLOCKID + "_front_fuel_" + f.toString() + "_" + suf;
-            String modelf = BLOCKID + "_fuel_" + f.toString() + "_" + suf;
+            String texture = BLOCKID + "_front_fuel_" + f + "_" + suf;
+            String modelf = BLOCKID + "_fuel_" + f + "_" + suf;
 
             ModelFile model = models().orientableWithBottom(
                 modelf, modLoc("block/" + BLOCKID + "_side"),

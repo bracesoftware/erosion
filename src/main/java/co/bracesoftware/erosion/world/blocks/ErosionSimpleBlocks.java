@@ -133,26 +133,26 @@ public class ErosionSimpleBlocks
         public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
         public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-        public static final Integer SHAPE_FIRSTDIM_X1 = 5;
-        public static final Integer SHAPE_FIRSTDIM_Y1 = 0;
-        public static final Integer SHAPE_FIRSTDIM_Z1 = 4;
-        public static final Integer SHAPE_FIRSTDIM_X2 = 11;
-        public static final Integer SHAPE_FIRSTDIM_Y2 = 2;
-        public static final Integer SHAPE_FIRSTDIM_Z2 = 10;
+        public static final int SHAPE_FIRSTDIM_X1 = 5;
+        public static final int SHAPE_FIRSTDIM_Y1 = 0;
+        public static final int SHAPE_FIRSTDIM_Z1 = 4;
+        public static final int SHAPE_FIRSTDIM_X2 = 11;
+        public static final int SHAPE_FIRSTDIM_Y2 = 2;
+        public static final int SHAPE_FIRSTDIM_Z2 = 10;
 
-        public static final Integer SHAPE_SECONDDIM_X1 = 8;
-        public static final Integer SHAPE_SECONDDIM_Y1 = 0;
-        public static final Integer SHAPE_SECONDDIM_Z1 = 9;
-        public static final Integer SHAPE_SECONDDIM_X2 = 12;
-        public static final Integer SHAPE_SECONDDIM_Y2 = 1;
-        public static final Integer SHAPE_SECONDDIM_Z2 = 12;
+        public static final int SHAPE_SECONDDIM_X1 = 8;
+        public static final int SHAPE_SECONDDIM_Y1 = 0;
+        public static final int SHAPE_SECONDDIM_Z1 = 9;
+        public static final int SHAPE_SECONDDIM_X2 = 12;
+        public static final int SHAPE_SECONDDIM_Y2 = 1;
+        public static final int SHAPE_SECONDDIM_Z2 = 12;
 
-        public static final Integer SHAPE_THIRDDIM_X1 = 6;
-        public static final Integer SHAPE_THIRDDIM_Y1 = 2;
-        public static final Integer SHAPE_THIRDDIM_Z1 = 5;
-        public static final Integer SHAPE_THIRDDIM_X2 = 9;
-        public static final Integer SHAPE_THIRDDIM_Y2 = 3;
-        public static final Integer SHAPE_THIRDDIM_Z2 = 8;
+        public static final int SHAPE_THIRDDIM_X1 = 6;
+        public static final int SHAPE_THIRDDIM_Y1 = 2;
+        public static final int SHAPE_THIRDDIM_Z1 = 5;
+        public static final int SHAPE_THIRDDIM_X2 = 9;
+        public static final int SHAPE_THIRDDIM_Y2 = 3;
+        public static final int SHAPE_THIRDDIM_Z2 = 8;
 
         private static final VoxelShape OLD_SHAPE_IF_SOMETHING_GOES_WRONG = Shapes.or(
             Block.box(

@@ -31,11 +31,11 @@ import net.minecraft.server.level.ServerLevel;
 
 public class ErosionRetrogen
 {
-    private static Boolean LOADED = false;
+    private static boolean LOADED = false;
     public static class RetrogenFeature
     {
-        public static final Integer MAX_REPLACEMENTS_PER_CHUNK = 10;
-        public static Integer RETROGEN_PERFORMED = 0;
+        public static final int MAX_REPLACEMENTS_PER_CHUNK = 10;
+        public static int RETROGEN_PERFORMED = 0;
 
         private String id;
         private String name;

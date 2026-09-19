@@ -25,31 +25,31 @@ public final class ErosionConfig
     }
     public static final boolean CRUCIBLE_COPRODUCT_DEBUG = true;
 
-    public static final Integer MAX_PENDING_SIZE = 30000;
-    public static final Integer MAX_PENDING_FAST_SIZE = 20000;
-    private static final Boolean DEBUG_MODE = false;
+    public static final int MAX_PENDING_SIZE = 30000;
+    public static final int MAX_PENDING_FAST_SIZE = 20000;
+    private static final boolean DEBUG_MODE = false;
     public static final String CREATIVE_TAB_ID = "creativetab.erosion.erosion_tab";
     public static final String CREATIVE_TAB_NAME = "erosion_tab";
-    public static final Integer MAX_PURIFIER_FUEL = 3; // Do NOT touch!
-    public static final Integer PURIFIER_SECONDS = 10;
-    public static final Integer CRUCIBLE_SECONDS = 15;
-    public static final Integer CHUNK_SIZE = 16;
+    public static final int MAX_PURIFIER_FUEL = 3; // Do NOT touch!
+    public static final int PURIFIER_SECONDS = 10;
+    public static final int CRUCIBLE_SECONDS = 15;
+    public static final int CHUNK_SIZE = 16;
 
-    public static final Boolean SOMETHING_WENT_WRONG = false;
+    public static final boolean SOMETHING_WENT_WRONG = false;
 
     public static final ResourceLocation MINI_FONT = ResourceLocation.withDefaultNamespace("uniform");
 
     public static final class Clusters
     {
-        public static final Integer MIN_SPAWN_DISTANCE = 24;
-        public static final Integer SIZE = 8;
-        public static final Integer COUNT_PER_TICK = 5;
+        public static final int MIN_SPAWN_DISTANCE = 24;
+        public static final int SIZE = 8;
+        public static final int COUNT_PER_TICK = 5;
     }
 
     public static final class Libs
     {
-        public static final Integer MAX_WORDS_PER_COMPONENT_LINE = 6;
-        public static final Boolean COMPONENT_WORD_WRAP = true;
+        public static final int MAX_WORDS_PER_COMPONENT_LINE = 6;
+        public static final boolean COMPONENT_WORD_WRAP = true;
     }
 
     public static final class ServerConfig
@@ -70,10 +70,10 @@ public final class ErosionConfig
 
         public static class BooleanConfig extends BasicConfig
         {
-            private Boolean defaultVal;
-            private Boolean value;
+            private boolean defaultVal;
+            private boolean value;
             private String fileName;
-            public BooleanConfig(String id, String name, Boolean defaultVal)
+            public BooleanConfig(String id, String name, boolean defaultVal)
             {
                 super(id, name);
                 this.value = defaultVal;
@@ -82,7 +82,7 @@ public final class ErosionConfig
                 this.fileName = CONFIG_FOLDER + this.id + CONFIG_FILE_EXT;
             }
 
-            public static void saveToFile(String f, Boolean b)
+            public static void saveToFile(String f, boolean b)
             {
                 try(FileWriter writer = new FileWriter(f))
                 {
@@ -94,7 +94,7 @@ public final class ErosionConfig
                 }
             }
 
-            public static Boolean readFromFile(String f, Boolean defaultVal)
+            public static boolean readFromFile(String f, boolean defaultVal)
             {
                 try(BufferedReader reader = new BufferedReader(new FileReader(f)))
                 {
@@ -121,11 +121,11 @@ public final class ErosionConfig
                 ErosionUtils.Log("Loaded `" + this.id + "` as -> " + this.value);
             }
 
-            public Boolean get()
+            public boolean get()
             {
                 return this.value;
             }
-            public void set(Boolean b)
+            public void set(boolean b)
             {
                 this.value = b;
             }
@@ -191,9 +191,9 @@ public final class ErosionConfig
         }
     }
 
-    public static final Integer MAX_EROSIONS_PER_TICK = 15;
+    public static final int MAX_EROSIONS_PER_TICK = 15;
     
-    public static Boolean isDebugOn()
+    public static boolean isDebugOn()
     {
         return DEBUG_MODE;
     }

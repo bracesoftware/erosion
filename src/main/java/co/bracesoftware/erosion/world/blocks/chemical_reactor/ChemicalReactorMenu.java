@@ -22,8 +22,8 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
     private final Container reactants;
     private final Container products;
 
-    public static final Integer ROWS = 3;
-    public static final Integer COL = 2;
+    public static final int ROWS = 3;
+    public static final int COL = 2;
     public static final Comparator<Item> itemComparator = Comparator.comparing(
         i -> BuiltInRegistries.ITEM.getKey(i)
     );

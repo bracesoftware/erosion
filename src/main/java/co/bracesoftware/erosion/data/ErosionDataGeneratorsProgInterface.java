@@ -122,7 +122,7 @@ public class ErosionDataGeneratorsProgInterface
     }
     public static class ErosionAdvancement
     {
-        private static Boolean PARENT_ADVANCEMENT_CREATED = false;
+        private static boolean PARENT_ADVANCEMENT_CREATED = false;
 
         public static AdvancementHolder generateParentAdvancement(
             ErosionAdvGen.Generator t

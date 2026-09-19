@@ -241,7 +241,7 @@ public final class ErosionMod
     // =========================================================
 
     private static final AtomicBoolean REGISTRY_SETUP = new AtomicBoolean(false);
-    private static Boolean MOD_LOADED = false;
+    private static boolean MOD_LOADED = false;
 
     public static void SetupRegistry(IEventBus modEventBus) throws ErosionRecipeImplException
     {

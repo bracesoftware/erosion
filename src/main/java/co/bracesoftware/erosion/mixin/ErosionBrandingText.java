@@ -17,5 +17,5 @@ import java.util.List;
 
 public class ErosionBrandingText
 {
-    public static final Boolean FKTHIS = true;
+    public static final boolean FKTHIS = true;
 }
