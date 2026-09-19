@@ -45,7 +45,18 @@ public class ErosionSplash extends JWindow
     {
         try
         {
-            logo = ImageIO.read(new File(i));
+            String rp = "/" + i;
+            var is = ErosionSplash.class.getResourceAsStream(rp);
+            
+            if(is != null)
+            {
+                logo = ImageIO.read(is);
+                is.close();
+            }
+            else
+            {
+                ErosionUtils.Log("Error while loading splash; resource not found: " + rp);
+            }
         }
         catch(IOException e)
         {
