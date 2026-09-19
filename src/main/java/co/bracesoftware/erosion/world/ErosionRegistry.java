@@ -215,6 +215,21 @@ public class ErosionRegistry
             );
         }
 
+        public static class SMLModSides
+        {
+            public static final IRawRegistry CLIENT = new IRawRegistry("client_side", "Erosion Client Side");
+            public static final IRawRegistry SERVER = new IRawRegistry("server_side", "Erosion Server Side");
+            public static final IRawRegistry COMMON = new IRawRegistry("common", "Erosion Common Side");
+        }
+
+        public static class CommandNames
+        {
+            public static final IRawRegistry MOD_STATUS = new IRawRegistry("status", "STATUS");
+            public static final IRawRegistry RELOAD_CONFIG = new IRawRegistry("reload_config", "RELOAD_CONFIG");
+            public static final IRawRegistry VIEW_CONFIG = new IRawRegistry("view_config", "VIEW_CONFIG");
+            public static final IRawRegistry SET_CONFIG = new IRawRegistry("set_config", "SET_CONFIG");
+        }
+
         //GASES
         public static final IRawRegistry SULFUR_DIOXIDE = new IRawRegistry("sulfur_dioxide", "Sulfur Dioxide");
         public static final IRawRegistry WATER_VAPOR = new IRawRegistry("water_vapor", "Water Vapor");

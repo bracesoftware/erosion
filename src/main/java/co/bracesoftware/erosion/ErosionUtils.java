@@ -150,5 +150,28 @@ public class ErosionUtils
             }
             return;
         }
+        public static void sendMsg(
+            Object s, Component text
+        ) throws ErosionAPIExceptions.ErosionDisplayMessageException
+        {
+            if(s == null) throw new ErosionDisplayMessageException("Object is null!");
+
+            try
+            {
+                var m = s.getClass().getMethod("sendSystemMessage", Component.class);
+                m.invoke(s, text);
+            }
+            catch(NoSuchMethodException e)
+            {
+                e.printStackTrace();
+                throw new ErosionDisplayMessageException("Incompatible object for `sendMsg` (no method found) -> " + s.getClass().getName());
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                throw new ErosionDisplayMessageException("Reflection circus crashed: " + e.getMessage());
+            }
+            return;
+        }
     }
 }

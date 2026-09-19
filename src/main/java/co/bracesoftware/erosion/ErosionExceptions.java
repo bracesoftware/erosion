@@ -122,4 +122,15 @@ public class ErosionExceptions
             }
         }
     }
+
+    public static class ErosionConfigException
+    {
+        public static class ErosionWrongConfigGetterOrSetterMethodCalledException extends ErosionException
+        {
+            public ErosionWrongConfigGetterOrSetterMethodCalledException(String e)
+            {
+                super(e);
+            }
+        }
+    }
 }

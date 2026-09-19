@@ -86,7 +86,7 @@ public final class ErosionMod
     @SubscribeEvent
     public static void onSleepFinished(SleepFinishedTimeEvent event)
     {
-        if(!ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.get()) return;
+        if(!ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getBoolean()) return;
         if(event.getLevel() instanceof ServerLevel level)
         {
             ErosionCore.Extra.bulkProcess(level);
@@ -96,7 +96,7 @@ public final class ErosionMod
     @SubscribeEvent
     public static void onLevelSave(LevelEvent.Save event)
     {
-        if(!ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.get()) return;
+        if(!ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getBoolean()) return;
         if(event.getLevel() instanceof ServerLevel level)
         {
             ErosionCore.Extra.bulkProcess(level);
@@ -203,7 +203,7 @@ public final class ErosionMod
                 ErosionCore.getPerformedAlterations(),
                 ErosionCore.getPendingFastSize(),
                 ErosionCore.getPerformedAlterationsPriority(),
-                ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.get(),
+                ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getBoolean(),
                 ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
             );
 

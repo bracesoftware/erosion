@@ -5,8 +5,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 
+import co.bracesoftware.erosion.ErosionExceptions.ErosionConfigException.ErosionWrongConfigGetterOrSetterMethodCalledException;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 
 public final class ErosionConfig
@@ -56,26 +60,68 @@ public final class ErosionConfig
     {
         public static final String CONFIG_FOLDER = "erosion_config/";
         public static final String CONFIG_FILE_EXT = ".sys_cfg";
-        private static class BasicConfig
+
+        public interface ErosionConfigGettersAndSetters
         {
-            public String name;
-            public String id;
-            
-            public BasicConfig(String i, String n)
+            default int getInteger()
             {
-                this.id = i;
-                this.name = n;
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not an integer!");
+            }
+           
+            default boolean getBoolean()
+            {
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not a boolean!");
+            }
+
+            default String getString()
+            {
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not a string!");
+            }
+
+            default void setInteger(int value)
+            {
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not an integer!");
+            }
+
+            default void setBoolean(boolean value)
+            {
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not a boolean!");
+            }
+
+            default void setString(String value)
+            {
+                throw new ErosionWrongConfigGetterOrSetterMethodCalledException("Not a string!");
             }
         }
 
-        public static class BooleanConfig extends BasicConfig
+        public static abstract class BasicConfig<T> implements ErosionConfigGettersAndSetters
         {
-            private boolean defaultVal;
+            public String name;
+            public String id;
+            private final Class<T> type;
+            
+            public BasicConfig(String i, String n, Class<T> t)
+            {
+                this.id = i;
+                this.name = n;
+                this.type = t;
+            }
+
+            public Class<?> getConfigClass()
+            {
+                return this.type;
+            }
+        }
+
+        public static class BooleanConfig extends BasicConfig<Boolean>
+        {
+            private final boolean defaultVal;
             private boolean value;
             private String fileName;
+
             public BooleanConfig(String id, String name, boolean defaultVal)
             {
-                super(id, name);
+                super(id, name, Boolean.class);
                 this.value = defaultVal;
                 this.defaultVal = defaultVal;
                 
@@ -113,6 +159,7 @@ public final class ErosionConfig
                 saveToFile(this.fileName, this.value);
                 ErosionUtils.Log("Attempt finished.");
             }
+
             public void load()
             {
                 ErosionUtils.Log("Loading configuration: " + this.id);
@@ -121,14 +168,16 @@ public final class ErosionConfig
                 ErosionUtils.Log("Loaded `" + this.id + "` as -> " + this.value);
             }
 
-            public boolean get()
+            public boolean getBoolean()
             {
                 return this.value;
             }
-            public void set(boolean b)
+
+            public void setBoolean(boolean b)
             {
                 this.value = b;
             }
+
             public String getName()
             {
                 return this.name;
@@ -141,7 +190,7 @@ public final class ErosionConfig
             false
         );
 
-        public static final List<BasicConfig> MOD_CONFIG = List.of(
+        public static final List<? extends BasicConfig<?>> MOD_CONFIG = List.of(
             AGRESSIVE_GEOCHEMICAL_ALTERATION
         );
 
@@ -188,6 +237,21 @@ public final class ErosionConfig
                 }
             }
             return;
+        }
+
+        public static List<Component> viewConfiguration()
+        {
+            var l = new ArrayList<Component>();
+            for(var g : ErosionConfig.ServerConfig.MOD_CONFIG)
+            {
+                if(g.getConfigClass().equals(Boolean.class)) l.add(
+                    Component.literal("   ")
+                    .append(Component.literal(g.name).withStyle(ChatFormatting.DARK_AQUA))
+                    .append(Component.literal(": ").withStyle(ChatFormatting.GRAY))
+                    .append(Component.literal("" + g.getBoolean()).withStyle(ChatFormatting.GOLD))
+                );
+            }
+            return l;
         }
     }
 

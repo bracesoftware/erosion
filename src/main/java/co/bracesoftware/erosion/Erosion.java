@@ -29,8 +29,9 @@ public class Erosion
     public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
     public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD + " snapshot " + Erosion.SNAPSHOT;
  
-    static {
-        ErosionUtils.Log("Welcome to Minecraft: Erosion Edition!");
+    static
+    {
+        ErosionUtils.Log("Welcome to " + Erosion.MODNAME + ": " + Erosion.SUBTITLE);
     }
     
     public static final Logger LOGGER = LogUtils.getLogger();
@@ -74,7 +75,7 @@ public class Erosion
         public static class ModSides
         {
             public static final ModSide CLIENT = new ModSide(
-                "client_side",
+                ErosionRegistry.RawRegistry.SMLModSides.CLIENT.getId(),
                 () -> {
                     ErosionMod.LoadMod();
                     return;
@@ -86,7 +87,7 @@ public class Erosion
             );
 
             public static final ModSide SERVER = new ModSide(
-                "server_side",
+                ErosionRegistry.RawRegistry.SMLModSides.SERVER.getId(),
                 () -> {
                     ErosionRetrogen.Load();
                     ErosionMod.LoadMod();

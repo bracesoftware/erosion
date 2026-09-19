@@ -8,6 +8,8 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
+
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ import co.bracesoftware.erosion.ErosionCore.ErosionDynamicItem;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandParserException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandSetupException;
 import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 
 @EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCommandProcessor
@@ -104,16 +107,30 @@ public class ErosionCommandProcessor
     }
 
     public static final ErosionCommand MOD_STATUS = new ErosionCommand(
-        "status", ErosionCommandProcessor::handleStatus,
+        ErosionRegistry.RawRegistry.CommandNames.MOD_STATUS.getId(),
+        ErosionCommandProcessor::handleStatus,
         "<>"
     );
     public static final ErosionCommand RELOAD_CONFIG = new ErosionCommand(
-        "reload_config", ErosionCommandProcessor::reloadCfg,
+        ErosionRegistry.RawRegistry.CommandNames.MOD_STATUS.getId(),
+        ErosionCommandProcessor::reloadCfg,
         "<>"
     );
 
+    public static final ErosionCommand VIEW_CONFIG = new ErosionCommand(
+        ErosionRegistry.RawRegistry.CommandNames.VIEW_CONFIG.getId(),
+        ErosionCommandProcessor::viewCfg,
+        "<>"
+    );
+    public static final ErosionCommand SET_CONFIG = new ErosionCommand(
+        ErosionRegistry.RawRegistry.CommandNames.SET_CONFIG.getId(),
+        ErosionCommandProcessor::setCfg,
+        "<config_key, value>"
+    );
+
     public static final List<ErosionCommand> COMMAND_LIST = List.of(
-        MOD_STATUS, RELOAD_CONFIG
+        MOD_STATUS, RELOAD_CONFIG,
+        VIEW_CONFIG, SET_CONFIG
     );
 
     ///////////////////////////
@@ -128,7 +145,7 @@ public class ErosionCommandProcessor
 
             for(var cmd : COMMAND_LIST)
             {
-                var c = Component.literal(cmd.name).withStyle(ChatFormatting.YELLOW).append(" ")
+                var c = Component.literal("   ").append(Component.literal(cmd.name).withStyle(ChatFormatting.YELLOW)).append(" ")
                 .append(Component.literal(cmd.getHelpDescription()).withStyle(ChatFormatting.GRAY));
                 s.sendSystemMessage(c);
             }
@@ -155,7 +172,7 @@ public class ErosionCommandProcessor
         return;
     }
 
-    // ====================================== //
+    // ================== ACTUAL COMMANDS ==================== //
 
     public static void handleStatus(CommandSourceStack s, List<String> args)
     {
@@ -186,6 +203,59 @@ public class ErosionCommandProcessor
         ErosionUtils.Misc.sendMsg(s, "Reloading mod configuration...");
         ErosionConfig.ServerConfig.LoadModConfig();
         ErosionUtils.Misc.sendMsg(s, "Configuration reloaded.");
+        
+        return;
+    }
+
+    public static void viewCfg(CommandSourceStack s, List<String> args)
+    {
+        ErosionUtils.Misc.sendMsg(s, "Configuration:");
+
+        printConfig(s);
+        return;
+    }
+
+    public static void printConfig(CommandSourceStack s)
+    {
+        for(var c : ErosionConfig.ServerConfig.viewConfiguration())
+        {
+            ErosionUtils.Misc.sendMsg(s,c);
+        }
+    }
+
+    public static void setCfg(CommandSourceStack s, List<String> args)
+    {
+        if(args.size() != 2)
+        {
+            ErosionUtils.Log("Expected 2 arguments after the command name!");
+            return;
+        }
+
+        String config = args.get(0);
+        String value = args.get(1);
+
+        for(var c : ErosionConfig.ServerConfig.MOD_CONFIG)
+        {
+            if(c.name.equals(config))
+            {
+                if(c.getConfigClass().equals(Boolean.class))
+                {
+                    if(
+                        !(value.equals("true")) &&
+                        !(value.equals("false"))
+                    )
+                    {
+                        ErosionUtils.Misc.sendMsg(s, "This configuration is a boolean, can be either `true` or `false`.");
+                        return;
+                    }
+                    c.setBoolean(Boolean.parseBoolean(value));
+                    ErosionUtils.Misc.sendMsg(s, "Value of `" + config + "` successfully changed to: " + c.getBoolean());
+                    return;
+                }
+            }
+        }
+
+        ErosionUtils.Misc.sendMsg(s,"Invalid configuration key! View the configuration for a key list.");
         return;
     }
 }
