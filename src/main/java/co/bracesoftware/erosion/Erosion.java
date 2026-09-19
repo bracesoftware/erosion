@@ -93,6 +93,7 @@ public class Erosion
                     ErosionRetrogen.Load();
                     ErosionMod.LoadMod();
                     ErosionConfig.ServerConfig.LoadModConfig();
+                    ErosionCommandProcessor.setupCommands();
                     
                     MinecraftServer s = ServerLifecycleHooks.getCurrentServer();
                     ErosionRegistry.DataAttachments.RETROGEN_DATA = ErosionRetrogen.RetrogenDataManager.loadRetrogenData(
@@ -103,6 +104,8 @@ public class Erosion
                 () -> {
                     ErosionMod.UnloadMod();
                     ErosionConfig.ServerConfig.SaveModConfig();
+                    ErosionCommandProcessor.discardCommands();
+
                     MinecraftServer s = ServerLifecycleHooks.getCurrentServer();
                     RetrogenDataManager.saveRetrogenData(
                         s, ErosionRegistry.RawRegistry.RETROGEN_DATA.getId(), 

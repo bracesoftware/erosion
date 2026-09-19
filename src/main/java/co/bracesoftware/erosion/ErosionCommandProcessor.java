@@ -134,6 +134,22 @@ public class ErosionCommandProcessor
         VIEW_CONFIG, SET_CONFIG
     );
 
+    public static void setupCommands()
+    {
+        for(var m : COMMAND_LIST)
+        {
+            m.setup();
+        }
+    }
+
+    public static void discardCommands()
+    {
+        for(var m : COMMAND_LIST)
+        {
+            m.discard();
+        }
+    }
+
     ///////////////////////////
 
     public static void process(
