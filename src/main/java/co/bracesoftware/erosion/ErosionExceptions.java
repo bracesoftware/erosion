@@ -1,5 +1,7 @@
 package co.bracesoftware.erosion;
 
+import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
+
 public class ErosionExceptions
 {
     public static abstract class ErosionException extends RuntimeException
@@ -74,6 +76,17 @@ public class ErosionExceptions
         public static class ErosionChemicalReactorException extends ErosionException
         {
             public ErosionChemicalReactorException(String e)
+            {
+                super(e);
+            }
+        }
+    }
+
+    public static class ErosionItemExceptions
+    {
+        public static class ErosionGasMaskInitException extends ErosionException
+        {
+            public ErosionGasMaskInitException(String e)
             {
                 super(e);
             }

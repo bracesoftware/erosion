@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:invizible_fire",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:basic_mask"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire a Basic Mask.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:basic_mask"
+    },
+    "title": "White Cloth over my Face"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

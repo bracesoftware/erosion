@@ -1601,11 +1601,6 @@ public class ErosionCore
         ANHYDROUS_BORAX_HYDRATION
     );
 
-    private static final List<DeferredItem<Item>> MASK_LIST = List.of(
-        ErosionRegistry.Items.BASIC_MASK,
-        ErosionRegistry.Items.GAS_MASK
-    );
-
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
@@ -1775,32 +1770,23 @@ public class ErosionCore
             );
         }
 
-        for(var defi : MASK_LIST)
+        if(currentItem instanceof ErosionSimpleItems.GasMask git)
         {
-            var item = defi.get();
-            if(item instanceof ErosionSimpleItems.GasMask git)
-            {
-                desc.add(
-                    Component.literal("A head accessory designed to protect the wearer from toxic gases emitted during melting items in a crucible.")
-                    .withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.BOLD)
-                );
-                
-                desc.add(
-                    Component.literal("- Quality: ").withStyle(ChatFormatting.DARK_AQUA)
-                    .append(
-                        ErosionUtils.compute(() -> {
-                            Component c = null;
-                            switch(git.getQuality())
-                            {
-                                case GasMask.Quality.HIGH -> c = Component.literal("High").withStyle(ChatFormatting.DARK_PURPLE);
-                                case GasMask.Quality.LOW -> c = Component.literal("Low").withStyle(ChatFormatting.DARK_RED);
-                                case GasMask.Quality.MEDIUM -> c = Component.literal("Medium").withStyle(ChatFormatting.BLUE);
-                            }
-                            return c;
-                        })
-                    )
-                );
-            }
+            desc.add(
+                Component.literal("A head accessory designed to protect the wearer from toxic gases emitted during melting items in a crucible.")
+                .withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.BOLD)
+            );
+
+            Component qc = switch (git.getQuality()) {
+                case HIGH -> Component.literal("High").withStyle(ChatFormatting.DARK_PURPLE);
+                case MEDIUM -> Component.literal("Medium").withStyle(ChatFormatting.BLUE);
+                case LOW -> Component.literal("Low").withStyle(ChatFormatting.DARK_RED);
+            };
+
+            desc.add(
+                Component.literal("- Quality: ").withStyle(ChatFormatting.DARK_AQUA)
+                .append(qc)
+            );
         }
         
         final class ChemicalInfo

@@ -11,6 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class ErosionConfig
 {
+    public static final boolean SUPER_SAFE_MODE = false;
     public static class ErosionDebugger
     {
         public static final boolean CRAZY_DEBUG_MODE = false;

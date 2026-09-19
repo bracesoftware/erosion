@@ -237,25 +237,7 @@ public class ErosionRegistry
 
     public static class ArmorMaterials
     {
-        public static final Holder<ArmorMaterial> GAS_MASK = ARMOR_MATERIALS.register(
-            ErosionRegistry.RawRegistry.GAS_MASK.getId(),
-            () -> new ArmorMaterial(
-                Map.of(
-                    ArmorItem.Type.HELMET, 2,
-                    ArmorItem.Type.CHESTPLATE, 0,
-                    ArmorItem.Type.LEGGINGS, 0,
-                    ArmorItem.Type.BOOTS, 0,
-                    ArmorItem.Type.BODY, 0
-                ),
-                10, SoundEvents.ARMOR_EQUIP_LEATHER,
-                () -> Ingredient.EMPTY,
-                List.of(
-                    new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(
-                        Erosion.MODID, ErosionRegistry.RawRegistry.GAS_MASK.getId()
-                    ))
-                ), 0f,0f
-            )
-        );
+        //no materials rn
     }
 
     public static class DataAttachments
@@ -542,12 +524,12 @@ public class ErosionRegistry
         //COOL ITEMS
         public static final DeferredItem<Item> GAS_MASK = ITEMS.register(
             RawRegistry.GAS_MASK.getId(), () -> ErosionSimpleItems.GasMask
-            .newGasMaskItem(ErosionSimpleItems.GasMask.Quality.HIGH)
+            .newGasMaskItem(RawRegistry.GAS_MASK.getId(),ErosionSimpleItems.GasMask.Quality.HIGH)
         );
 
         public static final DeferredItem<Item> BASIC_MASK = ITEMS.register(
             RawRegistry.BASIC_MASK.getId(), () -> ErosionSimpleItems.GasMask
-            .newGasMaskItem(ErosionSimpleItems.GasMask.Quality.LOW)
+            .newGasMaskItem(RawRegistry.BASIC_MASK.getId(),ErosionSimpleItems.GasMask.Quality.LOW)
         );
 
         //SIMPLEBLOCKS

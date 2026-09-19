@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:basic_mask",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:gas_mask"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire a Gas Mask.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:gas_mask"
+    },
+    "title": "A Netherite Ingot for this!?"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

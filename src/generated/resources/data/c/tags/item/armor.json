@@ -1,5 +1,6 @@
 {
   "values": [
-    "erosion:gas_mask"
+    "erosion:gas_mask",
+    "erosion:basic_mask"
   ]
 }
