@@ -50,7 +50,7 @@ public class ErosionSplash extends JWindow
             
             if(is != null)
             {
-                logo = ImageIO.read(is);
+                this.logo = ImageIO.read(is);
                 is.close();
             }
             else
@@ -63,9 +63,8 @@ public class ErosionSplash extends JWindow
             ErosionUtils.Log("Error while loading splash -> " + e.getMessage());
         }
 
-        int w = 400;
-        int h = 300;
-        setSize(w, h);
+        if(this.logo != null) setSize(this.logo.getWidth(), this.logo.getHeight());
+        else setSize(100,100);
 
         setLocationRelativeTo(null);
 
@@ -77,17 +76,14 @@ public class ErosionSplash extends JWindow
     public void paint(Graphics g)
     {
         super.paint(g);
-        if(logo != null)
+        if(this.logo != null)
         {
             Graphics2D g2d = (Graphics2D) g;
 
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 
-            int x = (getWidth() - logo.getWidth()) / 2;
-            int y = (getHeight() - logo.getHeight()) / 2;
-
-            g2d.drawImage(logo, x, y, null);
+            g2d.drawImage(this.logo, 0,0,null);
         }
         return;
     }
