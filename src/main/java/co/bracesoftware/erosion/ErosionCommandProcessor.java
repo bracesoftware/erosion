@@ -109,23 +109,23 @@ public class ErosionCommandProcessor
     public static final ErosionCommand MOD_STATUS = new ErosionCommand(
         ErosionRegistry.RawRegistry.CommandNames.MOD_STATUS.getId(),
         ErosionCommandProcessor::handleStatus,
-        "<>"
+        ErosionConfig.ForCommands.EMPTY_ARGUMENTS
     );
     public static final ErosionCommand RELOAD_CONFIG = new ErosionCommand(
         ErosionRegistry.RawRegistry.CommandNames.MOD_STATUS.getId(),
         ErosionCommandProcessor::reloadCfg,
-        "<>"
+        ErosionConfig.ForCommands.EMPTY_ARGUMENTS
     );
 
     public static final ErosionCommand VIEW_CONFIG = new ErosionCommand(
         ErosionRegistry.RawRegistry.CommandNames.VIEW_CONFIG.getId(),
         ErosionCommandProcessor::viewCfg,
-        "<>"
+        ErosionConfig.ForCommands.EMPTY_ARGUMENTS
     );
     public static final ErosionCommand SET_CONFIG = new ErosionCommand(
         ErosionRegistry.RawRegistry.CommandNames.SET_CONFIG.getId(),
         ErosionCommandProcessor::setCfg,
-        "<config_key, value>"
+        "< config_identifier value >"
     );
 
     public static final List<ErosionCommand> COMMAND_LIST = List.of(

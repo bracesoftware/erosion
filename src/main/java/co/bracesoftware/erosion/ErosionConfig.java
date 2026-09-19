@@ -43,6 +43,11 @@ public final class ErosionConfig
 
     public static final ResourceLocation MINI_FONT = ResourceLocation.withDefaultNamespace("uniform");
 
+    public static final class ForCommands
+    {
+        public static final String EMPTY_ARGUMENTS = "</>";
+    }
+
     public static final class Clusters
     {
         public static final int MIN_SPAWN_DISTANCE = 24;
