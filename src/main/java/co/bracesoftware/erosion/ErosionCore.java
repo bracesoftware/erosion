@@ -2420,7 +2420,6 @@ public class ErosionCore
 
         if(Pending.contains(pos.asLong()))
         {
-            //processPendingCore(level, ErosionMod.RANDOM.nextInt(ErosionConfig.MAX_EROSIONS_PER_TICK), priority);
             return;
         }
         BlockState state = level.getBlockState(pos);
@@ -2480,12 +2479,12 @@ public class ErosionCore
 
     public static void processPending(ServerLevel l)
     {
-        processPendingCore(l, ErosionConfig.MAX_EROSIONS_PER_TICK, false);
+        processPendingCore(l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK, false);
     }
 
     public static void processPendingPriority(ServerLevel l)
     {
-        processPendingCore(l, ErosionConfig.MAX_EROSIONS_PER_TICK + 1, true);//lmao
+        processPendingCore(l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK + 1, true);//lmao
     }
 
     // =================================================== //
@@ -2638,7 +2637,7 @@ public class ErosionCore
     {
         public static void bulkProcess(ServerLevel level)
         {
-            for(int i = 0; i < ErosionConfig.MAX_EROSIONS_PER_TICK / 2; ++i)
+            for(int i = 0; i < ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK / 2; ++i)
             {
                 ErosionCore.processPending(level);
                 ErosionCore.processPendingPriority(level);

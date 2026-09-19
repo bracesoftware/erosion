@@ -28,6 +28,7 @@ public final class ErosionConfig
         }
     }
     public static final boolean CRUCIBLE_COPRODUCT_DEBUG = true;
+    public static final int MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK = 15;
 
     public static final int MAX_PENDING_SIZE = 30000;
     public static final int MAX_PENDING_FAST_SIZE = 20000;
@@ -262,16 +263,9 @@ public final class ErosionConfig
             return l;
         }
     }
-
-    public static final int MAX_EROSIONS_PER_TICK = 15;
     
     public static boolean isDebugOn()
     {
         return DEBUG_MODE;
-    }
-
-    public ErosionConfig()
-    {
-        
     }
 }
