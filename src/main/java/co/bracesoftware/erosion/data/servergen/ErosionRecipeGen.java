@@ -70,6 +70,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .define('S', Items.STRING)
         .define('P', Items.PAPER)
         .define('W', Items.WHITE_WOOL)
+        .unlockedBy("has_paper", has(Items.PAPER))
         .save(output);
 
         ShapedRecipeBuilder.shaped(
@@ -80,6 +81,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .define('S', Items.STRING)
         .define('P', Items.LEATHER)
         .define('W', Items.NETHERITE_INGOT)
+        .unlockedBy("has_netheriteingot", has(Items.NETHERITE_INGOT))
         .save(output);
 
         ShapelessRecipeBuilder.shapeless(

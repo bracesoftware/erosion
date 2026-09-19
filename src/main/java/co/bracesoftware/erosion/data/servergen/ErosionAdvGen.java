@@ -70,6 +70,21 @@ public class ErosionAdvGen extends AdvancementProvider
                 crucible
             );
 
+            var basic_protection = ErosionAdvancement.generateAdvancement(
+                this, "White Cloth over my Face",
+                "Acquire a Basic Mask.",
+                ErosionRegistry.Items.BASIC_MASK.get(),
+                ErosionRegistry.RawRegistry.BASIC_MASK.getId(),
+                invizible_fire
+            );
+            var better_gas_mask = ErosionAdvancement.generateAdvancement(
+                this, "A Netherite Ingot for this!?",
+                "Acquire a Gas Mask.",
+                ErosionRegistry.Items.GAS_MASK.get(),
+                ErosionRegistry.RawRegistry.GAS_MASK.getId(),
+                basic_protection
+            );
+
             var flux = ErosionAdvancement.generateAdvancement(
                 this, "Getting Flux",
                 "Acquire Flux.",
