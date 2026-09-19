@@ -192,19 +192,22 @@ public class ErosionCustomEntitySys
 
         public static void applyGasEffects(LivingEntity entity, GasType ty)
         {
+            var s = entity.getItemBySlot(EquipmentSlot.HEAD);
+            var blockEffects = false;
+            if(s.getItem() instanceof GasMask git)
+            {
+                blockEffects = ErosionUtils.Misc.randomWithChanceToBe(
+                    true, git.getQuality().getSuccessRate()
+                );
+            }
+            //=======================////////
+            if(blockEffects) return;
             //any entity in radius gets effect
             if(ty.isToxic()) for(var f : ty.getGasEffects())
             {
                 if(entity instanceof ServerPlayer p)
                 {
                     if(p.isCreative() || p.isSpectator()) return;
-                    var s = p.getItemBySlot(EquipmentSlot.HEAD);
-                    if(s.getItem() instanceof GasMask git)
-                    {
-                        if(ErosionUtils.Misc.randomWithChanceToBe(
-                            true, git.getQuality().getSuccessRate())
-                        ) return;
-                    }
                 }
                 entity.addEffect(new MobEffectInstance(f, 200, 0));
             }
@@ -229,7 +232,7 @@ public class ErosionCustomEntitySys
                 {
                     ErosionUtils.displayMessage(
                         p, "You're inhaling " + ty.name,
-                        ErosionScreenMessage.Colors.YELLOW
+                        ErosionScreenMessage.Colors.GRAY
                     );
                 }
                 return;
