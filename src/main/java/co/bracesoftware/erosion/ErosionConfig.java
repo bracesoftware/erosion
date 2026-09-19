@@ -253,7 +253,7 @@ public final class ErosionConfig
                     Component.literal("   ")
                     .append(Component.literal(g.id).withStyle(ChatFormatting.DARK_AQUA))
                     .append(Component.literal(": ").withStyle(ChatFormatting.GRAY))
-                    .append(Component.literal("" + g.getBoolean()).withStyle(ChatFormatting.GOLD))
+                    .append(Component.literal(Boolean.toString(g.getBoolean())).withStyle(ChatFormatting.GOLD))
                 );
                 l.add(
                     Component.literal("   :: " + g.name).withStyle(ChatFormatting.GRAY)

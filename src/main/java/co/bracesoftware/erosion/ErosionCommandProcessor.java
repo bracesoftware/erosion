@@ -24,6 +24,7 @@ import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.Erosi
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandSetupException;
 import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
 @EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCommandProcessor
@@ -233,6 +234,7 @@ public class ErosionCommandProcessor
 
         String config = args.get(0);
         String value = args.get(1);
+        String newValue = null;
 
         for(var c : ErosionConfig.ServerConfig.MOD_CONFIG)
         {
@@ -249,13 +251,25 @@ public class ErosionCommandProcessor
                         return;
                     }
                     c.setBoolean(Boolean.parseBoolean(value));
-                    ErosionUtils.Misc.sendMsg(s, "Value of `" + config + "` successfully changed to: " + c.getBoolean());
-                    return;
+                    newValue = Boolean.toString(c.getBoolean());
+                    break;
                 }
             }
         }
 
-        ErosionUtils.Misc.sendMsg(s,"Invalid configuration identifier! View the configuration for an identifier list.");
+        if(newValue != null)
+        {
+            var GRAY = Text.Format(Text.Col.GRAY);
+            var DARK_AQUA = Text.Format(Text.Col.DARK_AQUA);
+            var GOLD = Text.Format(Text.Col.GOLD);
+            ErosionUtils.Misc.sendMsg(s, 
+                GRAY + "Value of `" +
+                DARK_AQUA + config +
+                GRAY + "` successfully changed to: " +
+                GOLD + newValue
+            );
+        }
+        else ErosionUtils.Misc.sendMsg(s,"Invalid configuration identifier! View the configuration for an identifier list.");
         return;
     }
 }
