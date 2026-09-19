@@ -194,7 +194,7 @@ public class ErosionCore
     {
         public String name;
         private static final List<String> DO_NOT_USE = null;
-        public List<String> antiDuplicator;
+        protected List<String> antiDuplicator;
 
         public void setup()
         {
@@ -206,6 +206,16 @@ public class ErosionCore
         {
             ErosionUtils.Log("Discarding simple dynamic item: " + this.name);
             return;
+        }
+
+        public void setupAntiDuplicationSystem() throws ErosionRecipeImplException
+        {
+            if(this.antiDuplicator == null)
+            {
+                this.antiDuplicator = new ArrayList<>();
+                return;
+            }
+            throw new ErosionRecipeImplException("Anti-duplicator already set-up.");
         }
 
         public void discardDuplicationPreventionSys(
@@ -322,7 +332,7 @@ public class ErosionCore
             this.product = p;
             this.mainProduct = k;
 
-            this.antiDuplicator = new ArrayList<>();
+            this.setupAntiDuplicationSystem();
         }
 
         @Override 
@@ -379,7 +389,7 @@ public class ErosionCore
             this.name = n;
             this.catalyst = c;
 
-            this.antiDuplicator = new ArrayList<>();
+            this.setupAntiDuplicationSystem();
             this.successChance = s;
         }
 
@@ -480,7 +490,7 @@ public class ErosionCore
                 this.product = p;
                 this.recipeCategory = i;
 
-                this.antiDuplicator = new ArrayList<>();
+                this.setupAntiDuplicationSystem();
             }
             public MaterialPurifier(String n, Supplier<Item> m, Supplier<List<Item>> p)
             {
@@ -489,7 +499,7 @@ public class ErosionCore
                 this.product = p;
                 this.recipeCategory = BlockEntityRecipeRegistries.MATERIAL_PURIFIER;
 
-                this.antiDuplicator = new ArrayList<>();
+                this.setupAntiDuplicationSystem();
             }
         }
 
@@ -509,7 +519,7 @@ public class ErosionCore
                 this.coproduct = g;
                 this.emittedGases = gg;
 
-                this.antiDuplicator = new ArrayList<>();
+                this.setupAntiDuplicationSystem();
             }
             public Crucible(
                 String n, Supplier<Item> m, Supplier<List<Item>> p,
@@ -525,7 +535,7 @@ public class ErosionCore
                 this.coproduct = g;
                 this.emittedGases = gg;
 
-                this.antiDuplicator = new ArrayList<>();
+                this.setupAntiDuplicationSystem();
             }
         }
 
@@ -671,7 +681,7 @@ public class ErosionCore
             this.materialItemSupplier = b;
             this.paths = c;
 
-            this.antiDuplicator = new ArrayList<>();
+            this.setupAntiDuplicationSystem();
         }
 
         @Override 

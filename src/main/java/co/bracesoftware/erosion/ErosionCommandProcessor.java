@@ -70,6 +70,8 @@ public class ErosionCommandProcessor
             this.what = w;
             this.helpInfo = h;
 
+            this.setupAntiDuplicationSystem();
+
             if(h.isEmpty() || h.isBlank())
             {
                 throw new ErosionCommandSetupException("Help info cannot be blank.");
