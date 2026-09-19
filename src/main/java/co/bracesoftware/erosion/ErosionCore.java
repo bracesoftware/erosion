@@ -2616,39 +2616,6 @@ public class ErosionCore
 
     // =================================================== //
 
-    public static class Command
-    {
-        public String name = "";
-        public String subcmd = "";
-        public Consumer<CommandSourceStack> action = null;
-
-        public Command(String n, String s, Consumer<CommandSourceStack> c)
-        {
-            this.name = n;
-            this.subcmd = s;
-            this.action = c;
-        }
-
-        public void execute(CommandSourceStack s)
-        {
-            action.accept(s);
-            return;
-        }
-    }
-
-    public static class CommandRegistry
-    {
-        public static final String EROSION_STATUS_SUBCMD = "status";
-        public static final String EROSION_CONFIG_SUBCMD = "reload_config";
-
-        public static final List<Command> COMMANDS = List.of(
-            new Command(Erosion.MODID, EROSION_STATUS_SUBCMD, ErosionCommands::handleStatus),
-            new Command(Erosion.MODID, EROSION_CONFIG_SUBCMD, ErosionCommands::reloadCfg)
-        );
-    }
-
-    // =================================================== //
-
     public static class BlockEntityRecipes
     {
         public static class MaterialPurifier

@@ -18,7 +18,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import net.neoforged.neoforge.event.level.LevelEvent;
@@ -225,26 +224,6 @@ public final class ErosionMod
       
         ErosionCore.processPending(level);
         return;
-    }
-
-    @SubscribeEvent
-    public static void onRegisterCommands(RegisterCommandsEvent event)
-    {
-        CommandDispatcher<CommandSourceStack> dispatcher = event.getDispatcher();
-
-        var erosionRoot = Commands.literal(Erosion.MODID);
-
-        for (ErosionCore.Command cmd : ErosionCore.CommandRegistry.COMMANDS) {
-            erosionRoot.then(
-                Commands.literal(cmd.subcmd)
-                    .executes(context -> {
-                        cmd.execute(context.getSource());
-                        return 1;
-                    })
-            );
-        }
-
-        dispatcher.register(erosionRoot);
     }
 
     @SubscribeEvent

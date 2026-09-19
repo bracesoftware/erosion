@@ -61,6 +61,36 @@ public class ErosionExceptions
             }
         }
     }
+
+    public static class ErosionAPIExceptions
+    {
+        public static class ErosionDisplayMessageException extends ErosionException
+        {
+            public ErosionDisplayMessageException(String e)
+            {
+                super(e);
+            }
+        }
+    }
+
+    public static class ErosionCommandExceptions
+    {
+        public static class ErosionCommandParserException extends ErosionException
+        {
+            public ErosionCommandParserException(String e)
+            {
+                super(e);
+            }
+        }
+        public static class ErosionCommandSetupException extends ErosionException
+        {
+            public ErosionCommandSetupException(String e)
+            {
+                super(e);
+            }
+        }
+    }
+
     public static class ErosionCustomEntityExceptions
     {
         public static class ErosionGasInitException extends ErosionException

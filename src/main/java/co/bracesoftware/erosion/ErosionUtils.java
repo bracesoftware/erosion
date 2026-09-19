@@ -1,14 +1,19 @@
 package co.bracesoftware.erosion;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
-
+import java.util.Optional;
 import java.util.function.*;
 
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionAPIExceptions;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionAPIExceptions.ErosionDisplayMessageException;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
+import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
@@ -47,8 +52,16 @@ public class ErosionUtils
         nf.setMaximumFractionDigits(1);
         return nf.format(value).toLowerCase();
     }
-    public static void displayMessageOld(Player player, String text)
+
+    @Deprecated 
+    public static void displayMessageVanilla(
+        Player player, String text
+    ) throws ErosionDisplayMessageException
     {
+        if(ErosionConfig.SUPER_SAFE_MODE)
+        {
+            throw new ErosionDisplayMessageException("Safe mode is on -> cannot call this function");
+        }
         player.displayClientMessage(
             Component.literal(text)
             .withStyle(ChatFormatting.WHITE), true
@@ -65,6 +78,15 @@ public class ErosionUtils
     {
         var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessage.Color.WHITE.getColor());
         if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> Optional<T> isInstanceOf(Object o, List<Class<?>> l)
+    {
+        return l.stream()
+        .filter(c -> c.isInstance(o))
+        .findFirst()
+        .map(c -> (T) c.cast(o));
     }
 
     public static String getResourcesFolder()
@@ -100,6 +122,31 @@ public class ErosionUtils
                         padv.award(ad, c);
                     }
                 }
+            }
+            return;
+        }
+        public static void sendMsg(
+            Object s, String text
+        ) throws ErosionAPIExceptions.ErosionDisplayMessageException
+        {
+            if(s == null) throw new ErosionDisplayMessageException("Object is null!");
+
+            Component component = Component.literal(ErosionDebugOverlay.MAIN_STYLE + text);
+
+            try
+            {
+                var m = s.getClass().getMethod("sendSystemMessage", Component.class);
+                m.invoke(s, component);
+            }
+            catch(NoSuchMethodException e)
+            {
+                e.printStackTrace();
+                throw new ErosionDisplayMessageException("Incompatible object for `sendMsg` (no method found) -> " + s.getClass().getName());
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                throw new ErosionDisplayMessageException("Reflection circus crashed: " + e.getMessage());
             }
             return;
         }
