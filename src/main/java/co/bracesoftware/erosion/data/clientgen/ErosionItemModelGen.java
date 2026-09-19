@@ -17,6 +17,7 @@ public class ErosionItemModelGen extends ItemModelProvider {
     {
         basicItem(ErosionRegistry.Items.FELDSPAR_POWDER.get());
         basicItem(ErosionRegistry.Items.GAS_MASK.get());
+        basicItem(ErosionRegistry.Items.BASIC_MASK.get());
         basicItem(ErosionRegistry.Items.FLUX.get());
         basicItem(ErosionRegistry.Items.RUBY.get());
         basicItem(ErosionRegistry.Items.BORAX.get());

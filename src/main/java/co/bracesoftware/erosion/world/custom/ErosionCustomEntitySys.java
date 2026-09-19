@@ -14,6 +14,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
@@ -32,6 +33,7 @@ import co.bracesoftware.erosion.ErosionExceptions.ErosionCustomEntityExceptions.
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 
@@ -196,6 +198,13 @@ public class ErosionCustomEntitySys
                 if(entity instanceof ServerPlayer p)
                 {
                     if(p.isCreative() || p.isSpectator()) return;
+                    var s = p.getItemBySlot(EquipmentSlot.HEAD);
+                    if(s.getItem() instanceof GasMask git)
+                    {
+                        if(ErosionUtils.Misc.randomWithChanceToBe(
+                            true, git.getQuality().getSuccessRate())
+                        ) return;
+                    }
                 }
                 entity.addEffect(new MobEffectInstance(f, 200, 0));
             }

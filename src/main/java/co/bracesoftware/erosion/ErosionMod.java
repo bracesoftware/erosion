@@ -55,9 +55,7 @@ public final class ErosionMod
     Text.Format(Text.Col.GOLD) +
      "             " + Erosion.SUBTITLE +
     Text.Format(Text.Col.GRAY);
-
-    private static final List<ChunkPos> LOADED_CHUNKS = new ArrayList<>();
-
+    
     //Objects for working whatever
     public static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
     public static final RandomSource RANDOM = RandomSource.create();
@@ -220,17 +218,10 @@ public final class ErosionMod
     }
 
     @SubscribeEvent//USED TO PROCESS LOW PRIORITY CANDIDATES
-    public static void onLevelTick(LevelTickEvent.Post event) {
-
-        if (!(event.getLevel() instanceof ServerLevel level)) {
-            return;
-        }
-
-        if (level.dimension() != Level.OVERWORLD) {
-            return;
-        }
-
-        long gameTime = level.getGameTime();
+    public static void onLevelTick(LevelTickEvent.Post event)
+    {
+        if(!(event.getLevel() instanceof ServerLevel level)) return;
+        if(level.dimension() != Level.OVERWORLD) return;
       
         ErosionCore.processPending(level);
         return;

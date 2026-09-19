@@ -221,6 +221,7 @@ public class ErosionRegistry
         public static final IRawRegistry ARSENIC_TRIOXIDE = new IRawRegistry("arsenic_trioxide", "Arsenic Trioxide");
 
         //COOL ITEMS
+        public static final IRawRegistry BASIC_MASK = new IRawRegistry("basic_mask", "Basic Mask");
         public static final IRawRegistry GAS_MASK = new IRawRegistry("gas_mask", "Gas Mask");
 
         //DATA ATTACHMENTS
@@ -540,7 +541,13 @@ public class ErosionRegistry
 
         //COOL ITEMS
         public static final DeferredItem<Item> GAS_MASK = ITEMS.register(
-            RawRegistry.GAS_MASK.getId(), () -> ErosionSimpleItems.GasMask.newGasMaskItem()
+            RawRegistry.GAS_MASK.getId(), () -> ErosionSimpleItems.GasMask
+            .newGasMaskItem(ErosionSimpleItems.GasMask.Quality.HIGH)
+        );
+
+        public static final DeferredItem<Item> BASIC_MASK = ITEMS.register(
+            RawRegistry.BASIC_MASK.getId(), () -> ErosionSimpleItems.GasMask
+            .newGasMaskItem(ErosionSimpleItems.GasMask.Quality.LOW)
         );
 
         //SIMPLEBLOCKS
@@ -877,6 +884,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.get());
             output.accept(ErosionRegistry.Items.CRUCIBLE.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
+            output.accept(ErosionRegistry.Items.BASIC_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_MASK.get());
         })
         .build()

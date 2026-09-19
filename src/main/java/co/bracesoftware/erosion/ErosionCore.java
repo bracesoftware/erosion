@@ -3,6 +3,9 @@ package co.bracesoftware.erosion;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorMenu;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
+import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask.Quality;
+import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
+import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask;
 import co.bracesoftware.erosion.api.eventbus.*;
 
 import java.util.ArrayList;
@@ -32,7 +35,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
-
+import net.neoforged.neoforge.registries.DeferredItem;
 import it.unimi.dsi.fastutil.longs.*;
 
 public class ErosionCore
@@ -1598,6 +1601,11 @@ public class ErosionCore
         ANHYDROUS_BORAX_HYDRATION
     );
 
+    private static final List<DeferredItem<Item>> MASK_LIST = List.of(
+        ErosionRegistry.Items.BASIC_MASK,
+        ErosionRegistry.Items.GAS_MASK
+    );
+
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
@@ -1765,6 +1773,34 @@ public class ErosionCore
                 Component.literal("A versatile container designed to safely sustain chemical reactions.")
                 .withStyle(ChatFormatting.DARK_PURPLE)
             );
+        }
+
+        for(var defi : MASK_LIST)
+        {
+            var item = defi.get();
+            if(item instanceof ErosionSimpleItems.GasMask git)
+            {
+                desc.add(
+                    Component.literal("A head accessory designed to protect the wearer from toxic gases emitted during melting items in a crucible.")
+                    .withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.BOLD)
+                );
+                
+                desc.add(
+                    Component.literal("- Quality: ").withStyle(ChatFormatting.DARK_AQUA)
+                    .append(
+                        ErosionUtils.compute(() -> {
+                            Component c = null;
+                            switch(git.getQuality())
+                            {
+                                case GasMask.Quality.HIGH -> c = Component.literal("High").withStyle(ChatFormatting.DARK_PURPLE);
+                                case GasMask.Quality.LOW -> c = Component.literal("Low").withStyle(ChatFormatting.DARK_RED);
+                                case GasMask.Quality.MEDIUM -> c = Component.literal("Medium").withStyle(ChatFormatting.BLUE);
+                            }
+                            return c;
+                        })
+                    )
+                );
+            }
         }
         
         final class ChemicalInfo

@@ -62,6 +62,26 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .unlockedBy("has_kaolinized_granite", has(ErosionRegistry.Items.KAOLINIZED_GRANITE.get()))
         .save(output);
 
+        ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Items.BASIC_MASK.get()
+        ).pattern("S S")
+        .pattern("PPP")
+        .pattern("PWP")
+        .define('S', Items.STRING)
+        .define('P', Items.PAPER)
+        .define('W', Items.WHITE_WOOL)
+        .save(output);
+
+        ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Items.GAS_MASK.get()
+        ).pattern("S S")
+        .pattern("PPP")
+        .pattern("PWP")
+        .define('S', Items.STRING)
+        .define('P', Items.LEATHER)
+        .define('W', Items.NETHERITE_INGOT)
+        .save(output);
+
         ShapelessRecipeBuilder.shapeless(
             RecipeCategory.MISC, ErosionRegistry.Items.FLUX.get()
         ).requires(ErosionRegistry.Items.FELDSPAR_POWDER.get())

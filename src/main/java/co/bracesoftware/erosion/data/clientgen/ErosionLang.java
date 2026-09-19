@@ -31,6 +31,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Items.DEBRIS.get(), ErosionRegistry.RawRegistry.DEBRIS.getName());
         add(ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName());
         add(ErosionRegistry.Items.FELDSPAR_POWDER.get(), ErosionRegistry.RawRegistry.FELDSPAR_POWDER.getName());
+        add(ErosionRegistry.Items.BASIC_MASK.get(), ErosionRegistry.RawRegistry.BASIC_MASK.getName());
         add(ErosionRegistry.Items.GAS_MASK.get(), ErosionRegistry.RawRegistry.GAS_MASK.getName());
 
         add(ErosionRegistry.Items.RAW_LIMONITE.get(), ErosionRegistry.RawRegistry.RAW_LIMONITE.getName());
