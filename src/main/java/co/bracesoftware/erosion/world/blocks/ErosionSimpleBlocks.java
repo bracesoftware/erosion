@@ -205,7 +205,8 @@ public class ErosionSimpleBlocks
             return BlockBehaviour.Properties.of().
                 strength(0.1f, 3.0f)
                 .sound(SoundType.DEEPSLATE)
-                .mapColor(MapColor.DEEPSLATE);
+                .mapColor(MapColor.DEEPSLATE)
+                .noCollission();
         }
 
         private static BlockBehaviour.Properties getPropertiesz()
