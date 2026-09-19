@@ -1,8 +1,10 @@
 package co.bracesoftware.erosion.data;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionLang;
@@ -22,13 +24,19 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 public class ErosionDataGenerators 
 {
     @SubscribeEvent
-    public static void gatherData(GatherDataEvent e) 
+    public static void gatherData(
+        GatherDataEvent e
+    ) throws ErosionDataGenException
     {
         DataGenerator generator = e.getGenerator();
         PackOutput packOutput = generator.getPackOutput();
         
         ErosionUtils.Log(ErosionMod.WELCOME_ASCII);
         ErosionUtils.Log("Doing data gen...");
+        if(ErosionConfig.SUPER_SAFE_MODE)
+        {
+            throw new ErosionDataGenException("Safe mode is on!");
+        }
         
         //other stuff
         ErosionDataGenInternal.generateChemicalReactorAnim();
