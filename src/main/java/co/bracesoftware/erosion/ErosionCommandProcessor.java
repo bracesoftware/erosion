@@ -236,7 +236,7 @@ public class ErosionCommandProcessor
 
         for(var c : ErosionConfig.ServerConfig.MOD_CONFIG)
         {
-            if(c.name.equals(config))
+            if(c.id.equals(config))
             {
                 if(c.getConfigClass().equals(Boolean.class))
                 {
@@ -255,7 +255,7 @@ public class ErosionCommandProcessor
             }
         }
 
-        ErosionUtils.Misc.sendMsg(s,"Invalid configuration key! View the configuration for a key list.");
+        ErosionUtils.Misc.sendMsg(s,"Invalid configuration identifier! View the configuration for an identifier list.");
         return;
     }
 }
