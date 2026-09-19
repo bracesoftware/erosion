@@ -108,8 +108,9 @@ public class ErosionSimpleItems
         public static DeferredItem<Item> newGasMaskItem(String id, Quality q)
         {
             createMaterial(id);
-            var g = new GasMask(id,GasMask.getGasMaskDefaultItemProperties(),q);
-            return ErosionRegistry.ITEMS.register(id, () -> g);
+            return ErosionRegistry.ITEMS.register(
+                id, () -> new GasMask(id,GasMask.getGasMaskDefaultItemProperties(),q)
+            );
         }
     }
 }
