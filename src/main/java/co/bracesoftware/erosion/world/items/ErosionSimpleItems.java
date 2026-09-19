@@ -10,6 +10,7 @@ import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionItemExceptions.ErosionGasMaskInitException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -17,6 +18,7 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.registries.DeferredItem;
 
 public class ErosionSimpleItems
 {
@@ -103,9 +105,11 @@ public class ErosionSimpleItems
             .fireResistant();
         }
 
-        public static GasMask newGasMaskItem(String id, Quality q)
+        public static DeferredItem<Item> newGasMaskItem(String id, Quality q)
         {
-            return new GasMask(id,GasMask.getGasMaskDefaultItemProperties(),q);
+            createMaterial(id);
+            var g = new GasMask(id,GasMask.getGasMaskDefaultItemProperties(),q);
+            return ErosionRegistry.ITEMS.register(id, () -> g);
         }
     }
 }

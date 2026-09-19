@@ -522,14 +522,12 @@ public class ErosionRegistry
         );
 
         //COOL ITEMS
-        public static final DeferredItem<Item> GAS_MASK = ITEMS.register(
-            RawRegistry.GAS_MASK.getId(), () -> ErosionSimpleItems.GasMask
-            .newGasMaskItem(RawRegistry.GAS_MASK.getId(),ErosionSimpleItems.GasMask.Quality.HIGH)
+        public static final DeferredItem<Item> GAS_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
+            RawRegistry.GAS_MASK.getId(), ErosionSimpleItems.GasMask.Quality.HIGH
         );
 
-        public static final DeferredItem<Item> BASIC_MASK = ITEMS.register(
-            RawRegistry.BASIC_MASK.getId(), () -> ErosionSimpleItems.GasMask
-            .newGasMaskItem(RawRegistry.BASIC_MASK.getId(),ErosionSimpleItems.GasMask.Quality.LOW)
+        public static final DeferredItem<Item> BASIC_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
+            RawRegistry.BASIC_MASK.getId(), ErosionSimpleItems.GasMask.Quality.LOW
         );
 
         //SIMPLEBLOCKS
