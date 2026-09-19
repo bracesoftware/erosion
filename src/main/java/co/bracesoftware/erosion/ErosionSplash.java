@@ -24,6 +24,7 @@ public class ErosionSplash extends JWindow
     static
     {
         var s = new ErosionSplash(Erosion.MODNAME + "." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT);
+        s.setVisible(true);
         new Thread(() -> {
             try
             {
