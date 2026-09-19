@@ -24,7 +24,7 @@ public class ErosionUtils
 {
     public static void Log(String text)
     {
-        System.out.println("\n\t{ErosionMod} -> System: " + text);
+        System.out.println("\n\t{" + Erosion.MODNAME + "} :: System: " + text);
         return;
     }
     public static <T> T compute(Supplier<T> supplier)

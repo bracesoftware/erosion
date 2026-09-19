@@ -14,7 +14,7 @@ public class ErosionDebugOverlay
 {
     public static final String MAIN_STYLE = Text.Format(
         Text.Col.DARK_RED, Text.Style.BOLD
-    ) + "[Erosion] " + Text.Format(
+    ) + "{" + Erosion.MODNAME + "} " + Text.Format(
         Text.Col.GRAY
     );
     

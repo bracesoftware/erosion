@@ -38,6 +38,7 @@ public class Erosion
 
     public Erosion(IEventBus modEventBus, ModContainer modContainer)
     {
+        ErosionSplash.class.getName();
         LOGGER.info("LOGGER test.");
         
         ErosionEventBus.registerListeners(ErosionCore.class);
