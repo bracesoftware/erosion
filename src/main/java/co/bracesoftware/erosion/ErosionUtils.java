@@ -129,6 +129,7 @@ public class ErosionUtils
             Object s, String text
         ) throws ErosionAPIExceptions.ErosionDisplayMessageException
         {
+            ErosionUtils.Log(getCurrentMethodName() + " says -> " + text);
             if(s == null) throw new ErosionDisplayMessageException("Object is null!");
 
             Component component = Component.literal(ErosionDebugOverlay.MAIN_STYLE + text);
@@ -141,7 +142,7 @@ public class ErosionUtils
             catch(NoSuchMethodException e)
             {
                 e.printStackTrace();
-                throw new ErosionDisplayMessageException("Incompatible object for `sendMsg` (no method found) -> " + s.getClass().getName());
+                throw new ErosionDisplayMessageException("Incompatible object for `" + getCurrentMethodName() + "` (no method found) -> " + s.getClass().getName());
             }
             catch(Exception e)
             {
@@ -154,6 +155,7 @@ public class ErosionUtils
             Object s, Component text
         ) throws ErosionAPIExceptions.ErosionDisplayMessageException
         {
+            ErosionUtils.Log(getCurrentMethodName() + " says -> " + text.getString());
             if(s == null) throw new ErosionDisplayMessageException("Object is null!");
 
             try
@@ -164,7 +166,7 @@ public class ErosionUtils
             catch(NoSuchMethodException e)
             {
                 e.printStackTrace();
-                throw new ErosionDisplayMessageException("Incompatible object for `sendMsg` (no method found) -> " + s.getClass().getName());
+                throw new ErosionDisplayMessageException("Incompatible object for `" + getCurrentMethodName() + "` (no method found) -> " + s.getClass().getName());
             }
             catch(Exception e)
             {
@@ -173,5 +175,9 @@ public class ErosionUtils
             }
             return;
         }
+    }
+    public static String getCurrentMethodName()
+    {
+        return Thread.currentThread().getStackTrace()[2].getMethodName();
     }
 }

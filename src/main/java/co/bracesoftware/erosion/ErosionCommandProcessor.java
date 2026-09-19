@@ -227,7 +227,7 @@ public class ErosionCommandProcessor
     {
         if(args.size() != 2)
         {
-            ErosionUtils.Log("Expected 2 arguments after the command name!");
+            ErosionUtils.Misc.sendMsg(s, "Insufficient argument list!");
             return;
         }
 
