@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.network.client;
 
 import co.bracesoftware.erosion.ErosionClient;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionRetrogen;
@@ -16,7 +17,7 @@ public class ErosionClientData
 
     public static void sendMessage(String text, int col)
     {
-        ErosionClient.ErosionScreenMessage.addMessage(text, col);
+        ErosionClient.ErosionScreenMessage.addMessage(text, ErosionScreenMessage.Color.getColorObject(col));
     }
 
     public static void updateModStatus(

@@ -209,6 +209,7 @@ public class ErosionSimpleBlocks
                 .noCollission();
         }
 
+        @Deprecated 
         private static BlockBehaviour.Properties getPropertiesz()
         {
             return null;
@@ -223,6 +224,7 @@ public class ErosionSimpleBlocks
                 .setValue(WATERLOGGED, false)
             );
         }
+        
         @Override
         protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
         {

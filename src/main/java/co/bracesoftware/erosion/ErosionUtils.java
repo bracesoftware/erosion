@@ -55,15 +55,15 @@ public class ErosionUtils
         );
     }
 
-    public static void displayMessage(Player pl, String text, int col)
+    public static void displayMessage(Player pl, String text, ErosionScreenMessage.Color col)
     {
-        var pk = new ErosionScreenMessagePacket(text, col);
+        var pk = new ErosionScreenMessagePacket(text, col.getColor());
         if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
     }
 
     public static void displayMessage(Player pl, String text)
     {
-        var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessage.Colors.WHITE);
+        var pk = new ErosionScreenMessagePacket(text, ErosionScreenMessage.Color.WHITE.getColor());
         if(pl instanceof ServerPlayer p) PacketDistributor.sendToPlayer(p, pk);
     }
 

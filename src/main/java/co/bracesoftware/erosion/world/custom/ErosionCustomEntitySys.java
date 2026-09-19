@@ -219,7 +219,7 @@ public class ErosionCustomEntitySys
                 {
                     ErosionUtils.displayMessage(
                         p, "You're being poisoned with " + ty.name,
-                        ErosionScreenMessage.Colors.RED
+                        ErosionScreenMessage.Color.RED
                     );
 
                     ErosionUtils.Misc.grantAdvancement(
@@ -232,7 +232,7 @@ public class ErosionCustomEntitySys
                 {
                     ErosionUtils.displayMessage(
                         p, "You're inhaling " + ty.name,
-                        ErosionScreenMessage.Colors.GRAY
+                        ErosionScreenMessage.Color.GRAY
                     );
                 }
                 return;

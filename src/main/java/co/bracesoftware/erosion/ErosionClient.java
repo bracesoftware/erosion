@@ -21,7 +21,9 @@ import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.util.Mth;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @EventBusSubscriber(modid = Erosion.MODID, value = Dist.CLIENT)
@@ -29,32 +31,50 @@ public class ErosionClient
 {
     public static class ErosionScreenMessage implements LayeredDraw.Layer
     {
-        public static class Colors
+        public static enum Color
         {
-            public static final int BLACK = 0x000000;
-            public static final int DARK_BLUE = 0x0000AA;
-            public static final int DARK_GREEN = 0x00AA00;
-            public static final int DARK_AQUA = 0x00AAAA;
-            public static final int DARK_RED = 0xAA0000;
-            public static final int DARK_PURPLE = 0xAA00AA;
-            public static final int GOLD = 0xFFAA00;
-            public static final int GRAY = 0xAAAAAA;
-            public static final int DARK_GRAY = 0x555555;
-            public static final int BLUE = 0x5555FF;
-            public static final int GREEN = 0x55FF55;
-            public static final int AQUA = 0x55FFFF;
-            public static final int RED = 0xFF5555;
-            public static final int LIGHT_PURPLE = 0xFF55FF;
-            public static final int YELLOW = 0xFFFF55;
-            public static final int WHITE = 0xFFFFFF;
+            BLACK(0x000000), DARK_BLUE(0x0000AA), DARK_GREEN(0x00AA00),
+            DARK_AQUA(0x00AAAA), DARK_RED(0xAA0000), DARK_PURPLE(0xAA00AA),
+            GOLD(0xFFAA00), GRAY(0xAAAAAA), DARK_GRAY(0x555555),
+            BLUE(0x5555FF), GREEN(0x55FF55), AQUA(0x55FFFF),
+            RED(0xFF5555), LIGHT_PURPLE(0xFF55FF), YELLOW(0xFFFF55),
+            WHITE(0xFFFFFF);
+
+            private final int col;
+
+            Color(int c)
+            {
+                this.col = c;
+            }
+
+            public int getColor()
+            {
+                return this.col;
+            }
+
+            // ==================== STATICZ
+            private static final Map<Integer, Color> MAPPING = new HashMap<>();
+
+            static
+            {
+                for(var p : Color.values())
+                {
+                    MAPPING.put(p.getColor(), p);
+                }
+            }
+
+            public static Color getColorObject(int c)
+            {
+                return MAPPING.getOrDefault(c, WHITE);
+            }
         }
         private static class DisplayEntry
         {
             final String text;
             final long time;
-            final int color;
+            final Color color;
 
-            DisplayEntry(String t, int c)
+            DisplayEntry(String t, Color c)
             {
                 this.color = c;
                 this.text = t;
@@ -81,7 +101,7 @@ public class ErosionClient
         public static final long DISPLAY_TIME_MS = 4000;
         public static final int START_FADE_AT_REMAINING = 500;
 
-        public static void addMessage(String t, int col)
+        public static void addMessage(String t, Color col)
         {
             synchronized(MESSAGES)
             {
@@ -131,7 +151,7 @@ public class ErosionClient
                         a = (DISPLAY_TIME_MS - age) / (float) START_FADE_AT_REMAINING;
                     }
                     a = Mth.clamp(a, 0f, 1f);
-                    int col = ((int) (a * 255) << 24) | msg.color;
+                    int col = ((int) (a * 255) << 24) | msg.color.getColor();
 
                     int w = mc.font.width(msg.text);
                     int x = cx - (w / 2);

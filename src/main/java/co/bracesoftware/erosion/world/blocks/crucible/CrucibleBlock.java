@@ -235,7 +235,7 @@ public class CrucibleBlock extends BaseEntityBlock
                     {
                         ErosionUtils.displayMessage(
                             player, "You got " + be.storedItem.getItem().getDescription().getString(),
-                            ErosionScreenMessage.Colors.DARK_AQUA
+                            ErosionScreenMessage.Color.DARK_AQUA
                         );
                         player.getInventory().placeItemBackInInventory(be.storedItem);
                         be.storedItem = ItemStack.EMPTY;
