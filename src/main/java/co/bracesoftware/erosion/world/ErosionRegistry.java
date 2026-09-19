@@ -872,12 +872,12 @@ public class ErosionRegistry
 
     public static void init(IEventBus modEventBus)
     {
+        ARMOR_MATERIALS.register(modEventBus);
         BLOCKS.register(modEventBus);
         ITEMS.register(modEventBus);
         CREATIVE_MODE_TABS.register(modEventBus);
         BLOCK_ENTITY_TYPES.register(modEventBus);
         MENUS.register(modEventBus);
-        ARMOR_MATERIALS.register(modEventBus);
 
         try
         {
