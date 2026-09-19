@@ -113,7 +113,7 @@ public class ErosionCommandProcessor
         ErosionConfig.ForCommands.EMPTY_ARGUMENTS
     );
     public static final ErosionCommand RELOAD_CONFIG = new ErosionCommand(
-        ErosionRegistry.RawRegistry.CommandNames.MOD_STATUS.getId(),
+        ErosionRegistry.RawRegistry.CommandNames.RELOAD_CONFIG.getId(),
         ErosionCommandProcessor::reloadCfg,
         ErosionConfig.ForCommands.EMPTY_ARGUMENTS
     );
