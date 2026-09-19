@@ -63,6 +63,7 @@ public class ErosionEventBus
                 ErosionUtils.Log("Successfully subscribed method `" + m.getName() + "` to event `" + ec.getName() + "`");
             }
         }
+        return;
     }
 
     public static class ErosionEventInvocation

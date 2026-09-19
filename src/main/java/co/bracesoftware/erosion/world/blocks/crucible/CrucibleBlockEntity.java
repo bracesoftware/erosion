@@ -80,9 +80,9 @@ public class CrucibleBlockEntity extends BlockEntity
             }
 
             var item = be.storedItem.getItem();
-            var l = ErosionCore.BlockEntityRecipes.Crucible.RECIPES.get(item);
+            var l = ErosionCore.BlockEntityRecipes.Crucible.getRecipes().get(item);
             int sr = ErosionCore.CrucibleCatalyst.getCatalystSuccessRate(be.catalyst.getItem());
-            var gl = ErosionCore.BlockEntityRecipes.Crucible.EMITTED_GASES.get(item);
+            var gl = ErosionCore.BlockEntityRecipes.Crucible.getEmittedGases().get(item);
 
             if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE)
             {
@@ -115,7 +115,7 @@ public class CrucibleBlockEntity extends BlockEntity
 
                 boolean s = ErosionUtils.Misc.randomWithChanceToBe(true, sr);
 
-                var f = ErosionCore.BlockEntityRecipes.Crucible.COPRODUCTS;
+                var f = ErosionCore.BlockEntityRecipes.Crucible.getCoproducts();
                 if(f.isEmpty())
                 {
                     if(ErosionConfig.CRUCIBLE_COPRODUCT_DEBUG) ErosionUtils.Log(

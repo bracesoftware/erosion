@@ -1623,11 +1623,6 @@ public class ErosionCore
         CHEMICAL_REACTION_LIST.add(e);
     }
 
-    public static final List<ChemicalReaction> getChemicalReactions()
-    {
-        return Collections.unmodifiableList(CHEMICAL_REACTION_LIST);
-    }
-
     // =====================================
 
     @ErosionEvents.ErosionEventSubscribe
@@ -1801,7 +1796,7 @@ public class ErosionCore
             public ChemicalInfo()
             {
                 this.info = List.of(
-                    "No geochemical information"
+                    "No chemical information"
                 );
             }
 
@@ -2614,23 +2609,54 @@ public class ErosionCore
     }
 
     // =================================================== //
+    public static class BlockRecipes
+    {
+        public static class ChemicalReactor
+        {
+            public static final List<ChemicalReaction> getChemicalReactions()
+            {
+                return Collections.unmodifiableList(CHEMICAL_REACTION_LIST);
+            }
+        }
+    }
 
     public static class BlockEntityRecipes
     {
         public static class MaterialPurifier
         {
-            public static Map<Item, List<Item>> RECIPES = new HashMap<>();
+            private static Map<Item, List<Item>> RECIPES = new HashMap<>();
+
+            public static Map<Item, List<Item>> getRecipes()
+            {
+                return Collections.unmodifiableMap(RECIPES);
+            }
         }
         public static class Crucible
         {
-            public static Map<Item, List<Item>> RECIPES = new HashMap<>();
-            public static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
-            public static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
-            public static Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
-        }
-        public static class ChemicalReactor
-        {
-            //nvm
+            private static Map<Item, List<Item>> RECIPES = new HashMap<>();
+            private static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
+            private static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
+            private static Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
+
+            public static Map<Item, List<Item>> getRecipes()
+            {
+                return Collections.unmodifiableMap(RECIPES);
+            }
+
+            public static Map<Item, List<Item>> getCatalysts()
+            {
+                return Collections.unmodifiableMap(CATALYSTS);
+            }
+
+            public static Map<Item, List<Item>> getCoproducts()
+            {
+                return Collections.unmodifiableMap(COPRODUCTS);
+            }
+
+            public static Map<Item, List<GasType>> getEmittedGases()
+            {
+                return Collections.unmodifiableMap(EMITTED_GASES);
+            }
         }
     }
     public static class Extra

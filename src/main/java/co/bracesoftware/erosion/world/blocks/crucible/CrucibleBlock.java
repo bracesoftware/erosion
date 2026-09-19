@@ -272,14 +272,14 @@ public class CrucibleBlock extends BaseEntityBlock
             }
             
             //if holding a meltable item
-            if(ErosionCore.BlockEntityRecipes.Crucible.RECIPES.containsKey(stack.getItem()))
+            if(ErosionCore.BlockEntityRecipes.Crucible.getRecipes().containsKey(stack.getItem()))
             {
                 if(be.catalyst.isEmpty())
                 {
                     if(!level.isClientSide()) ErosionUtils.displayMessage(player, "A catalyst has to be applied first.");
                     return ItemInteractionResult.sidedSuccess(level.isClientSide());
                 }
-                var m = ErosionCore.BlockEntityRecipes.Crucible.CATALYSTS;
+                var m = ErosionCore.BlockEntityRecipes.Crucible.getCatalysts();
                 if(m.containsKey(stack.getItem()))
                 {
                     List<Item> c = m.get(stack.getItem());

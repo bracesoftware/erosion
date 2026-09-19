@@ -140,7 +140,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
 
     private void scanRecipez()
     {
-        for(var cr : ErosionCore.getChemicalReactions())
+        for(var cr : ErosionCore.BlockRecipes.ChemicalReactor.getChemicalReactions())
         {
             if(cr.getReactants().equals(this.reactantsAsItemList()))
             {
