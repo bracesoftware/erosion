@@ -255,7 +255,8 @@ public class ErosionRegistry
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
 
         //SOUND EVENTS
-        public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Ore Mining");
+        public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
+        public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
         public static final IRawRegistry CRUCIBLE_MELTING = new IRawRegistry("crucible_melting", "Crucible Melting");
     }
 
@@ -327,6 +328,13 @@ public class ErosionRegistry
                 )
             )
         );
+        public static final Supplier<SoundEvent> ORE_PLACE = SOUND_EVENTS.register(
+            RawRegistry.ORE_PLACE.getId(), () -> SoundEvent.createVariableRangeEvent(
+                ResourceLocation.fromNamespaceAndPath(
+                    Erosion.MODID, RawRegistry.ORE_PLACE.getId()
+                )
+            )
+        );
         public static final Supplier<SoundEvent> CRUCIBLE_MELTING = SOUND_EVENTS.register(
             RawRegistry.CRUCIBLE_MELTING.getId(), () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
@@ -341,8 +349,8 @@ public class ErosionRegistry
         public static final SoundType ORE = new SoundType(
             1f,1f,
             ErosionRegistry.SoundEvents.ORE_MINE.get(),
-            SoundType.DEEPSLATE.getStepSound(),
-            SoundType.STONE.getPlaceSound(),
+            ErosionRegistry.SoundEvents.ORE_PLACE.get(),
+            ErosionRegistry.SoundEvents.ORE_PLACE.get(),
             ErosionRegistry.SoundEvents.ORE_MINE.get(),
             ErosionRegistry.SoundEvents.ORE_MINE.get()
         );

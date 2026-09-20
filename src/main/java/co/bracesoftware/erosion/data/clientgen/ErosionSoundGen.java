@@ -27,6 +27,13 @@ public class ErosionSoundGen extends SoundDefinitionsProvider
             .subtitle(ErosionRegistry.RawRegistry.ORE_MINE.getName())
         );
 
+        this.add(ErosionRegistry.SoundEvents.ORE_PLACE.get(), definition()
+            .with(sound(ResourceLocation.fromNamespaceAndPath(
+                Erosion.MODID, ErosionRegistry.RawRegistry.ORE_PLACE.getId()
+            )))
+            .subtitle(ErosionRegistry.RawRegistry.ORE_PLACE.getName())
+        );
+
         this.add(ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(), definition()
             .with(sound(ResourceLocation.fromNamespaceAndPath(
                 Erosion.MODID, ErosionRegistry.RawRegistry.CRUCIBLE_MELTING.getId()
