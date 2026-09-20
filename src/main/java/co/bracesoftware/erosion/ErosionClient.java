@@ -83,7 +83,7 @@ public class ErosionClient
 
             int offset = OFFSET_RANGE;
             boolean fadeOut = false;
-            long animStart = 0;
+            long animStart = -1;
 
             DisplayEntry(String t, Color c)
             {
@@ -161,7 +161,7 @@ public class ErosionClient
                     }
                     if(age > DisplayEntry.DISPLAY_TIME_MS - DisplayEntry.MAX_ANIM_TIME)
                     {
-                        msg.animStart = System.currentTimeMillis();
+                        if(msg.animStart < 0) msg.animStart = System.currentTimeMillis();
                         msg.fadeOut = true;
 
                     }
@@ -173,14 +173,13 @@ public class ErosionClient
                     int y = start + (i * 11);
                     if(!(msg.offset <= 0)) // we do fade in
                     {
-                        long e = System.currentTimeMillis() - age;
-                        float prog = (float) e / DisplayEntry.MAX_ANIM_TIME;
+                        float prog = (float) age / DisplayEntry.MAX_ANIM_TIME;
                         prog = Mth.clamp(prog, 0f,1f);
                         msg.offset = (int) Mth.lerp(DisplayEntry.OFFSET_RANGE, 0f, prog);
                     }
-                    if(msg.fadeOut)
+                    if(msg.fadeOut) //fade out
                     {
-                        long e = msg.animStart - age;
+                        long e = now - msg.animStart;
                         float prog = (float) e / DisplayEntry.MAX_ANIM_TIME;
                         prog = Mth.clamp(prog, 0f,1f);
                         msg.offset = (int) Mth.lerp(0f, DisplayEntry.OFFSET_RANGE, prog);
