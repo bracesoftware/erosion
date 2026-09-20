@@ -1,4 +1,10 @@
 {
+  "crucible_melting": {
+    "sounds": [
+      "erosion:crucible_melting"
+    ],
+    "subtitle": "Crucible Melting"
+  },
   "ore_mine": {
     "sounds": [
       "erosion:ore_mine"

@@ -37,6 +37,7 @@ import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent.Finis
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
@@ -226,6 +227,11 @@ public class CrucibleBlock extends BaseEntityBlock
                         if(!be.finished && !be.working)
                         {
                             be.working = true;
+                            level.playSound(
+                                null,pos,
+                                ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(),
+                                SoundSource.BLOCKS
+                            );
                         }
                         
                         be.setChanged();
@@ -307,6 +313,11 @@ public class CrucibleBlock extends BaseEntityBlock
                     {
                         be.finished = false;
                         be.working = true;
+                        level.playSound(
+                            null,pos,
+                            ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(),
+                            SoundSource.BLOCKS
+                        );
 
                         be.storedItem = stack.copyWithCount(1);
                         stack.shrink(1);

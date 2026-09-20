@@ -75,7 +75,6 @@ public class CrucibleBlockEntity extends BlockEntity
 
         if(be.working)
         {
-            level.playSound(null, pos, ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(), SoundSource.BLOCKS);
             if(ErosionConfig.CRUCIBLE_SECONDS < 1)
             {
                 throw new ErosionCrucibleException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");

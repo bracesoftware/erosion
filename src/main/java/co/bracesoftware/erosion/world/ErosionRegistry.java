@@ -343,7 +343,7 @@ public class ErosionRegistry
             SoundType.DEEPSLATE.getBreakSound(),
             SoundType.DEEPSLATE.getStepSound(),
             SoundType.DEEPSLATE.getPlaceSound(),
-            SoundType.DEEPSLATE.getHitSound(),//ErosionRegistry.SoundEvents.ORE_MINE.get(),
+            ErosionRegistry.SoundEvents.ORE_MINE.get(),
             SoundType.DEEPSLATE.getFallSound()
         );
     }
