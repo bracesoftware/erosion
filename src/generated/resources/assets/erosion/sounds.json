@@ -9,6 +9,12 @@
     "sounds": [
       "erosion:ore_mine"
     ],
-    "subtitle": "Ore Mining"
+    "subtitle": "Erosion Ore Sound"
+  },
+  "ore_place": {
+    "sounds": [
+      "erosion:ore_place"
+    ],
+    "subtitle": "Erosion Ore Sound"
   }
 }

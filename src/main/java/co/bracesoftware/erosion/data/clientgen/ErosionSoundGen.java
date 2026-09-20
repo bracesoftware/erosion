@@ -41,6 +41,13 @@ public class ErosionSoundGen extends SoundDefinitionsProvider
             .subtitle(ErosionRegistry.RawRegistry.CRUCIBLE_MELTING.getName())
         );
 
+        this.add(ErosionRegistry.SoundEvents.ROCK.get(), definition()
+            .with(sound(ResourceLocation.fromNamespaceAndPath(
+                Erosion.MODID, ErosionRegistry.RawRegistry.ROCK.getId()
+            )))
+            .subtitle(ErosionRegistry.RawRegistry.ROCK.getName())
+        );
+
         return;
     }
 }

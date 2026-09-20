@@ -65,12 +65,16 @@ public class CrucibleBlockEntity extends BlockEntity
     {
         if(level.isClientSide()) return;
 
-        int calculatedHeat = Math.min(ErosionConfig.CRUCIBLE_SECONDS, be.progress / 20);
-        int currentHeat = state.getValue(CrucibleBlock.HEAT);
+        int cc = Math.min(ErosionConfig.CRUCIBLE_SECONDS, be.progress / 20);
+        int ch = state.getValue(CrucibleBlock.HEAT);
 
-        if(currentHeat != calculatedHeat)
+        if(ch != cc)
         {
-            level.setBlock(pos, state.setValue(CrucibleBlock.HEAT, calculatedHeat), Block.UPDATE_CLIENTS);
+            level.setBlock(
+                pos,
+                state.setValue(CrucibleBlock.HEAT, cc),
+                Block.UPDATE_CLIENTS
+            );
         }
 
         if(be.working)

@@ -258,6 +258,7 @@ public class ErosionRegistry
         public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
         public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_place", "Erosion Ore Sound");
         public static final IRawRegistry CRUCIBLE_MELTING = new IRawRegistry("crucible_melting", "Crucible Melting");
+        public static final IRawRegistry ROCK = new IRawRegistry("rock", "Rock Sound");
     }
 
     public static class ErosionRenderingElements
@@ -342,6 +343,13 @@ public class ErosionRegistry
                 )
             )
         );
+        public static final Supplier<SoundEvent> ROCK = SOUND_EVENTS.register(
+            RawRegistry.ROCK.getId(), () -> SoundEvent.createVariableRangeEvent(
+                ResourceLocation.fromNamespaceAndPath(
+                    Erosion.MODID, RawRegistry.ROCK.getId()
+                )
+            )
+        );
     }
 
     public static class SoundTypes
@@ -353,6 +361,14 @@ public class ErosionRegistry
             ErosionRegistry.SoundEvents.ORE_PLACE.get(),
             ErosionRegistry.SoundEvents.ORE_MINE.get(),
             ErosionRegistry.SoundEvents.ORE_MINE.get()
+        );
+        public static final SoundType ROCK = new SoundType(
+            1f,1f,
+            ErosionRegistry.SoundEvents.ROCK.get(),
+            ErosionRegistry.SoundEvents.ROCK.get(),
+            ErosionRegistry.SoundEvents.ROCK.get(),
+            ErosionRegistry.SoundEvents.ROCK.get(),
+            ErosionRegistry.SoundEvents.ROCK.get()
         );
     }
 
