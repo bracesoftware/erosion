@@ -16,5 +16,11 @@
       "erosion:ore_place"
     ],
     "subtitle": "Erosion Ore Sound"
+  },
+  "rock": {
+    "sounds": [
+      "erosion:rock"
+    ],
+    "subtitle": "Rock Sound"
   }
 }

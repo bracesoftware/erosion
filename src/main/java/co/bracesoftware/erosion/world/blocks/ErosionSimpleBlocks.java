@@ -203,11 +203,11 @@ public class ErosionSimpleBlocks
 
         public static BlockBehaviour.Properties getDefaultBlockProperties()
         {
-            return BlockBehaviour.Properties.of().
-                strength(0.1f, 3.0f)
-                .sound(SoundType.DEEPSLATE)
-                .mapColor(MapColor.DEEPSLATE)
-                .noCollission();
+            return BlockBehaviour.Properties.of()
+            .strength(0.1f, 3.0f)
+            .mapColor(MapColor.DEEPSLATE)
+            .sound(ErosionRegistry.SoundTypes.ROCK)
+            .noCollission();
         }
 
         @Deprecated 
