@@ -6,6 +6,9 @@ import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
+import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -19,6 +22,10 @@ import net.minecraft.world.item.Items;
 
 public class ChemicalReactorMenu extends AbstractContainerMenu
 {
+    public List<GasType> gasesToBeEmitted;
+    public Player player;
+    public BlockPos position;
+
     private final Container reactants;
     private final Container products;
 
@@ -74,18 +81,20 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
         }
     }
 
-    public ChemicalReactorMenu(int cid, Inventory pinv)
+    public ChemicalReactorMenu(int cid, Inventory pinv, BlockPos p)
     {
         this(
             cid, pinv, 
             new SimpleContainer(ROWS * COL), 
-            new SimpleContainer(ROWS * COL)
+            new SimpleContainer(ROWS * COL),
+            p
         );
     }
 
     public ChemicalReactorMenu(
         int cid, Inventory pinv,
-        Container r, Container p
+        Container r, Container p,
+        BlockPos pos
     )
     {
         super(ErosionRegistry.Menus.CHEMICAL_REACTOR.get(), cid);
@@ -95,6 +104,9 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
         
         this.reactants = r;
         this.products = p;
+        this.player = pinv.player;
+
+        this.position = pos;
 
         if(r instanceof SimpleContainer sc)
         {
@@ -130,6 +142,8 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
     @Override
     public void slotsChanged(Container c)
     {
+        if(this.player.level().isClientSide()) return;
+
         super.slotsChanged(c);
         if(c == this.reactants)
         {
@@ -145,6 +159,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
             if(cr.getReactants().equals(this.reactantsAsItemList()))
             {
                 this.fillContainer(products, cr.getProducts());
+                this.gasesToBeEmitted = cr.getGasCoproducts();
                 return;
             }
         }
@@ -160,6 +175,10 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
             if(!stack.isEmpty())
             {
                 stack.shrink(1);
+                for(var g : this.gasesToBeEmitted)
+                {
+                    Gas.createGas(null, null, g);
+                }
             }
         }
 
@@ -196,8 +215,8 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
         }
     }
 
-    @Override
-    public ItemStack quickMoveStack(Player p, int i)
+    @Override 
+    public ItemStack quickMoveStack(Player p, int idx)
     {
         return ItemStack.EMPTY;
     }

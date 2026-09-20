@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
@@ -47,6 +48,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
 import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
@@ -63,6 +65,9 @@ public class ErosionRegistry
         );
         public static final Type<ErosionScreenMessagePacket> SCREEN_MESSAGE_PACKET = new Type<>(
             ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "screen_msg_packet")
+        );
+        public static final Type<ErosionAimedAtBlockPosPacket> AIMED_AT_BLOCK_PACKET = new Type<>(
+            ResourceLocation.fromNamespaceAndPath(Erosion.MODID, "aimed_at_block")
         );
     }
 
@@ -200,6 +205,7 @@ public class ErosionRegistry
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
         public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
+        public static final IRawRegistry CHEMICAL_REACTOR_SCRUBBER = new IRawRegistry("chemical_reactor_scrubber", "Chemical Reactor Scrubber");
 
         //MANUAL ADVANCEMENTS
         public static class ManualAdvancements
@@ -315,7 +321,7 @@ public class ErosionRegistry
     {
         public static final DeferredHolder<MenuType<?>, MenuType<ChemicalReactorMenu>> CHEMICAL_REACTOR = MENUS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> IMenuTypeExtension.create(
-                (winid, inv, data) -> new ChemicalReactorMenu(winid, inv)
+                (winid, inv, data) -> new ChemicalReactorMenu(winid, inv, data.readBlockPos())
             )
         );
     }
@@ -390,6 +396,12 @@ public class ErosionRegistry
 
         public static final DeferredBlock<Block> CHEMICAL_REACTOR = BLOCKS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new ChemicalReactorBlock(
+                BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
+                .requiresCorrectToolForDrops()
+            )
+        );
+        public static final DeferredBlock<Block> CHEMICAL_REACTOR_SCRUBBER = BLOCKS.register(
+            RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(), () -> new ChemicalReactorScrubberBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
@@ -603,6 +615,11 @@ public class ErosionRegistry
         public static final DeferredItem<Item> CHEMICAL_REACTOR = ITEMS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR.get(), new Item.Properties()
+            )
+        );
+        public static final DeferredItem<Item> CHEMICAL_REACTOR_SCRUBBER = ITEMS.register(
+            RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(), () -> new BlockItem(
+                Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), new Item.Properties()
             )
         );
 
@@ -949,6 +966,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.get());
             output.accept(ErosionRegistry.Items.CRUCIBLE.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get());
             output.accept(ErosionRegistry.Items.BASIC_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_MASK.get());
         })

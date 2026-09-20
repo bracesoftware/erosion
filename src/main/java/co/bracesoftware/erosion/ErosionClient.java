@@ -1,20 +1,29 @@
 package co.bracesoftware.erosion;
 
+import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.ErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorScreen;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
+import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Display;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
 import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.ScreenEvent;
 import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.api.distmarker.Dist;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
@@ -247,6 +256,26 @@ public class ErosionClient
             ErosionRegistry.ErosionRenderingElements.SCREEN_MESSAGE,
             new ErosionScreenMessage()
         );
+        return;
+    }
+
+    @SubscribeEvent
+    public static void onClientTick(ClientTickEvent.Post e)
+    {
+        Minecraft mc = Minecraft.getInstance();
+        if(mc.player == null || mc.level == null) return;
+        HitResult h = mc.hitResult;
+
+        if(h != null && h.getType() == HitResult.Type.BLOCK)
+        {
+            var p = ((BlockHitResult) h).getBlockPos();
+            var s = mc.level.getBlockState(p);
+
+            if(s.getBlock() instanceof ErosionBlockWithTip)
+            {
+                PacketDistributor.sendToServer(new ErosionAimedAtBlockPosPacket(p.asLong()));
+            }
+        }
         return;
     }
 }

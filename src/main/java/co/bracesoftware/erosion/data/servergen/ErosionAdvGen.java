@@ -128,6 +128,14 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getId(),
                 reactor
             );
+
+            var reactor_scrubber = ErosionAdvancement.generateAdvancement(
+                this, "Better than a Gas Mask?",
+                "Acquire a Chemical Reactor Scrubber",
+                ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get(),
+                ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(),
+                reactor
+            );
             return;
         }
     }

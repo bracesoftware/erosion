@@ -35,6 +35,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 
@@ -173,19 +174,25 @@ public final class ErosionMod
     }
 
     @SubscribeEvent
-    public static void regPayloads(RegisterPayloadHandlersEvent event)
+    public static void regPayloads(RegisterPayloadHandlersEvent e)
     {
-        event.registrar("1")
+        e.registrar("1")
         .playToClient(
             ErosionRegistry.DataPackets.MOD_STATUS_SYNC,
             ErosionStatusSyncPacket.STREAM_CODEC,
             ErosionStatusSyncPacket::handleData
         );
-        event.registrar("1")
+        e.registrar("1")
         .playToClient(
             ErosionRegistry.DataPackets.SCREEN_MESSAGE_PACKET,
             ErosionScreenMessagePacket.STREAM_CODEC,
             ErosionScreenMessagePacket::handleData
+        );
+        e.registrar("1")
+        .playToServer(
+            ErosionRegistry.DataPackets.AIMED_AT_BLOCK_PACKET,
+            ErosionAimedAtBlockPosPacket.STREAM_CODEC,
+            ErosionAimedAtBlockPosPacket::handleData
         );
         return;
     }

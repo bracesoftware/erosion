@@ -103,6 +103,13 @@ public class ErosionExceptions
     }
     public static class ErosionBlockExceptions
     {
+        public static class ErosionBlockWithTipImpl extends ErosionException
+        {
+            public ErosionBlockWithTipImpl(String e)
+            {
+                super(e);
+            }
+        }
         public static class ErosionChemicalReactorException extends ErosionException
         {
             public ErosionChemicalReactorException(String e)

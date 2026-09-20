@@ -1,6 +1,8 @@
 package co.bracesoftware.erosion.world.blocks;
 
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.ErosionExceptions;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionBlockWithTipImpl;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.GravelBlock;
 
@@ -11,6 +13,7 @@ import com.mojang.serialization.MapCodec;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -45,6 +48,13 @@ import net.neoforged.neoforge.common.ItemAbilities;
 
 public class ErosionSimpleBlocks
 {
+    public interface ErosionBlockWithTip
+    {
+        default void onBlockAimedOn(ServerPlayer p, BlockState s) throws ErosionBlockWithTipImpl
+        {
+            throw new ErosionBlockWithTipImpl("Class implements `ErosionBlockWithTip` but does not define the `onBlockAimedOn` method!");
+        }
+    }
     public static class GravelBlock extends FallingBlock
     {
         public static final MapCodec<GravelBlock> CODEC = simpleCodec(GravelBlock::new);

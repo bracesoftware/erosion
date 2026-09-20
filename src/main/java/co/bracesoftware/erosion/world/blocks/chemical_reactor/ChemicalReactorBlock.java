@@ -27,7 +27,7 @@ public class ChemicalReactorBlock extends Block
         {
             p.openMenu(
                 new SimpleMenuProvider(
-                    (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv),
+                    (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, bp),
                     Component.literal("Chemical Reactor")
                 )
             );

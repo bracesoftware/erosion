@@ -89,6 +89,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());
         add(ErosionRegistry.Blocks.CRUCIBLE.get(), ErosionRegistry.RawRegistry.CRUCIBLE.getName());
         add(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName());
+        add(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName());
         return;
     }
 }

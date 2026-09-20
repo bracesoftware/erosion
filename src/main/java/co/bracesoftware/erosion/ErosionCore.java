@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import it.unimi.dsi.fastutil.HashCommon;
@@ -325,12 +327,19 @@ public class ErosionCore
         public List<Item> productItems;
         public List<Item> mainProductItems;
 
-        public ChemicalReaction(String n, Supplier<List<Item>> r, Supplier<List<Item>> p, Supplier<List<Item>> k)
+        private List<GasType> gasCoproducts;
+
+        public ChemicalReaction(
+            String n, Supplier<List<Item>> r,
+            Supplier<List<Item>> p, Supplier<List<Item>> k,
+            List<GasType> gg
+        )
         {
             this.name = n;
             this.reactant = r;
             this.product = p;
             this.mainProduct = k;
+            this.gasCoproducts = gg;
 
             this.setupAntiDuplicationSystem();
         }
@@ -368,6 +377,11 @@ public class ErosionCore
         public List<Item> getProducts()
         {
             return this.productItems;
+        }
+
+        public List<GasType> getGasCoproducts()
+        {
+            return Collections.unmodifiableList(this.gasCoproducts);
         }
 
         @Override 
@@ -1547,7 +1561,10 @@ public class ErosionCore
         ), () -> List.of(
             Items.MUD, Items.BUCKET
         ),
-        () -> List.of(Items.MUD)
+        () -> List.of(Items.MUD),
+        List.of(
+            ErosionRegistry.GasTypes.WATER_VAPOR
+        )
     );
 
     public static final ChemicalReaction SULFURIC_ACID_SYNTHESIS = new ChemicalReaction(
@@ -1558,7 +1575,9 @@ public class ErosionCore
         ), () -> List.of(
             ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
         ),
-        () -> List.of(ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get())
+        () -> List.of(
+            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+        ), List.of()
     );
 
     public static final ChemicalReaction BORIC_ACID_SYNTHESIS = new ChemicalReaction(
@@ -1569,7 +1588,9 @@ public class ErosionCore
         ), () -> List.of(
             ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(),
             Items.BUCKET
-        ), () -> List.of(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get())
+        ), () -> List.of(
+            ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get()
+        ), List.of()
     );
 
     public static final ChemicalReaction ANHYDROUS_BORAX_HYDRATION = new ChemicalReaction(
@@ -1579,7 +1600,11 @@ public class ErosionCore
         ), () -> List.of(
             ErosionRegistry.Items.BORAX.get(),
             Items.BUCKET
-        ), () -> List.of(ErosionRegistry.Items.BORAX.get())
+        ), () -> List.of(
+            ErosionRegistry.Items.BORAX.get()
+        ), List.of(
+            ErosionRegistry.GasTypes.WATER_VAPOR
+        )
     );
 
     // ========================== REGISTRY
@@ -2015,6 +2040,24 @@ public class ErosionCore
             }
         }
 
+        BiConsumer<List<GasType>, List<Component>> formatGasList = (gl, d) -> {
+            for(var y : gl)
+            {
+                d.add(
+                    Component.literal("  * ").withStyle(ChatFormatting.GRAY)
+                    .append(
+                        Component.literal(y.name).withStyle(ChatFormatting.BOLD)
+                        .withStyle(
+                            y.isToxic() ?
+                            ChatFormatting.DARK_RED :
+                            ChatFormatting.GRAY
+                        )
+                    )
+                );
+            }
+            return;
+        };
+
         List<String> meltsIntoNames = new ArrayList<>();
         List<String> catalystListLmao = new ArrayList<>();
         List<String> coproductOfNames = new ArrayList<>();
@@ -2061,14 +2104,16 @@ public class ErosionCore
                 this.from = f;
             }
         }
-    
+
         List<SynthFromData> synthFrom = new ArrayList<>();
         List<String> usedIn = new ArrayList<>();
+        List<GasType> reactionGasCoproducts = null;
         for(var p : CHEMICAL_REACTION_LIST)
         {
             if(p.reactantItems.contains(currentItem))
             {
                 usedIn.add(p.name);
+                if(reactionGasCoproducts == null) reactionGasCoproducts = p.getGasCoproducts();
             }
             if(p.mainProductItems.contains(currentItem))
             {
@@ -2109,6 +2154,7 @@ public class ErosionCore
                     )
                 );
             }
+            formatGasList.accept(reactionGasCoproducts, desc);
         }
         if(!synthFrom.isEmpty())
         {
@@ -2276,20 +2322,7 @@ public class ErosionCore
                     Component.literal("- Melting this material emits potential gas coproduct(s): ")
                     .withStyle(ChatFormatting.GRAY)
                 );
-                for(var y : emitsGases)
-                {
-                    desc.add(
-                        Component.literal("  * ").withStyle(ChatFormatting.GRAY)
-                        .append(
-                            Component.literal(y.name).withStyle(ChatFormatting.BOLD)
-                            .withStyle(
-                                y.isToxic() ?
-                                ChatFormatting.DARK_RED :
-                                ChatFormatting.GRAY
-                            )
-                        )
-                    );
-                }
+                formatGasList.accept(emitsGases, desc);
             }
         }
 

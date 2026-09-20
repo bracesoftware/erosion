@@ -31,6 +31,7 @@ public class ErosionUtils
     {
         return supplier.get();
     }
+
     public static String getStatus()
     {
         Log(ErosionClientData.formatModStatusString(

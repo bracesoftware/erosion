@@ -27,6 +27,7 @@ public class ChemicalReactorProductSlot extends Slot
     @Override
     public void onTake(Player player, ItemStack stack)
     {
+        if(player.level().isClientSide()) return;
         this.watToDo.run();
         super.onTake(player, stack);
     }

@@ -41,6 +41,21 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .unlockedBy("has_purifier", has(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()))
         .save(output);
 
+        ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get()
+        )
+        .pattern("IMI")
+        .pattern("DKD")
+        .pattern("ONO")
+        .define('I', Items.IRON_INGOT)
+        .define('M', ErosionRegistry.Blocks.MATERIAL_PURIFIER.get())
+        .define('K', Items.ITEM_FRAME)
+        .define('D', Items.NETHERITE_SCRAP)
+        .define('O', Items.OBSIDIAN)
+        .define('N', Items.NETHERITE_INGOT)
+        .unlockedBy("has_purifier", has(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()))
+        .save(output);
+
 
         ShapedRecipeBuilder.shaped(
             RecipeCategory.REDSTONE, ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
@@ -76,11 +91,12 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         ShapedRecipeBuilder.shaped(
             RecipeCategory.BREWING, ErosionRegistry.Items.GAS_MASK.get()
         ).pattern("S S")
-        .pattern("PPP")
+        .pattern("GPG")
         .pattern("PWP")
         .define('S', Items.STRING)
         .define('P', Items.LEATHER)
         .define('W', Items.NETHERITE_INGOT)
+        .define('G', Items.GLASS_PANE)
         .unlockedBy("has_netheriteingot", has(Items.NETHERITE_INGOT))
         .save(output);
 

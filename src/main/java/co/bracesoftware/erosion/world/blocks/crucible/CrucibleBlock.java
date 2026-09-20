@@ -54,6 +54,7 @@ import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
+import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionChemicalReactorException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
 
@@ -346,27 +347,28 @@ public class CrucibleBlock extends BaseEntityBlock
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos)
+    public boolean canSurvive(BlockState s, LevelReader l, BlockPos p)
     {
-        BlockPos belowPos = pos.below();
-        BlockState belowState = level.getBlockState(belowPos);
+        BlockPos bwp = p.below();
+        BlockState bws = l.getBlockState(bwp);
         
-        boolean isCampfire = belowState.is(BlockTags.CAMPFIRES);
-        boolean isLava = belowState.getFluidState().is(FluidTags.LAVA) || belowState.is(Blocks.LAVA);
+        boolean isCampfire = bws.is(BlockTags.CAMPFIRES);
+        boolean isLava = bws.getFluidState().is(FluidTags.LAVA) || bws.is(Blocks.LAVA);
         
         return isCampfire || isLava;
     }
 
     @Override
     public BlockState updateShape(
-        BlockState state, Direction direction, BlockState neighborState,
-        LevelAccessor level, BlockPos currentPos, BlockPos neighborPos
-    ) {
-        if (direction == Direction.DOWN && !this.canSurvive(state, level, currentPos))
+        BlockState s, Direction d, BlockState ns,
+        LevelAccessor l, BlockPos bp, BlockPos np
+    )
+    {
+        if(d == Direction.DOWN && !this.canSurvive(s, l, bp))
         {
             return Blocks.AIR.defaultBlockState();
         }
-        return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
+        return super.updateShape(s, d, ns, l, bp, np);
     }
 
     @Override
