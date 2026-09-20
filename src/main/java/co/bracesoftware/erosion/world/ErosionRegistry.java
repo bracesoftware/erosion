@@ -256,7 +256,7 @@ public class ErosionRegistry
 
         //SOUND EVENTS
         public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
-        public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
+        public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_place", "Erosion Ore Sound");
         public static final IRawRegistry CRUCIBLE_MELTING = new IRawRegistry("crucible_melting", "Crucible Melting");
     }
 
