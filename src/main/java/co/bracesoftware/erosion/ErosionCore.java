@@ -1798,6 +1798,21 @@ public class ErosionCore
                 Component.literal("A versatile container designed to safely sustain chemical reactions.")
                 .withStyle(ChatFormatting.DARK_PURPLE)
             );
+            desc.add(
+                Component.literal("- Automatically regulates the internal pressure and thermal thresholds required for the reaction to occur.")
+                .withStyle(ChatFormatting.GRAY)
+            );
+        }
+        else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get())
+        {
+            desc.add(
+                Component.literal("A filtration system designed to safely neutralise toxic and hazardous fumes produced by the chemical reactor.")
+                .withStyle(ChatFormatting.DARK_PURPLE)
+            );
+            desc.add(
+                Component.literal("- Must be placed horizontally adjacent to a " + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName() + " to establish a functional exhaust link.")
+                .withStyle(ChatFormatting.GRAY)
+            );
         }
 
         if(currentItem instanceof ErosionSimpleItems.GasMask git)
