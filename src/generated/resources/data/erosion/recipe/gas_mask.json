@@ -2,6 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
+    "G": {
+      "item": "minecraft:glass_pane"
+    },
     "P": {
       "item": "minecraft:leather"
     },
@@ -14,7 +17,7 @@
   },
   "pattern": [
     "S S",
-    "PPP",
+    "GPG",
     "PWP"
   ],
   "result": {

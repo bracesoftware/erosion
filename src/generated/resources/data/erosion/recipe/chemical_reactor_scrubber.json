@@ -1,0 +1,33 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "D": {
+      "item": "minecraft:netherite_scrap"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "K": {
+      "item": "minecraft:item_frame"
+    },
+    "M": {
+      "item": "erosion:material_purifier"
+    },
+    "N": {
+      "item": "minecraft:netherite_ingot"
+    },
+    "O": {
+      "item": "minecraft:obsidian"
+    }
+  },
+  "pattern": [
+    "IMI",
+    "DKD",
+    "ONO"
+  ],
+  "result": {
+    "count": 1,
+    "id": "erosion:chemical_reactor_scrubber"
+  }
+}

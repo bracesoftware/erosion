@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:chemical_reactor",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:chemical_reactor_scrubber"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire a Chemical Reactor Scrubber",
+    "icon": {
+      "count": 1,
+      "id": "erosion:chemical_reactor_scrubber"
+    },
+    "title": "Better than a Gas Mask?"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

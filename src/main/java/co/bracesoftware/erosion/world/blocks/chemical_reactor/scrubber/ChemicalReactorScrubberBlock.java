@@ -5,6 +5,7 @@ import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionChemicalReactorException;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.ErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorBlock;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.ChemicalReactorMultiBlockComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-public class ChemicalReactorScrubberBlock extends Block implements ErosionBlockWithTip
+public class ChemicalReactorScrubberBlock extends Block implements ErosionBlockWithTip, ChemicalReactorMultiBlockComponent
 {
     public static final IntegerProperty FILTER_DURABILITY = IntegerProperty.create(
         "filter_durability", 0, 100

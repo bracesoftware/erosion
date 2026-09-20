@@ -6,10 +6,12 @@ import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.ChemicalReactorSystemComponent;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -20,7 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class ChemicalReactorMenu extends AbstractContainerMenu
+public class ChemicalReactorMenu extends AbstractContainerMenu implements ChemicalReactorSystemComponent
 {
     public List<GasType> gasesToBeEmitted;
     public Player player;
@@ -175,15 +177,25 @@ public class ChemicalReactorMenu extends AbstractContainerMenu
             if(!stack.isEmpty())
             {
                 stack.shrink(1);
-                for(var g : this.gasesToBeEmitted)
-                {
-                    Gas.createGas(null, null, g);
-                }
+                this.handleGasEmission();
             }
         }
 
         if(this.products.isEmpty()) scanRecipez();
         return;
+    }
+
+    public void handleGasEmission()
+    {
+        for(var g : this.gasesToBeEmitted)
+        {
+            var l = (ServerLevel) this.player.level();
+            if(!ChemicalReactorBlock.isFunctionalScrubberPresent(l, position))
+            {
+                Gas.createGas(l, this.position, g);
+            }
+            else ChemicalReactorBlock.damageScrubberFilter(l, position);
+        }
     }
 
     private void clearProducts()
