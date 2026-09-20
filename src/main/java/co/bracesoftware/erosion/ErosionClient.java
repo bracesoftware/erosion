@@ -144,6 +144,7 @@ public class ErosionClient
                 if(MESSAGES.isEmpty()) return;
                 int cx = gg.guiWidth() / 2;
                 int start = (gg.guiHeight() / 2) + 80;
+                boolean fadeOut = false;
 
                 for(int i = 0; i < MESSAGES.size(); i++)
                 {
@@ -153,10 +154,7 @@ public class ErosionClient
                     if(age > DISPLAY_TIME_MS - START_FADE_AT_REMAINING)
                     {
                         a = (DISPLAY_TIME_MS - age) / (float) START_FADE_AT_REMAINING;
-                        if((age % (DisplayEntry.OFFSET_RANGE / 3)) == 0)
-                        {
-                            --msg.offset;
-                        }
+                        fadeOut = true;
                     }
                     a = Mth.clamp(a, 0f, 1f);
                     int col = ((int) (a * 255) << 24) | msg.color.getColor();
@@ -165,6 +163,7 @@ public class ErosionClient
                     int x = cx - (w / 2) - msg.offset;
                     int y = start + (i * 11);
                     if(!(msg.offset <= 0)) --msg.offset;
+                    if(fadeOut) --msg.offset;
 
                     gg.drawString(mc.font, msg.text, x, y, col, true);
                 }
