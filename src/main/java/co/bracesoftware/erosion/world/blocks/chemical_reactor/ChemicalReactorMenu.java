@@ -187,6 +187,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements Chemic
 
     public void handleGasEmission()
     {
+        if(this.gasesToBeEmitted == null) return;
         for(var g : this.gasesToBeEmitted)
         {
             var l = (ServerLevel) this.player.level();
@@ -196,6 +197,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements Chemic
             }
             else ChemicalReactorBlock.damageScrubberFilter(l, position);
         }
+        return;
     }
 
     private void clearProducts()
