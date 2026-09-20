@@ -17,6 +17,8 @@ import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
+
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
@@ -2056,6 +2058,12 @@ public class ErosionCore
         }
 
         BiConsumer<List<GasType>, List<Component>> formatGasList = (gl, d) -> {
+            gl = gl.stream().collect(
+                Collectors.toMap(
+                    GasType::getId,
+                    g -> g, (e, r) -> e
+                )
+            ).values().stream().toList();
             for(var y : gl)
             {
                 d.add(
@@ -2122,13 +2130,13 @@ public class ErosionCore
 
         List<SynthFromData> synthFrom = new ArrayList<>();
         List<String> usedIn = new ArrayList<>();
-        List<GasType> reactionGasCoproducts = null;
+        List<GasType> reactionGasCoproducts = new ArrayList<>();
         for(var p : CHEMICAL_REACTION_LIST)
         {
             if(p.reactantItems.contains(currentItem))
             {
                 usedIn.add(p.name);
-                if(reactionGasCoproducts == null) reactionGasCoproducts = p.getGasCoproducts();
+                reactionGasCoproducts.addAll(p.getGasCoproducts());
             }
             if(p.mainProductItems.contains(currentItem))
             {
@@ -2169,6 +2177,10 @@ public class ErosionCore
                     )
                 );
             }
+            desc.add(
+                Component.literal("- Named reactions can have following gases as coproducts:")
+                .withStyle(ChatFormatting.GRAY)
+            );
             formatGasList.accept(reactionGasCoproducts, desc);
         }
         if(!synthFrom.isEmpty())

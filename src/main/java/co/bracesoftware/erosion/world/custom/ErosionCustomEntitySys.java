@@ -46,6 +46,16 @@ public class ErosionCustomEntitySys
     {
         public String id;
         public String name;
+
+        public String getId()
+        {
+            return this.id;
+        }
+
+        public String getName()
+        {
+            return this.name;
+        }
     }
 
     public static class GasType extends ErosionCustomEntity
