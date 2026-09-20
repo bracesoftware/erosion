@@ -6,6 +6,7 @@ import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Display;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -74,6 +75,7 @@ public class ErosionClient
             public static final long DISPLAY_TIME_MS = 4000;
             public static final int START_FADE_AT_REMAINING = 500;
             public static final int OFFSET_RANGE = 15;
+            public static final int MAX_ANIM_TIME = 200;
 
             final String text;
             final long time;
@@ -81,6 +83,7 @@ public class ErosionClient
 
             int offset = OFFSET_RANGE;
             boolean fadeOut = false;
+            long animStart = 0;
 
             DisplayEntry(String t, Color c)
             {
@@ -155,7 +158,12 @@ public class ErosionClient
                     if(age > DisplayEntry.DISPLAY_TIME_MS - DisplayEntry.START_FADE_AT_REMAINING)
                     {
                         a = (DisplayEntry.DISPLAY_TIME_MS - age) / (float) DisplayEntry.START_FADE_AT_REMAINING;
+                    }
+                    if(age > DisplayEntry.DISPLAY_TIME_MS - DisplayEntry.MAX_ANIM_TIME)
+                    {
+                        msg.animStart = System.currentTimeMillis();
                         msg.fadeOut = true;
+
                     }
                     a = Mth.clamp(a, 0f, 1f);
                     int col = ((int) (a * 255) << 24) | msg.color.getColor();
@@ -163,13 +171,19 @@ public class ErosionClient
                     int w = mc.font.width(msg.text);
                     int x = cx - (w / 2) - msg.offset;
                     int y = start + (i * 11);
-                    if(!(msg.offset <= 0)) --msg.offset;
+                    if(!(msg.offset <= 0)) // we do fade in
+                    {
+                        long e = System.currentTimeMillis() - age;
+                        float prog = (float) e / DisplayEntry.MAX_ANIM_TIME;
+                        prog = Mth.clamp(prog, 0f,1f);
+                        msg.offset = (int) Mth.lerp(DisplayEntry.OFFSET_RANGE, 0f, prog);
+                    }
                     if(msg.fadeOut)
                     {
-                        long rt = DisplayEntry.DISPLAY_TIME_MS - age;
-                        float fop = 1f - ((float) rt / DisplayEntry.START_FADE_AT_REMAINING);
-                        fop = Mth.clamp(fop, 0f, 1f);
-                        msg.offset = DisplayEntry.OFFSET_RANGE * (int) (1f - fop);
+                        long e = msg.animStart - age;
+                        float prog = (float) e / DisplayEntry.MAX_ANIM_TIME;
+                        prog = Mth.clamp(prog, 0f,1f);
+                        msg.offset = (int) Mth.lerp(0f, DisplayEntry.OFFSET_RANGE, prog);
                     }
 
                     gg.drawString(mc.font, msg.text, x, y, col, true);
