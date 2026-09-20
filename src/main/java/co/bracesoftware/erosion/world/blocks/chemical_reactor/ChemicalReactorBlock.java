@@ -33,7 +33,7 @@ public class ChemicalReactorBlock extends Block implements ChemicalReactorMultiB
                 new SimpleMenuProvider(
                     (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, bp),
                     Component.literal("Chemical Reactor")
-                )
+                ), a -> a.writeBlockPos(bp)
             );
         }
         return InteractionResult.sidedSuccess(l.isClientSide());
