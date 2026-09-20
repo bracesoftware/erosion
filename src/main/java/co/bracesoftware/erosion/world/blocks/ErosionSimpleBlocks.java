@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.world.blocks;
 
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.GravelBlock;
 
 import java.util.EnumMap;
@@ -74,7 +75,7 @@ public class ErosionSimpleBlocks
             return BlockBehaviour.Properties.of().
                 strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
-                .sound(SoundType.DEEPSLATE)
+                .sound(ErosionRegistry.SoundTypes.ORE)
                 .mapColor(MapColor.STONE);
         }
 

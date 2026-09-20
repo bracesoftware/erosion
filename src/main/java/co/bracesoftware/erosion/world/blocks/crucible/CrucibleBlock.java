@@ -189,6 +189,18 @@ public class CrucibleBlock extends BaseEntityBlock
         if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
         {
             //if player is holding a catalyst item
+            if(be.working)
+            {
+                if(!level.isClientSide())
+                {
+                    ErosionUtils.displayMessage(
+                        player, "This is hot!",
+                        ErosionScreenMessage.Color.DARK_RED
+                    );
+                    player.hurt(player.damageSources().generic(), 1f);
+                }
+                return ItemInteractionResult.SUCCESS;
+            }
             if(CrucibleCatalyst.isItemCrucibleCatalyst(stack.getItem()))
             {
                 //if clickin with catalyst on a crucible with an item,error msg

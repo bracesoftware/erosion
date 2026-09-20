@@ -18,6 +18,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
@@ -30,6 +31,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.IronBarsBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
@@ -63,9 +65,14 @@ public class ErosionRegistry
         );
     }
 
+///////////////////////////////////////////////////////////////////////////////////////
+
     public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Erosion.MODID);
+    
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Erosion.MODID);
+    
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
+
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
         Registries.BLOCK_ENTITY_TYPE, Erosion.MODID
     );
@@ -75,6 +82,10 @@ public class ErosionRegistry
     );
     public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(
         Registries.ARMOR_MATERIAL, Erosion.MODID
+    );
+
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(
+        Registries.SOUND_EVENT, Erosion.MODID
     );
     // ===================================================== //
     public static class DefaultAlterationPaths
@@ -241,6 +252,9 @@ public class ErosionRegistry
 
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
+
+        //SOUND EVENTS
+        public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Ore Mining");
     }
 
     public static class ErosionRenderingElements
@@ -299,6 +313,29 @@ public class ErosionRegistry
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> IMenuTypeExtension.create(
                 (winid, inv, data) -> new ChemicalReactorMenu(winid, inv)
             )
+        );
+    }
+
+    public static class SoundEvents
+    {
+        public static final Supplier<SoundEvent> ORE_MINE = SOUND_EVENTS.register(
+            RawRegistry.ORE_MINE.getId(), () -> SoundEvent.createVariableRangeEvent(
+                ResourceLocation.fromNamespaceAndPath(
+                    Erosion.MODID, RawRegistry.ORE_MINE.getId()
+                )
+            )
+        );
+    }
+
+    public static class SoundTypes
+    {
+        public static final SoundType ORE = new SoundType(
+            1f,1f,
+            SoundType.DEEPSLATE.getBreakSound(),
+            SoundType.DEEPSLATE.getStepSound(),
+            SoundType.DEEPSLATE.getPlaceSound(),
+            ErosionRegistry.SoundEvents.ORE_MINE.get(),
+            SoundType.DEEPSLATE.getFallSound()
         );
     }
 
@@ -887,20 +924,22 @@ public class ErosionRegistry
 
     public static void init(IEventBus modEventBus)
     {
-        ARMOR_MATERIALS.register(modEventBus);
-        BLOCKS.register(modEventBus);
-        ITEMS.register(modEventBus);
-        CREATIVE_MODE_TABS.register(modEventBus);
-        BLOCK_ENTITY_TYPES.register(modEventBus);
-        MENUS.register(modEventBus);
+        ErosionRegistry.ARMOR_MATERIALS.register(modEventBus);
+        ErosionRegistry.BLOCKS.register(modEventBus);
+        ErosionRegistry.ITEMS.register(modEventBus);
+        ErosionRegistry.CREATIVE_MODE_TABS.register(modEventBus);
+        ErosionRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
+        ErosionRegistry.MENUS.register(modEventBus);
+        ErosionRegistry.SOUND_EVENTS.register(modEventBus);
 
         try
         {
-            Class.forName(Blocks.class.getName());
-            Class.forName(Items.class.getName());
-            Class.forName(BlockEntities.class.getName());
-            Class.forName(Menus.class.getName());
-            Class.forName(ArmorMaterials.class.getName());
+            Class.forName(ErosionRegistry.Blocks.class.getName());
+            Class.forName(ErosionRegistry.Items.class.getName());
+            Class.forName(ErosionRegistry.BlockEntities.class.getName());
+            Class.forName(ErosionRegistry.Menus.class.getName());
+            Class.forName(ErosionRegistry.ArmorMaterials.class.getName());
+            Class.forName(ErosionRegistry.SoundEvents.class.getName());
         }
         catch(ClassNotFoundException e)
         {

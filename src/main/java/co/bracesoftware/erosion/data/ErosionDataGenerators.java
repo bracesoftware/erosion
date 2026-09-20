@@ -8,6 +8,7 @@ import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionLang;
+import co.bracesoftware.erosion.data.clientgen.ErosionSoundGen;
 import co.bracesoftware.erosion.data.commongen.ErosionDataGenInternal;
 import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
 import co.bracesoftware.erosion.data.servergen.ErosionBlockTagGen;
@@ -28,8 +29,8 @@ public class ErosionDataGenerators
         GatherDataEvent e
     ) throws ErosionDataGenException
     {
-        DataGenerator generator = e.getGenerator();
-        PackOutput packOutput = generator.getPackOutput();
+        DataGenerator g = e.getGenerator();
+        PackOutput p = g.getPackOutput();
         
         ErosionUtils.Log(ErosionMod.WELCOME_ASCII);
         ErosionUtils.Log("Doing data gen...");
@@ -42,21 +43,22 @@ public class ErosionDataGenerators
         ErosionDataGenInternal.generateChemicalReactorAnim();
 
         //client provider
-        generator.addProvider(e.includeClient(), new ErosionLang(packOutput));
-        generator.addProvider(e.includeClient(), new ErosionBlockStateGen(packOutput, e.getExistingFileHelper()));
-        generator.addProvider(e.includeClient(), new ErosionItemModelGen(packOutput, e.getExistingFileHelper()));
+        g.addProvider(e.includeClient(), new ErosionLang(p));
+        g.addProvider(e.includeClient(), new ErosionBlockStateGen(p, e.getExistingFileHelper()));
+        g.addProvider(e.includeClient(), new ErosionItemModelGen(p, e.getExistingFileHelper()));
+        g.addProvider(e.includeClient(), new ErosionSoundGen(p, e.getExistingFileHelper()));
 
         //server providers
-        generator.addProvider(e.includeServer(), new ErosionLootGen(packOutput, e.getLookupProvider()));
-        generator.addProvider(e.includeServer(), new ErosionRecipeGen(packOutput, e.getLookupProvider()));
-        generator.addProvider(e.includeServer(), new ErosionAdvGen(packOutput, e.getLookupProvider(), e.getExistingFileHelper()));
+        g.addProvider(e.includeServer(), new ErosionLootGen(p, e.getLookupProvider()));
+        g.addProvider(e.includeServer(), new ErosionRecipeGen(p, e.getLookupProvider()));
+        g.addProvider(e.includeServer(), new ErosionAdvGen(p, e.getLookupProvider(), e.getExistingFileHelper()));
 
         //block and item
-        var b = new ErosionBlockTagGen(packOutput, e.getLookupProvider(), e.getExistingFileHelper());
-        generator.addProvider(e.includeServer(), b);
+        var b = new ErosionBlockTagGen(p, e.getLookupProvider(), e.getExistingFileHelper());
+        g.addProvider(e.includeServer(), b);
 
-        generator.addProvider(e.includeServer(), new ErosionItemTagGen(
-            packOutput, e.getLookupProvider(), b.contentsGetter(), e.getExistingFileHelper())
+        g.addProvider(e.includeServer(), new ErosionItemTagGen(
+            p, e.getLookupProvider(), b.contentsGetter(), e.getExistingFileHelper())
         );
         return;
     }
