@@ -164,7 +164,7 @@ public class ErosionClient
                     int x = cx - (w / 2) - msg.offset;
                     int y = start + (i * 11);
                     if(!(msg.offset <= 0)) --msg.offset;
-                    if(msg.fadeOut) --msg.offset;
+                    if(msg.fadeOut && (age % 2 == 0)) --msg.offset;
 
                     gg.drawString(mc.font, msg.text, x, y, col, true);
                 }
