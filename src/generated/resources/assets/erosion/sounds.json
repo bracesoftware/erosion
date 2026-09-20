@@ -1,0 +1,8 @@
+{
+  "ore_mine": {
+    "sounds": [
+      "erosion:ore_mine"
+    ],
+    "subtitle": "Ore Mining"
+  }
+}

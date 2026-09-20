@@ -49,6 +49,7 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
+import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
 import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
@@ -255,6 +256,7 @@ public class ErosionRegistry
 
         //SOUND EVENTS
         public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Ore Mining");
+        public static final IRawRegistry CRUCIBLE_MELTING = new IRawRegistry("crucible_melting", "Crucible Melting");
     }
 
     public static class ErosionRenderingElements
@@ -325,6 +327,13 @@ public class ErosionRegistry
                 )
             )
         );
+        public static final Supplier<SoundEvent> CRUCIBLE_MELTING = SOUND_EVENTS.register(
+            RawRegistry.CRUCIBLE_MELTING.getId(), () -> SoundEvent.createVariableRangeEvent(
+                ResourceLocation.fromNamespaceAndPath(
+                    Erosion.MODID, RawRegistry.CRUCIBLE_MELTING.getId()
+                )
+            )
+        );
     }
 
     public static class SoundTypes
@@ -334,7 +343,7 @@ public class ErosionRegistry
             SoundType.DEEPSLATE.getBreakSound(),
             SoundType.DEEPSLATE.getStepSound(),
             SoundType.DEEPSLATE.getPlaceSound(),
-            ErosionRegistry.SoundEvents.ORE_MINE.get(),
+            SoundType.DEEPSLATE.getHitSound(),//ErosionRegistry.SoundEvents.ORE_MINE.get(),
             SoundType.DEEPSLATE.getFallSound()
         );
     }

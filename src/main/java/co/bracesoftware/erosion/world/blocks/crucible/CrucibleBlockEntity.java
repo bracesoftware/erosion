@@ -17,6 +17,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.ReloadableServerRegistries.Holder;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Containers;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
@@ -74,6 +75,7 @@ public class CrucibleBlockEntity extends BlockEntity
 
         if(be.working)
         {
+            level.playSound(null, pos, ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(), SoundSource.BLOCKS);
             if(ErosionConfig.CRUCIBLE_SECONDS < 1)
             {
                 throw new ErosionCrucibleException("Invalid `ErosionConfig.CRUCIBLE_SECONDS` value; must be 1 or bigger.");
