@@ -68,11 +68,15 @@ public class ErosionClient
                 return MAPPING.getOrDefault(c, WHITE);
             }
         }
+
         private static class DisplayEntry
         {
+            public static final int OFFSET_RANGE = 15;
+
             final String text;
             final long time;
             final Color color;
+            int offset = OFFSET_RANGE;
 
             DisplayEntry(String t, Color c)
             {
@@ -149,13 +153,18 @@ public class ErosionClient
                     if(age > DISPLAY_TIME_MS - START_FADE_AT_REMAINING)
                     {
                         a = (DISPLAY_TIME_MS - age) / (float) START_FADE_AT_REMAINING;
+                        if(age % 15 == 0)
+                        {
+                            --msg.offset;
+                        }
                     }
                     a = Mth.clamp(a, 0f, 1f);
                     int col = ((int) (a * 255) << 24) | msg.color.getColor();
 
                     int w = mc.font.width(msg.text);
-                    int x = cx - (w / 2);
+                    int x = cx - (w / 2) - msg.offset;
                     int y = start + (i * 11);
+                    if(!(msg.offset <= 0)) --msg.offset;
 
                     gg.drawString(mc.font, msg.text, x, y, col, true);
                 }
