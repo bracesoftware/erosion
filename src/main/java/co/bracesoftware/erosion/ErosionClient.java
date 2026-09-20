@@ -153,7 +153,7 @@ public class ErosionClient
                     if(age > DISPLAY_TIME_MS - START_FADE_AT_REMAINING)
                     {
                         a = (DISPLAY_TIME_MS - age) / (float) START_FADE_AT_REMAINING;
-                        if(DISPLAY_TIME_MS - age <= DisplayEntry.OFFSET_RANGE)
+                        if((age % (DisplayEntry.OFFSET_RANGE / 3)) == 0)
                         {
                             --msg.offset;
                         }
