@@ -71,6 +71,8 @@ public class ErosionClient
 
         private static class DisplayEntry
         {
+            public static final long DISPLAY_TIME_MS = 4000;
+            public static final int START_FADE_AT_REMAINING = 500;
             public static final int OFFSET_RANGE = 15;
 
             final String text;
@@ -104,8 +106,6 @@ public class ErosionClient
         }
 
         private static final List<DisplayEntry> MESSAGES = new ArrayList<>();
-        public static final long DISPLAY_TIME_MS = 4000;
-        public static final int START_FADE_AT_REMAINING = 500;
 
         public static void addMessage(String t, Color col)
         {
@@ -137,7 +137,7 @@ public class ErosionClient
                 while(it.hasNext())
                 {
                     var entry = it.next();
-                    if(now - entry.time > DISPLAY_TIME_MS)
+                    if(now - entry.time > DisplayEntry.DISPLAY_TIME_MS)
                     {
                         it.remove();
                     }
@@ -152,9 +152,9 @@ public class ErosionClient
                     var msg = MESSAGES.get(i);
                     long age = now - msg.time;
                     float a = 1.0f;
-                    if(age > DISPLAY_TIME_MS - START_FADE_AT_REMAINING)
+                    if(age > DisplayEntry.DISPLAY_TIME_MS - DisplayEntry.START_FADE_AT_REMAINING)
                     {
-                        a = (DISPLAY_TIME_MS - age) / (float) START_FADE_AT_REMAINING;
+                        a = (DisplayEntry.DISPLAY_TIME_MS - age) / (float) DisplayEntry.START_FADE_AT_REMAINING;
                         msg.fadeOut = true;
                     }
                     a = Mth.clamp(a, 0f, 1f);
@@ -164,7 +164,13 @@ public class ErosionClient
                     int x = cx - (w / 2) - msg.offset;
                     int y = start + (i * 11);
                     if(!(msg.offset <= 0)) --msg.offset;
-                    if(msg.fadeOut && (age % 2 == 0)) --msg.offset;
+                    if(msg.fadeOut)
+                    {
+                        long rt = DisplayEntry.DISPLAY_TIME_MS - age;
+                        float fop = 1f - ((float) rt / DisplayEntry.START_FADE_AT_REMAINING);
+                        fop = Mth.clamp(fop, 0f, 1f);
+                        msg.offset = DisplayEntry.OFFSET_RANGE * (int) (1f - fop);
+                    }
 
                     gg.drawString(mc.font, msg.text, x, y, col, true);
                 }
