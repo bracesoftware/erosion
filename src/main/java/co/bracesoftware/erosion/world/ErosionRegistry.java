@@ -340,11 +340,11 @@ public class ErosionRegistry
     {
         public static final SoundType ORE = new SoundType(
             1f,1f,
-            SoundType.DEEPSLATE.getBreakSound(),
-            SoundType.DEEPSLATE.getStepSound(),
-            SoundType.DEEPSLATE.getPlaceSound(),
             ErosionRegistry.SoundEvents.ORE_MINE.get(),
-            SoundType.DEEPSLATE.getFallSound()
+            SoundType.DEEPSLATE.getStepSound(),
+            SoundType.STONE.getPlaceSound(),
+            ErosionRegistry.SoundEvents.ORE_MINE.get(),
+            ErosionRegistry.SoundEvents.ORE_MINE.get()
         );
     }
 
