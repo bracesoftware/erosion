@@ -41,6 +41,8 @@ import java.util.List;
 
 import org.checkerframework.checker.units.qual.m;
 import org.jetbrains.annotations.Nullable;
+
+import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
@@ -110,8 +112,8 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
         this.callUseItemOnOnly(true);
     }
 
-    @Override
-    public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random)
+    @Override protected MapCodec<? extends ErosionNetworkSafeBaseEntityBlock> codec() { return simpleCodec(CrucibleBlock::new); }
+    @Override public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random)
     {
         boolean f = state.getValue(FINISHED);
         boolean w = state.getValue(WORKING);
@@ -169,76 +171,80 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
         return this.defaultBlockState().setValue(FACING, c.getHorizontalDirection().getOpposite());
     }
     @Override
-    public boolean serverUseItemOn(
-        ItemStack stack, BlockState state, ServerLevel level,
-        BlockPos pos, ServerPlayer player, InteractionHand hand,
-        BlockHitResult hitResult
-    )
+    public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
-        if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
+        if(p.getServerLevel().getBlockEntity(p.getBlockPos()) instanceof CrucibleBlockEntity be)
         {
             //dameg d playr if he touchin red hot shi
             if(be.working)
             {
                 ErosionUtils.displayMessage(
-                    player, "This is hot!",
+                    p.getServerPlayer(), "This is hot!",
                     ErosionScreenMessage.Color.DARK_RED
                 );
-                player.hurt(player.damageSources().generic(), 1f);
+                p.getServerPlayer().hurt(p.getServerPlayer().damageSources().generic(), 1f);
             
                 return true;
             }
             //if player is holding a catalyst item
-            if(CrucibleCatalyst.isItemCrucibleCatalyst(stack.getItem()))
+            if(CrucibleCatalyst.isItemCrucibleCatalyst(p.getItemStack().getItem()))
             {
                 //if clickin with catalyst on a crucible with an item,error msg
                 if(!be.storedItem.isEmpty())
                 {
                     ErosionUtils.displayMessage(
-                        player, "Crucible must be empty before applying a catalyst",
+                        p.getServerPlayer(), "Crucible must be empty before applying a catalyst",
                         ErosionScreenMessage.Color.RED
                     );
                     return true;
                 }
-                if(!be.catalyst.isEmpty() && be.catalyst.getItem() != stack.getItem())
+                if(!be.catalyst.isEmpty() && be.catalyst.getItem() != p.getItemStack().getItem())
                 {
                     ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
-                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), fuelStack);
+                    Containers.dropItemStack(p.getServerLevel(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), fuelStack);
                     be.catalyst = ItemStack.EMPTY;
                 }
 
                 if(be.catalyst.isEmpty())
                 {
-                    be.catalyst = stack.copyWithCount(1);
-                    stack.shrink(1);
+                    be.catalyst = p.getItemStack().copyWithCount(1);
+                    p.getItemStack().shrink(1);
                     
                     if(!be.finished && !be.working)
                     {
                         be.working = true;
-                        level.playSound(
-                            null,pos,
+                        p.getServerLevel().playSound(
+                            null,p.getBlockPos(),
                             ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(),
                             SoundSource.BLOCKS
                         );
                     }
                     
                     be.setChanged();
-                    level.getLightEngine().checkBlock(pos);
-                    level.setBlock(pos, state.setValue(FINISHED, be.finished).setValue(WORKING, be.working), Block.UPDATE_ALL);
-                    ErosionUtils.displayMessage(player, "Applied " + be.catalyst.getItem().getName(be.catalyst).getString());
+                    p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(),
+                        p.getBlockState()
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working), 
+                        Block.UPDATE_ALL
+                    );
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Applied " + be.catalyst.getItem().getName(be.catalyst).getString()
+                    );
                 }
                 return true;
             }
 
             //if empty hand ...
-            if(stack.isEmpty())
+            if(p.getItemStack().isEmpty())
             {
                 boolean logik = ((!be.working) && (be.finished));
 
                 if(logik && be.storedItem.isEmpty() && be.catalyst.isEmpty())
                 {
                     ErosionUtils.displayMessage(
-                        player, "The crucible is completely empty",
+                        p.getServerPlayer(), "The crucible is completely empty",
                         ErosionScreenMessage.Color.GRAY
                     );
                     return true;
@@ -247,22 +253,28 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                 if(logik && !be.storedItem.isEmpty())
                 {
                     ErosionUtils.displayMessage(
-                        player, "You got " + be.storedItem.getItem().getDescription().getString(),
+                        p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
                         ErosionScreenMessage.Color.DARK_AQUA
                     );
-                    player.getInventory().placeItemBackInInventory(be.storedItem);
+                    p.getServerPlayer().getInventory().placeItemBackInInventory(be.storedItem);
                     be.storedItem = ItemStack.EMPTY;
                     be.setChanged();
-                    level.getLightEngine().checkBlock(pos);
-                    level.setBlock(pos, state.setValue(FINISHED, be.finished).setValue(WORKING, be.working), Block.UPDATE_ALL);
+                    p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(),
+                        p.getBlockState()
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working),
+                        Block.UPDATE_ALL
+                    );
 
                     if(be.coproducts != null && !be.coproducts.isEmpty())
                     {
-                        ErosionUtils.displayMessage(player, "Crucible dropped coproduct(s)");
+                        ErosionUtils.displayMessage(p.getServerPlayer(), "Crucible dropped coproduct(s)");
                         for(var it : be.coproducts)
                         {
                             Containers.dropItemStack(
-                                level, pos.getX(), pos.getY(), pos.getZ(), it.copy()
+                                p.getServerLevel(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), it.copy()
                             );
                         }
                         be.coproducts = null;
@@ -273,21 +285,21 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                 if(logik && be.storedItem.isEmpty() && !be.catalyst.isEmpty())
                 {
                     ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
-                    Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), fuelStack);
+                    Containers.dropItemStack(p.getServerLevel(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), fuelStack);
                     be.catalyst = ItemStack.EMPTY;
-                    ErosionUtils.displayMessage(player, "Catalyst taken out");
+                    ErosionUtils.displayMessage(p.getServerPlayer(), "Catalyst taken out");
                 
                     return true;
                 }
             }
             
             //if holding a meltable item
-            if(ErosionCore.BlockEntityRecipes.Crucible.getRecipes().containsKey(stack.getItem()))
+            if(ErosionCore.BlockEntityRecipes.Crucible.getRecipes().containsKey(p.getItemStack().getItem()))
             {
                 if(!be.storedItem.isEmpty())
                 {
                     ErosionUtils.displayMessage(
-                        player, "Crucible must be empty before trying to melt anything",
+                        p.getServerPlayer(), "Crucible must be empty before trying to melt anything",
                         ErosionScreenMessage.Color.RED
                     );
                     return true;
@@ -295,19 +307,19 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                 if(be.catalyst.isEmpty())
                 {
                     ErosionUtils.displayMessage(
-                        player, "A catalyst has to be applied first",
+                        p.getServerPlayer(), "A catalyst has to be applied first",
                         ErosionScreenMessage.Color.YELLOW
                     );
                     return true;
                 }
                 var m = ErosionCore.BlockEntityRecipes.Crucible.getCatalysts();
-                if(m.containsKey(stack.getItem()))
+                if(m.containsKey(p.getItemStack().getItem()))
                 {
-                    List<Item> c = m.get(stack.getItem());
+                    List<Item> c = m.get(p.getItemStack().getItem());
                     if(!c.contains(be.catalyst.getItem()))
                     {
                         ErosionUtils.displayMessage(
-                            player, "The material isn't eligible for the applied catalyst",
+                            p.getServerPlayer(), "The material isn't eligible for the applied catalyst",
                             ErosionScreenMessage.Color.YELLOW
                         );
                         return true;
@@ -317,24 +329,27 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                 {
                     be.finished = false;
                     be.working = true;
-                    level.playSound(
-                        null,pos,
+                    p.getServerLevel().playSound(
+                        null,p.getBlockPos(),
                         ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(),
                         SoundSource.BLOCKS
                     );
 
-                    be.storedItem = stack.copyWithCount(1);
-                    stack.shrink(1);
+                    be.storedItem = p.getItemStack().copyWithCount(1);
+                    p.getItemStack().shrink(1);
 
                     be.setChanged();
-                    level.getLightEngine().checkBlock(pos);
-                    level.setBlock(
-                        pos,
-                        state.setValue(FINISHED, be.finished).
-                        setValue(WORKING, be.working),
+                    p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(),
+                        p.getBlockState()
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working),
                         Block.UPDATE_ALL
                     );
-                    ErosionUtils.displayMessage(player, "Melting " + be.storedItem.getItem().getName(be.storedItem).getString());
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Melting " + be.storedItem.getItem().getName(be.storedItem).getString()
+                    );
                 
                     return true;
                 }
@@ -342,11 +357,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
         }
 
         return false;
-    }
-
-    @Override
-    protected MapCodec<? extends ErosionNetworkSafeBaseEntityBlock> codec() {
-        return simpleCodec(CrucibleBlock::new);
     }
 
     @Override

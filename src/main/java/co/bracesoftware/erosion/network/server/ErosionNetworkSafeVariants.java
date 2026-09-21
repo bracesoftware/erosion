@@ -110,16 +110,49 @@ public class ErosionNetworkSafeVariants
             this.callUseItemOnOnlyFlag = cfg;
         }
         // ====================API===================== // 
-        public boolean serverUseItemOn(ItemStack is, BlockState bs, ServerLevel l, BlockPos bp, ServerPlayer p, InteractionHand hand, BlockHitResult hr)
+        public static final class ErosionBlockInteractionPacket
+        {
+            private final ItemStack itemStack;
+            private final BlockState blockState;
+            private final ServerLevel serverLevel;
+            private final BlockPos blockPos;
+            private final ServerPlayer serverPlayer;
+            private final InteractionHand interactionHand;
+            private final BlockHitResult blockHitResult;
+
+            public ErosionBlockInteractionPacket(
+                ItemStack is, BlockState bs, ServerLevel l, BlockPos bp,
+                ServerPlayer p, InteractionHand hand, BlockHitResult hr
+            )
+            {
+                this.itemStack = is;
+                this.blockState = bs;
+                this.serverLevel = l;
+                this.blockPos = bp;
+                this.serverPlayer = p;
+                this.interactionHand = hand;
+                this.blockHitResult = hr;
+            }
+
+            public ItemStack getItemStack() { return this.itemStack; }
+            public BlockState getBlockState() { return this.blockState; }
+            public ServerLevel getServerLevel() { return this.serverLevel; }
+            public BlockPos getBlockPos() { return this.blockPos; }
+            public ServerPlayer getServerPlayer() { return this.serverPlayer; }
+            public InteractionHand getInteractionHand() { return this.interactionHand; }
+            public BlockHitResult getBlockHitResult() { return this.blockHitResult; }
+        }
+
+        public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
         {
             return false;
         }
-        public boolean serverUseWithoutItem(BlockState bs, ServerLevel l, BlockPos bp, ServerPlayer p, BlockHitResult hr)
+        public boolean serverUseWithoutItem(ErosionBlockInteractionPacket p)
         {
             return false;
         }
 
-        public void onInteractionFail(BlockState bs, ServerLevel l, BlockPos bp, ServerPlayer p)
+        public void onInteractionFail(ErosionBlockInteractionPacket p)
         {
             return;
         }
@@ -146,12 +179,18 @@ public class ErosionNetworkSafeVariants
                 var l = (ServerLevel) leva;
                 boolean result = false;
 
-                if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.serverUseWithoutItem(bs,l,bp,p,hr);
-                else result = this.serverUseItemOn(stack, bs, l,bp, p, hand, hr);
+                if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.serverUseWithoutItem(new ErosionBlockInteractionPacket(
+                    null, bs, l, bp, p, null, hr
+                ));
+                else result = this.serverUseItemOn(new ErosionBlockInteractionPacket(
+                    stack, bs, l, bp, p, hand, hr
+                ));
                 
                 if(!result)
                 {
-                    this.onInteractionFail(bs, l, bp, p);
+                    this.onInteractionFail(new ErosionBlockInteractionPacket(
+                        null, bs, l, bp, p, null, null
+                    ));
                 }
             }
             //super.useItemOn(stack, s, l, bp, p, hand, hr);

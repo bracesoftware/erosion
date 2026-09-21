@@ -61,27 +61,23 @@ public class ChemicalReactorScrubberBlock extends ErosionNetworkSafeBlock implem
         );
     }
 
-    @Override public boolean serverUseItemOn(
-        ItemStack stack, BlockState state, ServerLevel level,
-        BlockPos pos, ServerPlayer p, InteractionHand hand,
-        BlockHitResult hitResult
-    )
+    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
-        var it = stack.getItem();
-        int dur = state.getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
+        var it = p.getItemStack().getItem();
+        int dur = p.getBlockState().getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
         if(it == ErosionRegistry.Items.GAS_FILTER.get())
         {
             if(dur > 0)
             {
                 ErosionUtils.displayMessage(
-                    p, "Filter in the scrubber is not yet worn out",
+                    p.getServerPlayer(), "Filter in the scrubber is not yet worn out",
                     ErosionScreenMessage.Color.RED
                 );
                 return false;
             }
-            stack.shrink(1);
-            var ns = state.setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, 100);
-            level.setBlock(pos, ns, Block.UPDATE_ALL);
+            p.getItemStack().shrink(1);
+            var ns = p.getBlockState().setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, 100);
+            p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
             return true;
         }
         return false;

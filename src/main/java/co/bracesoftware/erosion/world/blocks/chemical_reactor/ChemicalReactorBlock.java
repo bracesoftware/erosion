@@ -1,5 +1,7 @@
 package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
+import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
@@ -23,16 +25,22 @@ public class ChemicalReactorBlock extends ErosionNetworkSafeBlock implements IEr
         super(p);
     }
 
-    @Override public boolean serverUseWithoutItem(
-        BlockState bs, ServerLevel l, BlockPos bp,
-        ServerPlayer p, BlockHitResult hr
-    )
+    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
-        p.openMenu(
+        ErosionUtils.displayMessage(
+            p.getServerPlayer(), "You must be empty-handed to use the reactor",
+            ErosionScreenMessage.Color.RED
+        );
+        return true;
+    }
+
+    @Override public boolean serverUseWithoutItem(ErosionBlockInteractionPacket p)
+    {
+        p.getServerPlayer().openMenu(
             new SimpleMenuProvider(
-                (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, bp),
+                (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, p.getBlockPos()),
                 Component.literal("Chemical Reactor")
-            ), a -> a.writeBlockPos(bp)
+            ), a -> a.writeBlockPos(p.getBlockPos())
         );
         return true;
     }
