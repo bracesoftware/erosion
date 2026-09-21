@@ -99,9 +99,15 @@ public class ErosionNetworkSafeVariants
 
     public static abstract class ErosionNetworkSafeBlock extends Block
     {
+        private boolean callUseItemOnOnlyFlag = false;
         public ErosionNetworkSafeBlock(Block.Properties p)
         {
             super(p);
+        }
+
+        public final void callUseItemOnOnly(boolean cfg)
+        {
+            this.callUseItemOnOnlyFlag = cfg;
         }
         // ====================API===================== // 
         public boolean serverUseItemOn(ItemStack is, BlockState bs, ServerLevel l, BlockPos bp, ServerPlayer p, InteractionHand hand, BlockHitResult hr)
@@ -140,7 +146,7 @@ public class ErosionNetworkSafeVariants
                 var l = (ServerLevel) leva;
                 boolean result = false;
 
-                if(stack.isEmpty()) result = this.serverUseWithoutItem(bs,l,bp,p,hr);
+                if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.serverUseWithoutItem(bs,l,bp,p,hr);
                 else result = this.serverUseItemOn(stack, bs, l,bp, p, hand, hr);
                 
                 if(!result)

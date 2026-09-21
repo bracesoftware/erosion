@@ -107,6 +107,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
             .setValue(WORKING, false)
             .setValue(HEAT, 0)
         );
+        this.callUseItemOnOnly(true);
     }
 
     @Override
@@ -176,7 +177,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
     {
         if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
         {
-
             //dameg d playr if he touchin red hot shi
             if(be.working)
             {
@@ -233,7 +233,8 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
             //if empty hand ...
             if(stack.isEmpty())
             {
-                boolean logik = !be.working && be.finished;
+                boolean logik = ((!be.working) && (be.finished));
+
                 if(logik && be.storedItem.isEmpty() && be.catalyst.isEmpty())
                 {
                     ErosionUtils.displayMessage(
