@@ -1,11 +1,11 @@
 {
-  "parent": "erosion:chemical_reactor",
+  "parent": "erosion:chemical_reactor_scrubber",
   "criteria": {
     "has_item": {
       "conditions": {
         "items": [
           {
-            "items": "erosion:chemical_reactor_scrubber"
+            "items": "erosion:gas_filter"
           }
         ]
       },
@@ -13,12 +13,12 @@
     }
   },
   "display": {
-    "description": "Acquire a Chemical Reactor Scrubber.",
+    "description": "Acquire a Gas Filter.",
     "icon": {
       "count": 1,
-      "id": "erosion:chemical_reactor_scrubber"
+      "id": "erosion:gas_filter"
     },
-    "title": "Better than a Gas Mask?"
+    "title": "Gotta have a supply of this..."
   },
   "requirements": [
     [

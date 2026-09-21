@@ -134,7 +134,7 @@ public class ErosionNetworkSafeVariants
                 boolean result = this.serverUseItemOn(stack, s, (ServerLevel) l,bp, (ServerPlayer) p, hand, hr);
                 return booleanToInteractionResult(ItemInteractionResult.class, result);
             }
-            return super.useItemOn(stack, s, l, bp, p, hand, hr);
+            return ItemInteractionResult.SUCCESS;//super.useItemOn(stack, s, l, bp, p, hand, hr);
         }
 
         @Override protected final InteractionResult useWithoutItem(
@@ -147,7 +147,7 @@ public class ErosionNetworkSafeVariants
                 boolean result = this.serverUseWithoutItem(bs,(ServerLevel) l,bp,(ServerPlayer) p, hr);
                 return booleanToInteractionResult(InteractionResult.class, result);
             }
-            return super.useWithoutItem(bs, l, bp, p, hr);
+            return InteractionResult.SUCCESS;//super.useWithoutItem(bs, l, bp, p, hr);
         }
     }
 }

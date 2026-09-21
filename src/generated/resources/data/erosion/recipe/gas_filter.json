@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "A": {
+      "item": "minecraft:item_frame"
+    },
+    "C": {
+      "item": "minecraft:charcoal"
+    },
+    "P": {
+      "item": "minecraft:paper"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "CAC",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "erosion:gas_filter"
+  }
+}
