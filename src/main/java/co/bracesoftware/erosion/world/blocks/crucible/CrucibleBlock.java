@@ -38,6 +38,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import java.util.List;
+
+import org.checkerframework.checker.units.qual.m;
 import org.jetbrains.annotations.Nullable;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
@@ -174,7 +176,8 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
     {
         if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
         {
-            //if player is holding a catalyst item
+
+            //dameg d playr if he touchin red hot shi
             if(be.working)
             {
                 ErosionUtils.displayMessage(
@@ -185,12 +188,16 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
             
                 return true;
             }
+            //if player is holding a catalyst item
             if(CrucibleCatalyst.isItemCrucibleCatalyst(stack.getItem()))
             {
                 //if clickin with catalyst on a crucible with an item,error msg
                 if(!be.storedItem.isEmpty())
                 {
-                    ErosionUtils.displayMessage(player, "Crucible must be empty before applying a catalyst");
+                    ErosionUtils.displayMessage(
+                        player, "Crucible must be empty before applying a catalyst",
+                        ErosionScreenMessage.Color.RED
+                    );
                     return true;
                 }
                 if(!be.catalyst.isEmpty() && be.catalyst.getItem() != stack.getItem())
@@ -226,8 +233,17 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
             //if empty hand ...
             if(stack.isEmpty())
             {
+                boolean logik = !be.working && be.finished;
+                if(logik && be.storedItem.isEmpty() && be.catalyst.isEmpty())
+                {
+                    ErosionUtils.displayMessage(
+                        player, "The crucible is completely empty",
+                        ErosionScreenMessage.Color.GRAY
+                    );
+                    return true;
+                }
                 //if crucible is done, get the product
-                if(!be.working && be.finished && !be.storedItem.isEmpty())
+                if(logik && !be.storedItem.isEmpty())
                 {
                     ErosionUtils.displayMessage(
                         player, "You got " + be.storedItem.getItem().getDescription().getString(),
@@ -253,7 +269,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                     return true; //i want the hand anim bruv
                 }
                 //if crucible isn't working and is finished then take the catalyst out
-                if(!be.working && be.finished && be.storedItem.isEmpty() && !be.catalyst.isEmpty())
+                if(logik && be.storedItem.isEmpty() && !be.catalyst.isEmpty())
                 {
                     ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), fuelStack);
@@ -267,9 +283,20 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
             //if holding a meltable item
             if(ErosionCore.BlockEntityRecipes.Crucible.getRecipes().containsKey(stack.getItem()))
             {
+                if(!be.storedItem.isEmpty())
+                {
+                    ErosionUtils.displayMessage(
+                        player, "Crucible must be empty before trying to melt anything",
+                        ErosionScreenMessage.Color.RED
+                    );
+                    return true;
+                }
                 if(be.catalyst.isEmpty())
                 {
-                    ErosionUtils.displayMessage(player, "A catalyst has to be applied first.");
+                    ErosionUtils.displayMessage(
+                        player, "A catalyst has to be applied first",
+                        ErosionScreenMessage.Color.YELLOW
+                    );
                     return true;
                 }
                 var m = ErosionCore.BlockEntityRecipes.Crucible.getCatalysts();
@@ -278,7 +305,10 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
                     List<Item> c = m.get(stack.getItem());
                     if(!c.contains(be.catalyst.getItem()))
                     {
-                        ErosionUtils.displayMessage(player, "The material isn't eligible for the applied catalyst");
+                        ErosionUtils.displayMessage(
+                            player, "The material isn't eligible for the applied catalyst",
+                            ErosionScreenMessage.Color.YELLOW
+                        );
                         return true;
                     }
                 }

@@ -138,7 +138,11 @@ public class ErosionNetworkSafeVariants
             {
                 var p = (ServerPlayer) playa;
                 var l = (ServerLevel) leva;
-                boolean result = this.serverUseItemOn(stack, bs, l,bp, p, hand, hr);
+                boolean result = false;
+
+                if(stack.isEmpty()) result = this.serverUseWithoutItem(bs,l,bp,p,hr);
+                else result = this.serverUseItemOn(stack, bs, l,bp, p, hand, hr);
+                
                 if(!result)
                 {
                     this.onInteractionFail(bs, l, bp, p);
@@ -147,7 +151,7 @@ public class ErosionNetworkSafeVariants
             //super.useItemOn(stack, s, l, bp, p, hand, hr);
             return ItemInteractionResult.SUCCESS;
         }
-
+        /* 
         @Override protected final InteractionResult useWithoutItem(
             BlockState bs, Level leva, BlockPos bp,
             Player playa, BlockHitResult hr
@@ -166,5 +170,6 @@ public class ErosionNetworkSafeVariants
             //super.useWithoutItem(bs, l, bp, p, hr);
             return InteractionResult.SUCCESS;
         }
+        */
     }
 }
