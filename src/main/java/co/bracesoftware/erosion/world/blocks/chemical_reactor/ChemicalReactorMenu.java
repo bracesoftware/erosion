@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
@@ -24,7 +25,7 @@ import net.minecraft.world.item.Items;
 
 public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosionChemicalReactorSystemComponent
 {
-    public List<GasType> gasesToBeEmitted;
+    private List<GasType> gasesToBeEmitted;
     public Player player;
     public BlockPos position;
 
@@ -147,7 +148,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         if(this.player.level().isClientSide()) return;
 
         super.slotsChanged(c);
-        if(c == this.reactants)
+        if(c == this.reactants && this.products.isEmpty())
         {
             scanRecipez();
         }
@@ -162,6 +163,13 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
             {
                 this.fillContainer(products, cr.getProducts());
                 this.gasesToBeEmitted = cr.getGasCoproducts();
+                this.handleGasEmission();
+                
+                for(int i = 0; i < this.reactants.getContainerSize(); i++)
+                {
+                    var is = this.reactants.getItem(i);
+                    if(!is.isEmpty()) is.shrink(1);
+                }
                 return;
             }
         }
@@ -171,23 +179,17 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
 
     private void onProductTaken()
     {
-        for(int i = 0; i < this.reactants.getContainerSize(); i++)
+        if(ErosionUtils.Misc.randomWithChanceToBe(true, this.reactants.getContainerSize()))
         {
-            ItemStack stack = this.reactants.getItem(i);
-            if(!stack.isEmpty())
-            {
-                stack.shrink(1);
-                this.handleGasEmission();
-            }
+            this.handleGasEmission();
         }
-
-        if(this.products.isEmpty()) scanRecipez();
         return;
     }
 
     public void handleGasEmission()
     {
         if(this.gasesToBeEmitted == null) return;
+        if(this.gasesToBeEmitted.isEmpty()) return;
         for(var g : this.gasesToBeEmitted)
         {
             var l = (ServerLevel) this.player.level();
@@ -247,11 +249,9 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
     @Override 
     public void removed(Player p)
     {
-        if(this.reactants.isEmpty() && !this.products.isEmpty())
-        {
-            this.clearContainer(p, this.products);
-        }
-        else this.clearContainer(p, this.reactants);
+        super.removed(p);
+        this.clearContainer(p, this.products);
+        this.clearContainer(p, this.reactants);
         return;
     }
 }
