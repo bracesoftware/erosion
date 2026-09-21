@@ -1,5 +1,7 @@
 package co.bracesoftware.erosion.network.server;
 
+import java.util.function.Supplier;
+
 import javax.annotation.Nullable;
 
 import org.checkerframework.checker.units.qual.A;
@@ -58,8 +60,11 @@ public class ErosionNetworkSafeVariants
     }
     public static abstract class ErosionNetworkSafeBaseEntityBlock extends ErosionNetworkSafeBlock implements EntityBlock
     {
-        public final BlockEntityType<? extends ErosionNetworkSafeBlockEntity> networkSafeBlockEntityType;
-        public ErosionNetworkSafeBaseEntityBlock(Block.Properties p, BlockEntityType<? extends ErosionNetworkSafeBlockEntity> t)
+        public final Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> networkSafeBlockEntityType;
+        public ErosionNetworkSafeBaseEntityBlock(
+            Block.Properties p, 
+            Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> t
+        )
         {
             super(p);
             this.networkSafeBlockEntityType = t;
@@ -70,7 +75,7 @@ public class ErosionNetworkSafeVariants
         public final <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState s, BlockEntityType<T> type)
         {
             return level.isClientSide() ? null : createTickerHelper(
-                type, this.networkSafeBlockEntityType, ErosionNetworkSafeBlockEntity::tick
+                type, this.networkSafeBlockEntityType.get(), ErosionNetworkSafeBlockEntity::tick
             );
         }
 

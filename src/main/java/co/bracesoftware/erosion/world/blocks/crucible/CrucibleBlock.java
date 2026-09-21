@@ -95,7 +95,9 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
 
     public CrucibleBlock(Properties p)
     {
-        super(p.lightLevel(s -> s.getValue(WORKING) ? 10 : 0), ErosionRegistry.BlockEntities.CRUCIBLE.get());
+        super(p.lightLevel(s -> s.getValue(WORKING) ? 10 : 0), () -> (
+            BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>
+        ) ErosionRegistry.BlockEntities.CRUCIBLE.get());
         this.registerDefaultState(
             this.stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
