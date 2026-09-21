@@ -1804,6 +1804,10 @@ public class ErosionCore
                 Component.literal("- Automatically regulates the internal pressure and thermal thresholds required for the reaction to occur.")
                 .withStyle(ChatFormatting.GRAY)
             );
+            desc.add(
+                Component.literal("- The top must not be blocked by another block.")
+                .withStyle(ChatFormatting.DARK_AQUA)
+            );
         }
         else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get())
         {
@@ -1812,7 +1816,31 @@ public class ErosionCore
                 .withStyle(ChatFormatting.DARK_PURPLE)
             );
             desc.add(
-                Component.literal("- Must be placed horizontally adjacent to a " + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName() + " to establish a functional exhaust link.")
+                Component.literal(
+                    "- Must be placed horizontally adjacent to a " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName() + " or " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() +
+                    " to establish a functional exhaust link.")
+                .withStyle(ChatFormatting.GRAY)
+            );
+            desc.add(
+                Component.literal("- The top must not be blocked by another block.")
+                .withStyle(ChatFormatting.DARK_AQUA)
+            );
+        }
+        else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get())
+        {
+            desc.add(
+                Component.literal("An universal connection module used to connect a reactor with its components.")
+                .withStyle(ChatFormatting.DARK_PURPLE)
+            );
+            desc.add(
+                Component.literal(
+                    "- Can be connected to: " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() + "," +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName() + "," +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName()
+                )
                 .withStyle(ChatFormatting.GRAY)
             );
         }

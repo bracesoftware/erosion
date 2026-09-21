@@ -48,6 +48,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
@@ -206,8 +207,10 @@ public class ErosionRegistry
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
+
         public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
         public static final IRawRegistry CHEMICAL_REACTOR_SCRUBBER = new IRawRegistry("chemical_reactor_scrubber", "Chemical Reactor Scrubber");
+        public static final IRawRegistry CHEMICAL_REACTOR_MODULE = new IRawRegistry("chemical_reactor_module", "Chemical Reactor Module");
 
         //MANUAL ADVANCEMENTS
         public static class ManualAdvancements
@@ -395,7 +398,7 @@ public class ErosionRegistry
                 .requiresCorrectToolForDrops()
             )
         );
-
+        //======================= CHEMICAL REACTOR SYS
         public static final DeferredBlock<Block> CHEMICAL_REACTOR = BLOCKS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new ChemicalReactorBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
@@ -408,7 +411,13 @@ public class ErosionRegistry
                 .requiresCorrectToolForDrops()
             )
         );
-
+        public static final DeferredBlock<Block> CHEMICAL_REACTOR_MODULE = BLOCKS.register(
+            RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), () -> new ChemicalReactorModuleBlock(
+                BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
+                .requiresCorrectToolForDrops()
+            )
+        );
+        //----------------------------------------------
         //SIMPLE BLOCKS
         public static final DeferredBlock<Block> DRIED_DIRT = BLOCKS.register(
             ErosionRegistry.RawRegistry.DRIED_DIRT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
@@ -614,6 +623,7 @@ public class ErosionRegistry
                 Blocks.CRUCIBLE.get(), new Item.Properties()
             )
         );
+        //------------------------------------------------------
         public static final DeferredItem<Item> CHEMICAL_REACTOR = ITEMS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR.get(), new Item.Properties()
@@ -624,7 +634,12 @@ public class ErosionRegistry
                 Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), new Item.Properties()
             )
         );
-
+        public static final DeferredItem<Item> CHEMICAL_REACTOR_MODULE = ITEMS.register(
+            RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), () -> new BlockItem(
+                Blocks.CHEMICAL_REACTOR_MODULE.get(), new Item.Properties()
+            )
+        );
+        //-------------------------------------------------------
         //COOL ITEMS
         public static final DeferredItem<Item> GAS_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
             RawRegistry.GAS_MASK.getId(), ErosionSimpleItems.GasMask.Quality.HIGH
@@ -894,6 +909,12 @@ public class ErosionRegistry
                 ErosionRegistry.Blocks.CRUCIBLE.get()
             ).build(null)
         );
+        public static final Supplier<BlockEntityType<ChemicalReactorBlockEntity>> CHEMICAL_REACTOR = BLOCK_ENTITY_TYPES.register(
+            RawRegistry.CHEMICAL_REACTOR.getId(), () -> BlockEntityType.Builder.of(
+                ChemicalReactorBlockEntity::new,
+                ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
+            ).build(null)
+        );
     }
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EROSION_TAB = CREATIVE_MODE_TABS.register(
@@ -972,6 +993,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.CRUCIBLE.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get());
             output.accept(ErosionRegistry.Items.BASIC_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_FILTER.get());

@@ -22,6 +22,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ErosionUtils
 {
+    public record ErosionPair<A, B>(A first, B second) {}
     public static void Log(String text)
     {
         System.out.println("\n\t{" + Erosion.MODNAME + "} :: System: " + text);

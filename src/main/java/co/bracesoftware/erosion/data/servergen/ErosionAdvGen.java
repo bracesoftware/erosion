@@ -136,12 +136,21 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(),
                 reactor
             );
+        
             var gas_filter = ErosionAdvancement.generateAdvancement(
                 this, "Gotta have a supply of this...",
                 "Acquire a Gas Filter.",
                 ErosionRegistry.Items.GAS_FILTER.get(),
                 ErosionRegistry.RawRegistry.GAS_FILTER.getId(),
                 reactor_scrubber
+            );
+
+            var reactor_module = ErosionAdvancement.generateAdvancement(
+                this, "Expanding the Empire!",
+                "Acquire a Chemical Reactor Module.",
+                ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get(),
+                ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(),
+                reactor
             );
             return;
         }

@@ -72,6 +72,17 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .save(output);
 
         ShapedRecipeBuilder.shaped(
+            RecipeCategory.REDSTONE, ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get()
+        ).pattern("III")
+        .pattern("ORO")
+        .pattern("III")
+        .define('I', Items.IRON_INGOT)
+        .define('R', Items.REDSTONE)
+        .define('O', Items.OBSIDIAN)
+        .unlockedBy("has_redstone", has(Items.REDSTONE))
+        .save(output);
+
+        ShapedRecipeBuilder.shaped(
             RecipeCategory.BREWING, ErosionRegistry.Items.GAS_FILTER.get()
         ).pattern("PPP")
         .pattern("CAC")

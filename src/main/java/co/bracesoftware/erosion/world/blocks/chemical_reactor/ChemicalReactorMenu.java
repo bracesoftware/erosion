@@ -8,6 +8,7 @@ import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import net.minecraft.core.BlockPos;
@@ -193,11 +194,14 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         for(var g : this.gasesToBeEmitted)
         {
             var l = (ServerLevel) this.player.level();
-            if(!ChemicalReactorBlock.isFunctionalScrubberPresent(l, position))
+            var result = ChemicalReactorBlock.getNearestChemicalReactorMultiBlockComponent(
+                l, this.position, ChemicalReactorScrubberBlock.class
+            );
+            if(!result.first())
             {
                 Gas.createGas(l, this.position, g);
             }
-            else ChemicalReactorBlock.damageScrubberFilter(l, position);
+            else ChemicalReactorBlock.damageScrubberFilter(l, result.second());
         }
         return;
     }

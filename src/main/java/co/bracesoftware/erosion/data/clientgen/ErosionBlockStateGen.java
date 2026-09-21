@@ -389,6 +389,19 @@ public class ErosionBlockStateGen extends BlockStateProvider
         );
         simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
         simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
+
+        //CHEMICAL REACTOR MODULE
+        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
+
+        side = modLoc("block/" + BLOCKID + "_side");
+        bottom = modLoc("block/" + BLOCKID + "_bottom");
+        top = modLoc("block/" + BLOCKID + "_top");
+
+        crm = models().cubeBottomTop(
+            BLOCKID, side, bottom, top
+        );
+        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
+        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
         return;
     }
 
