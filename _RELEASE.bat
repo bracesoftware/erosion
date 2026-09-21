@@ -1,3 +1,4 @@
+call _PUSHCHANGES
 set repo="bracesoftware/erosion"
 set buildver=7
 gh release delete build%buildver% -y -R %repo% --cleanup-tag
