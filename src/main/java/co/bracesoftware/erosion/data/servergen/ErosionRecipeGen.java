@@ -59,12 +59,15 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
 
         ShapedRecipeBuilder.shaped(
             RecipeCategory.REDSTONE, ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
-        ).pattern("I I")
-        .pattern("RFR")
-        .pattern("III")
+        ).pattern("IHI")
+        .pattern("FRC")
+        .pattern("WHW")
         .define('I', Items.IRON_INGOT)
         .define('R', Items.REDSTONE)
         .define('F', Items.FURNACE)
+        .define('W', Items.STONE_BRICKS)
+        .define('H', Items.HOPPER)
+        .define('C', Items.CHEST)
         .unlockedBy("has_redstone", has(Items.REDSTONE))
         .save(output);
 

@@ -150,65 +150,65 @@ public class ErosionBlockStateGen extends BlockStateProvider
             String texturePath = (i == 0) ? ("block/" + BLOCKID) : ("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_heat_" + i);
 
             heatModels[i] = models().withExistingParent(modelName, mcLoc("block/block"))
-                .texture("particle", modLoc(texturePath))
-                .texture("texture", modLoc(texturePath))
-                
-                // down
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_BOTTOM_FROM, CrucibleBlock.MIN_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_BOTTOM_TO, CrucibleBlock.MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
+            .texture("particle", modLoc(texturePath))
+            .texture("texture", modLoc(texturePath))
 
-                //walls
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.MIN_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MIN_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MAX_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
-                    .to(CrucibleBlock.INNER_MIN_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.INNER_MAX_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                // edges
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.MIN_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MIN_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MAX_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
-                    .to(CrucibleBlock.RIM_MIN_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end()
-                    
-                .element()
-                    .from(CrucibleBlock.RIM_MAX_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
-                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
-                    .allFaces((direction, builder) -> builder.texture("#texture"))
-                    .end();
+            // down
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_BOTTOM_FROM, CrucibleBlock.MIN_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_BOTTOM_TO, CrucibleBlock.MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            //walls
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.MIN_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MIN_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MAX_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
+            .to(CrucibleBlock.INNER_MIN_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.INNER_MAX_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            // edges
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.MIN_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MIN_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MAX_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
+            .to(CrucibleBlock.RIM_MIN_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end()
+
+            .element()
+            .from(CrucibleBlock.RIM_MAX_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
+            .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
+            .allFaces((direction, builder) -> builder.texture("#texture"))
+            .end();
         }
 
         getVariantBuilder(crucible).forAllStates(state -> {
