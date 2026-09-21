@@ -50,7 +50,7 @@ public class ErosionSimpleBlocks
 {
     public interface IErosionBlockWithTip
     {
-        default void onBlockAimedOn(ServerPlayer p, BlockState s) throws ErosionBlockWithTipImpl
+        default void onBlockAimedOn(ServerPlayer p, BlockState bs, BlockPos bp) throws ErosionBlockWithTipImpl
         {
             throw new ErosionBlockWithTipImpl("Class implements `ErosionBlockWithTip` but does not define the `onBlockAimedOn` method!");
         }

@@ -90,7 +90,7 @@ public class MaterialPurifierBlock extends ErosionNetworkSafeBaseEntityBlock<Mat
                 double zSpeed = 0.0D;
 
                 level.addParticle(
-                    ParticleTypes.CAMPFIRE_COSY_SMOKE, 
+                    ParticleTypes.CAMPFIRE_COSY_SMOKE,
                     x, y, z, 
                     xSpeed, ySpeed, zSpeed
                 );

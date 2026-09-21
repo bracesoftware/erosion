@@ -27,7 +27,7 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         "filter_durability", 0, 100
     );
     // ================================================== //
-    @Override public void onBlockAimedOn(ServerPlayer p, BlockState s)
+    @Override public void onBlockAimedOn(ServerPlayer p, BlockState s, BlockPos pos)
     {
         var ggwp = ErosionRegistry.RawRegistry.GAS_FILTER.getName();
         int d = s.getValue(FILTER_DURABILITY);

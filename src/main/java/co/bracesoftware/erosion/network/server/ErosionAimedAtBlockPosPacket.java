@@ -33,10 +33,11 @@ public record ErosionAimedAtBlockPosPacket(
             if(c.player() instanceof ServerPlayer p)
             {
                 var l = p.serverLevel();
-                var s = l.getBlockState(BlockPos.of(d.pos));
+                var pozz = BlockPos.of(d.pos);
+                var s = l.getBlockState(pozz);
                 if(s.getBlock() instanceof IErosionBlockWithTip b)
                 {
-                    b.onBlockAimedOn(p, s);
+                    b.onBlockAimedOn(p, s, pozz);
                 }
             }    
         });

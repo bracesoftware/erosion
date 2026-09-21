@@ -13,6 +13,14 @@ public class ChemicalReactorSystemCore
     {
         default public boolean isInMultiBlockSystem(LevelReader l, BlockPos bp)
         {
+            //module block can live anywhere
+            if(this instanceof ChemicalReactorModuleBlock)
+            {
+                return true;
+            }
+
+
+            //if it is smth else, it has to have air on top
             if(!(this instanceof ChemicalReactorModuleBlock))
             {
                 if(!(l.getBlockState(bp.relative(Direction.UP)).isAir()))
@@ -21,11 +29,8 @@ public class ChemicalReactorSystemCore
                 }
             }
 
-            var dd = (this instanceof ChemicalReactorModuleBlock)
-            ? Direction.values()
-            : new Direction[] { Direction.NORTH, Direction.SOUTH, Direction.WEST, Direction.EAST };
-            
-            for(var d : dd)
+            //since the top is air, we search only horizontally or under
+            for(var d : new Direction[] {Direction.NORTH, Direction.SOUTH, Direction.DOWN, Direction.WEST, Direction.EAST})
             {
                 var pos = bp.relative(d);
                 var state = l.getBlockState(pos);
