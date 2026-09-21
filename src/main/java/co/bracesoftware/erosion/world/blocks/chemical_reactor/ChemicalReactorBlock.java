@@ -1,6 +1,6 @@
 package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
-import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.ChemicalReactorMultiBlockComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -14,7 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ChemicalReactorBlock extends Block implements ChemicalReactorMultiBlockComponent
+public class ChemicalReactorBlock extends Block implements IErosionChemicalReactorMultiBlockComponent
 {
     public ChemicalReactorBlock(Properties p)
     {

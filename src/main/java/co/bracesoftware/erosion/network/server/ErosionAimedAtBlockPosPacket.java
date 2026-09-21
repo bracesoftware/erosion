@@ -1,7 +1,7 @@
 package co.bracesoftware.erosion.network.server;
 
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.ErosionBlockWithTip;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.ErosionClient;
 import co.bracesoftware.erosion.network.client.ErosionClientData;
 import net.minecraft.core.BlockPos;
@@ -34,7 +34,7 @@ public record ErosionAimedAtBlockPosPacket(
             {
                 var l = p.serverLevel();
                 var s = l.getBlockState(BlockPos.of(d.pos));
-                if(s.getBlock() instanceof ErosionBlockWithTip b)
+                if(s.getBlock() instanceof IErosionBlockWithTip b)
                 {
                     b.onBlockAimedOn(p, s);
                 }

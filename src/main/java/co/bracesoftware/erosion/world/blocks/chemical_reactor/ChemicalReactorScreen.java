@@ -1,14 +1,14 @@
 package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.ChemicalReactorSystemComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReactorMenu> implements ChemicalReactorSystemComponent
+public class ChemicalReactorScreen extends AbstractContainerScreen<ChemicalReactorMenu> implements IErosionChemicalReactorSystemComponent
 {
     private static final ResourceLocation WINDOW_BG = ResourceLocation
         .fromNamespaceAndPath(Erosion.MODID, "textures/gui/container/chemical_reactor.png");

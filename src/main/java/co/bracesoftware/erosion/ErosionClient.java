@@ -2,7 +2,7 @@ package co.bracesoftware.erosion;
 
 import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.ErosionBlockWithTip;
+import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorScreen;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
@@ -271,7 +271,7 @@ public class ErosionClient
             var p = ((BlockHitResult) h).getBlockPos();
             var s = mc.level.getBlockState(p);
 
-            if(s.getBlock() instanceof ErosionBlockWithTip)
+            if(s.getBlock() instanceof IErosionBlockWithTip)
             {
                 PacketDistributor.sendToServer(new ErosionAimedAtBlockPosPacket(p.asLong()));
             }

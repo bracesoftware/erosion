@@ -48,7 +48,7 @@ import net.neoforged.neoforge.common.ItemAbilities;
 
 public class ErosionSimpleBlocks
 {
-    public interface ErosionBlockWithTip
+    public interface IErosionBlockWithTip
     {
         default void onBlockAimedOn(ServerPlayer p, BlockState s) throws ErosionBlockWithTipImpl
         {

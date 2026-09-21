@@ -6,7 +6,7 @@ import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.ChemicalReactorSystemComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class ChemicalReactorMenu extends AbstractContainerMenu implements ChemicalReactorSystemComponent
+public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosionChemicalReactorSystemComponent
 {
     public List<GasType> gasesToBeEmitted;
     public Player player;
