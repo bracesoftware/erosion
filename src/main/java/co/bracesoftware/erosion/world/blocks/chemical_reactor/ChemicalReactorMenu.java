@@ -206,6 +206,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         {
             this.products.setItem(i, ItemStack.EMPTY);
         }
+        return;
     }
 
     private void addPlayerInventory(Inventory pinv)
@@ -218,6 +219,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
                 this.addSlot(new Slot(pinv, j + i * 9 + 9, 8 + j * 18, y + i * 18));
             }
         }
+        return;
     }
 
     private void addPlayerHotbar(Inventory pinv)
@@ -227,6 +229,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         {
             this.addSlot(new Slot(pinv, k, 8 + k * 18, y));
         }
+        return;
     }
 
     @Override 
@@ -244,7 +247,11 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
     @Override 
     public void removed(Player p)
     {
-        super.removed(p);
-        this.clearContainer(p, this.reactants);
+        if(this.reactants.isEmpty() && !this.products.isEmpty())
+        {
+            this.clearContainer(p, this.products);
+        }
+        else this.clearContainer(p, this.reactants);
+        return;
     }
 }
