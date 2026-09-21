@@ -8,6 +8,7 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionMaterialPurifierException;
 import co.bracesoftware.erosion.ErosionMod;
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 
 import net.minecraft.core.BlockPos;
@@ -15,16 +16,14 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
-public class MaterialPurifierBlockEntity extends BlockEntity
+public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<MaterialPurifierBlockEntity>
 {
     public int fuel = 0;
     public boolean working = false;
@@ -46,15 +45,13 @@ public class MaterialPurifierBlockEntity extends BlockEntity
         super(ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), pos, state);
     }
 
-    public static void tick(
-        Level level, BlockPos pos, BlockState state,
-        MaterialPurifierBlockEntity be
+    @Override 
+    public boolean onBlockEntityTickOnServer(
+        MaterialPurifierBlockEntity be, ErosionBlockEntityTickPacket p
     ) throws ErosionMaterialPurifierException
     {
-        if(level.isClientSide()) return;
-
-        AABB s = new AABB(pos).inflate(0.5, 1.0, 0.5);
-        List<ItemEntity> i = level.getEntitiesOfClass(ItemEntity.class, s);
+        AABB s = new AABB(p.getBlockPos()).inflate(0.5, 1.0, 0.5);
+        List<ItemEntity> i = p.getServerLevel().getEntitiesOfClass(ItemEntity.class, s);
 
         if(ErosionConfig.isDebugOn()) if(!i.isEmpty()) {
             System.out.println("Items: " + i.size());
@@ -63,7 +60,7 @@ public class MaterialPurifierBlockEntity extends BlockEntity
             System.out.println("Working: " + be.working + " | Finished: " + be.finished);
         }
 
-        if(level.hasNeighborSignal(pos))
+        if(p.getServerLevel().hasNeighborSignal(p.getBlockPos()))
         {
             if(be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
             {
@@ -76,7 +73,10 @@ public class MaterialPurifierBlockEntity extends BlockEntity
                 }
 
                 be.setChanged();
-                level.setBlock(pos, state.setValue(MaterialPurifierBlock.FUEL, be.fuel)
+                p.getServerLevel().setBlock(
+                    p.getBlockPos(),
+                    p.getBlockState()
+                    .setValue(MaterialPurifierBlock.FUEL, be.fuel)
                     .setValue(MaterialPurifierBlock.FINISHED, be.finished)
                     .setValue(MaterialPurifierBlock.WORKING, be.working),
                     Block.UPDATE_ALL
@@ -110,7 +110,10 @@ public class MaterialPurifierBlockEntity extends BlockEntity
                     }
 
                     be.setChanged();
-                    level.setBlock(pos, state.setValue(MaterialPurifierBlock.FUEL, be.fuel)
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(),
+                        p.getBlockState()
+                        .setValue(MaterialPurifierBlock.FUEL, be.fuel)
                         .setValue(MaterialPurifierBlock.FINISHED, be.finished)
                         .setValue(MaterialPurifierBlock.WORKING, be.working),
                         Block.UPDATE_ALL
@@ -136,21 +139,18 @@ public class MaterialPurifierBlockEntity extends BlockEntity
                 var l = ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().get(be.storedItem.getItem());
                 be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
 
-                level.setBlock(pos,
-                    state.setValue(
-                        MaterialPurifierBlock.FUEL, be.fuel
-                    ).setValue(
-                        MaterialPurifierBlock.FINISHED, be.finished
-                    ).setValue(
-                        MaterialPurifierBlock.WORKING, be.working
-                    ),
+                p.getServerLevel().setBlock(p.getBlockPos(),
+                    p.getBlockState()
+                    .setValue(MaterialPurifierBlock.FUEL, be.fuel)
+                    .setValue(MaterialPurifierBlock.FINISHED, be.finished)
+                    .setValue(MaterialPurifierBlock.WORKING, be.working),
                     Block.UPDATE_ALL
                 );
 
                 be.setChanged();
             }
         }
-        return;
+        return true;
     }
 
     @Override 
@@ -184,7 +184,8 @@ public class MaterialPurifierBlockEntity extends BlockEntity
         return;
     }
     // =================================== //
-    private final IItemHandler itemHandler = new IItemHandler() {
+    private final IItemHandler itemHandler = new IItemHandler()
+    {
         @Override
         public int getSlots()
         {

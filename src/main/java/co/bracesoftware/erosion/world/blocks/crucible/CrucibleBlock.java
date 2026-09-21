@@ -53,7 +53,7 @@ import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.Erosio
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
 
-public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
+public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlock>
 {
     public static final int MIN_XZ = 4;
     public static final int MAX_XZ = 12;
@@ -101,7 +101,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
     {
         super(p.lightLevel(s -> s.getValue(WORKING) ? 10 : 0), () -> (
             BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>
-        ) ErosionRegistry.BlockEntities.CRUCIBLE.get());
+        ) ErosionRegistry.BlockEntities.CRUCIBLE.get(), CrucibleBlock::new);
         this.registerDefaultState(
             this.stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
@@ -112,7 +112,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
         this.callUseItemOnOnly(true);
     }
 
-    @Override protected MapCodec<? extends ErosionNetworkSafeBaseEntityBlock> codec() { return simpleCodec(CrucibleBlock::new); }
     @Override public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random)
     {
         boolean f = state.getValue(FINISHED);
@@ -170,6 +169,16 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock
     {
         return this.defaultBlockState().setValue(FACING, c.getHorizontalDirection().getOpposite());
     }
+
+    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+    {
+        ErosionUtils.displayMessage(
+            p.getServerPlayer(), "Cannot do that",
+            ErosionScreenMessage.Color.DARK_RED
+        );
+        return;
+    }
+    
     @Override
     public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {

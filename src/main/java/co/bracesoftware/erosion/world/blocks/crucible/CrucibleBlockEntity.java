@@ -61,18 +61,17 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
 
     @Override
     public boolean onBlockEntityTickOnServer(
-        ServerLevel level, BlockPos pos, BlockState state,
-        CrucibleBlockEntity be
+        CrucibleBlockEntity be, ErosionBlockEntityTickPacket p
     ) throws ErosionCrucibleException
     {
         int cc = Math.min(ErosionConfig.CRUCIBLE_SECONDS, be.progress / 20);
-        int ch = state.getValue(CrucibleBlock.HEAT);
+        int ch = p.getBlockState().getValue(CrucibleBlock.HEAT);
 
         if(ch != cc)
         {
-            level.setBlock(
-                pos,
-                state.setValue(CrucibleBlock.HEAT, cc),
+            p.getServerLevel().setBlock(
+                p.getBlockPos(),
+                p.getBlockState().setValue(CrucibleBlock.HEAT, cc),
                 Block.UPDATE_CLIENTS
             );
         }
@@ -106,7 +105,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
                 {
                     if(ErosionUtils.Misc.randomWithChanceToBe(false, sr))
                     {
-                        Gas.createGas((ServerLevel) level, pos, g);
+                        Gas.createGas(p.getServerLevel(), p.getBlockPos(), g);
                     }
                 }
             }
@@ -177,13 +176,11 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
 
                 be.catalyst = ItemStack.EMPTY;
 
-                level.getLightEngine().checkBlock(pos);
-                level.setBlock(pos,
-                    state.setValue(
-                        CrucibleBlock.FINISHED, be.finished
-                    ).setValue(
-                        CrucibleBlock.WORKING, be.working
-                    ),
+                p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                p.getServerLevel().setBlock(p.getBlockPos(),
+                    p.getBlockState()
+                    .setValue(CrucibleBlock.FINISHED, be.finished)
+                    .setValue(CrucibleBlock.WORKING, be.working),
                     Block.UPDATE_ALL
                 );
 

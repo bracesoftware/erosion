@@ -37,10 +37,13 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.serialization.MapCodec;
 
-public class MaterialPurifierBlock extends BaseEntityBlock
+public class MaterialPurifierBlock extends ErosionNetworkSafeBaseEntityBlock<MaterialPurifierBlock>
 {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty FUEL = IntegerProperty.create(
@@ -55,7 +58,9 @@ public class MaterialPurifierBlock extends BaseEntityBlock
 
     public MaterialPurifierBlock(Properties p)
     {
-        super(p);
+        super(p,() -> (
+            BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>
+        ) ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), MaterialPurifierBlock::new);
         this.registerDefaultState(
             this.stateDefinition.any()
             .setValue(FACING, Direction.NORTH)
@@ -63,6 +68,7 @@ public class MaterialPurifierBlock extends BaseEntityBlock
             .setValue(FINISHED, true)
             .setValue(WORKING, false)
         );
+        this.callUseItemOnOnly(true);
     }
 
     @Override
@@ -106,15 +112,6 @@ public class MaterialPurifierBlock extends BaseEntityBlock
         return new MaterialPurifierBlockEntity(p,s);
     }
 
-    @Nullable 
-    @Override 
-    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState s, BlockEntityType<T> type)
-    {
-        return level.isClientSide() ? null : createTickerHelper(
-            type, ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), MaterialPurifierBlockEntity::tick
-        );
-    }
-
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
     {
@@ -126,79 +123,74 @@ public class MaterialPurifierBlock extends BaseEntityBlock
     {
         return this.defaultBlockState().setValue(FACING, c.getHorizontalDirection().getOpposite());
     }
-    @Override
-    protected ItemInteractionResult useItemOn(
-        ItemStack stack, BlockState state, Level level,
-        BlockPos pos, Player player, InteractionHand hand,
-        BlockHitResult hitResult
-    )
+    
+    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
-        if(level.getBlockEntity(pos) instanceof MaterialPurifierBlockEntity be)
+        if(p.getServerLevel().getBlockEntity(p.getBlockPos()) instanceof MaterialPurifierBlockEntity be)
         {
-            if(stack.is(Items.REDSTONE)) 
+            if(p.getItemStack().is(Items.REDSTONE))
             {
                 if(be.fuel == ErosionConfig.MAX_PURIFIER_FUEL)
                 {
-                    if(!level.isClientSide())
-                    {
-                        ErosionUtils.displayMessage(player, "Fuel tank is full (3/3)");
-                    }
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Fuel tank is full (3/3)"
+                    );
+                    return true;
                 }
                 if(be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
                 {
-                    if(!level.isClientSide())
+                    be.fuel++;
+                    p.getItemStack().shrink(1);
+                    
+                    if(!be.finished && !be.working && be.fuel > 0)
                     {
-                        be.fuel++;
-                        stack.shrink(1);
-                        
-                        if(!be.finished && !be.working && be.fuel > 0)
-                        {
-                            be.fuel--;
-                            be.working = true;
-                        }
-                        
-                        be.setChanged();
-                        level.setBlock(
-                            pos, 
-                            state
-                            .setValue(FUEL, be.fuel)
-                            .setValue(FINISHED, be.finished)
-                            .setValue(WORKING, be.working), 
-                            Block.UPDATE_ALL
-                        );
-                        ErosionUtils.displayMessage(player, "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL);
+                        be.fuel--;
+                        be.working = true;
                     }
-                    return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                    
+                    be.setChanged();
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(), 
+                        p.getBlockState()
+                        .setValue(FUEL, be.fuel)
+                        .setValue(FINISHED, be.finished)
+                        .setValue(WORKING, be.working), 
+                        Block.UPDATE_ALL
+                    );
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL
+                    );
+                    return true;
                 }
             }
 
-            if(stack.isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
+            if(p.getItemStack().isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
             {
-                if(!level.isClientSide())
-                {
-                    player.getInventory().placeItemBackInInventory(be.storedItem);
-                    be.storedItem = ItemStack.EMPTY;
-                    be.setChanged();
-                    level.setBlock(
-                        pos,
-                        state
-                        .setValue(FUEL, be.fuel)
-                        .setValue(FINISHED, be.finished)
-                        .setValue(WORKING, be.working),
-                        Block.UPDATE_ALL
-                    );
-                }
-                return ItemInteractionResult.sidedSuccess(level.isClientSide());
+                p.getServerPlayer().getInventory().placeItemBackInInventory(be.storedItem);
+                be.storedItem = ItemStack.EMPTY;
+                be.setChanged();
+                p.getServerLevel().setBlock(
+                    p.getBlockPos(),
+                    p.getBlockState()
+                    .setValue(FUEL, be.fuel)
+                    .setValue(FINISHED, be.finished)
+                    .setValue(WORKING, be.working),
+                    Block.UPDATE_ALL
+                );
+                return true;
             }
         }
 
-        return super.useItemOn(stack, state, level, pos, player, hand, hitResult);
+        return false;
     }
 
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return simpleCodec(MaterialPurifierBlock::new);
+    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+    {
+        ErosionUtils.displayMessage(
+            p.getServerPlayer(), "Cannot do that",
+            ErosionScreenMessage.Color.DARK_RED
+        );
+        return;
     }
 
     @Override

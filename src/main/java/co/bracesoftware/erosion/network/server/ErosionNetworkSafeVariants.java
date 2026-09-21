@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.network.server;
 
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 import javax.annotation.Nullable;
@@ -10,6 +11,7 @@ import com.mojang.serialization.MapCodec;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionNetworkSafeBlockException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
+import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -38,8 +40,28 @@ public class ErosionNetworkSafeVariants
             super(b,pos,state);
         }
 
+        public static final class ErosionBlockEntityTickPacket
+        {
+            private final ServerLevel serverLevel;
+            private final BlockPos blockPos;
+            private final BlockState blockState;
+
+            public ErosionBlockEntityTickPacket(
+                ServerLevel l, BlockPos bp, BlockState bs
+            )
+            {
+                this.serverLevel = l;
+                this.blockPos = bp;
+                this.blockState = bs;
+            }
+
+            public ServerLevel getServerLevel() { return this.serverLevel; }
+            public BlockPos getBlockPos() { return this.blockPos; }
+            public BlockState getBlockState() { return this.blockState; }
+        }
+
         public boolean onBlockEntityTickOnServer(
-            ServerLevel l, BlockPos bp, BlockState bs, T e
+            T e, ErosionBlockEntityTickPacket p
         ) throws ErosionException
         {
             return false;
@@ -49,7 +71,7 @@ public class ErosionNetworkSafeVariants
         {
             if(!l.isClientSide())
             {
-                boolean result = e.onBlockEntityTickOnServer((ServerLevel) l, bp, bs, e);
+                boolean result = e.onBlockEntityTickOnServer(e, new ErosionBlockEntityTickPacket((ServerLevel) l, bp, bs));
                 if(!result)
                 {
                     throw new ErosionNetworkSafeBlockException("Why false?");
@@ -58,16 +80,19 @@ public class ErosionNetworkSafeVariants
             return;
         }
     }
-    public static abstract class ErosionNetworkSafeBaseEntityBlock extends ErosionNetworkSafeBlock implements EntityBlock
+    public static abstract class ErosionNetworkSafeBaseEntityBlock<T> extends ErosionNetworkSafeBlock implements EntityBlock
     {
+        private final MapCodec<T> codecHolder;
         public final Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> networkSafeBlockEntityType;
         public ErosionNetworkSafeBaseEntityBlock(
             Block.Properties p, 
-            Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> t
+            Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> t,
+            Function<Properties, T> codecBuilder
         )
         {
             super(p);
             this.networkSafeBlockEntityType = t;
+            this.codecHolder = MapCodec.unit(() -> codecBuilder.apply(p));
         }
 
         @Nullable 
@@ -79,9 +104,13 @@ public class ErosionNetworkSafeVariants
             );
         }
 
+        @Override protected final MapCodec<? extends ErosionNetworkSafeBaseEntityBlock<T>> codec()
+        {
+            return (MapCodec) this.codecHolder;
+        }
+
         // =========================== DO NOT TOUCH!
         //Theze are function overrides ported from BaseEntityBlock,put adapted to my network-safe variant
-        @Override protected abstract MapCodec<? extends ErosionNetworkSafeBaseEntityBlock> codec();
         @Override protected RenderShape getRenderShape(BlockState state) { return RenderShape.INVISIBLE; }
         @Override protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param) {
             super.triggerEvent(state, level, pos, id, param);
