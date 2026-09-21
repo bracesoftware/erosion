@@ -26,6 +26,7 @@
     "erosion:material_purifier",
     "erosion:crucible",
     "erosion:chemical_reactor",
-    "erosion:chemical_reactor_scrubber"
+    "erosion:chemical_reactor_scrubber",
+    "erosion:chemical_reactor_module"
   ]
 }

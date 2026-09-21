@@ -140,12 +140,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
     }
 
     @Override 
-    public RenderShape getRenderShape(BlockState s)
-    {
-        return RenderShape.MODEL;
-    }
-
-    @Override 
     public VoxelShape getShape(BlockState s, BlockGetter l, BlockPos p, CollisionContext c)
     {
         return SHAPE;
@@ -178,7 +172,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
         );
         return;
     }
-    
+
     @Override
     public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {

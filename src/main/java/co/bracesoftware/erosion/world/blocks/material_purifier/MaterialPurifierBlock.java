@@ -99,12 +99,6 @@ public class MaterialPurifierBlock extends ErosionNetworkSafeBaseEntityBlock<Mat
         return;
     }
 
-    @Override 
-    public RenderShape getRenderShape(BlockState s)
-    {
-        return RenderShape.MODEL;
-    }
-
     @Nullable 
     @Override 
     public BlockEntity newBlockEntity(BlockPos p, BlockState s)

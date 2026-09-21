@@ -111,7 +111,10 @@ public class ErosionNetworkSafeVariants
 
         // =========================== DO NOT TOUCH!
         //Theze are function overrides ported from BaseEntityBlock,put adapted to my network-safe variant
-        @Override protected RenderShape getRenderShape(BlockState state) { return RenderShape.INVISIBLE; }
+        @Override protected final RenderShape getRenderShape(BlockState state)
+        {
+            return RenderShape.MODEL;
+        }
         @Override protected boolean triggerEvent(BlockState state, Level level, BlockPos pos, int id, int param) {
             super.triggerEvent(state, level, pos, id, param);
             BlockEntity blockentity = level.getBlockEntity(pos);

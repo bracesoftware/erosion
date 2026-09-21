@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:chemical_reactor",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:chemical_reactor_module"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire a Chemical Reactor Module.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:chemical_reactor_module"
+    },
+    "title": "Expanding the Empire!"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
