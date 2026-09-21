@@ -2,20 +2,29 @@
   "type": "minecraft:crafting_shaped",
   "category": "redstone",
   "key": {
+    "C": {
+      "item": "minecraft:chest"
+    },
     "F": {
       "item": "minecraft:furnace"
+    },
+    "H": {
+      "item": "minecraft:hopper"
     },
     "I": {
       "item": "minecraft:iron_ingot"
     },
     "R": {
       "item": "minecraft:redstone"
+    },
+    "W": {
+      "item": "minecraft:stone_bricks"
     }
   },
   "pattern": [
-    "I I",
-    "RFR",
-    "III"
+    "IHI",
+    "FRC",
+    "WHW"
   ],
   "result": {
     "count": 1,
