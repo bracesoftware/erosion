@@ -131,10 +131,17 @@ public class ErosionAdvGen extends AdvancementProvider
 
             var reactor_scrubber = ErosionAdvancement.generateAdvancement(
                 this, "Better than a Gas Mask?",
-                "Acquire a Chemical Reactor Scrubber",
+                "Acquire a Chemical Reactor Scrubber.",
                 ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get(),
                 ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(),
                 reactor
+            );
+            var gas_filter = ErosionAdvancement.generateAdvancement(
+                this, "Gotta have a supply of this...",
+                "Acquire a Gas Filter.",
+                ErosionRegistry.Items.GAS_FILTER.get(),
+                ErosionRegistry.RawRegistry.GAS_FILTER.getId(),
+                reactor_scrubber
             );
             return;
         }

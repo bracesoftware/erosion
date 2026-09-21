@@ -1,11 +1,13 @@
 package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
@@ -14,29 +16,25 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 
-public class ChemicalReactorBlock extends Block implements IErosionChemicalReactorMultiBlockComponent
+public class ChemicalReactorBlock extends ErosionNetworkSafeBlock implements IErosionChemicalReactorMultiBlockComponent
 {
     public ChemicalReactorBlock(Properties p)
     {
         super(p);
     }
 
-    @Override 
-    protected InteractionResult useWithoutItem(
-        BlockState bs, Level l, BlockPos bp,
-        Player p, BlockHitResult hr
+    @Override public boolean serverUseWithoutItem(
+        BlockState bs, ServerLevel l, BlockPos bp,
+        ServerPlayer p, BlockHitResult hr
     )
     {
-        if(!l.isClientSide())
-        {
-            p.openMenu(
-                new SimpleMenuProvider(
-                    (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, bp),
-                    Component.literal("Chemical Reactor")
-                ), a -> a.writeBlockPos(bp)
-            );
-        }
-        return InteractionResult.sidedSuccess(l.isClientSide());
+        p.openMenu(
+            new SimpleMenuProvider(
+                (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, bp),
+                Component.literal("Chemical Reactor")
+            ), a -> a.writeBlockPos(bp)
+        );
+        return true;
     }
 
     public static boolean isFunctionalScrubberPresent(ServerLevel l, BlockPos p)

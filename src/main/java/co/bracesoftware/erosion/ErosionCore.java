@@ -1816,6 +1816,13 @@ public class ErosionCore
                 .withStyle(ChatFormatting.GRAY)
             );
         }
+        else if(currentItem == ErosionRegistry.Items.GAS_FILTER.get())
+        {
+            desc.add(
+                Component.literal("A filter designed to fit into a " + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName() + ".")
+                .withStyle(ChatFormatting.YELLOW)
+            );
+        }
 
         if(currentItem instanceof ErosionSimpleItems.GasMask git)
         {

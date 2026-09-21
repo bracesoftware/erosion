@@ -110,6 +110,15 @@ public class ErosionExceptions
                 super(e);
             }
         }
+
+        public static class ErosionNetworkSafeBlockException extends ErosionException
+        {
+            public ErosionNetworkSafeBlockException(String e)
+            {
+                super(e);
+            }
+        }
+
         public static class ErosionChemicalReactorException extends ErosionException
         {
             public ErosionChemicalReactorException(String e)

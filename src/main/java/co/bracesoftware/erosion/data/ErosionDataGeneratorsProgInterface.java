@@ -56,6 +56,10 @@ public class ErosionDataGeneratorsProgInterface
             {
                 t.tagz(Tags.Items.DUSTS).add(i);
             }
+            public static void createSimpleItem(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
+            {
+                t.tagz(ItemTags.create(ResourceLocation.fromNamespaceAndPath("c", "misc"))).add(i);
+            }
             public static void createSimpleArmorPiece(ErosionItemTagGen t, HolderLookup.Provider p, Item i)
             {
                 t.tagz(Tags.Items.ARMORS).add(i);

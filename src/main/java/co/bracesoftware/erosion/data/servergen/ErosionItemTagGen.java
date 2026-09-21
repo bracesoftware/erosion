@@ -37,6 +37,7 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         //SIMPLE ITEMS
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FELDSPAR_POWDER.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FLUX.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleItem(this, provider, ErosionRegistry.Items.GAS_FILTER.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RUBY.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.BORAX.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.DEHYDRATED_BORAX.get());

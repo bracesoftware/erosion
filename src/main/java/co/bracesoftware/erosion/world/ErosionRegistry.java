@@ -201,6 +201,8 @@ public class ErosionRegistry
         public static final IRawRegistry BUCKET_OF_SULFURIC_ACID = new IRawRegistry("sulfuric_acid_bucket", "Bucket of Sulfuric Acid");
         public static final IRawRegistry BORIC_ACID_CRYSTAL = new IRawRegistry("boric_acid_crystal", "Boric Acid Crystal");
 
+        public static final IRawRegistry GAS_FILTER = new IRawRegistry("gas_filter", "Gas Filter");
+
         //MACHINES
         public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
         public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
@@ -757,6 +759,9 @@ public class ErosionRegistry
         public static final DeferredItem<Item> FLUX = ITEMS.register(
             RawRegistry.FLUX.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
+        public static final DeferredItem<Item> GAS_FILTER = ITEMS.register(
+            RawRegistry.GAS_FILTER.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
         public static final DeferredItem<Item> RUBY = ITEMS.register(
             RawRegistry.RUBY.getId(), () -> new Item(new Item.Properties().stacksTo(64))
         );
@@ -969,6 +974,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get());
             output.accept(ErosionRegistry.Items.BASIC_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_MASK.get());
+            output.accept(ErosionRegistry.Items.GAS_FILTER.get());
         })
         .build()
     );

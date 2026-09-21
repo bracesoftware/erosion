@@ -10,6 +10,7 @@ import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionCrucibleException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
@@ -33,7 +34,7 @@ import net.neoforged.neoforge.items.ItemStackHandler;
 import net.minecraft.core.Direction;
 import org.jetbrains.annotations.NotNull;
 
-public class CrucibleBlockEntity extends BlockEntity
+public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleBlockEntity>
 {
     public ItemStack catalyst = ItemStack.EMPTY;
     public boolean working = false;
@@ -58,13 +59,12 @@ public class CrucibleBlockEntity extends BlockEntity
         super(ErosionRegistry.BlockEntities.CRUCIBLE.get(), pos, state);
     }
 
-    public static void tick(
-        Level level, BlockPos pos, BlockState state,
+    @Override
+    public boolean onBlockEntityTickOnServer(
+        ServerLevel level, BlockPos pos, BlockState state,
         CrucibleBlockEntity be
     ) throws ErosionCrucibleException
     {
-        if(level.isClientSide()) return;
-
         int cc = Math.min(ErosionConfig.CRUCIBLE_SECONDS, be.progress / 20);
         int ch = state.getValue(CrucibleBlock.HEAT);
 
@@ -190,7 +190,7 @@ public class CrucibleBlockEntity extends BlockEntity
                 be.setChanged();
             }
         }
-        return;
+        return true;
     }
 
     @Override 

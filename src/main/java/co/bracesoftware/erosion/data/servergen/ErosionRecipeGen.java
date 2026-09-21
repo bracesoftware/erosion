@@ -69,6 +69,17 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .save(output);
 
         ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Items.GAS_FILTER.get()
+        ).pattern("PPP")
+        .pattern("CAC")
+        .pattern("PPP")
+        .define('P', Items.PAPER)
+        .define('C', Items.CHARCOAL)
+        .define('A', Items.ITEM_FRAME)
+        .unlockedBy("has_charcoal", has(Items.CHARCOAL))
+        .save(output);
+
+        ShapedRecipeBuilder.shaped(
             RecipeCategory.BREWING, ErosionRegistry.Blocks.CRUCIBLE.get()
         ).pattern("G G")
         .pattern("G G")
@@ -78,7 +89,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .save(output);
 
         ShapedRecipeBuilder.shaped(
-            RecipeCategory.BREWING, ErosionRegistry.Items.BASIC_MASK.get()
+            RecipeCategory.COMBAT, ErosionRegistry.Items.BASIC_MASK.get()
         ).pattern("S S")
         .pattern("PPP")
         .pattern("PWP")
@@ -89,7 +100,7 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .save(output);
 
         ShapedRecipeBuilder.shaped(
-            RecipeCategory.BREWING, ErosionRegistry.Items.GAS_MASK.get()
+            RecipeCategory.COMBAT, ErosionRegistry.Items.GAS_MASK.get()
         ).pattern("S S")
         .pattern("GPG")
         .pattern("PWP")
