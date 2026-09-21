@@ -112,6 +112,11 @@ public class ErosionNetworkSafeVariants
         {
             return false;
         }
+
+        public void onInteractionFail(BlockState bs, ServerLevel l, BlockPos bp, ServerPlayer p)
+        {
+            return;
+        }
         // ============================================ //
         private static <T> T booleanToInteractionResult(
             Class<T> c, boolean s
@@ -124,30 +129,42 @@ public class ErosionNetworkSafeVariants
         }
 
         @Override protected final ItemInteractionResult useItemOn(
-            ItemStack stack, BlockState s, Level l,
-            BlockPos bp, Player p, InteractionHand hand,
+            ItemStack stack, BlockState bs, Level leva,
+            BlockPos bp, Player playa, InteractionHand hand,
             BlockHitResult hr
         )
         {
-            if(!l.isClientSide())
+            if(!leva.isClientSide())
             {
-                boolean result = this.serverUseItemOn(stack, s, (ServerLevel) l,bp, (ServerPlayer) p, hand, hr);
-                return booleanToInteractionResult(ItemInteractionResult.class, result);
+                var p = (ServerPlayer) playa;
+                var l = (ServerLevel) leva;
+                boolean result = this.serverUseItemOn(stack, bs, l,bp, p, hand, hr);
+                if(!result)
+                {
+                    this.onInteractionFail(bs, l, bp, p);
+                }
             }
-            return ItemInteractionResult.SUCCESS;//super.useItemOn(stack, s, l, bp, p, hand, hr);
+            //super.useItemOn(stack, s, l, bp, p, hand, hr);
+            return ItemInteractionResult.SUCCESS;
         }
 
         @Override protected final InteractionResult useWithoutItem(
-            BlockState bs, Level l, BlockPos bp,
-            Player p, BlockHitResult hr
+            BlockState bs, Level leva, BlockPos bp,
+            Player playa, BlockHitResult hr
         )
         {
-            if(!l.isClientSide())
+            if(!leva.isClientSide())
             {
-                boolean result = this.serverUseWithoutItem(bs,(ServerLevel) l,bp,(ServerPlayer) p, hr);
-                return booleanToInteractionResult(InteractionResult.class, result);
+                var p = (ServerPlayer) playa;
+                var l = (ServerLevel) leva;
+                boolean result = this.serverUseWithoutItem(bs,l,bp, p, hr);
+                if(!result)
+                {
+                    this.onInteractionFail(bs, l, bp, p);
+                }
             }
-            return InteractionResult.SUCCESS;//super.useWithoutItem(bs, l, bp, p, hr);
+            //super.useWithoutItem(bs, l, bp, p, hr);
+            return InteractionResult.SUCCESS;
         }
     }
 }
