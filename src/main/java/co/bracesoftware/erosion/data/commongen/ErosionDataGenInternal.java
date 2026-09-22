@@ -20,7 +20,7 @@ public class ErosionDataGenInternal
             assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId() + "_top." +
             ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
             generateNameList(assetsBlock + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId(), 2, "top"),
-            20, false
+            20, true
         );
 
         ErosionTextureGen.createAnimatedTexture(
@@ -28,14 +28,14 @@ public class ErosionDataGenInternal
             assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId() + "_bottom." +
             ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
             generateNameList(assetsBlock + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), 2, "bottom"),
-            20, false
+            20, true
         );
         ErosionTextureGen.createAnimatedTexture(
             ErosionUtils.getResourcesFolder() +
             assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId() + "_top." +
             ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
             generateNameList(assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), 4, "top"),
-            5, false
+            5, true
         );
         return;
     }

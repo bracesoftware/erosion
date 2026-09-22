@@ -34,6 +34,7 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
         //we wanna know how many reactors are connected to the multiblock system
         //use same mechanism for searching as i did in findNearestReactorComponent or whatever it is called xd
         int reactorsFound = 0;
+        int scrubbersFound = 0;
         var visited = new HashSet<BlockPos>();
         var queue = new LinkedList<BlockPos>();
 
@@ -54,6 +55,10 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
                 {
                     reactorsFound++;
                 }
+                else if(blok instanceof ChemicalReactorScrubberBlock)
+                {
+                    scrubbersFound++;
+                }
                 else if(blok instanceof ChemicalReactorModuleBlock)
                 {
                     queue.add(pozz);
@@ -67,6 +72,15 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
         );
         else ErosionUtils.displayMessage(
             p, reactorsFound + " reactor(s) connected",
+            ErosionScreenMessage.Color.DARK_GREEN
+        );
+
+        if(scrubbersFound == 0) ErosionUtils.displayMessage(
+            p, "No scrubbers are connected",
+            ErosionScreenMessage.Color.DARK_RED
+        );
+        else ErosionUtils.displayMessage(
+            p, scrubbersFound + " scrubber(s) connected",
             ErosionScreenMessage.Color.DARK_GREEN
         );
 
