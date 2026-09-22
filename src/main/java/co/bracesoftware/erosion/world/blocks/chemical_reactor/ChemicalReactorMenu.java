@@ -196,11 +196,16 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         var result = ChemicalReactorBlock.getNearestChemicalReactorMultiBlockComponent(
             l,this.position, ChemicalReactorCoolingSystemBlock.class
         );
-        if(!result.yes)
+        if(result.no())
         {
             this.player.igniteForSeconds(10);
+            this.player.closeContainer();
             ErosionUtils.displayMessage(
-                this.player, "Connect a cooling system",
+                this.player, "Reactor overheated",
+                ErosionScreenMessage.Color.DARK_RED
+            );
+            ErosionUtils.displayMessage(
+                this.player, "Connect a cooling system!",
                 ErosionScreenMessage.Color.GOLD
             );
         }

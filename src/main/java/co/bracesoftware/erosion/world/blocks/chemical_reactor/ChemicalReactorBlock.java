@@ -88,6 +88,15 @@ implements IErosionChemicalReactorMultiBlockComponent
             this.yes = y;
             this.pos = p;
         }
+
+        public boolean no()
+        {
+            return this.yes ? false : true; //lets be extremely explicit, shall we?
+        }
+        public boolean yes()
+        {
+            return this.yes;
+        }
     }
 
     public static ChemicalReactorMultiBlockComponentPosPacket getNearestChemicalReactorMultiBlockComponent(
@@ -166,7 +175,10 @@ implements IErosionChemicalReactorMultiBlockComponent
                     }
                     //but if not found and we are not searching for the module, we simply 
                     //go thru the module network for the target until we find it xD
-                    else if(blok instanceof ChemicalReactorModuleBlock)
+                    else if(
+                        blok instanceof ChemicalReactorModuleBlock ||
+                        blok instanceof ChemicalReactorBlock
+                    )
                     {
                         queue.add(pozz);
                     }

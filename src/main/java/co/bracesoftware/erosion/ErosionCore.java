@@ -1694,7 +1694,9 @@ public class ErosionCore
         ANHYDROUS_BORAX_HYDRATION
     );
 
-    private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL = List.of();
+    private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL = List.of(
+        WATER
+    );
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
@@ -2346,19 +2348,20 @@ public class ErosionCore
             {
                 desc.add(
                     Component.literal(TAB).withStyle(ChatFormatting.GRAY)
+                    .append(
+                        Component.literal(s.reactionName).withStyle(ChatFormatting.YELLOW)
+                    )
                     .append(ErosionUtils.compute(() -> {
                         Component c = Component.literal("");
                         if(s.exothermic)
                         {
-                            c = Component.literal("(").withStyle(ChatFormatting.GRAY)
+                            c = Component.literal(" (").withStyle(ChatFormatting.GRAY)
                             .append(Component.literal("Exothermic!").withStyle(ChatFormatting.RED))
                             .append(Component.literal(")").withStyle(ChatFormatting.GRAY));
                         }
                         return c;
                     }))
                     .append(
-                        Component.literal(s.reactionName).withStyle(ChatFormatting.YELLOW)
-                    ).append(
                         Component.literal(" using:").withStyle(ChatFormatting.GRAY)
                     )
                 );

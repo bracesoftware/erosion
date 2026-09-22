@@ -57,6 +57,7 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
                 if(blok instanceof ChemicalReactorBlock)
                 {
                     reactorsFound++;
+                    queue.add(pozz);//since a reactor contains same wiring and pipery as the modul
                 }
                 else if(blok instanceof ChemicalReactorScrubberBlock)
                 {
@@ -67,7 +68,9 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
                     coolingSystemsFound++;
                 }
                 //else we search
-                else if(blok instanceof ChemicalReactorModuleBlock)
+                else if(
+                    blok instanceof ChemicalReactorModuleBlock
+                )
                 {
                     queue.add(pozz);
                 }
