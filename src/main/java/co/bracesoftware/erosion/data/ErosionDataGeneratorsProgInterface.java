@@ -297,12 +297,28 @@ public class ErosionDataGeneratorsProgInterface
                 output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
                 ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
             }
-
+            
             BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
             what = "bottom";
             base = resourcePath + BLOCKID + "_" + what + PNG;
             howMany = 12;
+            for(int i = 0; i < howMany; i++)
+            {
+                int idx = i + 1;
+                layer = resourcePath + "layers/indicator_" + idx + PNG;
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
+                ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
+            }
+
+            //-------------------------------------------------
+            BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId();
+            ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
+            what = "side";
+            base = resourcePath + BLOCKID + "_" + what + PNG;
+            layer = new String();
+            output = new String();
+            howMany = 4;
             for(int i = 0; i < howMany; i++)
             {
                 int idx = i + 1;
