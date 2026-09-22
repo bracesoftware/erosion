@@ -40,7 +40,7 @@ public class ErosionDataGenerators
         }
         
         //other stuff
-        ErosionDataGenInternal.generateChemicalReactorAnim();
+        ErosionDataGenInternal.generateChemicalReactorAnims();
 
         //client provider
         g.addProvider(e.includeClient(), new ErosionLang(p));

@@ -34,6 +34,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.Tags;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 
@@ -301,7 +302,13 @@ public class ErosionDataGeneratorsProgInterface
 
         public static void generateRandomRotations(ErosionBlockStateGen g, Block b)
         {
-            var model = g.cubeAll(b);
+            generateRandomRotationsForModel(g, b, g.cubeAll(b));
+            return;
+        }
+        
+        public static void generateRandomRotationsForModel(ErosionBlockStateGen g, Block b, ModelFile m)
+        {
+            var model = m;
             g.getVariantBuilder(b)
             .forAllStates(
                 s -> new ConfiguredModel[] {

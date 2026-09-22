@@ -400,7 +400,10 @@ public class ErosionBlockStateGen extends BlockStateProvider
         crm = models().cubeBottomTop(
             BLOCKID, side, bottom, top
         );
-        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotationsForModel(
+            this,ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm
+        );
+        //simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
         simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
         return;
     }
