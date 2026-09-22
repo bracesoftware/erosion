@@ -27,8 +27,8 @@ public class ErosionDataGenInternal
             ErosionUtils.getResourcesFolder() +
             assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId() + "_bottom." +
             ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
-            generateNameList(assetsBlock + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), 3, "bottom"),
-            20, true
+            generateNameList(assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), 12, "bottom"),
+            3, true
         );
         ErosionTextureGen.createAnimatedTexture(
             ErosionUtils.getResourcesFolder() +

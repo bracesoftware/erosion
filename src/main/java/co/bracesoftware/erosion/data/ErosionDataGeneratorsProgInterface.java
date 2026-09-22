@@ -278,14 +278,29 @@ public class ErosionDataGeneratorsProgInterface
             //---------------------------CHEMICAL REACTOR COMPONENTS
             BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
-            String base = resourcePath + BLOCKID + "_top" + ".png";
+            String what = "top";
+            String base = resourcePath + BLOCKID + "_" + what + ".png";
             String layer = new String();
             String output = new String();
-            for(int i = 0; i < 4; i++)
+            int howMany = 4;
+            for(int i = 0; i < howMany; i++)
             {
                 int idx = i + 1;
                 layer = resourcePath + "layers/hand_" + idx + ".png";
-                output = generatedResourcesPath + BLOCKID + "_top_" + idx + ".png";
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + ".png";
+                ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
+            }
+
+            BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
+            ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
+            what = "bottom";
+            base = resourcePath + BLOCKID + "_" + what + ".png";
+            howMany = 12;
+            for(int i = 0; i < howMany; i++)
+            {
+                int idx = i + 1;
+                layer = resourcePath + "layers/indicator_" + idx + ".png";
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + ".png";
                 ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
             }
             return;
