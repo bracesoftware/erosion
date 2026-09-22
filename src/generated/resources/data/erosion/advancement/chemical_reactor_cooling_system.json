@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:chemical_reactor_scrubber",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:chemical_reactor_cooling_system"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire a Chemical Reactor Cooling System.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:chemical_reactor_cooling_system"
+    },
+    "title": "Have to Cool Things Down"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

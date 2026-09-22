@@ -322,7 +322,7 @@ public class ErosionDataGeneratorsProgInterface
             for(int i = 0; i < howMany; i++)
             {
                 int idx = i + 1;
-                layer = resourcePath + "layers/indicator_" + idx + PNG;
+                layer = resourcePath + "layers/console_" + idx + PNG;
                 output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
                 ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
             }
