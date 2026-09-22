@@ -369,7 +369,9 @@ public class ErosionDataGeneratorsProgInterface
                 g.rotate(Math.toRadians(angle), w/2.0,h/2.0);
                 g.drawImage(org, 0,0,null);
                 g.dispose();
-                ImageIO.write(img,ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,lol);
+                var f = new File(who);
+                f.createNewFile();
+                ImageIO.write(img,ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,f);
                 ErosionUtils.Log("Rotated successfully -> " + who + "::" + angle);
                 return who;
             }
