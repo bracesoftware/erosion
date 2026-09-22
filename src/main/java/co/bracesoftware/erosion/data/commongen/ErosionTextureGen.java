@@ -26,6 +26,11 @@ public class ErosionTextureGen
         List<String> l, String o
     ) throws IOException 
     {
+        ErosionUtils.Log("Trying to combine following files:");
+        for(var f : l)
+        {
+            ErosionUtils.Log(f);
+        }
         var f = ImageIO.read(new File(l.get(0)));
         int w = f.getWidth();
         int h = f.getHeight();
