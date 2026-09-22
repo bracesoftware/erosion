@@ -394,8 +394,8 @@ public class ErosionBlockStateGen extends BlockStateProvider
         BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
 
         side = modLoc("block/" + BLOCKID + "_side");
-        bottom = modLoc("block/" + BLOCKID + "_bottom");
-        top = modLoc("block/" + BLOCKID + "_top");
+        bottom = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_bottom");
+        top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
 
         crm = models().cubeBottomTop(
             BLOCKID, side, bottom, top
