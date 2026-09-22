@@ -729,6 +729,19 @@ public class ErosionCore
         }
     }
 
+    public static final class ChemicalReactorCoolingFluid extends ErosionDynamicItem
+    {
+        private final Supplier<Item> coolingFluidItemSupplier;
+        private Item coolingFluidItem;
+
+        public ChemicalReactorCoolingFluid(String n, Supplier<Item> it)
+        {
+            this.name = n;
+            this.coolingFluidItemSupplier = it;
+            this.setupAntiDuplicationSystem();
+        }
+    }
+
     // ======================= ERODABLE MATERIALS
 
     public static final AlterableMaterial GRASS_BLOCK = new AlterableMaterial(

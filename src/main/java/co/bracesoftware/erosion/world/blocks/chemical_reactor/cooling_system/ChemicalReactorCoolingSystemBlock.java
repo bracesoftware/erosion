@@ -1,4 +1,4 @@
-package co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber;
+package co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system;
 
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
@@ -8,6 +8,7 @@ import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWi
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -20,61 +21,61 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
-public class ChemicalReactorScrubberBlock extends ErosionNetworkSafeBlock
+public class ChemicalReactorCoolingSystemBlock extends ErosionNetworkSafeBlock
 implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
 {
-    public static final IntegerProperty FILTER_DURABILITY = IntegerProperty.create(
-        "filter_durability", 0, 100
+    public static final IntegerProperty COOLING_FLUID_LEVEL = IntegerProperty.create(
+        "coolin_fluid_leva", 0, 1000
     );
     // ================================================== //
     @Override public void onBlockAimedOn(ServerPlayer p, BlockState s, BlockPos pos)
     {
-        var ggwp = ErosionRegistry.RawRegistry.GAS_FILTER.getName();
-        int d = s.getValue(FILTER_DURABILITY);
+        int d = s.getValue(COOLING_FLUID_LEVEL);
         if(d == 0) ErosionUtils.displayMessage(
-            p, "Put a new " + ggwp + " into the scrubber!",
+            p, "Fill the system with a cooling fluid",
             ErosionScreenMessage.Color.DARK_RED
         );
         else
         {
             ErosionUtils.displayMessage(
-                p, ggwp + " durability: " + d + "%",
+                p, "Cooling fluid level: " + d + "mB",
                 ErosionScreenMessage.Color.DARK_GREEN
             );
         }
         return;
     }
 
-    public ChemicalReactorScrubberBlock(Block.Properties p)
+    public ChemicalReactorCoolingSystemBlock(Block.Properties p)
     {
         super(p);
         this.registerDefaultState(
             this.stateDefinition.any().
-            setValue(FILTER_DURABILITY,0)
+            setValue(COOLING_FLUID_LEVEL,0)
         );
     }
 
     @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
         var it = p.getItemStack().getItem();
-        int dur = p.getBlockState().getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
+        int lev = p.getBlockState().getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
         if(it == ErosionRegistry.Items.GAS_FILTER.get())
         {
-            if(dur > 0)
+            if(lev > 0)
             {
                 ErosionUtils.displayMessage(
-                    p.getServerPlayer(), "Filter in the scrubber is not yet worn out",
+                    p.getServerPlayer(), "There is still enough fluid in the system",
                     ErosionScreenMessage.Color.RED
                 );
                 return true;
             }
             p.getItemStack().shrink(1);
-            var ns = p.getBlockState().setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, 100);
+            var ns = p.getBlockState().setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, 1000);
             p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
             return true;
         }
         return false;
     }
+
     @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
     {
         ErosionUtils.displayMessage(
@@ -86,7 +87,7 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
     // ================================================== //
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
     {
-        b.add(FILTER_DURABILITY);
+        b.add(COOLING_FLUID_LEVEL);
         return;
     }
 

@@ -211,6 +211,10 @@ public class ErosionRegistry
         public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
         public static final IRawRegistry CHEMICAL_REACTOR_SCRUBBER = new IRawRegistry("chemical_reactor_scrubber", "Chemical Reactor Scrubber");
         public static final IRawRegistry CHEMICAL_REACTOR_MODULE = new IRawRegistry("chemical_reactor_module", "Chemical Reactor Module");
+        public static final IRawRegistry CHEMICAL_REACTOR_COOLING_SYSTEM = new IRawRegistry(
+            "chemical_reactor_cooling_system", 
+            "Chemical Reactor Cooling System"
+        );
 
         //MANUAL ADVANCEMENTS
         public static class ManualAdvancements

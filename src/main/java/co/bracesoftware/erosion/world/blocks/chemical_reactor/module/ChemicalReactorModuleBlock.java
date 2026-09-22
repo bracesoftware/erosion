@@ -86,6 +86,14 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
 
         return;
     }
+    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+    {
+        ErosionUtils.displayMessage(
+            p.getServerPlayer(), "Cannot do that",
+            ErosionScreenMessage.Color.DARK_RED
+        );
+        return;
+    }
     //--------------------------------------------------
 
     @Override public boolean canSurvive(BlockState s, LevelReader l, BlockPos p)
