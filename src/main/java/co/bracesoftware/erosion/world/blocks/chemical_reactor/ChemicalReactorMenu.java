@@ -167,13 +167,15 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
                 this.fillContainer(products, cr.getProducts());
                 this.gasesToBeEmitted = cr.getGasCoproducts();
                 this.handleGasEmission();
-                if(cr.isExothermic()) this.handleExothermicReaction();
                 
                 for(int i = 0; i < this.reactants.getContainerSize(); i++)
                 {
                     var is = this.reactants.getItem(i);
                     if(!is.isEmpty()) is.shrink(1);
                 }
+
+                //dot on the i
+                if(cr.isExothermic()) this.handleExothermicReaction();
                 return;
             }
         }
