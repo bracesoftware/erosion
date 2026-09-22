@@ -244,6 +244,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
             {
                 boolean logik = ((!be.working) && (be.finished));
 
+                //if bro's klikin for no reason, say it
                 if(logik && be.storedItem.isEmpty() && be.catalyst.isEmpty())
                 {
                     ErosionUtils.displayMessage(

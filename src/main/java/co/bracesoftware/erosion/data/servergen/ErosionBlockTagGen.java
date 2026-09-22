@@ -103,6 +103,9 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleMachine(
             this,provider,ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get()
         );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleMachine(
+            this,provider,ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get()
+        );
         return;
     }
 }

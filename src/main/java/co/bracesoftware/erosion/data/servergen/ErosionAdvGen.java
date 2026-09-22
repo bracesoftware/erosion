@@ -152,6 +152,13 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(),
                 reactor
             );
+            var reactor_cooling_sys = ErosionAdvancement.generateAdvancement(
+                this, "Have to Cool Things Down",
+                "Acquire a Chemical Reactor Cooling System.",
+                ErosionRegistry.Items.CHEMICAL_REACTOR_COOLING_SYSTEM.get(),
+                ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(),
+                reactor_scrubber
+            );
             return;
         }
     }

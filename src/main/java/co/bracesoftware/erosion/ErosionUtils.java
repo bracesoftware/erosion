@@ -13,15 +13,32 @@ import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.ChunkPos;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ErosionUtils
 {
+    public static void spawnGasParticle(ServerLevel l, BlockPos p)
+    {
+        double x = p.getX();
+        double y = p.getY();
+        double z = p.getZ();
+        ClientboundLevelParticlesPacket pp = new ClientboundLevelParticlesPacket(
+            ParticleTypes.CAMPFIRE_COSY_SMOKE, true, x,y,z,
+            0.0f,0.0f,0.0f,0.005f,5
+        );
+        l.getChunkSource().chunkMap.getPlayers(
+            new ChunkPos(BlockPos.containing(x, y, z)), false
+        ).forEach(pl -> pl.connection.send(pp));
+    }
     public record ErosionPair<A, B>(A first, B second) {}
     public static void Log(String text)
     {

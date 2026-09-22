@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
 import co.bracesoftware.erosion.ErosionExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionChemicalReactorException;
+import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionUtils.ErosionPair;
 
@@ -13,12 +14,14 @@ import java.util.Queue;
 import java.util.LinkedList;
 import java.util.List;
 
+import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system.ChemicalReactorCoolingSystemBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlock;
@@ -75,7 +78,19 @@ implements IErosionChemicalReactorMultiBlockComponent
         return true;
     }
 
-    public static ErosionPair<Boolean, BlockPos> getNearestChemicalReactorMultiBlockComponent(
+    public static final class ChemicalReactorMultiBlockComponentPosPacket
+    {
+        public final boolean yes;
+        public final long pos;
+
+        public ChemicalReactorMultiBlockComponentPosPacket(boolean y, long p)
+        {
+            this.yes = y;
+            this.pos = p;
+        }
+    }
+
+    public static ChemicalReactorMultiBlockComponentPosPacket getNearestChemicalReactorMultiBlockComponent(
         ServerLevel l, BlockPos crp, Class<? extends IErosionChemicalReactorMultiBlockComponent> c
     )
     {
@@ -89,7 +104,17 @@ implements IErosionChemicalReactorMultiBlockComponent
                 if(s.getBlock() instanceof ChemicalReactorScrubberBlock)
                 {
                     int dur = s.getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
-                    if(dur > 0) return new ErosionPair<>(true, pozz);
+                    if(dur > 0) return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
+                }
+            }
+            else if(c == ChemicalReactorCoolingSystemBlock.class)
+            {
+                var pozz = BlockPos.of(e.cachedCoolingSystemPos);
+                var s = l.getBlockState(pozz);
+                if(s.getBlock() instanceof ChemicalReactorCoolingSystemBlock)
+                {
+                    int cf = s.getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
+                    if(cf > 0) return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                 }
             }
 
@@ -120,17 +145,27 @@ implements IErosionChemicalReactorMultiBlockComponent
                             if(dur > 0)
                             {
                                 e.cachedScrubberPos = pozz.asLong();
-                                return new ErosionPair<>(true, pozz);
+                                return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
+                            }
+                            continue;
+                        }
+                        else if(blok instanceof ChemicalReactorCoolingSystemBlock)
+                        {
+                            int cf = s.getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
+                            if(cf > 0)
+                            {
+                                e.cachedCoolingSystemPos = pozz.asLong();
+                                return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                             }
                             continue;
                         }
                         else
                         {
-                            return new ErosionPair<>(true, pozz);
+                            return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                         }
                     }
                     //but if not found and we are not searching for the module, we simply 
-                    //recursively go for the target until we find it xD
+                    //go thru the module network for the target until we find it xD
                     else if(blok instanceof ChemicalReactorModuleBlock)
                     {
                         queue.add(pozz);
@@ -138,7 +173,7 @@ implements IErosionChemicalReactorMultiBlockComponent
                 }
             }
         }
-        return new ErosionPair<>(false, null);
+        return new ChemicalReactorMultiBlockComponentPosPacket(false, 0);
     }
     public static ChemicalReactorBlockEntity getChemicalReactorEntity(ServerLevel l, BlockPos pos)
     {
@@ -160,10 +195,29 @@ implements IErosionChemicalReactorMultiBlockComponent
             {
                 var ns = s.setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, filter - 1);
                 l.setBlockAndUpdate(p, ns);
+                ErosionUtils.spawnGasParticle(l,p);
                 return;
             }
             else throw new ErosionChemicalReactorException("Tried to damage a scrubber with no filter -> " + p);
         }
-        return;
+        else throw new ErosionChemicalReactorException("What are you doing? -> " + l + "::" + p);
+    }
+    public static void consumeSomeCoolingFluid(ServerLevel l, BlockPos p)
+    {
+        var s = l.getBlockState(p);
+        if(s.getBlock() instanceof ChemicalReactorCoolingSystemBlock)
+        {
+            int f = s.getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
+            if(f > 0)
+            {
+                int mb = ErosionMod.RANDOM.nextInt(30);
+                if(mb > f) mb = f;
+                var ns = s.setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, f - mb);
+                l.setBlockAndUpdate(p, ns);
+                return;
+            }
+            else throw new ErosionChemicalReactorException("Tried to consume fluid but no fluid was present -> " + p);
+        }
+        else throw new ErosionChemicalReactorException("What are you doing now? -> " + l + "::" + p);
     }
 }

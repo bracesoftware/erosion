@@ -3,8 +3,11 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.AirBlock;
+import net.minecraft.world.level.block.Block;
 
 public class ChemicalReactorSystemCore
 {
@@ -47,5 +50,11 @@ public class ChemicalReactorSystemCore
             return false;
         }
     }
-    public static interface IErosionChemicalReactorItem {}
+    public static interface IErosionChemicalReactorItem
+    {
+        public static Item.Properties getDefaultProperties()
+        {
+            return new Properties().stacksTo(16);
+        }
+    }
 }

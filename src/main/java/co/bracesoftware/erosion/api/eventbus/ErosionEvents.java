@@ -79,5 +79,10 @@ public class ErosionEvents
         {
             ErosionCore.add(cr);
         }
+
+        public void registerChemicalReactorCoolingFluid(ErosionCore.ChemicalReactorCoolingFluid f)
+        {
+            ErosionCore.add(f);
+        }
     }
 }

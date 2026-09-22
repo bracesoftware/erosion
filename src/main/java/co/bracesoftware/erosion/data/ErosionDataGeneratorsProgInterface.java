@@ -1,8 +1,13 @@
 package co.bracesoftware.erosion.data;
 
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
@@ -40,6 +45,9 @@ import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 
 public class ErosionDataGeneratorsProgInterface
 {
+    public static final String resourcePath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/";
+    public static final String generatedResourcesPath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/" + ErosionUtils.getGeneratedFolder();
+            
     public static class ErosionTags
     {
         public abstract interface ErosionTaggable<T>
@@ -236,13 +244,12 @@ public class ErosionDataGeneratorsProgInterface
     {
         public static void generateCustomTextures()
         {
+            final String PNG = "." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT;
             //----------------------------MATERIAL PURIFIER
             ErosionUtils.Log("Generating custom textures...");
             String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
-            String resourcePath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/";
-            String generatedResourcesPath = ErosionUtils.getResourcesFolder() + "assets/" + Erosion.MODID + "/textures/block/" + ErosionUtils.getGeneratedFolder();
-            File baseFile = new File(resourcePath + BLOCKID + "_front.png");
+            File baseFile = new File(resourcePath + BLOCKID + "_front" + PNG);
 
             for(int fuel = 0; fuel <= ErosionConfig.MAX_PURIFIER_FUEL; fuel++)
             {
@@ -250,15 +257,15 @@ public class ErosionDataGeneratorsProgInterface
                 {
                     String status = finished ? "on" : "off";
 
-                    File fuelLayer = new File(resourcePath + "layers/fuel_" + fuel + ".png");
-                    File lampLayer = new File(resourcePath + "layers/lamp_" + status + ".png");
+                    File fuelLayer = new File(resourcePath + "layers/fuel_" + fuel + PNG);
+                    File lampLayer = new File(resourcePath + "layers/lamp_" + status + PNG);
                     
                     List<File> layers = List.of(
                         fuelLayer,
                         lampLayer
                     );
 
-                    File outputFile = new File(generatedResourcesPath + BLOCKID + "_front_fuel_" + fuel + "_" + status + ".png");
+                    File outputFile = new File(generatedResourcesPath + BLOCKID + "_front_fuel_" + fuel + "_" + status + PNG);
 
                     ErosionTextureGen.combine(baseFile, layers, outputFile);
                 }
@@ -267,11 +274,11 @@ public class ErosionDataGeneratorsProgInterface
             //-------------------------------------CRUCIBLE
             BLOCKID = ErosionRegistry.RawRegistry.CRUCIBLE.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
-            File baseCrucibleContent = new File(resourcePath + BLOCKID + ".png");
+            File baseCrucibleContent = new File(resourcePath + BLOCKID + PNG);
 
             for(int i = 1; i <= ErosionConfig.CRUCIBLE_SECONDS; i++)
             {
-                File outputTex = new File(generatedResourcesPath + BLOCKID + "_heat_" + i + ".png");
+                File outputTex = new File(generatedResourcesPath + BLOCKID + "_heat_" + i + PNG);
                 ErosionTextureGen.generateHeatedTexture(baseCrucibleContent, outputTex, i, ErosionConfig.CRUCIBLE_SECONDS);
             }
 
@@ -279,31 +286,82 @@ public class ErosionDataGeneratorsProgInterface
             BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
             String what = "top";
-            String base = resourcePath + BLOCKID + "_" + what + ".png";
+            String base = resourcePath + BLOCKID + "_" + what + PNG;
             String layer = new String();
             String output = new String();
             int howMany = 4;
             for(int i = 0; i < howMany; i++)
             {
                 int idx = i + 1;
-                layer = resourcePath + "layers/hand_" + idx + ".png";
-                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + ".png";
+                layer = resourcePath + "layers/hand_" + idx + PNG;
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
                 ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
             }
 
             BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
             ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
             what = "bottom";
-            base = resourcePath + BLOCKID + "_" + what + ".png";
+            base = resourcePath + BLOCKID + "_" + what + PNG;
             howMany = 12;
             for(int i = 0; i < howMany; i++)
             {
                 int idx = i + 1;
-                layer = resourcePath + "layers/indicator_" + idx + ".png";
-                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + ".png";
+                layer = resourcePath + "layers/indicator_" + idx + PNG;
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
+                ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
+            }
+
+            BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId();
+            ErosionUtils.Log("Generating custom texture for -> " + BLOCKID);
+            what = "top";
+            base = resourcePath + BLOCKID + "_" + what + PNG;
+            howMany = 36;
+            for(int i = 0; i < howMany; i++)
+            {
+                int idx = i + 1;
+                layer = createRotatedTexture(
+                    resourcePath + "layers/fan" + PNG,
+                    generatedResourcesPath + "fan_" + idx + PNG,
+                    i * 10
+                );
+                output = generatedResourcesPath + BLOCKID + "_" + what + "_" + idx + PNG;
                 ErosionTextureGen.combine(new File(base), List.of(new File(layer)), new File(output));
             }
             return;
+        }
+
+        public static String createRotatedTexture(String from, String who, int angle)
+        {
+            final String CRASH = "wdym who?";
+            var lol = new File(from);
+            if(lol == null || !lol.exists())
+            {
+                return CRASH;
+            }
+            
+            try
+            {
+                var org = ImageIO.read(lol);
+                int h = org.getHeight();
+                int w = org.getWidth();
+                var img = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+                var g = img.createGraphics();
+                g.setRenderingHint(
+                    RenderingHints.KEY_INTERPOLATION,
+                    RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR
+                );
+                g.rotate(Math.toRadians(angle), w/2.0,h/2.0);
+                g.drawImage(org, 0,0,null);
+                g.dispose();
+                ImageIO.write(img,ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,lol);
+                ErosionUtils.Log("Rotated successfully -> " + who + "::" + angle);
+                return who;
+            }
+            catch(Exception e)
+            {
+                e.printStackTrace();
+                return CRASH;
+            }
         }
 
         public static BlockModelBuilder createRockModel(

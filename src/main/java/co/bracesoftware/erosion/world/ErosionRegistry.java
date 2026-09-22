@@ -48,6 +48,8 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorItem;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system.ChemicalReactorCoolingSystemBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
@@ -421,6 +423,12 @@ public class ErosionRegistry
                 .requiresCorrectToolForDrops()
             )
         );
+        public static final DeferredBlock<Block> CHEMICAL_REACTOR_COOLING_SYSTEM = BLOCKS.register(
+            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), () -> new ChemicalReactorCoolingSystemBlock(
+                BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
+                .requiresCorrectToolForDrops()
+            )
+        );
         //----------------------------------------------
         //SIMPLE BLOCKS
         public static final DeferredBlock<Block> DRIED_DIRT = BLOCKS.register(
@@ -630,17 +638,22 @@ public class ErosionRegistry
         //------------------------------------------------------
         public static final DeferredItem<Item> CHEMICAL_REACTOR = ITEMS.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
-                Blocks.CHEMICAL_REACTOR.get(), new Item.Properties()
+                Blocks.CHEMICAL_REACTOR.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
         public static final DeferredItem<Item> CHEMICAL_REACTOR_SCRUBBER = ITEMS.register(
             RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(), () -> new BlockItem(
-                Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), new Item.Properties()
+                Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
         public static final DeferredItem<Item> CHEMICAL_REACTOR_MODULE = ITEMS.register(
             RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), () -> new BlockItem(
-                Blocks.CHEMICAL_REACTOR_MODULE.get(), new Item.Properties()
+                Blocks.CHEMICAL_REACTOR_MODULE.get(), IErosionChemicalReactorItem.getDefaultProperties()
+            )
+        );
+        public static final DeferredItem<Item> CHEMICAL_REACTOR_COOLING_SYSTEM = ITEMS.register(
+            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), () -> new BlockItem(
+                Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
         //-------------------------------------------------------
@@ -998,6 +1011,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get());
             output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
             output.accept(ErosionRegistry.Items.BASIC_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_MASK.get());
             output.accept(ErosionRegistry.Items.GAS_FILTER.get());

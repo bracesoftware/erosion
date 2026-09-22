@@ -389,6 +389,19 @@ public class ErosionBlockStateGen extends BlockStateProvider
         simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
         simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
 
+        //CHEMICAL REACTOR COOLING SYSTEM
+        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId();
+
+        side = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_side");
+        bottom = modLoc("block/" + BLOCKID + "_bottom");
+        top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
+
+        crm = models().cubeBottomTop(
+            BLOCKID, side, bottom, top
+        );
+        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
+        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
+
         //CHEMICAL REACTOR MODULE
         BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
 

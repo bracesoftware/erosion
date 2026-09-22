@@ -13,9 +13,11 @@ public class ChemicalReactorBlockEntity extends ErosionNetworkSafeBlockEntity<Ch
 implements IErosionChemicalReactorSystemComponent
 {
     public long cachedScrubberPos = 0;
+    public long cachedCoolingSystemPos = 0;
     public static class DataRawName
     {
         public static final String CACHED_SCRUBBER_POS = "scrubber_cache";
+        public static final String CACHED_COOLING_SYSTEM_POS = "coolin_sys_cache";
     }
 
     public ChemicalReactorBlockEntity(BlockPos pos, BlockState state)
@@ -36,6 +38,7 @@ implements IErosionChemicalReactorSystemComponent
     {
         super.saveAdditional(t, r);
         t.putLong(DataRawName.CACHED_SCRUBBER_POS, this.cachedScrubberPos);
+        t.putLong(DataRawName.CACHED_COOLING_SYSTEM_POS, this.cachedCoolingSystemPos);
         return;
     }
 
@@ -44,6 +47,7 @@ implements IErosionChemicalReactorSystemComponent
     {
         super.loadAdditional(t, r);
         this.cachedScrubberPos = t.getLong(DataRawName.CACHED_SCRUBBER_POS);
+        this.cachedCoolingSystemPos = t.getLong(DataRawName.CACHED_COOLING_SYSTEM_POS);
         return;
     }
 }

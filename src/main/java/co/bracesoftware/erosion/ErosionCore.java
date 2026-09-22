@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
+import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
@@ -331,10 +332,12 @@ public class ErosionCore
 
         private List<GasType> gasCoproducts;
 
+        private final boolean exothermic;
+
         public ChemicalReaction(
             String n, Supplier<List<Item>> r,
             Supplier<List<Item>> p, Supplier<List<Item>> k,
-            List<GasType> gg
+            List<GasType> gg, boolean e
         )
         {
             this.name = n;
@@ -342,8 +345,14 @@ public class ErosionCore
             this.product = p;
             this.mainProduct = k;
             this.gasCoproducts = gg;
+            this.exothermic = e;
 
             this.setupAntiDuplicationSystem();
+        }
+
+        public boolean isExothermic()
+        {
+            return this.exothermic;
         }
 
         @Override 
@@ -732,13 +741,38 @@ public class ErosionCore
     public static final class ChemicalReactorCoolingFluid extends ErosionDynamicItem
     {
         private final Supplier<Item> coolingFluidItemSupplier;
+        private final Supplier<Item> giveBackSupplier;
         private Item coolingFluidItem;
+        private Item giveBackItem; //if the fluid is in the bucket
 
-        public ChemicalReactorCoolingFluid(String n, Supplier<Item> it)
+        public ChemicalReactorCoolingFluid(String n, Supplier<Item> it, Supplier<Item> gb)
         {
             this.name = n;
             this.coolingFluidItemSupplier = it;
             this.setupAntiDuplicationSystem();
+            this.giveBackSupplier = gb;
+        }
+
+        @Override public void setup() throws ErosionRecipeImplException
+        {
+            ErosionUtils.Log("Loading chemical reactor cooling fluid -> " + this.name);
+            this.coolingFluidItem = this.coolingFluidItemSupplier.get();
+            this.giveBackItem = this.giveBackSupplier.get();
+
+            this.preventDuplication(antiDuplicator);
+
+            BlockEntityRecipes.ChemicalReactor.COOLING_LIQUIDS.putIfAbsent(coolingFluidItem, giveBackItem);
+            return;
+        }
+
+        @Override 
+        public void discard()
+        {
+            ErosionUtils.Log("Discarding chemical reactor cooling fluid -> " + this.name);
+            
+            BlockEntityRecipes.ChemicalReactor.COOLING_LIQUIDS.clear();
+            this.discardDuplicationPreventionSys(antiDuplicator);
+            return;
         }
     }
 
@@ -1579,7 +1613,7 @@ public class ErosionCore
         () -> List.of(Items.MUD),
         List.of(
             ErosionRegistry.GasTypes.WATER_VAPOR
-        )
+        ),false
     );
 
     public static final ChemicalReaction SULFURIC_ACID_SYNTHESIS = new ChemicalReaction(
@@ -1592,7 +1626,7 @@ public class ErosionCore
         ),
         () -> List.of(
             ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
-        ), List.of()
+        ), List.of(),true
     );
 
     public static final ChemicalReaction BORIC_ACID_SYNTHESIS = new ChemicalReaction(
@@ -1605,7 +1639,7 @@ public class ErosionCore
             Items.BUCKET
         ), () -> List.of(
             ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get()
-        ), List.of()
+        ), List.of(),true
     );
 
     public static final ChemicalReaction ANHYDROUS_BORAX_HYDRATION = new ChemicalReaction(
@@ -1619,7 +1653,16 @@ public class ErosionCore
             ErosionRegistry.Items.BORAX.get()
         ), List.of(
             ErosionRegistry.GasTypes.WATER_VAPOR
-        )
+        ),false
+    );
+    
+
+    // ------------------------------- COOLING FLUIDS
+
+    public static final ChemicalReactorCoolingFluid WATER = new ChemicalReactorCoolingFluid(
+        Items.WATER_BUCKET.getDescription().getString(),
+        () -> Items.WATER_BUCKET,
+        () -> Items.BUCKET
     );
 
     // ========================== REGISTRY
@@ -1651,10 +1694,13 @@ public class ErosionCore
         ANHYDROUS_BORAX_HYDRATION
     );
 
+    private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL = List.of();
+
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST = new ArrayList<>();
+    private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST = new ArrayList<>();
 
     public static void add(RefinableMaterial e)
     {
@@ -1671,6 +1717,11 @@ public class ErosionCore
     public static void add(ChemicalReaction e)
     {
         CHEMICAL_REACTION_LIST.add(e);
+    }
+
+    public static void add(ChemicalReactorCoolingFluid e)
+    {
+        CHEMICAL_REACTOR_COOLING_FLUID_LIST.add(e);
     }
 
     // =====================================
@@ -1695,11 +1746,13 @@ public class ErosionCore
         ALTERABLE_MATERIALS_LIST.clear();
         CRUCIBLE_CATALYST_LIST.clear();
         CHEMICAL_REACTION_LIST.clear();
+        CHEMICAL_REACTOR_COOLING_FLUID_LIST.clear();
 
         REFINABLE_MATERIALS_LIST.addAll(REFINABLE_MATERIALS_LIST_ORIGINAL);
         ALTERABLE_MATERIALS_LIST.addAll(ALTERABLE_MATERIALS_LIST_ORIGINAL);
         CRUCIBLE_CATALYST_LIST.addAll(CRUCIBLE_CATALYST_LIST_ORIGINAL);
         CHEMICAL_REACTION_LIST.addAll(CHEMICAL_REACTION_LIST_ORIGINAL);
+        CHEMICAL_REACTOR_COOLING_FLUID_LIST.addAll(CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL);
 
         for(int i = 0; i < ErosionModCompat.COMPATIBLE_MODS.size(); ++i)
         {
@@ -1738,6 +1791,12 @@ public class ErosionCore
             var m = CHEMICAL_REACTION_LIST.get(i);
             m.setup();
         }
+
+        for(int i = 0; i < CHEMICAL_REACTOR_COOLING_FLUID_LIST.size(); ++i)
+        {
+            var m = CHEMICAL_REACTOR_COOLING_FLUID_LIST.get(i);
+            m.setup();
+        }
         return;
     }
 
@@ -1770,6 +1829,12 @@ public class ErosionCore
         for(int i = 0; i < CHEMICAL_REACTION_LIST.size(); ++i)
         {
             var m = CHEMICAL_REACTION_LIST.get(i);
+            m.discard();
+        }
+
+        for(int i = 0; i < CHEMICAL_REACTOR_COOLING_FLUID_LIST.size(); ++i)
+        {
+            var m = CHEMICAL_REACTOR_COOLING_FLUID_LIST.get(i);
             m.discard();
         }
         return;
@@ -1841,6 +1906,25 @@ public class ErosionCore
                 .withStyle(ChatFormatting.DARK_AQUA)
             );
         }
+        else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_COOLING_SYSTEM.get())
+        {
+            desc.add(
+                Component.literal("A cooling system designed to safely handle heat produced by the chemical reactor when doing exothermic reactions.")
+                .withStyle(ChatFormatting.DARK_PURPLE)
+            );
+            desc.add(
+                Component.literal(
+                    "- Must be placed horizontally adjacent to a " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName() + " or " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() +
+                    " to establish a functional cooling pipe link.")
+                .withStyle(ChatFormatting.GRAY)
+            );
+            desc.add(
+                Component.literal("- The top must not be blocked by another block.")
+                .withStyle(ChatFormatting.DARK_AQUA)
+            );
+        }
         else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get())
         {
             desc.add(
@@ -1852,6 +1936,7 @@ public class ErosionCore
                     "- Can be connected to: " +
                     ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() + ", " +
                     ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName() + ", " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getName() + ", " +
                     ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName()
                 )
                 .withStyle(ChatFormatting.GRAY)
@@ -2166,13 +2251,15 @@ public class ErosionCore
 
         final class SynthFromData
         {
-            public String reactionName;
-            public List<String> from;
+            public final String reactionName;
+            public final List<String> from;
+            public final boolean exothermic;
 
-            public SynthFromData(String n, List<String> f)
+            public SynthFromData(String n, List<String> f, boolean e)
             {
                 this.reactionName = n;
                 this.from = f;
+                this.exothermic = e;
             }
         }
 
@@ -2193,7 +2280,17 @@ public class ErosionCore
                 {
                     l.add(k.getDescription().getString());
                 }
-                synthFrom.add(new SynthFromData(p.name, l));
+                synthFrom.add(new SynthFromData(p.name, l, p.isExothermic()));
+            }
+        }
+
+        boolean isCoolingFluid = false;
+        for(var p : CHEMICAL_REACTOR_COOLING_FLUID_LIST)
+        {
+            if(currentItem == p.coolingFluidItem)
+            {
+                isCoolingFluid = true;
+                break;
             }
         }
 
@@ -2201,13 +2298,21 @@ public class ErosionCore
 
         if(
             !(usedIn.isEmpty()) ||
-            !(synthFrom.isEmpty())
+            !(synthFrom.isEmpty()) ||
+            isCoolingFluid
         )
         {
             desc.add(Component.literal(""));
             desc.add(
                 Component.literal("Chemical reactor information").
                 withStyle(ChatFormatting.DARK_GREEN, ChatFormatting.UNDERLINE)
+            );
+        }
+        if(isCoolingFluid)
+        {
+            desc.add(
+                Component.literal("- Used as a cooling fluid for safely handling exothermic reactions in the reactor.")
+                .withStyle(ChatFormatting.DARK_RED)
             );
         }
         if(!usedIn.isEmpty())
@@ -2241,6 +2346,16 @@ public class ErosionCore
             {
                 desc.add(
                     Component.literal(TAB).withStyle(ChatFormatting.GRAY)
+                    .append(ErosionUtils.compute(() -> {
+                        Component c = Component.literal("");
+                        if(s.exothermic)
+                        {
+                            c = Component.literal("(").withStyle(ChatFormatting.GRAY)
+                            .append(Component.literal("Exothermic!").withStyle(ChatFormatting.RED))
+                            .append(Component.literal(")").withStyle(ChatFormatting.GRAY));
+                        }
+                        return c;
+                    }))
                     .append(
                         Component.literal(s.reactionName).withStyle(ChatFormatting.YELLOW)
                     ).append(
@@ -2729,17 +2844,23 @@ public class ErosionCore
     // =================================================== //
     public static class BlockRecipes
     {
+        
+    }
+
+    public static class BlockEntityRecipes
+    {
         public static class ChemicalReactor
         {
+            private static Map<Item, Item> COOLING_LIQUIDS = new HashMap<>();
+            public static Map<Item, Item> getChemicalReactorCoolingLiquids()
+            {
+                return Collections.unmodifiableMap(COOLING_LIQUIDS);
+            }
             public static final List<ChemicalReaction> getChemicalReactions()
             {
                 return Collections.unmodifiableList(CHEMICAL_REACTION_LIST);
             }
         }
-    }
-
-    public static class BlockEntityRecipes
-    {
         public static class MaterialPurifier
         {
             private static Map<Item, List<Item>> RECIPES = new HashMap<>();

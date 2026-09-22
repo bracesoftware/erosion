@@ -10,6 +10,7 @@ import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.Erosio
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system.ChemicalReactorCoolingSystemBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,6 +36,7 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
         //use same mechanism for searching as i did in findNearestReactorComponent or whatever it is called xd
         int reactorsFound = 0;
         int scrubbersFound = 0;
+        int coolingSystemsFound = 0;
         var visited = new HashSet<BlockPos>();
         var queue = new LinkedList<BlockPos>();
 
@@ -51,6 +53,7 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
                 visited.add(pozz);
                 var s = p.level().getBlockState(pozz);
                 var blok = s.getBlock();
+                //if it is a functional multiblock component,increase the counter
                 if(blok instanceof ChemicalReactorBlock)
                 {
                     reactorsFound++;
@@ -59,6 +62,11 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
                 {
                     scrubbersFound++;
                 }
+                else if(blok instanceof ChemicalReactorCoolingSystemBlock)
+                {
+                    coolingSystemsFound++;
+                }
+                //else we search
                 else if(blok instanceof ChemicalReactorModuleBlock)
                 {
                     queue.add(pozz);
@@ -81,6 +89,15 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
         );
         else ErosionUtils.displayMessage(
             p, scrubbersFound + " scrubber(s) connected",
+            ErosionScreenMessage.Color.DARK_GREEN
+        );
+
+        if(coolingSystemsFound == 0) ErosionUtils.displayMessage(
+            p, "No cooling systems are connected",
+            ErosionScreenMessage.Color.DARK_RED
+        );
+        else ErosionUtils.displayMessage(
+            p, coolingSystemsFound + " cooling system(s) connected",
             ErosionScreenMessage.Color.DARK_GREEN
         );
 

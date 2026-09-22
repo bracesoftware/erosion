@@ -14,7 +14,7 @@ public class ErosionDataGenInternal
     private static final String assetsGenerated = assetsBlock + ErosionUtils.getGeneratedFolder();
     public static void generateChemicalReactorAnims()
     {
-
+        String where;
         ErosionTextureGen.createAnimatedTexture(
             ErosionUtils.getResourcesFolder() +
             assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId() + "_top." +
@@ -36,6 +36,24 @@ public class ErosionDataGenInternal
             ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
             generateNameList(assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), 4, "top"),
             5, true
+        );
+
+        where = "side";
+        ErosionTextureGen.createAnimatedTexture(
+            ErosionUtils.getResourcesFolder() +
+            assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId() + "_" + where + "." +
+            ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
+            generateNameList(assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), 4, where),
+            15, true
+        );
+
+        where = "top";
+        ErosionTextureGen.createAnimatedTexture(
+            ErosionUtils.getResourcesFolder() +
+            assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId() + "_" + where + "." +
+            ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT,
+            generateNameList(assetsGenerated + ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), 36, where),
+            2, false
         );
         return;
     }

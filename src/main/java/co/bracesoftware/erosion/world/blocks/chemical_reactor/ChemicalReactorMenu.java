@@ -6,8 +6,10 @@ import java.util.List;
 
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
+import co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system.ChemicalReactorCoolingSystemBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
@@ -158,13 +160,14 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
 
     private void scanRecipez()
     {
-        for(var cr : ErosionCore.BlockRecipes.ChemicalReactor.getChemicalReactions())
+        for(var cr : ErosionCore.BlockEntityRecipes.ChemicalReactor.getChemicalReactions())
         {
             if(cr.getReactants().equals(this.reactantsAsItemList()))
             {
                 this.fillContainer(products, cr.getProducts());
                 this.gasesToBeEmitted = cr.getGasCoproducts();
                 this.handleGasEmission();
+                if(cr.isExothermic()) this.handleExothermicReaction();
                 
                 for(int i = 0; i < this.reactants.getContainerSize(); i++)
                 {
@@ -187,6 +190,23 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
         return;
     }
 
+    public void handleExothermicReaction()
+    {
+        var l = (ServerLevel) this.player.level();
+        var result = ChemicalReactorBlock.getNearestChemicalReactorMultiBlockComponent(
+            l,this.position, ChemicalReactorCoolingSystemBlock.class
+        );
+        if(!result.yes)
+        {
+            this.player.igniteForSeconds(10);
+            ErosionUtils.displayMessage(
+                this.player, "Connect a cooling system",
+                ErosionScreenMessage.Color.GOLD
+            );
+        }
+        else ChemicalReactorBlock.consumeSomeCoolingFluid(l, BlockPos.of(result.pos));
+    }
+
     public void handleGasEmission()
     {
         if(this.gasesToBeEmitted == null) return;
@@ -197,11 +217,11 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
             var result = ChemicalReactorBlock.getNearestChemicalReactorMultiBlockComponent(
                 l, this.position, ChemicalReactorScrubberBlock.class
             );
-            if(!result.first())
+            if(!result.yes)
             {
                 Gas.createGas(l, this.position, g);
             }
-            else ChemicalReactorBlock.damageScrubberFilter(l, result.second());
+            else ChemicalReactorBlock.damageScrubberFilter(l, BlockPos.of(result.pos));
         }
         return;
     }

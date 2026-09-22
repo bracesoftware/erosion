@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system;
 
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
+import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipes;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
@@ -13,6 +14,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -56,22 +58,31 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
 
     @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
     {
-        var it = p.getItemStack().getItem();
+        var holdingItem = p.getItemStack().getItem();
         int lev = p.getBlockState().getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
-        if(it == ErosionRegistry.Items.GAS_FILTER.get())
+        for(var item : BlockEntityRecipes.ChemicalReactor.getChemicalReactorCoolingLiquids().entrySet())
         {
-            if(lev > 0)
+            var coolingItem = item.getKey();
+            var giveBack = item.getValue();
+            if(holdingItem == coolingItem)
             {
+                if(lev > 0)
+                {
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "There is still enough fluid in the system",
+                        ErosionScreenMessage.Color.RED
+                    );
+                    return true;
+                }
+                p.getItemStack().shrink(1);
+                var ns = p.getBlockState().setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, 1000);
+                p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
+                p.getServerPlayer().getInventory().placeItemBackInInventory(new ItemStack(giveBack, 1));
                 ErosionUtils.displayMessage(
-                    p.getServerPlayer(), "There is still enough fluid in the system",
-                    ErosionScreenMessage.Color.RED
+                    p.getServerPlayer(), "Fluid successfully applied"
                 );
                 return true;
             }
-            p.getItemStack().shrink(1);
-            var ns = p.getBlockState().setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, 1000);
-            p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
-            return true;
         }
         return false;
     }
