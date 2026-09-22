@@ -1837,8 +1837,8 @@ public class ErosionCore
             desc.add(
                 Component.literal(
                     "- Can be connected to: " +
-                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() + "," +
-                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName() + "," +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName() + ", " +
+                    ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName() + ", " +
                     ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName()
                 )
                 .withStyle(ChatFormatting.GRAY)
