@@ -40,6 +40,7 @@ public class ErosionDataGenerators
         }
         
         //other stuff
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
         ErosionDataGenInternal.generateChemicalReactorAnims();
 
         //client provider

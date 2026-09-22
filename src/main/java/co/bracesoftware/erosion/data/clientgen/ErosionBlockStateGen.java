@@ -101,7 +101,6 @@ public class ErosionBlockStateGen extends BlockStateProvider
 
         //MACHINES
         // ============================================= //
-        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
         //ModelFile[][][] purifierModels = new ModelFile[ErosionConfig.MAX_PURIFIER_FUEL + 1][2][];
 
         getVariantBuilder(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()).forAllStates(s -> {
