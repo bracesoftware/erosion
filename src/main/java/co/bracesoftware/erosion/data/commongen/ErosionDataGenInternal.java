@@ -48,7 +48,7 @@ public class ErosionDataGenInternal
             int idx = i + 1;
             l.add(
                 ErosionUtils.getResourcesFolder() + assetsBlock +
-                ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId() + "_" + orientation + "_" + idx + "." +
+                id + "_" + orientation + "_" + idx + "." +
                 ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT
             );
         }
