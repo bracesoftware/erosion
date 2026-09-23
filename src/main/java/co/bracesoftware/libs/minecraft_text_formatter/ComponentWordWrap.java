@@ -44,15 +44,9 @@ public class ComponentWordWrap
 
         for(var sw : a)
         {
-            boolean ww = sw.text.isBlank();
+            boolean ww = isSymbol(sw.text) || sw.text.isBlank();
 
-            if(ww && iss)
-            {
-                cc.append(Component.literal(sw.text).setStyle(sw.style));
-                continue;
-            }
-
-            if(isSymbol(sw.text)) //preserve symbols
+            if(ww && iss) //prserve formatting 
             {
                 cc.append(Component.literal(sw.text).setStyle(sw.style));
                 continue;
@@ -68,7 +62,7 @@ public class ComponentWordWrap
                 cc = Component.empty();
                 w = 0;
                 iss = true;
-                if(sw.text.isBlank()) //prserve formatting 
+                if(sw.text.isBlank())
                 {
                     cc.append(Component.literal(sw.text).setStyle(sw.style));
                     continue;
