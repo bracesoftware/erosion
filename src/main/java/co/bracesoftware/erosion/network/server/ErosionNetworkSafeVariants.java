@@ -11,9 +11,12 @@ import com.mojang.serialization.MapCodec;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionNetworkSafeBlockException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
+import co.bracesoftware.erosion.ErosionMod;
+import co.bracesoftware.libs.chrono.Task;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -136,16 +139,28 @@ public class ErosionNetworkSafeVariants
 
     public static abstract class ErosionNetworkSafeBlock extends Block
     {
+        public static enum RandomTickFrequency
+        {
+            VERY_LOW(1000), LOW(500), MEDIUM(250),
+            HIGH(100), VERY_HIGH(20);
+
+            private final int delay;
+            RandomTickFrequency(int when)
+            {
+                this.delay = when;
+            }
+
+            public int getDelay() { return this.delay; }
+        }
+
+        private boolean randomTickSetup = false;
         private boolean callUseItemOnOnlyFlag = false;
+        private RandomTickFrequency randomTickFrequency = RandomTickFrequency.VERY_LOW;
         public ErosionNetworkSafeBlock(Block.Properties p)
         {
             super(p);
         }
-
-        public final void callUseItemOnOnly(boolean cfg)
-        {
-            this.callUseItemOnOnlyFlag = cfg;
-        }
+        
         // ====================API===================== // 
         public static final class ErosionBlockInteractionPacket
         {
@@ -193,6 +208,25 @@ public class ErosionNetworkSafeVariants
         {
             return;
         }
+
+        public void serverOnRandomTick(ErosionBlockInteractionPacket p)
+        {
+            return;
+        }
+
+        public final void callUseItemOnOnly(boolean cfg)
+        {
+            this.callUseItemOnOnlyFlag = cfg;
+        }
+
+        public final void setRandomTickFrequency(RandomTickFrequency f)
+        {
+            this.randomTickFrequency = f;
+        }
+        public final RandomTickFrequency getRandomTickFrequency()
+        {
+            return this.randomTickFrequency;
+        }
         // ============================================ //
         @SuppressWarnings("all")
         private static <T> T booleanToInteractionResult(
@@ -234,6 +268,30 @@ public class ErosionNetworkSafeVariants
             //super.useItemOn(stack, s, l, bp, p, hand, hr);
             return ItemInteractionResult.SUCCESS;
         }
+
+        @Override
+        public final void tick(BlockState bs, ServerLevel l, BlockPos bp, RandomSource r) {}
+        @Override public final void randomTick(BlockState bs, ServerLevel l, BlockPos bp, RandomSource r)
+        {
+            super.tick(bs, l, bp, r);
+            if(!this.randomTickSetup)
+            {
+                this.randomTickSetup = true;
+                tickManager(bs, l, bp);
+            }
+            return;
+        }
+
+        private final void tickManager(BlockState bs, ServerLevel l, BlockPos bp)
+        {
+            if(!l.getBlockState(bp).is(this)) return;
+            this.serverOnRandomTick(new ErosionBlockInteractionPacket(null, bs, l, bp, null, null, null));
+            var d = this.getRandomTickFrequency().getDelay();
+            Task.schedule(d + ErosionMod.RANDOM.nextInt(d), () -> {
+                tickManager(bs,l,bp);
+            });
+        }
+
         /* 
         @Override protected final InteractionResult useWithoutItem(
             BlockState bs, Level leva, BlockPos bp,

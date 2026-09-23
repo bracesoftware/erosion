@@ -51,11 +51,13 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
             this.stateDefinition.any().
             setValue(FILTER_DURABILITY,0)
         );
+
+        this.setRandomTickFrequency(RandomTickFrequency.MEDIUM);
     }
 
-    @Override public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random)
+    @Override public void serverOnRandomTick(ErosionBlockInteractionPacket p)
     {
-        ErosionUtils.spawnGasParticle(level, pos);
+        ErosionUtils.spawnGasParticle(p.getServerLevel(), p.getBlockPos());
         return;
     }
 
