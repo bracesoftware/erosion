@@ -26,6 +26,30 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ErosionUtils
 {
+    public static int getTicksRemainingUntil(long ct, int interval)
+    {
+        return (int) (interval - (ct % interval)) % interval;
+    }
+
+    public static String tickToFormattedTime(int tick)
+    {
+        int totalSeconds = tick / 20;
+
+        int days = totalSeconds / 86400;
+        int hours = (totalSeconds % 86400) / 3600;
+        int minutes = (totalSeconds % 3600) / 60;
+        int seconds = totalSeconds % 60;
+
+        var result = new StringBuilder();
+
+        if(days > 0) result.append(days).append(" day(s) ");
+        if(hours > 0) result.append(hours).append(" hr(s) ");
+        if(minutes > 0) result.append(minutes).append(" min(s) ");
+        if(seconds > 0 || result.isEmpty()) result.append(seconds).append(" sec(s)");
+
+        return result.toString().trim();
+    }
+
     public static int minutesToTick(int min)
     {
         return min * 60 * 20;

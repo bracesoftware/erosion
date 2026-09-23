@@ -1,0 +1,78 @@
+{
+  "variants": {
+    "": [
+      {
+        "model": "erosion:block/dehydrated_limonite_ore"
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "y": 90
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "y": 180
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "y": 270
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 90
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 90,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 90,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 90,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 180
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 180,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 180,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 180,
+        "y": 270
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 270
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 270,
+        "y": 90
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 270,
+        "y": 180
+      },
+      {
+        "model": "erosion:block/dehydrated_limonite_ore",
+        "x": 270,
+        "y": 270
+      }
+    ]
+  }
+}

@@ -3,6 +3,7 @@ package co.bracesoftware.erosion.network.client;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionRetrogen;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.libs.minecraft_text_formatter.*;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -19,25 +20,25 @@ public class ErosionDebugOverlay
     );
     
     @SubscribeEvent
-    public static void onDebugText(CustomizeGuiOverlayEvent.DebugText event)
+    public static void onDebugText(CustomizeGuiOverlayEvent.DebugText e)
     {
-        event.getRight().add("");
-        event.getRight().add(
+        e.getRight().add("");
+        e.getRight().add(
             MAIN_STYLE + 
             Text.Format(Text.Col.DARK_GREEN) +
             "Installed: build " + Erosion.BUILD
         );
-        event.getRight().add(
+        e.getRight().add(
             MAIN_STYLE + Text.Format(Text.Col.DARK_AQUA) +
             "Snapshot: " + Erosion.SNAPSHOT
         );
 
-        event.getLeft().add("");
-        event.getLeft().add(
+        e.getLeft().add("");
+        e.getLeft().add(
             MAIN_STYLE +
             ErosionClientData.CACHED_STATUS_STRING
         );
-        event.getLeft().add(
+        e.getLeft().add(
             MAIN_STYLE +
             Text.Format(Text.Col.AQUA) + 
             ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getName() + ": " + 
@@ -49,11 +50,18 @@ public class ErosionDebugOverlay
                 )
             )
         );
-        event.getLeft().add(
+        e.getLeft().add(
             MAIN_STYLE +
             "Retrogen blocks generated: " + 
             Text.Format(Text.Col.GOLD) +
             ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
+        );
+
+        e.getLeft().add(
+            MAIN_STYLE +
+            "Geochemical process wave in: " + 
+            Text.Format(Text.Col.DARK_AQUA) +
+            ErosionUtils.tickToFormattedTime(ErosionClientData.CLIENT_UNTIL)
         );
         return;
     }

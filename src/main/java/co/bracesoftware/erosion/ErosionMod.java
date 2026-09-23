@@ -212,7 +212,12 @@ public final class ErosionMod
                 ErosionCore.getPerformedAlterationsPriority(),
                 ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getBoolean(),
                 ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED,
-                ErosionCore.getPendingAgainSize()
+                ErosionCore.getPendingAgainSize(),
+                ErosionUtils.getTicksRemainingUntil(
+                    tick, ErosionUtils.minutesToTick(
+                        ErosionConfig.PROCESS_PENDING_AGAIN_INTERVAL_MINS
+                    )
+                )
             );
 
             var pl = e.getServer().getPlayerList().getPlayers();

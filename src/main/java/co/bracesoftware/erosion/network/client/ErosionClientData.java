@@ -9,6 +9,7 @@ import net.neoforged.api.distmarker.Dist;
 
 public class ErosionClientData
 {
+    public static int CLIENT_UNTIL = 0; 
     public static String CACHED_STATUS_STRING = "No data yet!";
     public static class ConfigFromServer
     {
@@ -23,12 +24,13 @@ public class ErosionClientData
     public static void updateModStatus(
         int pending, long performed, int pendingfast, long performed2,
         boolean agal,
-        int retrogen, int pendingagain
+        int retrogen, int pendingagain,int until
     )
     {
-        CACHED_STATUS_STRING = formatModStatusString(pending, performed, pendingfast, performed2,pendingagain);
+        ErosionClientData.CACHED_STATUS_STRING = formatModStatusString(pending, performed, pendingfast, performed2,pendingagain);
         ConfigFromServer.AGGRESIVE_GEOCHEMICAL_ALTERATION = agal;
         ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED = retrogen;
+        ErosionClientData.CLIENT_UNTIL = until;
     }
 
     public static String formatModStatusString(int pending, long performed, int pendingfast, long performed2, int pendingagain)

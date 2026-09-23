@@ -12,6 +12,7 @@
     "erosion:raw_azurite",
     "erosion:raw_tetrahedrite",
     "erosion:raw_arsenopyrite",
-    "erosion:raw_pyrite"
+    "erosion:raw_pyrite",
+    "erosion:raw_dehydrated_limonite"
   ]
 }

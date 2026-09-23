@@ -15,7 +15,8 @@ public record ErosionStatusSyncPacket(
     long performed2,
     boolean agal,
     int retrogen,
-    int pendingagain
+    int pendingagain,
+    int until
 ) implements CustomPacketPayload
 {
     public static final StreamCodec<RegistryFriendlyByteBuf, ErosionStatusSyncPacket> STREAM_CODEC = StreamCodec.of(
@@ -27,6 +28,7 @@ public record ErosionStatusSyncPacket(
             ByteBufCodecs.BOOL.encode(buf, packet.agal());
             ByteBufCodecs.INT.encode(buf, packet.retrogen());
             ByteBufCodecs.INT.encode(buf, packet.pendingagain());
+            ByteBufCodecs.INT.encode(buf, packet.until());
         },
         buf -> new ErosionStatusSyncPacket(
             ByteBufCodecs.INT.decode(buf),
@@ -34,6 +36,7 @@ public record ErosionStatusSyncPacket(
             ByteBufCodecs.INT.decode(buf),
             ByteBufCodecs.VAR_LONG.decode(buf),
             ByteBufCodecs.BOOL.decode(buf),
+            ByteBufCodecs.INT.decode(buf),
             ByteBufCodecs.INT.decode(buf),
             ByteBufCodecs.INT.decode(buf)
         )
@@ -55,7 +58,8 @@ public record ErosionStatusSyncPacket(
                 data.performed2(),
                 data.agal(),
                 data.retrogen(),
-                data.pendingagain()
+                data.pendingagain(),
+                data.until()
             );
         });
     }

@@ -1521,7 +1521,9 @@ public class ErosionCore
             
             ErosionRegistry.Items.RAW_LIMONITE.get(),
             ErosionRegistry.Items.RAW_MAGNETITE.get(),
-            ErosionRegistry.Items.RAW_MAGNETITE.get(),
+            ErosionRegistry.Items.RAW_HEMATITE.get(),
+            ErosionRegistry.Items.RAW_GOETHITE.get(),
+
             ErosionRegistry.Items.RAW_MALACHITE.get(),
             ErosionRegistry.Items.RAW_AZURITE.get(),
             ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
@@ -1531,8 +1533,11 @@ public class ErosionCore
 
             ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
             ErosionRegistry.Items.RAW_CASSITERITE.get(),
-            ErosionRegistry.Items.RAW_SPHALERITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+            ErosionRegistry.Items.RAW_SPHALERITE.get(),
+
+            ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+            ErosionRegistry.Items.RAW_PYRITE.get()
+        )
     );
 
     public static final RefinableMaterial.Crucible RAW_LIMONITE = new RefinableMaterial.Crucible(
@@ -1927,7 +1932,7 @@ public class ErosionCore
         RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
         RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
         BORAX, CRACKED_STONE, ARSENOPYRITE_ORE, RAW_ARSENOPYRITE,
-        PYRITE_ORE, RAW_PYRITE
+        PYRITE_ORE, RAW_PYRITE, GOETHITE_ORE, RAW_GOETHITE
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
         FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
@@ -2975,7 +2980,7 @@ public class ErosionCore
         if(l.dimension() != Level.OVERWORLD) return;
       
         int tick = e.getLevel().getServer().getTickCount();
-        if(tick % ErosionUtils.minutesToTick(2) == 0)
+        if(tick % ErosionUtils.minutesToTick(ErosionConfig.PROCESS_PENDING_AGAIN_INTERVAL_MINS) == 0)
         {
             processPendingCore(PENDING_AGAIN, l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK * 2, false);
         }

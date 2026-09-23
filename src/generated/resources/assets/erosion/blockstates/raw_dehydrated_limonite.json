@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,waterlogged=false": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 90
+    },
+    "facing=east,waterlogged=true": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 90
+    },
+    "facing=north,waterlogged=false": {
+      "model": "erosion:block/raw_dehydrated_limonite"
+    },
+    "facing=north,waterlogged=true": {
+      "model": "erosion:block/raw_dehydrated_limonite"
+    },
+    "facing=south,waterlogged=false": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 180
+    },
+    "facing=south,waterlogged=true": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 180
+    },
+    "facing=west,waterlogged=false": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 270
+    },
+    "facing=west,waterlogged=true": {
+      "model": "erosion:block/raw_dehydrated_limonite",
+      "y": 270
+    }
+  }
+}

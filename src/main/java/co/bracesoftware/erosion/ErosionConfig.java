@@ -40,6 +40,7 @@ public final class ErosionConfig
     public static final int PURIFIER_SECONDS = 10;
     public static final int CRUCIBLE_SECONDS = 15;
     public static final int CHUNK_SIZE = 16;
+    public static final int PROCESS_PENDING_AGAIN_INTERVAL_MINS = 2;
 
     public static final boolean SOMETHING_WENT_WRONG = false;
 
