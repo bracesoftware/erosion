@@ -4,19 +4,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.ErosionAdvancement;
-import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
-import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.data.AdvancementProvider;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -30,6 +23,7 @@ public class ErosionAdvGen extends AdvancementProvider
         super(o, r, efh, List.of(new Generator()));
     }
 
+    @SuppressWarnings("all")
     public static class Generator implements AdvancementProvider.AdvancementGenerator
     {
         public ExistingFileHelper efh = null;

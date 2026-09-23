@@ -3,9 +3,7 @@ package co.bracesoftware.erosion;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorMenu;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
-import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask.Quality;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
-import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask;
 import co.bracesoftware.erosion.api.eventbus.*;
 
 import java.util.ArrayList;
@@ -17,23 +15,16 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
-import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
-import co.bracesoftware.erosion.ErosionCore.AlterationPacketList;
-import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
-import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -50,8 +41,6 @@ import net.minecraft.world.level.material.Fluids;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.LevelTickEvent;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
-import net.neoforged.neoforge.registries.DeferredItem;
 import it.unimi.dsi.fastutil.longs.*;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -223,6 +212,7 @@ public class ErosionCore
         }
     }
 
+    @SuppressWarnings("all")
     public static abstract class ErosionDynamicItem
     {
         public String name;
@@ -2229,6 +2219,7 @@ public class ErosionCore
                 this.info = l;
             }
 
+            @SuppressWarnings("all")
             public ChemicalInfo()
             {
                 this.info = List.of(

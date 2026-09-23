@@ -3,8 +3,6 @@ package co.bracesoftware.erosion.world.blocks.crucible;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionCrucibleException;
@@ -16,23 +14,9 @@ import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.ReloadableServerRegistries.Holder;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.Containers;
-import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.AABB;
-import net.neoforged.neoforge.items.IItemHandler;
-import net.neoforged.neoforge.items.ItemStackHandler;
-import net.minecraft.core.Direction;
-import org.jetbrains.annotations.NotNull;
 
 public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleBlockEntity>
 {
@@ -60,6 +44,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
     }
 
     @Override
+    @SuppressWarnings("all")
     public boolean onBlockEntityTickOnServer(
         CrucibleBlockEntity be, ErosionBlockEntityTickPacket p
     ) throws ErosionCrucibleException

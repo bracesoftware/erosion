@@ -2,8 +2,6 @@ package co.bracesoftware.erosion.network.server;
 
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
-import co.bracesoftware.erosion.ErosionClient;
-import co.bracesoftware.erosion.network.client.ErosionClientData;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

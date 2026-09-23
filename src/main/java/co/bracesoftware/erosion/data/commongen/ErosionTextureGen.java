@@ -14,7 +14,6 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

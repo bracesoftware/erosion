@@ -1,7 +1,6 @@
 package co.bracesoftware.erosion.world;
 
 import java.util.List;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import co.bracesoftware.erosion.Erosion;
@@ -14,24 +13,18 @@ import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
-import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.IronBarsBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -39,7 +32,6 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -54,8 +46,6 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
-import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
-import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -372,6 +362,7 @@ public class ErosionRegistry
         );
     }
 
+    @SuppressWarnings("all")
     public static class SoundTypes
     {
         public static final SoundType ORE = new SoundType(

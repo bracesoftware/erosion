@@ -1,7 +1,5 @@
 package co.bracesoftware.erosion;
 
-import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
-
 public class ErosionExceptions
 {
     public static abstract class ErosionException extends RuntimeException

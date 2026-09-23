@@ -11,7 +11,6 @@ import com.mojang.serialization.MapCodec;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionNetworkSafeBlockException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
-import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -70,6 +69,7 @@ public class ErosionNetworkSafeVariants
             return false;
         }
 
+        @SuppressWarnings("all")
         public static void tick(Level l, BlockPos bp, BlockState bs, ErosionNetworkSafeBlockEntity e)
         {
             e.tickAge++;
@@ -84,13 +84,14 @@ public class ErosionNetworkSafeVariants
             return;
         }
     }
+    @SuppressWarnings("all")
     public static abstract class ErosionNetworkSafeBaseEntityBlock<T> extends ErosionNetworkSafeBlock implements EntityBlock
     {
         private final MapCodec<T> codecHolder;
-        public final Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> networkSafeBlockEntityType;
+        public final Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>> networkSafeBlockEntityType;
         public ErosionNetworkSafeBaseEntityBlock(
             Block.Properties p, 
-            Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity>> t,
+            Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>> t,
             Function<Properties, T> codecBuilder
         )
         {
@@ -193,6 +194,7 @@ public class ErosionNetworkSafeVariants
             return;
         }
         // ============================================ //
+        @SuppressWarnings("all")
         private static <T> T booleanToInteractionResult(
             Class<T> c, boolean s
         ) throws ErosionNetworkSafeBlockException

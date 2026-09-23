@@ -9,20 +9,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.arguments.StringArgumentType;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
-import co.bracesoftware.erosion.ErosionCommandProcessor.ErosionCommand;
-import co.bracesoftware.erosion.ErosionConfig.ServerConfig;
 import co.bracesoftware.erosion.ErosionCore.ErosionDynamicItem;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandParserException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandSetupException;
-import co.bracesoftware.erosion.network.client.ErosionDebugOverlay;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 

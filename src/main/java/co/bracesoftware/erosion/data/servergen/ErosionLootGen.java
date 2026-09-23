@@ -1,6 +1,5 @@
 package co.bracesoftware.erosion.data.servergen;
 
-import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -10,7 +9,6 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

@@ -1,45 +1,30 @@
 package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 
-import co.bracesoftware.erosion.ErosionExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionChemicalReactorException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
-import co.bracesoftware.erosion.ErosionUtils.ErosionPair;
 
 import java.util.HashSet;
 
 import javax.annotation.Nullable;
-import java.util.Set;
-import java.util.Queue;
 import java.util.LinkedList;
-import java.util.List;
 
-import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
-import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system.ChemicalReactorCoolingSystemBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalReactorModuleBlock;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
-import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlock;
-import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.BlockHitResult;
 
 public class ChemicalReactorBlock extends ErosionNetworkSafeBaseEntityBlock<ChemicalReactorBlock>
 implements IErosionChemicalReactorMultiBlockComponent

@@ -1,10 +1,8 @@
 package co.bracesoftware.erosion.world.blocks;
 
 import co.bracesoftware.erosion.ErosionConfig;
-import co.bracesoftware.erosion.ErosionExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionBlockWithTipImpl;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.GravelBlock;
 
 import java.util.EnumMap;
 import java.util.Map;
@@ -219,12 +217,6 @@ public class ErosionSimpleBlocks
             .mapColor(MapColor.DEEPSLATE)
             .sound(ErosionRegistry.SoundTypes.ROCK)
             .noCollission();
-        }
-
-        @Deprecated 
-        private static BlockBehaviour.Properties getPropertiesz()
-        {
-            return null;
         }
 
         public RockBlock(Properties p)

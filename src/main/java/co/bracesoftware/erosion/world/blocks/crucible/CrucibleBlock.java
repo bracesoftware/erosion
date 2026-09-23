@@ -3,22 +3,16 @@ package co.bracesoftware.erosion.world.blocks.crucible;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.ItemInteractionResult;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
-import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
@@ -26,23 +20,18 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import java.util.List;
 
-import org.checkerframework.checker.units.qual.m;
 import org.jetbrains.annotations.Nullable;
 
-import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
@@ -51,8 +40,8 @@ import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import com.mojang.serialization.MapCodec;
 
+@SuppressWarnings("all")
 public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlock>
 {
     public static final int MIN_XZ = 4;

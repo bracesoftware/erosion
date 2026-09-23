@@ -17,6 +17,59 @@ import net.neoforged.fml.ModList;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.server.ServerLifecycleHooks;
 
+/*
+
+This huge comment is dedicated to:
+
+    IN-GAME ITEMS:
+        * Kaolinized Granite
+        -                   for being THE FIRST BLOCK ADDED TO THE MOD!
+        * Material Purifier
+        -                   for being THE FIRST BLOCK ENTITY ADDED TO THE MOD!
+        * Crucible
+        -                   for being THE FIRST BLOCK WITH A CUSTOM MODEL
+        * Chemical Reactor
+        and its components
+        such as Cooling System,
+        Scrubber and Module
+        -                   for being the FIRST BLOCK WITH A MULTIBLOCK SYSTEM
+        -                   for being the FIRST BLOCK WITH AN ABSTRACTCOINTAINERMENU IMPLEMENTATION
+        -                   for being the first block to be implemented using the custom Erosion network-safe block api
+        * Hematite, Magnetite, Limonite
+        and Malachite
+        -                   for being THE FIRST 4 ORES TO BE ADDED TO THE mod
+        * Gas Mask
+        -                   for being the FIRST WEARABLE ITEM ADDED TO THE MOD
+        * Sulfur Dioxide
+        -                   for being the first gas to be added as a custom gas entity
+        * Ore Mining Sound
+        -                   for being the first custom sound added by the mod
+        * ChemicalReactorMenu
+        -                   for being the first menu to be added to the game
+
+    SOURCE CODE:
+        * ErosionNetworkSafeVariants, and the whole erosion.data package
+        -                   for making my life easier
+        * ErosionMod, ErosionCore, ErosionUtils
+        -                   for being the first classes to be added to the source code
+        * ErosionRegistry
+        -                   for being the bravest class out of them all
+        * ErosionClusterHandler, ErosionRetrogen
+        -                   for bringing super cool retrogen mechanisms this mod would be impossible without
+        * ErosionModCompat, ErosionSimpleItems, ErosionSplash, ErosionSimpleBlocks
+        -                   for little funny things
+        * ErosionClient
+        -                   for being the first and only class to IMPLEMENT CLIENT-ONLY STUFF
+        * ErosionBrandingText
+        -                   for being first and almost last attempt at writing mixins
+        * ErosionStatusSyncPacket
+        -                   for being THE FIRST NETWORK PACKET TO BE ADDED
+        * ChemicalReactorBlock.ChemicalReactorMultiBlockComponentPosPacket
+        -                   for being an absolute gigachad class
+        * IErosionBlockWithTip
+        -                   for being a first very useful interface
+*/
+
 @Mod(Erosion.MODID)
 @EventBusSubscriber(modid = Erosion.MODID)
 public class Erosion

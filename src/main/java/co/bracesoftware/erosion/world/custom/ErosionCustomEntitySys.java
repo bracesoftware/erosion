@@ -2,9 +2,6 @@ package co.bracesoftware.erosion.world.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
 import net.minecraft.resources.ResourceLocation;
@@ -12,11 +9,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -34,7 +28,6 @@ import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems.GasMask;
-import co.bracesoftware.libs.minecraft_text_formatter.Text;
 import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -291,8 +284,6 @@ public class ErosionCustomEntitySys
             }
             return;
         }
-
-        var s = e.getServer();
 
         if(ErosionConfig.ErosionDebugger.CRAZY_DEBUG_MODE) ErosionUtils.Log(
             "Processing gases; total of -> " + GAS_LIST.size()

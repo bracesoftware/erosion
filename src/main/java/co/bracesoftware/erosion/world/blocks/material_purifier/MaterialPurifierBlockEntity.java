@@ -45,7 +45,8 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
         super(ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), pos, state);
     }
 
-    @Override 
+    @Override
+    @SuppressWarnings("all")
     public boolean onBlockEntityTickOnServer(
         MaterialPurifierBlockEntity be, ErosionBlockEntityTickPacket p
     ) throws ErosionMaterialPurifierException

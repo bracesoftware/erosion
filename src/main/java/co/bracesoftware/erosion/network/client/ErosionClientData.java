@@ -5,7 +5,6 @@ import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionRetrogen;
-import net.neoforged.api.distmarker.Dist;
 
 public class ErosionClientData
 {

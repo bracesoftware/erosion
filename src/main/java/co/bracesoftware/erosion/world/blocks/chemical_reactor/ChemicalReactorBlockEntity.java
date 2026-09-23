@@ -5,8 +5,6 @@ import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.Erosio
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorSystemComponent;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class ChemicalReactorBlockEntity extends ErosionNetworkSafeBlockEntity<ChemicalReactorBlockEntity>

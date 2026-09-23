@@ -5,7 +5,6 @@ import java.util.LinkedList;
 
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
-import co.bracesoftware.erosion.ErosionUtils.ErosionPair;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorBlock;

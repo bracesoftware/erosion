@@ -68,7 +68,6 @@ public class ErosionEventBus
 
     public static class ErosionEventInvocation
     {
-        @SuppressWarnings("unchecked")
         public static<T extends BasicErosionEvent> void CALL_EVENT_LISTENERS(
             T e
         ) throws ErosionEventBusException

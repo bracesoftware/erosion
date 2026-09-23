@@ -1,18 +1,15 @@
 package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-import net.neoforged.neoforge.common.conditions.ItemExistsCondition;
 
 import java.util.List;
 import java.util.Map;

@@ -1,23 +1,15 @@
 package co.bracesoftware.erosion.data.clientgen;
 
-import java.io.File;
-import java.util.List;
-
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
-import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.RockBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
-import co.bracesoftware.erosion.data.commongen.ErosionTextureGen;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.ModelFile;

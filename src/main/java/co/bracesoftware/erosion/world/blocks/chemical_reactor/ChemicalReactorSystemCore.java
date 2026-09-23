@@ -6,8 +6,6 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.AirBlock;
-import net.minecraft.world.level.block.Block;
 
 public class ChemicalReactorSystemCore
 {
