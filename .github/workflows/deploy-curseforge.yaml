@@ -1,0 +1,43 @@
+name: Publish Release to CurseForge
+
+on:
+  push:
+    tags:
+      - 'build*'
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download JAR from GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+
+          mkdir -p release
+
+          gh release download "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pattern "Erosion-neoforge.jar" \
+            --dir release
+
+          echo "Downloaded:"
+          ls -lh release/Erosion-neoforge.jar
+
+      - name: Upload to CurseForge
+        uses: Kirstein/curseforge-upload@v1
+        with:
+          token: ${{ secrets.CURSEFORGE_TOKEN }}
+          project_id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          game_versions: '1.21.1,NeoForge'
+          file_path: 'release/Erosion-neoforge.jar'
+          changelog: 'Automated release ${{ github.ref_name }}'
+          release_type: 'release'

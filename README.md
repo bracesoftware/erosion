@@ -7,6 +7,7 @@
 
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
 
+## Tooltips
 Each item this mod adds or modifies gets its nicely described tooltip like this, so you cannot get lost!
 
 <div align="center">
@@ -16,11 +17,12 @@ Each item this mod adds or modifies gets its nicely described tooltip like this,
     <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/tooltips2.png">
 </div>
 
-Creative tab:
+## Creative tab
 <div align="center">
     <img height="150" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/all_items.png">
 </div>
 
+## Examples of geochemical alteration
 As you can see blocks can be altered by lava or water present.
 
 <div align="center">
@@ -35,8 +37,9 @@ As you can see blocks can be altered by lava or water present.
     <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/river1.png">
 </div>
 
+## Retrogen
 There are nice minerals that spawn in real-time as your rivers erode the soil.
-This mod adds malachite, limonite, magnetite, hematite, bismuthinite, cassiterite, and more!
+This mod adds malachite, limonite, magnetite, hematite, bismuthinite, cassiterite, pyrite, and more!
 
 <div align="center">
     <img height="300" src="https://raw.githubusercontent.com/bracesoftware/erosion/main/gallery/malachite.png">

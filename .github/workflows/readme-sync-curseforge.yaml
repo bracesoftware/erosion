@@ -1,0 +1,39 @@
+name: Sync README to CurseForge
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - README.md
+
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Sync README to CurseForge
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          CURSEFORGE_PROJECT_ID: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+        run: |
+          set -e
+
+          jq -n \
+            --rawfile body README.md \
+            '{description: $body}' \
+            > payload.json
+
+          curl --fail-with-body \
+            -X POST \
+            "https://minecraft.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/edit" \
+            -H "X-Api-Token: ${CURSEFORGE_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data-binary @payload.json
+
+          echo "README successfully synced to CurseForge."
