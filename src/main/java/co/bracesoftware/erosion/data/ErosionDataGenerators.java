@@ -9,7 +9,7 @@ import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
 import co.bracesoftware.erosion.data.clientgen.ErosionLang;
 import co.bracesoftware.erosion.data.clientgen.ErosionSoundGen;
-import co.bracesoftware.erosion.data.commongen.ErosionDataGenInternal;
+import co.bracesoftware.erosion.data.commongen.ErosionBlockAnimGen;
 import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
 import co.bracesoftware.erosion.data.servergen.ErosionBlockTagGen;
 import co.bracesoftware.erosion.data.servergen.ErosionItemTagGen;
@@ -41,7 +41,7 @@ public class ErosionDataGenerators
         
         //other stuff
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
-        ErosionDataGenInternal.generateChemicalReactorAnims();
+        ErosionBlockAnimGen.generateChemicalReactorAnims();
 
         //client provider
         g.addProvider(e.includeClient(), new ErosionLang(p));
