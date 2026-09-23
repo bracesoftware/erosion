@@ -29,11 +29,18 @@ jobs:
             '{description: $body, descriptionType: "markdown"}' \
             > payload.json
 
-          curl --fail-with-body \
+          RESPONSE=$(curl -s -w "%{http_code}" -o response.txt \
             -X POST \
             "https://minecraft.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/edit" \
             -H "X-Api-Token: ${CURSEFORGE_TOKEN}" \
-            -H "Content-Type: application/json" \
-            --data-binary @payload.json
+            -F "metadata=<payload.json")
+
+          echo "HTTP Status Code: $RESPONSE"
+          cat response.txt
+
+          if [ "$RESPONSE" -ne 200 ] && [ "$RESPONSE" -ne 202 ]; then
+            echo "Failed to sync README to CurseForge"
+            exit 1
+          fi
 
           echo "README successfully synced to CurseForge."
