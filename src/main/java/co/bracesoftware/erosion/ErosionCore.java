@@ -10,6 +10,7 @@ import co.bracesoftware.erosion.api.eventbus.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
+import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
 import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
@@ -280,6 +282,19 @@ public class ErosionCore
             {
                 return this.name;
             }
+
+            public static final Comparator<AlterationRule> RULE_COMPARATOR = Comparator.comparing(
+                i -> i.getName()
+            );
+
+            @Override public boolean equals(Object o)
+            {
+                if(o instanceof AlterationRule p)
+                {
+                    return this.name.equals(p.name);
+                }
+                return false;
+            }
         }
         public static final AlterationRule CONTACT_WITH_WATER = new AlterationRule(
             "Contact with water or steam",
@@ -293,18 +308,32 @@ public class ErosionCore
             "High lithostatic pressure",
             ErosionCore::highPressure
         );
+        public static final AlterationRule EXPOSURE_TO_AIR = new AlterationRule(
+            "Exposure to air",
+            ErosionCore::exposureToAir
+        );
         
         // =========================================== //
         private List<AlterationRule> rules;
 
         public AlterationRules(List<AlterationRule> r)
         {
-            this.rules = r;
+            this.rules = new ArrayList<>(r);
+            this.rules.sort(AlterationRule.RULE_COMPARATOR);
         }
 
         public List<AlterationRule> getRules()
         {
             return this.rules;
+        }
+
+        @Override public boolean equals(Object o)
+        {
+            if(o instanceof AlterationRules p)
+            {
+                return this.rules.equals(p.rules);
+            }
+            return false;
         }
 
         public boolean checkIfAllConditionsAreMet(ServerLevel l, BlockPos p)
@@ -652,6 +681,26 @@ public class ErosionCore
 
         public static class AlterationPath
         {
+            public static class AlterationPathType
+            {
+                public final String name;
+                public final AlterationRules rules;
+                public AlterationPathType(String n, AlterationRules r)
+                {
+                    this.name = n;
+                    this.rules = r;
+                }
+
+                @Override public boolean equals(Object o)
+                {
+                    if(o instanceof AlterationPathType p)
+                    {
+                        return this.name.equals(p.name) && this.rules.equals(p.rules);
+                    }
+                    return false;
+                }
+            }
+
             public String name;
             public Supplier<List<Block>> productSupplier;
             public Supplier<List<Item>> productItemSupplier;
@@ -659,18 +708,63 @@ public class ErosionCore
             public AlterationRules rules = null;
             public List<Block> product = null;
             public List<Item> productItem = null; //for tooltips
+            public AlterationPathType type = null;
 
+            //main constructor
             public AlterationPath(
                 String n,
                 Supplier<List<Block>> a,
                 Supplier<List<Item>> b,
-                AlterationRules c
+                AlterationRules r
             )
             {
-                this.name = n;
-                this.rules = c;
+                this(new AlterationPathType(n, r),a,b);
+            }
+
+            //other constructors
+            public AlterationPath(AlterationPathType t)
+            {
+                this.name = t.name;
+                this.rules = t.rules;
+                this.type = t;
+            }
+
+            public AlterationPath(
+                AlterationPathType t,
+                Supplier<List<Block>> a,
+                Supplier<List<Item>> b
+            )
+            {
+                this.type = t;
+                this.name = t.name;
+                this.rules = t.rules;
                 this.productSupplier = a;
                 this.productItemSupplier = b;
+            }
+
+            public static final AlterationPath combinePaths(
+                AlterationPath a, AlterationPath b
+            ) throws ErosionRecipeImplException
+            {
+                final String op = a.name + " + " + b.name;
+                if(!a.type.equals(b.type))
+                {
+                    throw new ErosionRecipeImplException("Alteration path types must be equal -> " + op);
+                }
+                if(a.product.isEmpty() && b.product.isEmpty())
+                {
+                    throw new ErosionRecipeImplException("Both product lists are empty -> " + op);
+                }
+
+                var result = new AlterationPath(a.type);
+                var bloks = new ArrayList<>(a.product);
+                bloks.addAll(b.product);
+                var itemz = new ArrayList<>(a.productItem);
+                itemz.addAll(b.productItem);
+                result.product = bloks;
+                result.productItem = itemz;
+                ErosionUtils.Log("Mod optimizer automatically combined 2 alteration paths -> " + op);
+                return result;
             }
 
             public void setup() throws ErosionRecipeImplException
@@ -724,6 +818,61 @@ public class ErosionCore
             }
 
             ALTERATION_INVERTED.putIfAbsent(this.material, this);
+
+            //lmao
+            var lmao = new ArrayList<>(this.paths);
+            var ref = new HashMap<String, List<Integer>>();
+            for(int i = 0; i < lmao.size(); i++)
+            {
+                var path = lmao.get(i);
+
+                ref.computeIfAbsent(
+                    path.name,
+                    k -> new ArrayList<>()
+                ).add(i);
+            }
+
+            //make combined paths
+            var newList = new ArrayList<AlterationPath>();
+            var modified = new ArrayList<Integer>();
+            for(var k : ref.entrySet())
+            {
+                var name = k.getKey();
+                var combinable = k.getValue();
+
+                var newPath = new AlterationPath(new AlterationPathType(name, lmao.get(combinable.get(0)).rules));
+                for(var sk : combinable)
+                {
+                    var path = lmao.get(sk);
+                    try
+                    {
+                        newPath = AlterationPath.combinePaths(path, newPath);
+                        modified.add(sk);
+                    }
+                    catch(Exception e)
+                    {
+                        continue;
+                    }
+                }
+
+                newList.add(newPath);
+                continue;
+            }
+
+            //we delete the old ones
+            for(int i = 0; i < lmao.size(); i++)
+            {
+                var p = lmao.get(i);
+                if(modified.contains(i))
+                {
+                    p = null;
+                }
+            }
+
+            lmao.removeIf(i -> i == null);
+            lmao.addAll(newList);
+
+            this.paths = new ArrayList<>(lmao);
             return;
         }
 
@@ -1011,6 +1160,19 @@ public class ErosionCore
         ))
     );
 
+    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN = new AlterableMaterial.AlterationPath(
+        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
+        () -> List.of(
+            ErosionRegistry.Blocks.AZURITE_ORE.get()
+        ),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_AZURITE.get()
+        ),
+        new AlterationRules(List.of(
+            AlterationRules.EXPOSURE_TO_AIR
+        ))
+    );
+
     public static final AlterableMaterial COBBLESTONE = new AlterableMaterial(
         Blocks.COBBLESTONE.getName().getString(),
         () -> Blocks.COBBLESTONE, () -> Items.COBBLESTONE,
@@ -1027,7 +1189,7 @@ public class ErosionCore
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
             ),
-            HYDROTHERMAL_BLOCK_GEN
+            HYDROTHERMAL_BLOCK_GEN,EXPOSURE_TO_AIR_GEN
         )
     );
 
@@ -1077,7 +1239,7 @@ public class ErosionCore
                 ), new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
-            )
+            ),EXPOSURE_TO_AIR_GEN
         )
     );
 
@@ -2794,6 +2956,24 @@ public class ErosionCore
     {
         //simple as that lmao
         if(p.getY() < 20) return true;
+        return false;
+    }
+
+    public static boolean exposureToAir(ServerLevel l, BlockPos p)
+    {
+        int exposedSides = 0;
+        if(p.getY() > 60)
+        {
+            for(var d : Direction.values())
+            {
+                var pozz = p.relative(d);
+                if(l.getBlockState(pozz).isAir())
+                {
+                    ++exposedSides;
+                    if(exposedSides >= 3) return true;
+                }
+            }
+        }
         return false;
     }
 

@@ -103,6 +103,7 @@ public class ErosionRegistry
         public static final String ALTERATION_BY_LAVA = "Alteration by lava";
         public static final String HYDROTHERMAL_ALTERATION = "Hydrothermal alteration";
         public static final String ALTERATION_BY_HEAT_AND_PRESSURE = "Alteration by heat and lithostatic pressure";
+        public static final String ALTERATION_BY_AIR_EXPOSURE = "Alteration by being exposed to air";
     }
     // ===================================================== //
     public static class RawRegistry

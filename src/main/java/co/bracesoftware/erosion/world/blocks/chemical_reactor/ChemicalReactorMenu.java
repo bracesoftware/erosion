@@ -25,6 +25,7 @@ import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 
 public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosionChemicalReactorSystemComponent
 {
@@ -39,6 +40,9 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
     public static final int COL = 2;
     public static final Comparator<Item> itemComparator = Comparator.comparing(
         i -> BuiltInRegistries.ITEM.getKey(i)
+    );
+    public static final Comparator<Block> blockComparator = Comparator.comparing(
+        i -> BuiltInRegistries.BLOCK.getKey(i)
     );
 
     public List<Item> reactantsAsItemList()
