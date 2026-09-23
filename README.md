@@ -74,7 +74,6 @@ Link: https://discord.gg/gFvUagQbBd
 
 View more on Github: https://github.com/bracesoftware/erosion
 
-
 ### Developer info
 Want to make a compatibility layer with Erosion?
 - Erosion got its own event bus! Use this:
