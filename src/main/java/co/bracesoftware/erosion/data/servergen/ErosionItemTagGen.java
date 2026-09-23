@@ -76,6 +76,9 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         ErosionTags.Items.createSimpleRawOre(
             this,provider,ErosionRegistry.Items.RAW_PYRITE.get()
         );
+        ErosionTags.Items.createSimpleRawOre(
+            this,provider,ErosionRegistry.Items.RAW_GOETHITE.get()
+        );
 
         ErosionTags.Items.createSimpleArmorPiece(
             this,provider,ErosionRegistry.Items.GAS_MASK.get()

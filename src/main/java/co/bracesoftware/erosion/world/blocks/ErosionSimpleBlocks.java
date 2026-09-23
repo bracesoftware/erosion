@@ -59,8 +59,9 @@ public class ErosionSimpleBlocks
     {
         public static final MapCodec<GravelBlock> CODEC = simpleCodec(GravelBlock::new);
 
-        public GravelBlock(BlockBehaviour.Properties properties) {
-            super(properties);
+        public GravelBlock(BlockBehaviour.Properties p)
+        {
+            super(p);
         }
 
         @Override

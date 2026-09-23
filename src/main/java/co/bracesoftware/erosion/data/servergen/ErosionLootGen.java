@@ -103,6 +103,11 @@ public class ErosionLootGen extends LootTableProvider
                     b, ErosionRegistry.Items.RAW_AZURITE.get()
                 )
             );
+            add(ErosionRegistry.Blocks.GOETHITE_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RAW_GOETHITE.get()
+                )
+            );
             add(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
                 b -> createOreDrop(
                     b, ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
@@ -144,6 +149,7 @@ public class ErosionLootGen extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.RAW_BISMUTHINITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_CASSITERITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_AZURITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_GOETHITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_PYRITE.get());
@@ -198,7 +204,9 @@ public class ErosionLootGen extends LootTableProvider
                 ErosionRegistry.Blocks.RAW_CASSITERITE.get(),
 
                 ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                ErosionRegistry.Blocks.GOETHITE_ORE.get(),
                 ErosionRegistry.Blocks.RAW_AZURITE.get(),
+                ErosionRegistry.Blocks.RAW_GOETHITE.get(),
 
                 ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
                 ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get(),

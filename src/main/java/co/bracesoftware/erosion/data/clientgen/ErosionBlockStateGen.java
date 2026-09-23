@@ -78,6 +78,9 @@ public class ErosionBlockStateGen extends BlockStateProvider
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.AZURITE_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.GOETHITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
         );
 
@@ -327,6 +330,17 @@ public class ErosionBlockStateGen extends BlockStateProvider
                 this,
                 ErosionRegistry.RawRegistry.RAW_AZURITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.AZURITE_ORE.getId() //block texture
+            )
+        );
+
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
+            ErosionRegistry.Items.RAW_GOETHITE.get(),
+            ErosionRegistry.Blocks.RAW_GOETHITE.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_GOETHITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.GOETHITE_ORE.getId() //block texture
             )
         );
 

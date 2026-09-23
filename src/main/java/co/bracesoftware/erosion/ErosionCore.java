@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
+import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
 import co.bracesoftware.erosion.ErosionCore.AlterationPacketList;
 import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
@@ -1199,13 +1200,26 @@ public class ErosionCore
         ))
     );
 
-    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN = new AlterableMaterial.AlterationPath(
+    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_AZURITE = new AlterableMaterial.AlterationPath(
         ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
         () -> List.of(
             ErosionRegistry.Blocks.AZURITE_ORE.get()
         ),
         () -> List.of(
             ErosionRegistry.Items.RAW_AZURITE.get()
+        ),
+        new AlterationRules(List.of(
+            AlterationRules.EXPOSURE_TO_AIR
+        ))
+    );
+
+    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_GOETHITE = new AlterableMaterial.AlterationPath(
+        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
+        () -> List.of(
+            ErosionRegistry.Blocks.GOETHITE_ORE.get()
+        ),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_GOETHITE.get()
         ),
         new AlterationRules(List.of(
             AlterationRules.EXPOSURE_TO_AIR
@@ -1228,7 +1242,9 @@ public class ErosionCore
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
             ),
-            HYDROTHERMAL_BLOCK_GEN,EXPOSURE_TO_AIR_GEN
+            HYDROTHERMAL_BLOCK_GEN,
+            EXPOSURE_TO_AIR_GEN_AZURITE,
+            EXPOSURE_TO_AIR_GEN_GOETHITE
         )
     );
 
@@ -1278,7 +1294,9 @@ public class ErosionCore
                 ), new AlterationRules(List.of(
                     AlterationRules.CONTACT_WITH_LAVA
                 ))
-            ),EXPOSURE_TO_AIR_GEN
+            ),
+            EXPOSURE_TO_AIR_GEN_AZURITE,
+            EXPOSURE_TO_AIR_GEN_GOETHITE
         )
     );
 
@@ -1780,6 +1798,31 @@ public class ErosionCore
         )
     );
 
+
+    //turn mined ore into pure ore
+    public static final RefinableMaterial.Crucible RAW_GOETHITE = new RefinableMaterial.Crucible(
+        ErosionRegistry.RawRegistry.RAW_GOETHITE.getName(),
+        () -> ErosionRegistry.Items.RAW_GOETHITE.get(),
+        () -> List.of(
+            Items.IRON_NUGGET
+        ), List.of(
+            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
+        ), () -> List.of(
+        ), List.of(
+        )
+    );
+
+    //turn block into its raw ore if mined with silk touch
+    public static final RefinableMaterial GOETHITE_ORE = new RefinableMaterial.MaterialPurifier(
+        ErosionRegistry.RawRegistry.GOETHITE_ORE.getName(),
+        () -> ErosionRegistry.Items.GOETHITE_ORE.get(),
+        () -> List.of(
+            ErosionRegistry.Items.RAW_GOETHITE.get()
+        )
+    );
+
+    //-------------------------------------------------------
+
     public static final RefinableMaterial RUBY_ORE = new RefinableMaterial.MaterialPurifier(
         ErosionRegistry.RawRegistry.RUBY_ORE.getName(),
         () -> ErosionRegistry.Items.RUBY_ORE.get(),
@@ -2193,6 +2236,7 @@ public class ErosionCore
                 return this.info;
             }
         }
+        final String TAB = "  * ";
 
         final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.ofEntries(
             //ванила ајтеми хаахахаха
@@ -2246,6 +2290,14 @@ public class ErosionCore
             ))),
             Map.entry(ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
                 "Tin(IV)-oxide"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_GOETHITE.get(), new ChemicalInfo(List.of(
+                "Dehydrated/anhydrous iron(III)-oxyhydroxide",
+                "Composed primarily of iron-oxyhydroxide polymorphs such as:",
+                TAB + "Goethite",
+                TAB + "Akaganeite",
+                TAB + "Lepidocrocite",
+                "and Feroxyhyte."
             ))),
             Map.entry(ErosionRegistry.Items.RAW_SPHALERITE.get(), new ChemicalInfo(List.of(
                 "Zinc-sulfide"
@@ -2496,8 +2548,6 @@ public class ErosionCore
                 break;
             }
         }
-
-        final String TAB = "  * ";
 
         if(
             !(usedIn.isEmpty()) ||
