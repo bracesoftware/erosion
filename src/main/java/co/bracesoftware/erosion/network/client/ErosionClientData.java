@@ -23,28 +23,32 @@ public class ErosionClientData
     public static void updateModStatus(
         int pending, long performed, int pendingfast, long performed2,
         boolean agal,
-        int retrogen
+        int retrogen, int pendingagain
     )
     {
-        CACHED_STATUS_STRING = formatModStatusString(pending, performed, pendingfast, performed2);
+        CACHED_STATUS_STRING = formatModStatusString(pending, performed, pendingfast, performed2,pendingagain);
         ConfigFromServer.AGGRESIVE_GEOCHEMICAL_ALTERATION = agal;
         ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED = retrogen;
     }
 
-    public static String formatModStatusString(int pending, long performed, int pendingfast, long performed2)
+    public static String formatModStatusString(int pending, long performed, int pendingfast, long performed2, int pendingagain)
     {
         int max = ErosionConfig.MAX_PENDING_SIZE;
-        int maxfast = ErosionConfig.MAX_PENDING_FAST_SIZE;
+        int maxfast = ErosionConfig.MAX_PENDING_FAST_SIZE + ErosionConfig.MAX_PENDING_AGAIN_SIZE;
         double consumption = (
-            ErosionCore.PENDING.getUsedMemory() + ErosionCore.PENDING_FAST.getUsedMemory()
+            ErosionCore.PENDING.getUsedMemory() +
+            ErosionCore.PENDING_FAST.getUsedMemory() +
+            ErosionCore.PENDING_AGAIN.getUsedMemory()
         ) / 1024.0;
         double maxAllocated = (
-            ErosionCore.PENDING.getMaxAllocatedMemory() + ErosionCore.PENDING_FAST.getMaxAllocatedMemory()
+            ErosionCore.PENDING.getMaxAllocatedMemory() +
+            ErosionCore.PENDING_FAST.getMaxAllocatedMemory() +
+            ErosionCore.PENDING_AGAIN.getMaxAllocatedMemory()
         ) / 1024.0;
 
         return String.format(
             "Pending: %d/%d, +%d/%d with high priority (%.2f/%.2f KiB) | Performed: %d, +%d with high priority",
-            pending, max, pendingfast, maxfast, consumption, maxAllocated, performed, performed2
+            pending, max, pendingfast + pendingagain, maxfast, consumption, maxAllocated, performed, performed2
         );
     }
 }

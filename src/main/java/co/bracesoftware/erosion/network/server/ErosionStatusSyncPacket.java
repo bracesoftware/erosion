@@ -9,19 +9,34 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public record ErosionStatusSyncPacket(
-    int pending, long performed, int pendingfast, long performed2,
+    int pending,
+    long performed,
+    int pendingfast,
+    long performed2,
     boolean agal,
-    int retrogen
+    int retrogen,
+    int pendingagain
 ) implements CustomPacketPayload
 {
-    public static final StreamCodec<RegistryFriendlyByteBuf, ErosionStatusSyncPacket> STREAM_CODEC = StreamCodec.composite(
-        ByteBufCodecs.INT, ErosionStatusSyncPacket::pending,
-        ByteBufCodecs.VAR_LONG, ErosionStatusSyncPacket::performed,
-        ByteBufCodecs.INT, ErosionStatusSyncPacket::pendingfast,
-        ByteBufCodecs.VAR_LONG, ErosionStatusSyncPacket::performed2,
-        ByteBufCodecs.BOOL, ErosionStatusSyncPacket::agal,
-        ByteBufCodecs.INT, ErosionStatusSyncPacket::retrogen,
-        ErosionStatusSyncPacket::new
+    public static final StreamCodec<RegistryFriendlyByteBuf, ErosionStatusSyncPacket> STREAM_CODEC = StreamCodec.of(
+        (buf, packet) -> {
+            ByteBufCodecs.INT.encode(buf, packet.pending());
+            ByteBufCodecs.VAR_LONG.encode(buf, packet.performed());
+            ByteBufCodecs.INT.encode(buf, packet.pendingfast());
+            ByteBufCodecs.VAR_LONG.encode(buf, packet.performed2());
+            ByteBufCodecs.BOOL.encode(buf, packet.agal());
+            ByteBufCodecs.INT.encode(buf, packet.retrogen());
+            ByteBufCodecs.INT.encode(buf, packet.pendingagain());
+        },
+        buf -> new ErosionStatusSyncPacket(
+            ByteBufCodecs.INT.decode(buf),
+            ByteBufCodecs.VAR_LONG.decode(buf),
+            ByteBufCodecs.INT.decode(buf),
+            ByteBufCodecs.VAR_LONG.decode(buf),
+            ByteBufCodecs.BOOL.decode(buf),
+            ByteBufCodecs.INT.decode(buf),
+            ByteBufCodecs.INT.decode(buf)
+        )
     );
 
     @Override
@@ -39,7 +54,8 @@ public record ErosionStatusSyncPacket(
                 data.pendingfast(),
                 data.performed2(),
                 data.agal(),
-                data.retrogen()
+                data.retrogen(),
+                data.pendingagain()
             );
         });
     }

@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
+import co.bracesoftware.erosion.ErosionCore.AlterationPacketList;
 import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
 import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
@@ -40,13 +41,19 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Fluids;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.LevelTickEvent;
+import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import it.unimi.dsi.fastutil.longs.*;
 
+@EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionCore
 {
     public static String CACHED_STATUS_STRING = "";
@@ -184,6 +191,7 @@ public class ErosionCore
 
     public static final AlterationPacketList PENDING = new AlterationPacketList(ErosionConfig.MAX_PENDING_SIZE);
     public static final AlterationPacketList PENDING_FAST = new AlterationPacketList(ErosionConfig.MAX_PENDING_FAST_SIZE);
+    public static final AlterationPacketList PENDING_AGAIN = new AlterationPacketList(ErosionConfig.MAX_PENDING_FAST_SIZE);
 
     public static final Map<Item, List<Component>> ITEM_DESCRIPTIONS = new HashMap<>();
     public static final Map<Item, Integer> CATALYST_SUCCESS_CHANCE = new HashMap<>();
@@ -719,14 +727,15 @@ public class ErosionCore
 
                 @Override public int hashCode()
                 {
-                    return Objects.hash(this.name, this.rules);
+                    return Objects.hash(this.rules);
                 }
 
+                //name doesn't matter, only rules,because the name isnt displayed anyways
                 @Override public boolean equals(Object o)
                 {
                     if(o instanceof AlterationPathType p)
                     {
-                        return this.name.equals(p.name) && this.rules.equals(p.rules);
+                        return this.rules.equals(p.rules);
                     }
                     return false;
                 }
@@ -2840,6 +2849,10 @@ public class ErosionCore
         {
             Pending = PENDING_FAST;
         }
+        if(ErosionUtils.isPlayerNearby(level, pos, 6))
+        {
+            Pending = PENDING_AGAIN;
+        }
 
         if(Pending.contains(pos.asLong()))
         {
@@ -2856,9 +2869,20 @@ public class ErosionCore
         {
             if(p.rules.checkIfAllConditionsAreMet(level, pos))
             {
-                if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
+                if(Pending != PENDING_AGAIN) if(Pending.size() >= (priority ? ErosionConfig.MAX_PENDING_FAST_SIZE : ErosionConfig.MAX_PENDING_SIZE))
                 {
                     Pending.remove(0);
+                }
+                else
+                {
+                    int proc = 0;
+                    while(!(proc != ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK / 3))
+                    {
+                        if(Pending.isEmpty()) break;
+                        gpos = Pending.getAndRemove(0);
+                        proc++;
+                        tryAlterBlock(level, gpos, priority);
+                    }
                 }
                 Pending.add(pos, p.product.get(ErosionMod.RANDOM.nextInt(p.product.size())));
                 if(ErosionConfig.isDebugOn()) ErosionUtils.Log("Added candidate: " + pos);
@@ -2880,34 +2904,42 @@ public class ErosionCore
 
     // =================================================== //
         
-    private static void processPendingCore(ServerLevel level, int count, boolean priority)
+    private static void processPendingCore(AlterationPacketList l, ServerLevel level, int count, boolean priority)
     {
-        var Pending = PENDING;
-        if(priority)
-        {
-            Pending = PENDING_FAST;
-        }
-
-        if(Pending.isEmpty()) return;
+        if(l.isEmpty()) return;
         int processedThisTick = 0;
 
-        for(int i = Pending.size() - 1; i >= 0 && processedThisTick < count; i--)
+        for(int i = l.size() - 1; i >= 0 && processedThisTick < count; i--)
         {
-            gpos = Pending.getAndRemove(i);
+            gpos = l.getAndRemove(i);
             tryAlterBlock(level, gpos, priority);
             processedThisTick++;
         }
         return;
     }
 
+    @SubscribeEvent
+    public static void onLevelTick(LevelTickEvent.Post e)
+    {
+        if(!(e.getLevel() instanceof ServerLevel l)) return;
+        if(l.dimension() != Level.OVERWORLD) return;
+      
+        int tick = e.getLevel().getServer().getTickCount();
+        if(tick % ErosionUtils.minutesToTick(2) == 0)
+        {
+            processPendingCore(PENDING_AGAIN, l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK * 2, false);
+        }
+        return;
+    }
+
     public static void processPending(ServerLevel l)
     {
-        processPendingCore(l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK, false);
+        processPendingCore(PENDING, l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK, false);
     }
 
     public static void processPendingPriority(ServerLevel l)
     {
-        processPendingCore(l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK + 1, true);//lmao
+        processPendingCore(PENDING_FAST, l, ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK + 1, true);//lmao
     }
 
     // =================================================== //
@@ -2989,18 +3021,24 @@ public class ErosionCore
         return false;
     }
 
+    private static final Direction[] DIRECTIONS = Direction.values();
     public static boolean exposureToAir(ServerLevel l, BlockPos p)
     {
         int exposedSides = 0;
         if(p.getY() > 60)
         {
-            for(var d : Direction.values())
+            for(var d : DIRECTIONS)
             {
                 var pozz = p.relative(d);
                 if(l.getBlockState(pozz).isAir())
                 {
                     ++exposedSides;
-                    if(exposedSides >= 3) return true;
+                    if(exposedSides >= 3) return ErosionUtils.Misc.randomWithChanceToBe(
+                        true, ErosionMod.RANDOM.nextInt(100)
+                    );
+                    // @WHY_IS_NOT_TS_RED? trying to simulate a probability of air molecules hitting the surface
+                    //but since particles follow the rules of quantum mekaniks,
+                    //the probability is RANDOM.nextInt(..)
                 }
             }
         }
@@ -3039,10 +3077,13 @@ public class ErosionCore
     {
         return PENDING.size();
     }
-
     public static int getPendingFastSize()
     {
         return PENDING_FAST.size();
+    }
+    public static int getPendingAgainSize()
+    {
+        return PENDING_AGAIN.size();
     }
 
     public static int getPerformedAlterations()

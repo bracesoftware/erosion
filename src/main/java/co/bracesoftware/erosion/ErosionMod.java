@@ -211,7 +211,8 @@ public final class ErosionMod
                 ErosionCore.getPendingFastSize(),
                 ErosionCore.getPerformedAlterationsPriority(),
                 ErosionConfig.ServerConfig.AGRESSIVE_GEOCHEMICAL_ALTERATION.getBoolean(),
-                ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED
+                ErosionRetrogen.RetrogenFeature.RETROGEN_PERFORMED,
+                ErosionCore.getPendingAgainSize()
             );
 
             var pl = e.getServer().getPlayerList().getPlayers();
@@ -224,9 +225,9 @@ public final class ErosionMod
     }
 
     @SubscribeEvent//USED TO PROCESS LOW PRIORITY CANDIDATES
-    public static void onLevelTick(LevelTickEvent.Post event)
+    public static void onLevelTick(LevelTickEvent.Post e)
     {
-        if(!(event.getLevel() instanceof ServerLevel level)) return;
+        if(!(e.getLevel() instanceof ServerLevel level)) return;
         if(level.dimension() != Level.OVERWORLD) return;
       
         ErosionCore.processPending(level);
@@ -234,9 +235,9 @@ public final class ErosionMod
     }
 
     @SubscribeEvent
-    public static void registerCapabilities(RegisterCapabilitiesEvent event)
+    public static void registerCapabilities(RegisterCapabilitiesEvent e)
     {
-        event.registerBlockEntity(
+        e.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
             ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(),
             (blockEntity, side) -> blockEntity.getItemHandler(side)

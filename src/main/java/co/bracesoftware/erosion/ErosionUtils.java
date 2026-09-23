@@ -26,6 +26,22 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 public class ErosionUtils
 {
+    public static int minutesToTick(int min)
+    {
+        return min * 60 * 20;
+    }
+    public static boolean isPlayerNearby(ServerLevel l, BlockPos p, int radius)
+    {
+        double radiusSq = (double) radius * radius;
+
+        for(var player : l.players())
+        {
+            if(player.isSpectator() || !player.isAlive()) continue;
+            if(player.distanceToSqr(p.getX() + 0.5, p.getY() + 0.5, p.getZ() + 0.5) <= radiusSq) return true;
+        }
+
+        return false;
+    }
     public static void spawnGasParticle(ServerLevel l, BlockPos p)
     {
         double x = p.getX();
@@ -56,13 +72,15 @@ public class ErosionUtils
             ErosionCore.getPendingSize(),
             ErosionCore.getPerformedAlterations(),
             ErosionCore.getPendingFastSize(),
-            ErosionCore.getPerformedAlterationsPriority()
+            ErosionCore.getPerformedAlterationsPriority(),
+            ErosionCore.getPendingAgainSize()
         ));
         return ErosionClientData.formatModStatusString(
             ErosionCore.getPendingSize(),
             ErosionCore.getPerformedAlterations(),
             ErosionCore.getPendingFastSize(),
-            ErosionCore.getPerformedAlterationsPriority()
+            ErosionCore.getPerformedAlterationsPriority(),
+            ErosionCore.getPendingAgainSize()
         );
     }
     public static String formatCompact(double value)

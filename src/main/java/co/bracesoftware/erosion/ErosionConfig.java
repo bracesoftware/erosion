@@ -32,6 +32,7 @@ public final class ErosionConfig
 
     public static final int MAX_PENDING_SIZE = 30000;
     public static final int MAX_PENDING_FAST_SIZE = 20000;
+    public static final int MAX_PENDING_AGAIN_SIZE = 1000;
     private static final boolean DEBUG_MODE = false;
     public static final String CREATIVE_TAB_ID = "creativetab.erosion.erosion_tab";
     public static final String CREATIVE_TAB_NAME = "erosion_tab";
