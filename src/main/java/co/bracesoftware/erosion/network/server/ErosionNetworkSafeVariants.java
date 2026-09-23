@@ -35,6 +35,7 @@ public class ErosionNetworkSafeVariants
 {
     public static abstract class ErosionNetworkSafeBlockEntity<T> extends BlockEntity
     {
+        private int tickAge = 0;
         public ErosionNetworkSafeBlockEntity(BlockEntityType<?> b, BlockPos pos, BlockState state)
         {
             super(b,pos,state);
@@ -60,6 +61,8 @@ public class ErosionNetworkSafeVariants
             public BlockState getBlockState() { return this.blockState; }
         }
 
+        public int getEntityAgeInTicks() { return this.tickAge; }
+
         public boolean onBlockEntityTickOnServer(
             T e, ErosionBlockEntityTickPacket p
         ) throws ErosionException
@@ -69,6 +72,7 @@ public class ErosionNetworkSafeVariants
 
         public static void tick(Level l, BlockPos bp, BlockState bs, ErosionNetworkSafeBlockEntity e)
         {
+            e.tickAge++;
             if(!l.isClientSide())
             {
                 boolean result = e.onBlockEntityTickOnServer(e, new ErosionBlockEntityTickPacket((ServerLevel) l, bp, bs));

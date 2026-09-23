@@ -69,6 +69,15 @@ implements IErosionChemicalReactorMultiBlockComponent
 
     @Override public boolean serverUseWithoutItem(ErosionBlockInteractionPacket p)
     {
+        var pozz = p.getBlockPos().relative(Direction.UP);
+        if(!p.getServerLevel().getBlockState(pozz).isAir())
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "The top of the reactor is obstructed",
+                ErosionScreenMessage.Color.GRAY
+            );
+            return true;
+        }
         p.getServerPlayer().openMenu(
             new SimpleMenuProvider(
                 (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, p.getBlockPos()),
@@ -106,7 +115,7 @@ implements IErosionChemicalReactorMultiBlockComponent
         var xd = l.getBlockEntity(crp);
         if(xd instanceof ChemicalReactorBlockEntity e)
         {
-            if(c == ChemicalReactorScrubberBlock.class)
+            if(c == ChemicalReactorScrubberBlock.class && e.scrubberCached)
             {
                 var pozz = BlockPos.of(e.cachedScrubberPos);
                 var s = l.getBlockState(pozz);
@@ -116,7 +125,7 @@ implements IErosionChemicalReactorMultiBlockComponent
                     if(dur > 0) return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                 }
             }
-            else if(c == ChemicalReactorCoolingSystemBlock.class)
+            else if(c == ChemicalReactorCoolingSystemBlock.class && e.coolingSysCached)
             {
                 var pozz = BlockPos.of(e.cachedCoolingSystemPos);
                 var s = l.getBlockState(pozz);
@@ -154,6 +163,7 @@ implements IErosionChemicalReactorMultiBlockComponent
                             if(dur > 0)
                             {
                                 e.cachedScrubberPos = pozz.asLong();
+                                e.scrubberCached = true;
                                 return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                             }
                             continue;
@@ -164,6 +174,7 @@ implements IErosionChemicalReactorMultiBlockComponent
                             if(cf > 0)
                             {
                                 e.cachedCoolingSystemPos = pozz.asLong();
+                                e.coolingSysCached = true;
                                 return new ChemicalReactorMultiBlockComponentPosPacket(true, pozz.asLong());
                             }
                             continue;

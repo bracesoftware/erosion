@@ -12,6 +12,8 @@ import net.minecraft.world.level.block.state.BlockState;
 public class ChemicalReactorBlockEntity extends ErosionNetworkSafeBlockEntity<ChemicalReactorBlockEntity>
 implements IErosionChemicalReactorSystemComponent
 {
+    public boolean scrubberCached = false;
+    public boolean coolingSysCached = false;
     public long cachedScrubberPos = 0;
     public long cachedCoolingSystemPos = 0;
     public static class DataRawName
@@ -29,25 +31,12 @@ implements IErosionChemicalReactorSystemComponent
         ChemicalReactorBlockEntity e, ErosionBlockEntityTickPacket p
     ) throws ErosionException
     {
+        //every 5 minutes we reset cache flags
+        if(e.getEntityAgeInTicks() % 6000 == 0)
+        {
+            this.scrubberCached = false;
+            this.coolingSysCached = false;
+        }
         return true;
-    }
-
-    //--------------------------------------------------------------------------
-    @Override 
-    protected void saveAdditional(CompoundTag t, HolderLookup.Provider r)
-    {
-        super.saveAdditional(t, r);
-        t.putLong(DataRawName.CACHED_SCRUBBER_POS, this.cachedScrubberPos);
-        t.putLong(DataRawName.CACHED_COOLING_SYSTEM_POS, this.cachedCoolingSystemPos);
-        return;
-    }
-
-    @Override 
-    public void loadAdditional(CompoundTag t, HolderLookup.Provider r)
-    {
-        super.loadAdditional(t, r);
-        this.cachedScrubberPos = t.getLong(DataRawName.CACHED_SCRUBBER_POS);
-        this.cachedCoolingSystemPos = t.getLong(DataRawName.CACHED_COOLING_SYSTEM_POS);
-        return;
     }
 }
