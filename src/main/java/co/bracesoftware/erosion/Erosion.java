@@ -28,13 +28,13 @@ public class Erosion
     public static final String SUBTITLE = "Chemically Reimagined.";
     public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
     public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD + " snapshot " + Erosion.SNAPSHOT;
- 
+    
+    public static final Logger LOGGER = LogUtils.getLogger();
+
     static
     {
         ErosionUtils.Log("Welcome to " + Erosion.MODNAME + ": " + Erosion.SUBTITLE);
     }
-    
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     public Erosion(IEventBus modEventBus, ModContainer modContainer)
     {
