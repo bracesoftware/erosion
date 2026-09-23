@@ -8,7 +8,9 @@ import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWi
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
@@ -44,11 +46,17 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
 
     public ChemicalReactorScrubberBlock(Block.Properties p)
     {
-        super(p);
+        super(p.randomTicks());
         this.registerDefaultState(
             this.stateDefinition.any().
             setValue(FILTER_DURABILITY,0)
         );
+    }
+
+    @Override public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random)
+    {
+        ErosionUtils.spawnGasParticle(level, pos);
+        return;
     }
 
     @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
