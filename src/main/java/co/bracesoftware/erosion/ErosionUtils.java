@@ -42,7 +42,7 @@ public class ErosionUtils
     public record ErosionPair<A, B>(A first, B second) {}
     public static void Log(String text)
     {
-        System.out.println("\n\t{" + Erosion.MODNAME + "} :: System: " + text);
+        System.out.println("LOG:\n{" + Erosion.MODNAME + "} :: System:\t" + text);
         return;
     }
     public static <T> T compute(Supplier<T> supplier)
