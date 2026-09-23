@@ -14,6 +14,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
@@ -197,6 +199,21 @@ public class ErosionCore
         public static final int CRUCIBLE = 2;
     }
 
+    public interface IErosionCanBeGarbage
+    {
+        Map<IErosionCanBeGarbage, Boolean> here = new WeakHashMap<>();
+
+        default public void markAsGarbage()
+        {
+            here.put(this, true);
+        }
+
+        default public boolean isGarbage()
+        {
+            return here.getOrDefault(this, false);
+        }
+    }
+
     public static abstract class ErosionDynamicItem
     {
         public String name;
@@ -295,6 +312,10 @@ public class ErosionCore
                 }
                 return false;
             }
+            @Override public int hashCode()
+            {
+                return Objects.hash(this.name);
+            }
         }
         public static final AlterationRule CONTACT_WITH_WATER = new AlterationRule(
             "Contact with water or steam",
@@ -325,6 +346,11 @@ public class ErosionCore
         public List<AlterationRule> getRules()
         {
             return this.rules;
+        }
+
+        @Override public int hashCode()
+        {
+            return Objects.hash(this.rules);
         }
 
         @Override public boolean equals(Object o)
@@ -679,7 +705,7 @@ public class ErosionCore
         public Block material = null;
         public Item materialItem = null;//for tooltips
 
-        public static class AlterationPath
+        public static class AlterationPath implements IErosionCanBeGarbage
         {
             public static class AlterationPathType
             {
@@ -689,6 +715,11 @@ public class ErosionCore
                 {
                     this.name = n;
                     this.rules = r;
+                }
+
+                @Override public int hashCode()
+                {
+                    return Objects.hash(this.name, this.rules);
                 }
 
                 @Override public boolean equals(Object o)
@@ -706,8 +737,8 @@ public class ErosionCore
             public Supplier<List<Item>> productItemSupplier;
 
             public AlterationRules rules = null;
-            public List<Block> product = null;
-            public List<Item> productItem = null; //for tooltips
+            public List<Block> product = new ArrayList<>();
+            public List<Item> productItem = new ArrayList<>(); //for tooltips
             public AlterationPathType type = null;
 
             //main constructor
@@ -821,13 +852,13 @@ public class ErosionCore
 
             //lmao
             var lmao = new ArrayList<>(this.paths);
-            var ref = new HashMap<String, List<Integer>>();
+            var ref = new HashMap<AlterationPathType, List<Integer>>();
             for(int i = 0; i < lmao.size(); i++)
             {
                 var path = lmao.get(i);
 
                 ref.computeIfAbsent(
-                    path.name,
+                    path.type,
                     k -> new ArrayList<>()
                 ).add(i);
             }
@@ -837,10 +868,10 @@ public class ErosionCore
             var modified = new ArrayList<Integer>();
             for(var k : ref.entrySet())
             {
-                var name = k.getKey();
+                var tt = k.getKey();
                 var combinable = k.getValue();
 
-                var newPath = new AlterationPath(new AlterationPathType(name, lmao.get(combinable.get(0)).rules));
+                var newPath = new AlterationPath(tt);
                 for(var sk : combinable)
                 {
                     var path = lmao.get(sk);
@@ -859,19 +890,18 @@ public class ErosionCore
                 continue;
             }
 
-            //we delete the old ones
-            for(int i = 0; i < lmao.size(); i++)
+            //we mark old ones as garbage
+            for(var idx : modified)
             {
-                var p = lmao.get(i);
-                if(modified.contains(i))
-                {
-                    p = null;
-                }
+                lmao.get(idx).markAsGarbage();
             }
 
-            lmao.removeIf(i -> i == null);
+            //remove old ones
+            lmao.removeIf(IErosionCanBeGarbage::isGarbage);
+            //add new ones
             lmao.addAll(newList);
 
+            //overwrite the final paths list
             this.paths = new ArrayList<>(lmao);
             return;
         }
