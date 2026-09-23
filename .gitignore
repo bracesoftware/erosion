@@ -1,3 +1,4 @@
+src.zip
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
