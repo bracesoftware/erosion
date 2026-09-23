@@ -21,6 +21,7 @@ import net.neoforged.neoforge.server.ServerLifecycleHooks;
 @EventBusSubscriber(modid = Erosion.MODID)
 public class Erosion
 {
+    public static final Logger LOGGER = LogUtils.getLogger();
     public static final String MODID = "erosion";
     public static final String MODNAME = "Erosion";
     public static final int BUILD = 7;
@@ -28,8 +29,6 @@ public class Erosion
     public static final String SUBTITLE = "Chemically Reimagined.";
     public static final String SNAPSHOT = ModList.get().getModFileById(Erosion.MODID).versionString();
     public static final String MOD_BRANDING = Erosion.MODNAME + " build " + Erosion.BUILD + " snapshot " + Erosion.SNAPSHOT;
-    
-    public static final Logger LOGGER = LogUtils.getLogger();
 
     static
     {
