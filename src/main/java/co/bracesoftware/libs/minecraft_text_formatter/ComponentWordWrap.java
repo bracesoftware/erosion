@@ -62,7 +62,12 @@ public class ComponentWordWrap
                 cc = Component.empty();
                 w = 0;
                 iss = true;
-                if(sw.text.isBlank())
+                if(sw.text.isBlank()) //prserve formatting 
+                {
+                    cc.append(Component.literal(sw.text).setStyle(sw.style));
+                    continue;
+                }
+                if(isSymbol(sw.text)) //preserve symbols
                 {
                     cc.append(Component.literal(sw.text).setStyle(sw.style));
                     continue;
@@ -74,6 +79,19 @@ public class ComponentWordWrap
         if(!cc.getString().isEmpty()) result.add(cc);
 
         return result;
+    }
+
+    public static final String SYMBOL_LIST = "!?.()[]{}#$*/:;&%\"\'\\";
+
+    private static boolean isSymbol(String who)
+    {
+        if(who.length() != 1) return false;
+        char c = who.charAt(0);
+        for(int i = 0; i < SYMBOL_LIST.length(); i++)
+        {
+            if(c == SYMBOL_LIST.charAt(i)) return true;
+        }
+        return false;
     }
 
     private static class StyledWord
