@@ -52,6 +52,12 @@ public class ComponentWordWrap
                 continue;
             }
 
+            if(isSymbol(sw.text)) //preserve symbols
+            {
+                cc.append(Component.literal(sw.text).setStyle(sw.style));
+                continue;
+            }
+
             if(!ww)
             {
                 iss = false;
@@ -63,11 +69,6 @@ public class ComponentWordWrap
                 w = 0;
                 iss = true;
                 if(sw.text.isBlank()) //prserve formatting 
-                {
-                    cc.append(Component.literal(sw.text).setStyle(sw.style));
-                    continue;
-                }
-                if(isSymbol(sw.text)) //preserve symbols
                 {
                     cc.append(Component.literal(sw.text).setStyle(sw.style));
                     continue;
