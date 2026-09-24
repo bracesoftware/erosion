@@ -1,5 +1,8 @@
 package co.bracesoftware.erosion.network.server;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -14,6 +17,7 @@ import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.libs.chrono.Task;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
@@ -153,12 +157,37 @@ public class ErosionNetworkSafeVariants
             public int getDelay() { return this.delay; }
         }
 
-        private boolean randomTickSetup = false;
+        private record RandomTickSetupPacket(ResourceKey<Level> level, long pos)
+        {
+            public RandomTickSetupPacket(ServerLevel level, BlockPos pos)
+            {
+                this(level.dimension(), pos.asLong());
+            }
+        }
+
+        private static final Map<RandomTickSetupPacket, Boolean> RANDOM_TICK_SET_UP = new HashMap<>();
         private boolean callUseItemOnOnlyFlag = false;
         private RandomTickFrequency randomTickFrequency = RandomTickFrequency.VERY_LOW;
         public ErosionNetworkSafeBlock(Block.Properties p)
         {
             super(p);
+        }
+
+        private final boolean isRandomTickSysSetUpFor(ServerLevel l, BlockPos bp)
+        {
+            return RANDOM_TICK_SET_UP.getOrDefault(new RandomTickSetupPacket(l,bp), false);
+        }
+
+        private final void discardRandomTickSysFor(ServerLevel l, BlockPos bp)
+        {
+            var p = new RandomTickSetupPacket(l, bp);
+            if(RANDOM_TICK_SET_UP.containsKey(p)) RANDOM_TICK_SET_UP.remove(p);
+        }
+
+        private final void setRandomTickSysSetUpFor(ServerLevel l, BlockPos bp, boolean what)
+        {
+            var p = new RandomTickSetupPacket(l, bp);
+            RANDOM_TICK_SET_UP.put(p, what);
         }
         
         // ====================API===================== // 
@@ -274,9 +303,9 @@ public class ErosionNetworkSafeVariants
         @Override public final void randomTick(BlockState bs, ServerLevel l, BlockPos bp, RandomSource r)
         {
             super.tick(bs, l, bp, r);
-            if(!this.randomTickSetup)
+            if(!this.isRandomTickSysSetUpFor(l, bp))
             {
-                this.randomTickSetup = true;
+                this.setRandomTickSysSetUpFor(l,bp,true);
                 tickManager(bs, l, bp);
             }
             return;
@@ -284,11 +313,22 @@ public class ErosionNetworkSafeVariants
 
         private final void tickManager(BlockState bs, ServerLevel l, BlockPos bp)
         {
-            if(!l.getBlockState(bp).is(this)) return;
-            this.serverOnRandomTick(new ErosionBlockInteractionPacket(null, bs, l, bp, null, null, null));
+            if(!l.isLoaded(bp))
+            {
+                this.discardRandomTickSysFor(l, bp);
+                return;
+            }
+
+            var cbs = l.getBlockState(bp);
+            if(!cbs.is(this))
+            {
+                this.discardRandomTickSysFor(l, bp);
+                return;
+            }
+            this.serverOnRandomTick(new ErosionBlockInteractionPacket(null, cbs, l, bp, null, null, null));
             var d = this.getRandomTickFrequency().getDelay();
             Task.schedule(d + ErosionMod.RANDOM.nextInt(d), () -> {
-                tickManager(bs,l,bp);
+                tickManager(cbs,l,bp);
             });
         }
 
