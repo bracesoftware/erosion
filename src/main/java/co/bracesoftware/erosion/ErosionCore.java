@@ -773,6 +773,11 @@ public class ErosionCore
                 this.productItemSupplier = b;
             }
 
+            public static final AlterationPath copy(AlterationPath p)
+            {
+                return new AlterationPath(p.type, p.productSupplier, p.productItemSupplier);
+            }
+
             public static final AlterationPath combinePaths(
                 AlterationPath a, AlterationPath b
             ) throws ErosionRecipeImplException
@@ -846,7 +851,9 @@ public class ErosionCore
             this.material = this.materialSupplier.get();
             this.materialItem = this.materialItemSupplier.get();
 
-            this.paths = new ArrayList<>(this.originalPaths);
+            this.paths = this.originalPaths.stream().map(
+                o -> AlterationPath.copy(o)
+            ).collect(Collectors.toList());
 
             for(int i = 0; i < this.paths.size(); ++i)
             {
