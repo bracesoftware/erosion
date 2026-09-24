@@ -34,6 +34,7 @@ implements IErosionChemicalReactorMultiBlockComponent
         super(p, () -> (
             BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>
         ) ErosionRegistry.BlockEntities.CHEMICAL_REACTOR.get(), ChemicalReactorBlock::new);
+        this.setServerLogic(new ChemicalReactorBlockServerLogic());
     }
 
     @Nullable 
@@ -43,33 +44,36 @@ implements IErosionChemicalReactorMultiBlockComponent
         return new ChemicalReactorBlockEntity(p,s);
     }
 
-    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
+    public static class ChemicalReactorBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        ErosionUtils.displayMessage(
-            p.getServerPlayer(), "You must be empty-handed to use the reactor",
-            ErosionScreenMessage.Color.RED
-        );
-        return true;
-    }
-
-    @Override public boolean serverUseWithoutItem(ErosionBlockInteractionPacket p)
-    {
-        var pozz = p.getBlockPos().relative(Direction.UP);
-        if(!p.getServerLevel().getBlockState(pozz).isAir())
+        @Override public boolean useItemOn(ErosionBlockInteractionPacket p)
         {
             ErosionUtils.displayMessage(
-                p.getServerPlayer(), "The top of the reactor is obstructed",
-                ErosionScreenMessage.Color.GRAY
+                p.getServerPlayer(), "You must be empty-handed to use the reactor",
+                ErosionScreenMessage.Color.RED
             );
             return true;
         }
-        p.getServerPlayer().openMenu(
-            new SimpleMenuProvider(
-                (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, p.getBlockPos()),
-                Component.literal("Chemical Reactor")
-            ), a -> a.writeBlockPos(p.getBlockPos())
-        );
-        return true;
+
+        @Override public boolean useWithoutItem(ErosionBlockInteractionPacket p)
+        {
+            var pozz = p.getBlockPos().relative(Direction.UP);
+            if(!p.getServerLevel().getBlockState(pozz).isAir())
+            {
+                ErosionUtils.displayMessage(
+                    p.getServerPlayer(), "The top of the reactor is obstructed",
+                    ErosionScreenMessage.Color.GRAY
+                );
+                return true;
+            }
+            p.getServerPlayer().openMenu(
+                new SimpleMenuProvider(
+                    (cid, pinv, pid) -> new ChemicalReactorMenu(cid, pinv, p.getBlockPos()),
+                    Component.literal("Chemical Reactor")
+                ), a -> a.writeBlockPos(p.getBlockPos())
+            );
+            return true;
+        }
     }
 
     public static final class ChemicalReactorMultiBlockComponentPosPacket

@@ -49,46 +49,50 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
             this.stateDefinition.any().
             setValue(COOLING_FLUID_LEVEL,0)
         );
+        this.setServerLogic(new ChemicalReactorCoolingSystemBlockServerLogic());
     }
 
-    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
+    public static class ChemicalReactorCoolingSystemBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        var holdingItem = p.getItemStack().getItem();
-        int lev = p.getBlockState().getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
-        for(var item : BlockEntityRecipes.ChemicalReactor.getChemicalReactorCoolingLiquids().entrySet())
+        @Override public boolean useItemOn(ErosionBlockInteractionPacket p)
         {
-            var coolingItem = item.getKey();
-            var giveBack = item.getValue();
-            if(holdingItem == coolingItem)
+            var holdingItem = p.getItemStack().getItem();
+            int lev = p.getBlockState().getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
+            for(var item : BlockEntityRecipes.ChemicalReactor.getChemicalReactorCoolingLiquids().entrySet())
             {
-                if(lev > 0)
+                var coolingItem = item.getKey();
+                var giveBack = item.getValue();
+                if(holdingItem == coolingItem)
                 {
+                    if(lev > 0)
+                    {
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "There is still enough fluid in the system",
+                            ErosionScreenMessage.Color.RED
+                        );
+                        return true;
+                    }
+                    p.getItemStack().shrink(1);
+                    var ns = p.getBlockState().setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, 1000);
+                    p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
+                    p.getServerPlayer().getInventory().placeItemBackInInventory(new ItemStack(giveBack, 1));
                     ErosionUtils.displayMessage(
-                        p.getServerPlayer(), "There is still enough fluid in the system",
-                        ErosionScreenMessage.Color.RED
+                        p.getServerPlayer(), "Fluid successfully applied"
                     );
                     return true;
                 }
-                p.getItemStack().shrink(1);
-                var ns = p.getBlockState().setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, 1000);
-                p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
-                p.getServerPlayer().getInventory().placeItemBackInInventory(new ItemStack(giveBack, 1));
-                ErosionUtils.displayMessage(
-                    p.getServerPlayer(), "Fluid successfully applied"
-                );
-                return true;
             }
+            return false;
         }
-        return false;
-    }
 
-    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
-    {
-        ErosionUtils.displayMessage(
-            p.getServerPlayer(), "Cannot do that",
-            ErosionScreenMessage.Color.DARK_RED
-        );
-        return;
+        @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Cannot do that",
+                ErosionScreenMessage.Color.DARK_RED
+            );
+            return;
+        }
     }
     // ================================================== //
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)

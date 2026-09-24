@@ -54,6 +54,7 @@ public class MaterialPurifierBlock extends ErosionNetworkSafeBaseEntityBlock<Mat
             .setValue(WORKING, false)
         );
         this.callUseItemOnOnly(true);
+        this.setServerLogic(new MaterialPurifierBlockServerLogic());
     }
 
     @Override
@@ -103,75 +104,77 @@ public class MaterialPurifierBlock extends ErosionNetworkSafeBaseEntityBlock<Mat
         return this.defaultBlockState().setValue(FACING, c.getHorizontalDirection().getOpposite());
     }
     
-    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
+    public static class MaterialPurifierBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        if(p.getServerLevel().getBlockEntity(p.getBlockPos()) instanceof MaterialPurifierBlockEntity be)
+        @Override public boolean useItemOn(ErosionBlockInteractionPacket p)
         {
-            if(p.getItemStack().is(Items.REDSTONE))
+            if(p.getServerLevel().getBlockEntity(p.getBlockPos()) instanceof MaterialPurifierBlockEntity be)
             {
-                if(be.fuel == ErosionConfig.MAX_PURIFIER_FUEL)
+                if(p.getItemStack().is(Items.REDSTONE))
                 {
-                    ErosionUtils.displayMessage(
-                        p.getServerPlayer(), "Fuel tank is full (3/3)"
-                    );
-                    return true;
-                }
-                if(be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
-                {
-                    be.fuel++;
-                    p.getItemStack().shrink(1);
-                    
-                    if(!be.finished && !be.working && be.fuel > 0)
+                    if(be.fuel == ErosionConfig.MAX_PURIFIER_FUEL)
                     {
-                        be.fuel--;
-                        be.working = true;
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "Fuel tank is full (3/3)"
+                        );
+                        return true;
                     }
-                    
+                    if(be.fuel < ErosionConfig.MAX_PURIFIER_FUEL)
+                    {
+                        be.fuel++;
+                        p.getItemStack().shrink(1);
+                        
+                        if(!be.finished && !be.working && be.fuel > 0)
+                        {
+                            be.fuel--;
+                            be.working = true;
+                        }
+                        
+                        be.setChanged();
+                        p.getServerLevel().setBlock(
+                            p.getBlockPos(), 
+                            p.getBlockState()
+                            .setValue(FUEL, be.fuel)
+                            .setValue(FINISHED, be.finished)
+                            .setValue(WORKING, be.working), 
+                            Block.UPDATE_ALL
+                        );
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL
+                        );
+                        return true;
+                    }
+                }
+
+                if(p.getItemStack().isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
+                {
+                    p.getServerPlayer().getInventory().placeItemBackInInventory(be.storedItem);
+                    be.storedItem = ItemStack.EMPTY;
                     be.setChanged();
                     p.getServerLevel().setBlock(
-                        p.getBlockPos(), 
+                        p.getBlockPos(),
                         p.getBlockState()
                         .setValue(FUEL, be.fuel)
                         .setValue(FINISHED, be.finished)
-                        .setValue(WORKING, be.working), 
+                        .setValue(WORKING, be.working),
                         Block.UPDATE_ALL
-                    );
-                    ErosionUtils.displayMessage(
-                        p.getServerPlayer(), "Fuel level: " + be.fuel + "/" + ErosionConfig.MAX_PURIFIER_FUEL
                     );
                     return true;
                 }
             }
 
-            if(p.getItemStack().isEmpty()) if(!be.working && be.finished && !be.storedItem.isEmpty())
-            {
-                p.getServerPlayer().getInventory().placeItemBackInInventory(be.storedItem);
-                be.storedItem = ItemStack.EMPTY;
-                be.setChanged();
-                p.getServerLevel().setBlock(
-                    p.getBlockPos(),
-                    p.getBlockState()
-                    .setValue(FUEL, be.fuel)
-                    .setValue(FINISHED, be.finished)
-                    .setValue(WORKING, be.working),
-                    Block.UPDATE_ALL
-                );
-                return true;
-            }
+            return false;
         }
 
-        return false;
+        @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Cannot do that",
+                ErosionScreenMessage.Color.DARK_RED
+            );
+            return;
+        }
     }
-
-    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
-    {
-        ErosionUtils.displayMessage(
-            p.getServerPlayer(), "Cannot do that",
-            ErosionScreenMessage.Color.DARK_RED
-        );
-        return;
-    }
-
     @Override
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving)
     {

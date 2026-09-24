@@ -51,43 +51,48 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         );
 
         this.setRandomTickFrequency(RandomTickFrequency.MEDIUM);
+        this.setServerLogic(new ChemicalReactorScrubberBlockServerLogic());
     }
 
-    @Override public void serverOnRandomTick(ErosionBlockInteractionPacket p)
+    public static class ChemicalReactorScrubberBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        ErosionUtils.spawnGasParticle(p.getServerLevel(), p.getBlockPos().relative(Direction.UP));
-        return;
-    }
-
-    @Override public boolean serverUseItemOn(ErosionBlockInteractionPacket p)
-    {
-        var it = p.getItemStack().getItem();
-        int dur = p.getBlockState().getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
-        if(it == ErosionRegistry.Items.GAS_FILTER.get())
+        @Override public void onRandomTick(ErosionBlockInteractionPacket p)
         {
-            if(dur > 0)
+            ErosionUtils.spawnGasParticle(p.getServerLevel(), p.getBlockPos().relative(Direction.UP));
+            return;
+        }
+
+        @Override public boolean useItemOn(ErosionBlockInteractionPacket p)
+        {
+            var it = p.getItemStack().getItem();
+            int dur = p.getBlockState().getValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY);
+            if(it == ErosionRegistry.Items.GAS_FILTER.get())
             {
-                ErosionUtils.displayMessage(
-                    p.getServerPlayer(), "Filter in the scrubber is not yet worn out",
-                    ErosionScreenMessage.Color.RED
-                );
+                if(dur > 0)
+                {
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Filter in the scrubber is not yet worn out",
+                        ErosionScreenMessage.Color.RED
+                    );
+                    return true;
+                }
+                p.getItemStack().shrink(1);
+                var ns = p.getBlockState().setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, 100);
+                p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
                 return true;
             }
-            p.getItemStack().shrink(1);
-            var ns = p.getBlockState().setValue(ChemicalReactorScrubberBlock.FILTER_DURABILITY, 100);
-            p.getServerLevel().setBlock(p.getBlockPos(), ns, Block.UPDATE_ALL);
-            return true;
+            return false;
         }
-        return false;
+        @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Cannot do that",
+                ErosionScreenMessage.Color.DARK_RED
+            );
+            return;
+        }
     }
-    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
-    {
-        ErosionUtils.displayMessage(
-            p.getServerPlayer(), "Cannot do that",
-            ErosionScreenMessage.Color.DARK_RED
-        );
-        return;
-    }
+    
     // ================================================== //
     @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
     {

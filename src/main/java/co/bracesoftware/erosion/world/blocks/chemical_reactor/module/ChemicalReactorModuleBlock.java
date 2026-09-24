@@ -26,6 +26,8 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
     public ChemicalReactorModuleBlock(Block.Properties p)
     {
         super(p);
+        this.setServerLogic(new ChemicalReactorModuleBlockServerLogic());
+        this.setCommonLogic(new ChemicalReactorModuleBlockCommonLogic());
     }
 
     //--------------------------------------------------
@@ -105,46 +107,41 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
 
         return;
     }
-    @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+
+    public static class ChemicalReactorModuleBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        ErosionUtils.displayMessage(
-            p.getServerPlayer(), "Cannot do that",
-            ErosionScreenMessage.Color.DARK_RED
-        );
-        return;
+        @Override public void onInteractionFail(ErosionBlockInteractionPacket p)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Cannot do that",
+                ErosionScreenMessage.Color.DARK_RED
+            );
+            return;
+        }
     }
 
-    @Override public boolean serverOnAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
+    public static class ChemicalReactorModuleBlockCommonLogic extends ErosionNetworkSafeBlockSidedLogic
     {
-        if(p.getBlockClassInfo() instanceof ChemicalReactorModuleBlock)
+        @Override public boolean onAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
         {
-            return true;
+            if(p.getBlockClassInfo() instanceof ChemicalReactorModuleBlock)
+            {
+                return true;
+            }
+            if(p.getBlockClassInfo() instanceof ChemicalReactorBlock)
+            {
+                return true;
+            }
+            if(p.getBlockClassInfo() instanceof ChemicalReactorCoolingSystemBlock)
+            {
+                return true;
+            }
+            if(p.getBlockClassInfo() instanceof ChemicalReactorScrubberBlock)
+            {
+                return true;
+            }
+            return false;
         }
-        if(p.getBlockClassInfo() instanceof ChemicalReactorBlock)
-        {
-            ErosionUtils.displayMessage(
-                p.getServerPlayer(), "Reactor connected successfully",
-                ErosionScreenMessage.Color.YELLOW
-            );
-            return true;
-        }
-        if(p.getBlockClassInfo() instanceof ChemicalReactorCoolingSystemBlock)
-        {
-            ErosionUtils.displayMessage(
-                p.getServerPlayer(), "Reactor cooling system connected successfully",
-                ErosionScreenMessage.Color.BLUE
-            );
-            return true;
-        }
-        if(p.getBlockClassInfo() instanceof ChemicalReactorScrubberBlock)
-        {
-            ErosionUtils.displayMessage(
-                p.getServerPlayer(), "Reactor scrubber connected successfully",
-                ErosionScreenMessage.Color.DARK_GRAY
-            );
-            return true;
-        }
-        return false;
     }
     //--------------------------------------------------
 
