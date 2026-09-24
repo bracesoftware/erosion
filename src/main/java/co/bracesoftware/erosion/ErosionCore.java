@@ -817,7 +817,8 @@ public class ErosionCore
             }
         }
 
-        public List<AlterationPath> paths = null;
+        private List<AlterationPath> paths = null;
+        public final List<AlterationPath> originalPaths;
         
         public AlterableMaterial(
             String n, Supplier<Block> a,
@@ -831,6 +832,8 @@ public class ErosionCore
             this.materialItemSupplier = b;
             this.paths = c;
 
+            this.originalPaths = Collections.unmodifiableList(c);
+
             this.setupAntiDuplicationSystem();
         }
 
@@ -842,6 +845,8 @@ public class ErosionCore
 
             this.material = this.materialSupplier.get();
             this.materialItem = this.materialItemSupplier.get();
+
+            this.paths = new ArrayList<>(this.originalPaths);
 
             for(int i = 0; i < this.paths.size(); ++i)
             {
