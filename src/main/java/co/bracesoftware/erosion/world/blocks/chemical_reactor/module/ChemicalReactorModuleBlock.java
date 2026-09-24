@@ -113,6 +113,39 @@ implements IErosionChemicalReactorMultiBlockComponent, IErosionBlockWithTip
         );
         return;
     }
+
+    @Override public boolean serverOnAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
+    {
+        if(p.getBlockClassInfo() instanceof ChemicalReactorModuleBlock)
+        {
+            return true;
+        }
+        if(p.getBlockClassInfo() instanceof ChemicalReactorBlock)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Reactor connected successfully",
+                ErosionScreenMessage.Color.YELLOW
+            );
+            return true;
+        }
+        if(p.getBlockClassInfo() instanceof ChemicalReactorCoolingSystemBlock)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Reactor cooling system connected successfully",
+                ErosionScreenMessage.Color.BLUE
+            );
+            return true;
+        }
+        if(p.getBlockClassInfo() instanceof ChemicalReactorScrubberBlock)
+        {
+            ErosionUtils.displayMessage(
+                p.getServerPlayer(), "Reactor scrubber connected successfully",
+                ErosionScreenMessage.Color.DARK_GRAY
+            );
+            return true;
+        }
+        return false;
+    }
     //--------------------------------------------------
 
     @Override public boolean canSurvive(BlockState s, LevelReader l, BlockPos p)
