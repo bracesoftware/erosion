@@ -851,9 +851,12 @@ public class ErosionCore
             this.material = this.materialSupplier.get();
             this.materialItem = this.materialItemSupplier.get();
 
+            //since the path optimizer does its job
+            //i wanna be safe and copy the original list each time we rejoin a world
+            // not doing this will result in a horrendous error :D
             this.paths = this.originalPaths.stream().map(
-                o -> AlterationPath.copy(o)
-            ).collect(Collectors.toList());
+                AlterationPath::copy
+            ).toList();
 
             for(int i = 0; i < this.paths.size(); ++i)
             {

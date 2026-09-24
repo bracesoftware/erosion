@@ -401,6 +401,7 @@ public class ErosionBlockStateGen extends BlockStateProvider
         side = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_side");
         bottom = modLoc("block/" + BLOCKID + "_bottom");
         top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
+        bottom = top;
 
         crm = models().cubeBottomTop(
             BLOCKID, side, bottom, top
