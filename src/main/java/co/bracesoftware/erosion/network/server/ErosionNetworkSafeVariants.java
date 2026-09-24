@@ -226,62 +226,71 @@ public class ErosionNetworkSafeVariants
                 this.block = b;
             }
 
+            public ErosionBlockInteractionPacket toServerPacket()
+            {
+                return this;
+            }
+
+            public ErosionBlockInteractionPacket toCommonOrClientPacket()
+            {
+                return this;
+            }
+
             public Block getBlockClassInfo() { return this.block; }
             public ItemStack getItemStack() { return this.itemStack; }
             public BlockState getBlockState() { return this.blockState; }
-            public ServerLevel getServerLevel()
+            public BlockPos getBlockPos() { return this.blockPos; }
+            public InteractionHand getInteractionHand() { return this.interactionHand; }
+            public BlockHitResult getBlockHitResult() { return this.blockHitResult; }
+            public Player getPlayer() { return this.player; }
+            public Level getLevel() { return this.level; }
+            public ServerLevel getServerLevel() throws ErosionNetworkSafeBlockException
             {
                 if(this.level instanceof ServerLevel l)
                 {
                     return l;
                 }
-                return null;
+                throw new ErosionNetworkSafeBlockException("Tried to access the server memory from the client");
             }
-            public BlockPos getBlockPos() { return this.blockPos; }
-            public ServerPlayer getServerPlayer()
+            public ServerPlayer getServerPlayer() throws ErosionNetworkSafeBlockException
             {
                 if(this.player instanceof ServerPlayer p)
                 {
                     return p;
                 }
-                return null;
+                throw new ErosionNetworkSafeBlockException("Tried to access the server memory from the client");
             }
-            public InteractionHand getInteractionHand() { return this.interactionHand; }
-            public BlockHitResult getBlockHitResult() { return this.blockHitResult; }
-            public Player getPlayer() { return this.player; }
-            public Level getLevel() { return this.level; }
-            
         }
 
         public static class ErosionNetworkSafeBlockSidedLogic
         {
             public ErosionNetworkSafeBlockSidedLogic() {}
+            // -------------------------------------------------------------------- //
             public boolean useItemOn(ErosionBlockInteractionPacket p)
             {
                 return false;
             }
+            // -------------------------------------------------------------------- //
             public boolean useWithoutItem(ErosionBlockInteractionPacket p)
             {
                 return false;
             }
-
+            // -------------------------------------------------------------------- //
             public boolean onAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
             {
                 return false;
             }
-
+            // -------------------------------------------------------------------- //
             public void onInteractionFail(ErosionBlockInteractionPacket p)
             {
                 return;
             }
-
+            // -------------------------------------------------------------------- //
             public void onRandomTick(ErosionBlockInteractionPacket p)
             {
                 return;
             }
         }
-
-        
 
         public final void callUseItemOnOnly(boolean cfg)
         {
@@ -292,6 +301,7 @@ public class ErosionNetworkSafeVariants
         {
             this.randomTickFrequency = f;
         }
+
         public final RandomTickFrequency getRandomTickFrequency()
         {
             return this.randomTickFrequency;
@@ -336,30 +346,42 @@ public class ErosionNetworkSafeVariants
             if(stack.getItem() instanceof BlockItem it)
             {
                 boolean result = false;
+                var packet = new ErosionBlockInteractionPacket(stack, bs, leva, bp, playa, hand, hr, it.getBlock());
                 result = this.COMMON.onAttemptToPlaceBlock(
-                    new ErosionBlockInteractionPacket(stack, bs, leva, bp, playa, hand, hr, it.getBlock())
+                    packet.toCommonOrClientPacket()
                 );
+                if(result)
+                {
+                    if(leva.isClientSide()) this.CLIENT.onAttemptToPlaceBlock(
+                        packet.toCommonOrClientPacket()
+                    );
+                    else this.SERVER.onAttemptToPlaceBlock(
+                        packet.toServerPacket()
+                    );
+                }
                 if(result) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             }
 
             if(!leva.isClientSide())
             {
-                var p = (ServerPlayer) playa;
-                var l = (ServerLevel) leva;
                 boolean result = false;
 
-                if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.SERVER.useWithoutItem(new ErosionBlockInteractionPacket(
-                    null, bs, l, bp, p, null, hr,this
-                ));
+                if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.SERVER.useWithoutItem(
+                    new ErosionBlockInteractionPacket(
+                        null, bs, leva, bp, playa, null, hr,this
+                    ).toServerPacket()
+                );
                 else result = this.SERVER.useItemOn(new ErosionBlockInteractionPacket(
-                    stack, bs, l, bp, p, hand, hr,this
+                    stack, bs, leva, bp, playa, hand, hr,this
                 ));
                 
                 if(!result)
                 {
-                    this.SERVER.onInteractionFail(new ErosionBlockInteractionPacket(
-                        null, bs, l, bp, p, null, null,this
-                    ));
+                    this.SERVER.onInteractionFail(
+                        new ErosionBlockInteractionPacket(
+                            null, bs, leva, bp, playa, null, null,this
+                        ).toServerPacket()
+                    );
                 }
             }
             //super.useItemOn(stack, s, l, bp, p, hand, hr);
@@ -393,7 +415,10 @@ public class ErosionNetworkSafeVariants
                 this.discardRandomTickSysFor(l, bp);
                 return;
             }
-            this.SERVER.onRandomTick(new ErosionBlockInteractionPacket(null, cbs, l, bp, null, null, null, this));
+            this.SERVER.onRandomTick(
+                new ErosionBlockInteractionPacket(null, cbs, l, bp, null, null, null, this)
+                .toServerPacket()
+            );
             var d = this.getRandomTickFrequency().getDelay();
             Task.schedule(d + ErosionMod.RANDOM.nextInt(d), () -> {
                 tickManager(cbs,l,bp);
