@@ -295,7 +295,7 @@ public class ErosionNetworkSafeVariants
         {
             if(stack.getItem() instanceof BlockItem it)
             {
-                boolean result = leva.isClientSide();
+                boolean result = false;
                 if(!leva.isClientSide())
                 {
                     var p = (ServerPlayer) playa;
