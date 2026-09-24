@@ -31,7 +31,7 @@ import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
-
+import co.bracesoftware.libs.chrono.Task;
 import co.bracesoftware.libs.minecraft_text_formatter.Text;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -193,6 +193,7 @@ public final class ErosionMod
     @SubscribeEvent //USED TO PROCESS CANDIDATES WITH HIGH PRIORITY
     public static void onServerTick(ServerTickEvent.Post e)
     {
+        Task.processPending();
         int tick = e.getServer().getTickCount();
         ErosionCore.processPendingPriority(e.getServer().getLevel(Level.OVERWORLD));
         
