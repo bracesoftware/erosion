@@ -55,7 +55,7 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
 
     @Override public void serverOnRandomTick(ErosionBlockInteractionPacket p)
     {
-        ErosionUtils.spawnGasParticle(p.getServerLevel(), p.getBlockPos());
+        ErosionUtils.spawnGasParticle(p.getServerLevel(), p.getBlockPos().relative(Direction.UP));
         return;
     }
 
