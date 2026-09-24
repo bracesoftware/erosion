@@ -293,19 +293,25 @@ public class ErosionNetworkSafeVariants
             BlockHitResult hr
         )
         {
+            if(stack.getItem() instanceof BlockItem it)
+            {
+                boolean result = leva.isClientSide();
+                if(!leva.isClientSide())
+                {
+                    var p = (ServerPlayer) playa;
+                    var l = (ServerLevel) leva;
+                    result = this.serverOnAttemptToPlaceBlock(
+                        new ErosionBlockInteractionPacket(stack, bs, l, bp, p, hand, hr, it.getBlock())
+                    );
+                }
+                if(result) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
+            }
+
             if(!leva.isClientSide())
             {
                 var p = (ServerPlayer) playa;
                 var l = (ServerLevel) leva;
                 boolean result = false;
-
-                if(stack.getItem() instanceof BlockItem it)
-                {
-                    result = this.serverOnAttemptToPlaceBlock(
-                        new ErosionBlockInteractionPacket(stack, bs, l, bp, p, hand, hr, it.getBlock())
-                    );
-                    if(result) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-                }
 
                 if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.serverUseWithoutItem(new ErosionBlockInteractionPacket(
                     null, bs, l, bp, p, null, hr,this
