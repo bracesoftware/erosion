@@ -14,6 +14,7 @@
     "erosion:raw_arsenopyrite",
     "erosion:raw_pyrite",
     "erosion:raw_anglesite",
+    "erosion:raw_galena",
     "erosion:raw_dehydrated_limonite"
   ]
 }
