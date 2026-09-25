@@ -56,7 +56,7 @@ jobs:
           project_id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
           file_path: 'release/Erosion-neoforge.jar'
           game_endpoint: 'minecraft'
-          game_versions: '1.21.1,NeoForge,Java 21'
+          game_versions: 'Minecraft 1.21:1.21.1,Java 21,NeoForge'
           display_name: ${{ env.DISPLAY_NAME }}
           changelog: 'Automated release ${{ env.VERSION }}'
           release_type: 'release'
