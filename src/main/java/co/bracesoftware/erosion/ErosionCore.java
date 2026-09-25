@@ -1224,11 +1224,13 @@ public class ErosionCore
             ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
             () -> List.of(
                 ErosionRegistry.Blocks.GOETHITE_ORE.get(),
-                ErosionRegistry.Blocks.ANGLESITE_ORE.get()
+                ErosionRegistry.Blocks.ANGLESITE_ORE.get(),
+                ErosionRegistry.Blocks.CRACKED_STONE.get()
             ),
             () -> List.of(
                 ErosionRegistry.Items.RAW_GOETHITE.get(),
-                ErosionRegistry.Items.RAW_ANGLESITE.get()
+                ErosionRegistry.Items.RAW_ANGLESITE.get(),
+                ErosionRegistry.Items.CRACKED_STONE.get()
             ),
             new AlterationRules(List.of(
                 AlterationRules.EXPOSURE_TO_AIR
@@ -1273,7 +1275,8 @@ public class ErosionCore
                         ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
                         ErosionRegistry.Blocks.AZURITE_ORE.get(),
                         ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
-                        ErosionRegistry.Blocks.PYRITE_ORE.get()
+                        ErosionRegistry.Blocks.PYRITE_ORE.get(),
+                        ErosionRegistry.Blocks.GALENA_ORE.get()
                     ),
                     () -> List.of(
                         Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
@@ -1285,7 +1288,8 @@ public class ErosionCore
                         ErosionRegistry.Items.RAW_SPHALERITE.get(),
                         ErosionRegistry.Items.RAW_AZURITE.get(),
                         ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
-                        ErosionRegistry.Items.RAW_PYRITE.get()
+                        ErosionRegistry.Items.RAW_PYRITE.get(),
+                        ErosionRegistry.Items.RAW_GALENA.get()
                     ),
                     new AlterationRules(List.of(
                         AlterationRules.CONTACT_WITH_WATER
@@ -1908,6 +1912,8 @@ public class ErosionCore
                 CrucibleCatalysts.BORIC_ACID_CRYSTAL
             ), () -> List.of(
             ), List.of(
+                ErosionRegistry.GasTypes.LEAD_MONOXIDE,
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE
             )
         );
 
@@ -1932,6 +1938,8 @@ public class ErosionCore
                 CrucibleCatalysts.BORIC_ACID_CRYSTAL
             ), () -> List.of(
             ), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE,
+                ErosionRegistry.GasTypes.LEAD_MONOXIDE
             )
         );
 

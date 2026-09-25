@@ -46,6 +46,7 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
+import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -261,6 +262,7 @@ public class ErosionRegistry
         public static final IRawRegistry SULFUR_DIOXIDE = new IRawRegistry("sulfur_dioxide", "Sulfur Dioxide");
         public static final IRawRegistry WATER_VAPOR = new IRawRegistry("water_vapor", "Water Vapor");
         public static final IRawRegistry ARSENIC_TRIOXIDE = new IRawRegistry("arsenic_trioxide", "Arsenic Trioxide");
+        public static final IRawRegistry LEAD_MONOXIDE = new IRawRegistry("lead_monoxide", "Lead Monoxide");
 
         //COOL ITEMS
         public static final IRawRegistry BASIC_MASK = new IRawRegistry("basic_mask", "Basic Mask");
@@ -323,6 +325,20 @@ public class ErosionRegistry
             100, false, 3,
             ParticleTypes.CAMPFIRE_COSY_SMOKE, 5,
             List.of()
+        );
+        public static final GasType LEAD_MONOXIDE = new GasType(
+            RawRegistry.LEAD_MONOXIDE.getId(),
+            RawRegistry.LEAD_MONOXIDE.getName(),
+            356, true, 5,
+            ParticleTypes.CRIMSON_SPORE, 15,
+            List.of(
+                MobEffects.WITHER,
+                MobEffects.CONFUSION,
+                MobEffects.MOVEMENT_SLOWDOWN,
+                MobEffects.DIG_SLOWDOWN,
+                MobEffects.POISON,
+                MobEffects.OOZING
+            )
         );
     }
 
