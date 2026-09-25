@@ -42,7 +42,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
 
     public MaterialPurifierBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(), pos, state);
+        super(ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.getBlockEntityHolder().get(), pos, state);
     }
 
     @Override

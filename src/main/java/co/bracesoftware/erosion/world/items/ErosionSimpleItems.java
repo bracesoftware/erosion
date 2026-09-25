@@ -8,7 +8,9 @@ import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionItemExceptions.ErosionGasMaskInitException;
-import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
+import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
+import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContentResourceLocation;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
@@ -18,7 +20,6 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 public class ErosionSimpleItems
 {
@@ -56,7 +57,7 @@ public class ErosionSimpleItems
         private final Quality quality;
         private final Holder<ArmorMaterial> material;
 
-        public GasMask(String id, Item.Properties p, Quality q)
+        public GasMask(ErosionModContentResourceLocation id, Item.Properties p, Quality q)
         {
             super(createMaterial(id), ArmorItem.Type.HELMET, p);
             this.quality = q;
@@ -77,19 +78,19 @@ public class ErosionSimpleItems
         private static final Map<String, Holder<ArmorMaterial>> MATERIALS = new HashMap<>();
 
         private static Holder<ArmorMaterial> createMaterial(
-            String id
+            ErosionModContentResourceLocation id
         ) throws ErosionGasMaskInitException
         {
-            if(MATERIALS.containsKey(id))
+            if(MATERIALS.containsKey(id.getId()))
             {
                 if(ErosionConfig.SUPER_SAFE_MODE)
                 {
-                    throw new ErosionGasMaskInitException("Already created such material -> " + id);
+                    throw new ErosionGasMaskInitException("Already created such material -> " + id.getId());
                 }
-                return MATERIALS.get(id);
+                return MATERIALS.get(id.getId());
             }
-            var m = ErosionRegistry.ARMOR_MATERIALS.register(
-                id,() -> new ArmorMaterial(
+            var m = ErosionModContentManager.EROSION_MOD_ARMOR_MATERIALS.register(
+                id.getId(),() -> new ArmorMaterial(
                     Map.of(
                         ArmorItem.Type.HELMET, 2,
                         ArmorItem.Type.CHESTPLATE, 0,
@@ -101,13 +102,13 @@ public class ErosionSimpleItems
                     () -> Ingredient.EMPTY,
                     List.of(
                         new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(
-                            Erosion.MODID, id
+                            Erosion.MODID, id.getId()
                         ))
                     ), 0f,0f
                 )
             );
-            MATERIALS.put(id, m);
-            ErosionUtils.Log("Created armor material -> " + id);
+            MATERIALS.put(id.getId(), m);
+            ErosionUtils.Log("Created armor material -> " + id.getId());
             return m;
         } 
 
@@ -117,11 +118,12 @@ public class ErosionSimpleItems
             .fireResistant();
         }
 
-        public static DeferredItem<Item> newGasMaskItem(String id, Quality q)
+        public static ErosionModContent.ErosionItem newGasMaskItem(ErosionModContentResourceLocation id, Quality q)
         {
             createMaterial(id);
-            return ErosionRegistry.ITEMS.register(
-                id, () -> new GasMask(id,GasMask.getGasMaskDefaultItemProperties(),q)
+            return new ErosionModContentManager.ErosionModContent.ErosionItem(
+                id,
+                () -> new GasMask(id, GasMask.getGasMaskDefaultItemProperties(),q)
             );
         }
     }

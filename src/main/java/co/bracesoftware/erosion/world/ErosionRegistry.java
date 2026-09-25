@@ -72,34 +72,6 @@ public class ErosionRegistry
 
 ///////////////////////////////////////////////////////////////////////////////////////
 
-    public static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Registries.MENU, Erosion.MODID);
-    
-    public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Erosion.MODID);
-    
-    public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(Erosion.MODID);
-
-    public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(
-        Registries.BLOCK_ENTITY_TYPE, Erosion.MODID
-    );
-
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
-        Registries.CREATIVE_MODE_TAB, Erosion.MODID
-    );
-    public static final DeferredRegister<ArmorMaterial> ARMOR_MATERIALS = DeferredRegister.create(
-        Registries.ARMOR_MATERIAL, Erosion.MODID
-    );
-
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(
-        Registries.SOUND_EVENT, Erosion.MODID
-    );
-
-    public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(
-        Registries.DATA_COMPONENT_TYPE, Erosion.MODID
-    );
-
-    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(
-        Registries.RECIPE_SERIALIZER, Erosion.MODID
-    );
     // ===================================================== //
     public static class DefaultAlterationPaths
     {
@@ -112,124 +84,103 @@ public class ErosionRegistry
     // ===================================================== //
     public static class RawRegistry
     {
-        public static class IRawRegistry
-        {
-            private String id = null;
-            private String name = null;
-
-            public IRawRegistry(String id, String name)
-            {
-                this.id = id;
-                this.name = name;
-            }
-
-            public String getId()
-            {
-                return this.id;
-            }
-            public String getName()
-            {
-                return this.name;
-            }
-        }
-
         //raw registry
         //RETROGEN FEATURES
         public static class ErosionRetrogenFeatures
         {
-            public static final IRawRegistry PLACE_ROCKS = new IRawRegistry("place_rocks", "Place rocks around the chunk");
+            public static final ErosionModContentResourceLocation PLACE_ROCKS = new ErosionModContentResourceLocation("place_rocks", "Place rocks around the chunk");
         }
 
         //SIMPLE BLOCKS
-        public static final IRawRegistry DRIED_DIRT = new IRawRegistry("dried_dirt", "Dried Dirt");
-        public static final IRawRegistry MINERAL_RICH_DIRT = new IRawRegistry("mineral_rich_dirt", "Mineral-rich Soil");
-        public static final IRawRegistry KAOLINIZED_GRANITE = new IRawRegistry("kaolinized_granite", "Kaolinized Granite");
-        public static final IRawRegistry ALBITIZED_GRANITE = new IRawRegistry("albitized_granite", "Albitized Granite");
-        public static final IRawRegistry QUARTZ_GRAVEL = new IRawRegistry("quartz_gravel", "Quartz Gravel");
-        public static final IRawRegistry PROPYLITIZED_DIORITE = new IRawRegistry("propylitized_diorite", "Propylitized Diorite");
-        public static final IRawRegistry CRACKED_CALCITE = new IRawRegistry("cracked_calcite", "Cracked Calcite");
+        public static final ErosionModContentResourceLocation DRIED_DIRT = new ErosionModContentResourceLocation("dried_dirt", "Dried Dirt");
+        public static final ErosionModContentResourceLocation MINERAL_RICH_DIRT = new ErosionModContentResourceLocation("mineral_rich_dirt", "Mineral-rich Soil");
+        public static final ErosionModContentResourceLocation KAOLINIZED_GRANITE = new ErosionModContentResourceLocation("kaolinized_granite", "Kaolinized Granite");
+        public static final ErosionModContentResourceLocation ALBITIZED_GRANITE = new ErosionModContentResourceLocation("albitized_granite", "Albitized Granite");
+        public static final ErosionModContentResourceLocation QUARTZ_GRAVEL = new ErosionModContentResourceLocation("quartz_gravel", "Quartz Gravel");
+        public static final ErosionModContentResourceLocation PROPYLITIZED_DIORITE = new ErosionModContentResourceLocation("propylitized_diorite", "Propylitized Diorite");
+        public static final ErosionModContentResourceLocation CRACKED_CALCITE = new ErosionModContentResourceLocation("cracked_calcite", "Cracked Calcite");
         
-        public static final IRawRegistry LIMONITE_ORE = new IRawRegistry("limonite_ore", "Limonite Ore");
-        public static final IRawRegistry HEMATITE_ORE = new IRawRegistry("hematite_ore", "Hematite Ore");
-        public static final IRawRegistry MAGNETITE_ORE = new IRawRegistry("magnetite_ore", "Magnetite Ore");
-        public static final IRawRegistry CALCITE_MALACHITE_ORE = new IRawRegistry("calcite_malachite_ore", "Calcite Malachite Ore");
+        public static final ErosionModContentResourceLocation LIMONITE_ORE = new ErosionModContentResourceLocation("limonite_ore", "Limonite Ore");
+        public static final ErosionModContentResourceLocation HEMATITE_ORE = new ErosionModContentResourceLocation("hematite_ore", "Hematite Ore");
+        public static final ErosionModContentResourceLocation MAGNETITE_ORE = new ErosionModContentResourceLocation("magnetite_ore", "Magnetite Ore");
+        public static final ErosionModContentResourceLocation CALCITE_MALACHITE_ORE = new ErosionModContentResourceLocation("calcite_malachite_ore", "Calcite Malachite Ore");
 
-        public static final IRawRegistry NATIVE_GOLD_DEPOSIT = new IRawRegistry("native_gold_deposit", "Native Gold Deposit");
-        public static final IRawRegistry CASSITERITE_DEPOSIT = new IRawRegistry("cassiterite_deposit", "Cassiterite Deposit");
-        public static final IRawRegistry NATIVE_SILVER_DEPOSIT = new IRawRegistry("native_silver_deposit", "Native Silver Deposit");
+        public static final ErosionModContentResourceLocation NATIVE_GOLD_DEPOSIT = new ErosionModContentResourceLocation("native_gold_deposit", "Native Gold Deposit");
+        public static final ErosionModContentResourceLocation CASSITERITE_DEPOSIT = new ErosionModContentResourceLocation("cassiterite_deposit", "Cassiterite Deposit");
+        public static final ErosionModContentResourceLocation NATIVE_SILVER_DEPOSIT = new ErosionModContentResourceLocation("native_silver_deposit", "Native Silver Deposit");
 
-        public static final IRawRegistry BISMUTHINITE_ORE = new IRawRegistry("bismuthinite_ore", "Bismuthinite Ore");
-        public static final IRawRegistry SPHALERITE_ORE = new IRawRegistry("sphalerite_ore", "Sphalerite Ore");
+        public static final ErosionModContentResourceLocation BISMUTHINITE_ORE = new ErosionModContentResourceLocation("bismuthinite_ore", "Bismuthinite Ore");
+        public static final ErosionModContentResourceLocation SPHALERITE_ORE = new ErosionModContentResourceLocation("sphalerite_ore", "Sphalerite Ore");
 
-        public static final IRawRegistry AZURITE_ORE = new IRawRegistry("azurite_ore", "Azurite Ore");
-        public static final IRawRegistry GOETHITE_ORE = new IRawRegistry("dehydrated_limonite_ore", "Dehydrated Limonite Ore");
-        public static final IRawRegistry TETRAHEDRITE_ORE = new IRawRegistry("tetrahedrite_ore", "Tetrahedrite Ore");
-        public static final IRawRegistry ARSENOPYRITE_ORE = new IRawRegistry("arsenopyrite_ore", "Arsenopyrite Ore");
-        public static final IRawRegistry PYRITE_ORE = new IRawRegistry("pyrite_ore", "Pyrite Ore");
-        public static final IRawRegistry ANGLESITE_ORE = new IRawRegistry("anglesite_ore", "Anglesite Ore");
-        public static final IRawRegistry GALENA_ORE = new IRawRegistry("galena_ore", "Galena Ore");
-        public static final IRawRegistry HALITE_ORE = new IRawRegistry("halite_ore", "Halite Ore");
+        public static final ErosionModContentResourceLocation AZURITE_ORE = new ErosionModContentResourceLocation("azurite_ore", "Azurite Ore");
+        public static final ErosionModContentResourceLocation GOETHITE_ORE = new ErosionModContentResourceLocation("dehydrated_limonite_ore", "Dehydrated Limonite Ore");
+        public static final ErosionModContentResourceLocation TETRAHEDRITE_ORE = new ErosionModContentResourceLocation("tetrahedrite_ore", "Tetrahedrite Ore");
+        public static final ErosionModContentResourceLocation ARSENOPYRITE_ORE = new ErosionModContentResourceLocation("arsenopyrite_ore", "Arsenopyrite Ore");
+        public static final ErosionModContentResourceLocation PYRITE_ORE = new ErosionModContentResourceLocation("pyrite_ore", "Pyrite Ore");
+        public static final ErosionModContentResourceLocation ANGLESITE_ORE = new ErosionModContentResourceLocation("anglesite_ore", "Anglesite Ore");
+        public static final ErosionModContentResourceLocation GALENA_ORE = new ErosionModContentResourceLocation("galena_ore", "Galena Ore");
+        public static final ErosionModContentResourceLocation HALITE_ORE = new ErosionModContentResourceLocation("halite_ore", "Halite Ore");
 
-        public static final IRawRegistry RUBY_ORE = new IRawRegistry("ruby_ore", "Ruby Ore");
-        public static final IRawRegistry SAPPHIRE_ORE = new IRawRegistry("sapphire_ore", "Sapphire Ore");
+        public static final ErosionModContentResourceLocation RUBY_ORE = new ErosionModContentResourceLocation("ruby_ore", "Ruby Ore");
+        public static final ErosionModContentResourceLocation SAPPHIRE_ORE = new ErosionModContentResourceLocation("sapphire_ore", "Sapphire Ore");
 
-        public static final IRawRegistry BORAX_DEPOSIT = new IRawRegistry("borax_deposit", "Borax Deposit");
-        public static final IRawRegistry CRACKED_STONE = new IRawRegistry("cracked_stone", "Cracked Stone");
+        public static final ErosionModContentResourceLocation BORAX_DEPOSIT = new ErosionModContentResourceLocation("borax_deposit", "Borax Deposit");
+        public static final ErosionModContentResourceLocation CRACKED_STONE = new ErosionModContentResourceLocation("cracked_stone", "Cracked Stone");
 
         //ITEMS
-        public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
-        public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
-        public static final IRawRegistry SALT = new IRawRegistry("salt", "Salt");
+        public static final ErosionModContentResourceLocation FELDSPAR_POWDER = new ErosionModContentResourceLocation("feldspar_powder", "Feldspar Powder");
+        public static final ErosionModContentResourceLocation FLUX = new ErosionModContentResourceLocation("flux", "Flux");
+        public static final ErosionModContentResourceLocation SALT = new ErosionModContentResourceLocation("salt", "Salt");
 
-        public static final IRawRegistry SULFUR_SLAG = new IRawRegistry("sulfur_slag", "Sulfur Slag");
-        public static final IRawRegistry ANTIMONY_SLAG = new IRawRegistry("antimony_slag", "Antimony Slag");
-        public static final IRawRegistry DEBRIS = new IRawRegistry("debris", "Debris");
-        public static final IRawRegistry CRUSHED_EGG_SHELL = new IRawRegistry("crushed_egg_shell", "Crushed Egg Shell");
-        public static final IRawRegistry RAW_LIMONITE = new IRawRegistry("raw_limonite", "Raw Limonite");
-        public static final IRawRegistry RAW_HEMATITE = new IRawRegistry("raw_hematite", "Raw Hematite");
-        public static final IRawRegistry RAW_MAGNETITE = new IRawRegistry("raw_magnetite", "Raw Magnetite");
-        public static final IRawRegistry RAW_MALACHITE = new IRawRegistry("raw_malachite", "Raw Malachite");
+        public static final ErosionModContentResourceLocation SULFUR_SLAG = new ErosionModContentResourceLocation("sulfur_slag", "Sulfur Slag");
+        public static final ErosionModContentResourceLocation ANTIMONY_SLAG = new ErosionModContentResourceLocation("antimony_slag", "Antimony Slag");
+        public static final ErosionModContentResourceLocation DEBRIS = new ErosionModContentResourceLocation("debris", "Debris");
+        public static final ErosionModContentResourceLocation CRUSHED_EGG_SHELL = new ErosionModContentResourceLocation("crushed_egg_shell", "Crushed Egg Shell");
+        public static final ErosionModContentResourceLocation RAW_LIMONITE = new ErosionModContentResourceLocation("raw_limonite", "Raw Limonite");
+        public static final ErosionModContentResourceLocation RAW_HEMATITE = new ErosionModContentResourceLocation("raw_hematite", "Raw Hematite");
+        public static final ErosionModContentResourceLocation RAW_MAGNETITE = new ErosionModContentResourceLocation("raw_magnetite", "Raw Magnetite");
+        public static final ErosionModContentResourceLocation RAW_MALACHITE = new ErosionModContentResourceLocation("raw_malachite", "Raw Malachite");
 
-        public static final IRawRegistry NATIVE_GOLD = new IRawRegistry("native_gold", "Native Gold");
-        public static final IRawRegistry NATIVE_SILVER = new IRawRegistry("native_silver", "Native Silver");
-        public static final IRawRegistry SILVER_CHUNK = new IRawRegistry("silver_chunk", "Silver Chunk");
-        public static final IRawRegistry RAW_CASSITERITE = new IRawRegistry("raw_cassiterite", "Raw Cassiterite");
-        public static final IRawRegistry TIN_CHUNK = new IRawRegistry("tin_chunk", "Tin Chunk");
-        public static final IRawRegistry LEAD_CHUNK = new IRawRegistry("lead_chunk", "Lead Chunk");
+        public static final ErosionModContentResourceLocation NATIVE_GOLD = new ErosionModContentResourceLocation("native_gold", "Native Gold");
+        public static final ErosionModContentResourceLocation NATIVE_SILVER = new ErosionModContentResourceLocation("native_silver", "Native Silver");
+        public static final ErosionModContentResourceLocation SILVER_CHUNK = new ErosionModContentResourceLocation("silver_chunk", "Silver Chunk");
+        public static final ErosionModContentResourceLocation RAW_CASSITERITE = new ErosionModContentResourceLocation("raw_cassiterite", "Raw Cassiterite");
+        public static final ErosionModContentResourceLocation TIN_CHUNK = new ErosionModContentResourceLocation("tin_chunk", "Tin Chunk");
+        public static final ErosionModContentResourceLocation LEAD_CHUNK = new ErosionModContentResourceLocation("lead_chunk", "Lead Chunk");
 
-        public static final IRawRegistry RAW_BISMUTHINITE = new IRawRegistry("raw_bismuthinite", "Raw Bismuthinite");
-        public static final IRawRegistry BISMUTH_CHUNK = new IRawRegistry("bismuth_chunk", "Bismuth Chunk");
+        public static final ErosionModContentResourceLocation RAW_BISMUTHINITE = new ErosionModContentResourceLocation("raw_bismuthinite", "Raw Bismuthinite");
+        public static final ErosionModContentResourceLocation BISMUTH_CHUNK = new ErosionModContentResourceLocation("bismuth_chunk", "Bismuth Chunk");
 
-        public static final IRawRegistry RAW_SPHALERITE = new IRawRegistry("raw_sphalerite", "Raw Sphalerite");
-        public static final IRawRegistry ZINC_CHUNK = new IRawRegistry("zinc_chunk", "Zinc Chunk");
+        public static final ErosionModContentResourceLocation RAW_SPHALERITE = new ErosionModContentResourceLocation("raw_sphalerite", "Raw Sphalerite");
+        public static final ErosionModContentResourceLocation ZINC_CHUNK = new ErosionModContentResourceLocation("zinc_chunk", "Zinc Chunk");
 
-        public static final IRawRegistry RAW_AZURITE = new IRawRegistry("raw_azurite", "Raw Azurite");
-        public static final IRawRegistry RAW_GOETHITE = new IRawRegistry("raw_dehydrated_limonite", "Raw Dehydrated Limonite");
-        public static final IRawRegistry RUBY = new IRawRegistry("ruby", "Ruby");
-        public static final IRawRegistry SAPPHIRE = new IRawRegistry("sapphire", "Sapphire");
-        public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
-        public static final IRawRegistry RAW_ARSENOPYRITE = new IRawRegistry("raw_arsenopyrite", "Raw Arsenopyrite");
-        public static final IRawRegistry RAW_PYRITE = new IRawRegistry("raw_pyrite", "Raw Pyrite");
-        public static final IRawRegistry RAW_ANGLESITE = new IRawRegistry("raw_anglesite", "Raw Anglesite");
-        public static final IRawRegistry RAW_GALENA = new IRawRegistry("raw_galena", "Raw Galena");
-        public static final IRawRegistry RAW_HALITE = new IRawRegistry("raw_halite", "Raw Halite");
+        public static final ErosionModContentResourceLocation RAW_AZURITE = new ErosionModContentResourceLocation("raw_azurite", "Raw Azurite");
+        public static final ErosionModContentResourceLocation RAW_GOETHITE = new ErosionModContentResourceLocation("raw_dehydrated_limonite", "Raw Dehydrated Limonite");
+        public static final ErosionModContentResourceLocation RUBY = new ErosionModContentResourceLocation("ruby", "Ruby");
+        public static final ErosionModContentResourceLocation SAPPHIRE = new ErosionModContentResourceLocation("sapphire", "Sapphire");
+        public static final ErosionModContentResourceLocation RAW_TETRAHEDRITE = new ErosionModContentResourceLocation("raw_tetrahedrite", "Raw Tetrahedrite");
+        public static final ErosionModContentResourceLocation RAW_ARSENOPYRITE = new ErosionModContentResourceLocation("raw_arsenopyrite", "Raw Arsenopyrite");
+        public static final ErosionModContentResourceLocation RAW_PYRITE = new ErosionModContentResourceLocation("raw_pyrite", "Raw Pyrite");
+        public static final ErosionModContentResourceLocation RAW_ANGLESITE = new ErosionModContentResourceLocation("raw_anglesite", "Raw Anglesite");
+        public static final ErosionModContentResourceLocation RAW_GALENA = new ErosionModContentResourceLocation("raw_galena", "Raw Galena");
+        public static final ErosionModContentResourceLocation RAW_HALITE = new ErosionModContentResourceLocation("raw_halite", "Raw Halite");
 
-        public static final IRawRegistry BORAX = new IRawRegistry("borax", "Borax");
-        public static final IRawRegistry DEHYDRATED_BORAX = new IRawRegistry("dehydrated_borax", "Dehydrated Borax");
+        public static final ErosionModContentResourceLocation BORAX = new ErosionModContentResourceLocation("borax", "Borax");
+        public static final ErosionModContentResourceLocation DEHYDRATED_BORAX = new ErosionModContentResourceLocation("dehydrated_borax", "Dehydrated Borax");
 
-        public static final IRawRegistry BUCKET_OF_SULFURIC_ACID = new IRawRegistry("sulfuric_acid_bucket", "Bucket of Sulfuric Acid");
-        public static final IRawRegistry BORIC_ACID_CRYSTAL = new IRawRegistry("boric_acid_crystal", "Boric Acid Crystal");
+        public static final ErosionModContentResourceLocation BUCKET_OF_SULFURIC_ACID = new ErosionModContentResourceLocation("sulfuric_acid_bucket", "Bucket of Sulfuric Acid");
+        public static final ErosionModContentResourceLocation BORIC_ACID_CRYSTAL = new ErosionModContentResourceLocation("boric_acid_crystal", "Boric Acid Crystal");
 
-        public static final IRawRegistry GAS_FILTER = new IRawRegistry("gas_filter", "Gas Filter");
+        public static final ErosionModContentResourceLocation GAS_FILTER = new ErosionModContentResourceLocation("gas_filter", "Gas Filter");
 
         //MACHINES
-        public static final IRawRegistry MATERIAL_PURIFIER = new IRawRegistry("material_purifier", "Material Purifier");
-        public static final IRawRegistry CRUCIBLE = new IRawRegistry("crucible", "Crucible");
+        public static final ErosionModContentResourceLocation MATERIAL_PURIFIER = new ErosionModContentResourceLocation("material_purifier", "Material Purifier");
+        public static final ErosionModContentResourceLocation CRUCIBLE = new ErosionModContentResourceLocation("crucible", "Crucible");
 
-        public static final IRawRegistry CHEMICAL_REACTOR = new IRawRegistry("chemical_reactor", "Chemical Reactor");
-        public static final IRawRegistry CHEMICAL_REACTOR_SCRUBBER = new IRawRegistry("chemical_reactor_scrubber", "Chemical Reactor Scrubber");
-        public static final IRawRegistry CHEMICAL_REACTOR_MODULE = new IRawRegistry("chemical_reactor_module", "Chemical Reactor Module");
-        public static final IRawRegistry CHEMICAL_REACTOR_COOLING_SYSTEM = new IRawRegistry(
+        public static final ErosionModContentResourceLocation CHEMICAL_REACTOR = new ErosionModContentResourceLocation("chemical_reactor", "Chemical Reactor");
+        public static final ErosionModContentResourceLocation CHEMICAL_REACTOR_SCRUBBER = new ErosionModContentResourceLocation("chemical_reactor_scrubber", "Chemical Reactor Scrubber");
+        public static final ErosionModContentResourceLocation CHEMICAL_REACTOR_MODULE = new ErosionModContentResourceLocation("chemical_reactor_module", "Chemical Reactor Module");
+        public static final ErosionModContentResourceLocation CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContentResourceLocation(
             "chemical_reactor_cooling_system",
             "Chemical Reactor Cooling System"
         );
@@ -237,7 +188,7 @@ public class ErosionRegistry
         //MANUAL ADVANCEMENTS
         public static class ManualAdvancements
         {
-            public static final IRawRegistry INVISIBLE_FIRE = new IRawRegistry(
+            public static final ErosionModContentResourceLocation INVISIBLE_FIRE = new ErosionModContentResourceLocation(
                 "invizible_fire", "Invisible Fire..."
             );
         }
@@ -246,57 +197,57 @@ public class ErosionRegistry
 
         public static class ChemicalReactions
         {
-            public static final IRawRegistry SULFURIC_ACID_SYNTHESIS = new IRawRegistry(
+            public static final ErosionModContentResourceLocation SULFURIC_ACID_SYNTHESIS = new ErosionModContentResourceLocation(
                 "sulfuric_acid_synth", "Sulfuric Acid Synthesis"
             );
-            public static final IRawRegistry BORIC_ACID_SYNTHESIS = new IRawRegistry(
+            public static final ErosionModContentResourceLocation BORIC_ACID_SYNTHESIS = new ErosionModContentResourceLocation(
                 "boric_acid_synth", "Boric Acid Synthesis"
             );
-            public static final IRawRegistry DIRT_HYDRATION = new IRawRegistry(
+            public static final ErosionModContentResourceLocation DIRT_HYDRATION = new ErosionModContentResourceLocation(
                 "dirt_hydration", "Dirt Hydration"
             );
-            public static final IRawRegistry ANHYDROUS_BORAX_HYDRATION = new IRawRegistry(
+            public static final ErosionModContentResourceLocation ANHYDROUS_BORAX_HYDRATION = new ErosionModContentResourceLocation(
                 "borax_hydration", "Anhydrous Borax Hydration"
             );
         }
 
         public static class SMLModSides
         {
-            public static final IRawRegistry CLIENT = new IRawRegistry("client_side", "Erosion Client Side");
-            public static final IRawRegistry SERVER = new IRawRegistry("server_side", "Erosion Server Side");
-            public static final IRawRegistry COMMON = new IRawRegistry("common", "Erosion Common Side");
+            public static final ErosionModContentResourceLocation CLIENT = new ErosionModContentResourceLocation("client_side", "Erosion Client Side");
+            public static final ErosionModContentResourceLocation SERVER = new ErosionModContentResourceLocation("server_side", "Erosion Server Side");
+            public static final ErosionModContentResourceLocation COMMON = new ErosionModContentResourceLocation("common", "Erosion Common Side");
         }
 
         public static class CommandNames
         {
-            public static final IRawRegistry MOD_STATUS = new IRawRegistry("status", "STATUS");
-            public static final IRawRegistry RELOAD_CONFIG = new IRawRegistry("reload_config", "RELOAD_CONFIG");
-            public static final IRawRegistry VIEW_CONFIG = new IRawRegistry("view_config", "VIEW_CONFIG");
-            public static final IRawRegistry SET_CONFIG = new IRawRegistry("set_config", "SET_CONFIG");
+            public static final ErosionModContentResourceLocation MOD_STATUS = new ErosionModContentResourceLocation("status", "STATUS");
+            public static final ErosionModContentResourceLocation RELOAD_CONFIG = new ErosionModContentResourceLocation("reload_config", "RELOAD_CONFIG");
+            public static final ErosionModContentResourceLocation VIEW_CONFIG = new ErosionModContentResourceLocation("view_config", "VIEW_CONFIG");
+            public static final ErosionModContentResourceLocation SET_CONFIG = new ErosionModContentResourceLocation("set_config", "SET_CONFIG");
         }
 
         //GASES
-        public static final IRawRegistry SULFUR_DIOXIDE = new IRawRegistry("sulfur_dioxide", "Sulfur Dioxide");
-        public static final IRawRegistry WATER_VAPOR = new IRawRegistry("water_vapor", "Water Vapor");
-        public static final IRawRegistry ARSENIC_TRIOXIDE = new IRawRegistry("arsenic_trioxide", "Arsenic Trioxide");
-        public static final IRawRegistry LEAD_MONOXIDE = new IRawRegistry("lead_monoxide", "Lead Monoxide");
+        public static final ErosionModContentResourceLocation SULFUR_DIOXIDE = new ErosionModContentResourceLocation("sulfur_dioxide", "Sulfur Dioxide");
+        public static final ErosionModContentResourceLocation WATER_VAPOR = new ErosionModContentResourceLocation("water_vapor", "Water Vapor");
+        public static final ErosionModContentResourceLocation ARSENIC_TRIOXIDE = new ErosionModContentResourceLocation("arsenic_trioxide", "Arsenic Trioxide");
+        public static final ErosionModContentResourceLocation LEAD_MONOXIDE = new ErosionModContentResourceLocation("lead_monoxide", "Lead Monoxide");
 
         //COOL ITEMS
-        public static final IRawRegistry BASIC_MASK = new IRawRegistry("basic_mask", "Basic Mask");
-        public static final IRawRegistry GAS_MASK = new IRawRegistry("gas_mask", "Gas Mask");
+        public static final ErosionModContentResourceLocation BASIC_MASK = new ErosionModContentResourceLocation("basic_mask", "Basic Mask");
+        public static final ErosionModContentResourceLocation GAS_MASK = new ErosionModContentResourceLocation("gas_mask", "Gas Mask");
 
         //DATA ATTACHMENTS
-        public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
+        public static final ErosionModContentResourceLocation RETROGEN_DATA = new ErosionModContentResourceLocation("retrogen_data", "Erosion Retrogen Data");
 
         //DATA COMPONENTS
-        public static final IRawRegistry IS_SALTED_FOOD = new IRawRegistry("is_salted_food", "Is Salted Food?");
-        public static final IRawRegistry IS_SALTED_FOOD_SERIALIZER = new IRawRegistry("isf_serializer", "Is Salted Food Serializer");
+        public static final ErosionModContentResourceLocation IS_SALTED_FOOD = new ErosionModContentResourceLocation("is_salted_food", "Is Salted Food?");
+        public static final ErosionModContentResourceLocation IS_SALTED_FOOD_SERIALIZER = new ErosionModContentResourceLocation("isf_serializer", "Is Salted Food Serializer");
 
         //SOUND EVENTS
-        public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
-        public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_place", "Erosion Ore Sound");
-        public static final IRawRegistry CRUCIBLE_MELTING = new IRawRegistry("crucible_melting", "Crucible Melting");
-        public static final IRawRegistry ROCK = new IRawRegistry("rock", "Rock Sound");
+        public static final ErosionModContentResourceLocation ORE_MINE = new ErosionModContentResourceLocation("ore_mine", "Erosion Ore Sound");
+        public static final ErosionModContentResourceLocation ORE_PLACE = new ErosionModContentResourceLocation("ore_place", "Erosion Ore Sound");
+        public static final ErosionModContentResourceLocation CRUCIBLE_MELTING = new ErosionModContentResourceLocation("crucible_melting", "Crucible Melting");
+        public static final ErosionModContentResourceLocation ROCK = new ErosionModContentResourceLocation("rock", "Rock Sound");
     }
 
     public static class ErosionRenderingElements
@@ -405,7 +356,7 @@ public class ErosionRegistry
                 )
             )
         );
-        public static final Supplier<SoundEvent> CRUCIBLE_MELTING = SOUND_EVENTS.register(
+        public static final ErosionModContent.ErosionSound CRUCIBLE_MELTING = WHAT??.register(
             RawRegistry.CRUCIBLE_MELTING.getId(), () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
                     Erosion.MODID, RawRegistry.CRUCIBLE_MELTING.getId()
@@ -445,272 +396,272 @@ public class ErosionRegistry
     public static class Blocks
     {
         //MACHINES
-        public static final DeferredBlock<Block> MATERIAL_PURIFIER = BLOCKS.register(
-            RawRegistry.MATERIAL_PURIFIER.getId(), () -> new MaterialPurifierBlock(
+        public static final ErosionModContent.ErosionBlock MATERIAL_PURIFIER = new ErosionModContent.ErosionBlock(
+            RawRegistry.MATERIAL_PURIFIER, () -> new MaterialPurifierBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
-        public static final DeferredBlock<Block> CRUCIBLE = BLOCKS.register(
-            RawRegistry.CRUCIBLE.getId(), () -> new CrucibleBlock(
+        public static final ErosionModContent.ErosionBlock CRUCIBLE = new ErosionModContent.ErosionBlock(
+            RawRegistry.CRUCIBLE, () -> new CrucibleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
         //======================= CHEMICAL REACTOR SYS
-        public static final DeferredBlock<Block> CHEMICAL_REACTOR = BLOCKS.register(
-            RawRegistry.CHEMICAL_REACTOR.getId(), () -> new ChemicalReactorBlock(
+        public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR = new ErosionModContent.ErosionBlock(
+            RawRegistry.CHEMICAL_REACTOR, () -> new ChemicalReactorBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
-        public static final DeferredBlock<Block> CHEMICAL_REACTOR_SCRUBBER = BLOCKS.register(
-            RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(), () -> new ChemicalReactorScrubberBlock(
+        public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_SCRUBBER = new ErosionModContent.ErosionBlock(
+            RawRegistry.CHEMICAL_REACTOR_SCRUBBER, () -> new ChemicalReactorScrubberBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
-        public static final DeferredBlock<Block> CHEMICAL_REACTOR_MODULE = BLOCKS.register(
-            RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), () -> new ChemicalReactorModuleBlock(
+        public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_MODULE = new ErosionModContent.ErosionBlock(
+            RawRegistry.CHEMICAL_REACTOR_MODULE, () -> new ChemicalReactorModuleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
-        public static final DeferredBlock<Block> CHEMICAL_REACTOR_COOLING_SYSTEM = BLOCKS.register(
-            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), () -> new ChemicalReactorCoolingSystemBlock(
+        public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContent.ErosionBlock(
+            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM, () -> new ChemicalReactorCoolingSystemBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
         );
         //----------------------------------------------
         //SIMPLE BLOCKS
-        public static final DeferredBlock<Block> DRIED_DIRT = BLOCKS.register(
-            ErosionRegistry.RawRegistry.DRIED_DIRT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
+        public static final ErosionModContent.ErosionBlock DRIED_DIRT = new ErosionModContent.ErosionBlock(
+            ErosionRegistry.RawRegistry.DRIED_DIRT, () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> MINERAL_RICH_DIRT = BLOCKS.register(
-            ErosionRegistry.RawRegistry.MINERAL_RICH_DIRT.getId(), () -> new ErosionSimpleBlocks.DirtBlock(
+        public static final ErosionModContent.ErosionBlock MINERAL_RICH_DIRT = new ErosionModContent.ErosionBlock(
+            ErosionRegistry.RawRegistry.MINERAL_RICH_DIRT, () -> new ErosionSimpleBlocks.DirtBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
 
-        public static final DeferredBlock<Block> PROPYLITIZED_DIORITE = BLOCKS.register(
-            ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock PROPYLITIZED_DIORITE = new ErosionModContent.ErosionBlock(
+            ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
 
-        public static final DeferredBlock<Block> BORAX_DEPOSIT = BLOCKS.register(
-            ErosionRegistry.RawRegistry.BORAX_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock BORAX_DEPOSIT = new ErosionModContent.ErosionBlock(
+            ErosionRegistry.RawRegistry.BORAX_DEPOSIT, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
 
-        public static final DeferredBlock<Block> KAOLINIZED_GRANITE = BLOCKS.register(
-            RawRegistry.KAOLINIZED_GRANITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock KAOLINIZED_GRANITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.KAOLINIZED_GRANITE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> CRACKED_STONE = BLOCKS.register(
-            RawRegistry.CRACKED_STONE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock CRACKED_STONE = new ErosionModContent.ErosionBlock(
+            RawRegistry.CRACKED_STONE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> ALBITIZED_GRANITE = BLOCKS.register(
-            RawRegistry.ALBITIZED_GRANITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock ALBITIZED_GRANITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.ALBITIZED_GRANITE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> QUARTZ_GRAVEL = BLOCKS.register(
-            RawRegistry.QUARTZ_GRAVEL.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
+        public static final ErosionModContent.ErosionBlock QUARTZ_GRAVEL = new ErosionModContent.ErosionBlock(
+            RawRegistry.QUARTZ_GRAVEL, () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.GravelBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> CRACKED_CALCITE = BLOCKS.register(
-            RawRegistry.CRACKED_CALCITE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock CRACKED_CALCITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.CRACKED_CALCITE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
         
-        public static final DeferredBlock<Block> LIMONITE_ORE = BLOCKS.register(
-            RawRegistry.LIMONITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock LIMONITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.LIMONITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> HEMATITE_ORE = BLOCKS.register(
-            RawRegistry.HEMATITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock HEMATITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.HEMATITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> MAGNETITE_ORE = BLOCKS.register(
-            RawRegistry.MAGNETITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock MAGNETITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.MAGNETITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> CALCITE_MALACHITE_ORE = BLOCKS.register(
-            RawRegistry.CALCITE_MALACHITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock CALCITE_MALACHITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.CALCITE_MALACHITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> NATIVE_GOLD_DEPOSIT = BLOCKS.register(
-            RawRegistry.NATIVE_GOLD_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
+        public static final ErosionModContent.ErosionBlock NATIVE_GOLD_DEPOSIT = new ErosionModContent.ErosionBlock(
+            RawRegistry.NATIVE_GOLD_DEPOSIT, () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> NATIVE_SILVER_DEPOSIT = BLOCKS.register(
-            RawRegistry.NATIVE_SILVER_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
+        public static final ErosionModContent.ErosionBlock NATIVE_SILVER_DEPOSIT = new ErosionModContent.ErosionBlock(
+            RawRegistry.NATIVE_SILVER_DEPOSIT, () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> CASSITERITE_DEPOSIT = BLOCKS.register(
-            RawRegistry.CASSITERITE_DEPOSIT.getId(), () -> new ErosionSimpleBlocks.GravelBlock(
+        public static final ErosionModContent.ErosionBlock CASSITERITE_DEPOSIT = new ErosionModContent.ErosionBlock(
+            RawRegistry.CASSITERITE_DEPOSIT, () -> new ErosionSimpleBlocks.GravelBlock(
                 ErosionSimpleBlocks.DirtBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> BISMUTHINITE_ORE = BLOCKS.register(
-            RawRegistry.BISMUTHINITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock BISMUTHINITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.BISMUTHINITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> SPHALERITE_ORE = BLOCKS.register(
-            RawRegistry.SPHALERITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock SPHALERITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.SPHALERITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> AZURITE_ORE = BLOCKS.register(
-            RawRegistry.AZURITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock AZURITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.AZURITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> GOETHITE_ORE = BLOCKS.register(
-            RawRegistry.GOETHITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock GOETHITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.GOETHITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> TETRAHEDRITE_ORE = BLOCKS.register(
-            RawRegistry.TETRAHEDRITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock TETRAHEDRITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.TETRAHEDRITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> ARSENOPYRITE_ORE = BLOCKS.register(
-            RawRegistry.ARSENOPYRITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock ARSENOPYRITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.ARSENOPYRITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> PYRITE_ORE = BLOCKS.register(
-            RawRegistry.PYRITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock PYRITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.PYRITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> ANGLESITE_ORE = BLOCKS.register(
-            RawRegistry.ANGLESITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock ANGLESITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.ANGLESITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> HALITE_ORE = BLOCKS.register(
-            RawRegistry.HALITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock HALITE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.HALITE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> GALENA_ORE = BLOCKS.register(
-            RawRegistry.GALENA_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock GALENA_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.GALENA_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RUBY_ORE = BLOCKS.register(
-            RawRegistry.RUBY_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock RUBY_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RUBY_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> SAPPHIRE_ORE = BLOCKS.register(
-            RawRegistry.SAPPHIRE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+        public static final ErosionModContent.ErosionBlock SAPPHIRE_ORE = new ErosionModContent.ErosionBlock(
+            RawRegistry.SAPPHIRE_ORE, () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
 
-        public static final DeferredBlock<Block> RAW_LIMONITE = BLOCKS.register(
-            RawRegistry.RAW_LIMONITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_LIMONITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_LIMONITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_MAGNETITE = BLOCKS.register(
-            RawRegistry.RAW_MAGNETITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_MAGNETITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_MAGNETITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_HEMATITE = BLOCKS.register(
-            RawRegistry.RAW_HEMATITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_HEMATITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_HEMATITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_MALACHITE = BLOCKS.register(
-            RawRegistry.RAW_MALACHITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_MALACHITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_MALACHITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> NATIVE_GOLD = BLOCKS.register(
-            RawRegistry.NATIVE_GOLD.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock NATIVE_GOLD = new ErosionModContent.ErosionBlock(
+            RawRegistry.NATIVE_GOLD, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> NATIVE_SILVER = BLOCKS.register(
-            RawRegistry.NATIVE_SILVER.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock NATIVE_SILVER = new ErosionModContent.ErosionBlock(
+            RawRegistry.NATIVE_SILVER, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_SPHALERITE = BLOCKS.register(
-            RawRegistry.RAW_SPHALERITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_SPHALERITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_SPHALERITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_BISMUTHINITE = BLOCKS.register(
-            RawRegistry.RAW_BISMUTHINITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_BISMUTHINITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_BISMUTHINITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_CASSITERITE = BLOCKS.register(
-            RawRegistry.RAW_CASSITERITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_CASSITERITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_CASSITERITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_AZURITE = BLOCKS.register(
-            RawRegistry.RAW_AZURITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_AZURITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_AZURITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_GOETHITE = BLOCKS.register(
-            RawRegistry.RAW_GOETHITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_GOETHITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_GOETHITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_TETRAHEDRITE = BLOCKS.register(
-            RawRegistry.RAW_TETRAHEDRITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_TETRAHEDRITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_TETRAHEDRITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_ARSENOPYRITE = BLOCKS.register(
-            RawRegistry.RAW_ARSENOPYRITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_ARSENOPYRITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_ARSENOPYRITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_PYRITE = BLOCKS.register(
-            RawRegistry.RAW_PYRITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_PYRITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_PYRITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_ANGLESITE = BLOCKS.register(
-            RawRegistry.RAW_ANGLESITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_ANGLESITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_ANGLESITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_GALENA = BLOCKS.register(
-            RawRegistry.RAW_GALENA.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_GALENA = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_GALENA, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
-        public static final DeferredBlock<Block> RAW_HALITE = BLOCKS.register(
-            RawRegistry.RAW_HALITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+        public static final ErosionModContent.ErosionBlock RAW_HALITE = new ErosionModContent.ErosionBlock(
+            RawRegistry.RAW_HALITE, () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
@@ -718,333 +669,333 @@ public class ErosionRegistry
     public static class Items
     {
         //MACHINES
-        public static final DeferredItem<Item> MATERIAL_PURIFIER = ITEMS.register(
-            RawRegistry.MATERIAL_PURIFIER.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem MATERIAL_PURIFIER = new ErosionModContent.ErosionItem(
+            RawRegistry.MATERIAL_PURIFIER, () -> new BlockItem(
                 Blocks.MATERIAL_PURIFIER.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> CRUCIBLE = ITEMS.register(
-            RawRegistry.CRUCIBLE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CRUCIBLE = new ErosionModContent.ErosionItem(
+            RawRegistry.CRUCIBLE, () -> new BlockItem(
                 Blocks.CRUCIBLE.get(), new Item.Properties()
             )
         );
         //------------------------------------------------------
-        public static final DeferredItem<Item> CHEMICAL_REACTOR = ITEMS.register(
-            RawRegistry.CHEMICAL_REACTOR.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CHEMICAL_REACTOR = new ErosionModContent.ErosionItem(
+            RawRegistry.CHEMICAL_REACTOR, () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
-        public static final DeferredItem<Item> CHEMICAL_REACTOR_SCRUBBER = ITEMS.register(
-            RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CHEMICAL_REACTOR_SCRUBBER = new ErosionModContent.ErosionItem(
+            RawRegistry.CHEMICAL_REACTOR_SCRUBBER, () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
-        public static final DeferredItem<Item> CHEMICAL_REACTOR_MODULE = ITEMS.register(
-            RawRegistry.CHEMICAL_REACTOR_MODULE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CHEMICAL_REACTOR_MODULE = new ErosionModContent.ErosionItem(
+            RawRegistry.CHEMICAL_REACTOR_MODULE, () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR_MODULE.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
-        public static final DeferredItem<Item> CHEMICAL_REACTOR_COOLING_SYSTEM = ITEMS.register(
-            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContent.ErosionItem(
+            RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM, () -> new BlockItem(
                 Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), IErosionChemicalReactorItem.getDefaultProperties()
             )
         );
         //-------------------------------------------------------
         //COOL ITEMS
-        public static final DeferredItem<Item> GAS_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
-            RawRegistry.GAS_MASK.getId(), ErosionSimpleItems.GasMask.Quality.HIGH
+        public static final ErosionModContent.ErosionItem GAS_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
+            RawRegistry.GAS_MASK, ErosionSimpleItems.GasMask.Quality.HIGH
         );
 
-        public static final DeferredItem<Item> BASIC_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
-            RawRegistry.BASIC_MASK.getId(), ErosionSimpleItems.GasMask.Quality.LOW
+        public static final ErosionModContent.ErosionItem BASIC_MASK = ErosionSimpleItems.GasMask.newGasMaskItem(
+            RawRegistry.BASIC_MASK, ErosionSimpleItems.GasMask.Quality.LOW
         );
 
         //SIMPLEBLOCKS
 
-        public static final DeferredItem<Item> DRIED_DIRT = ITEMS.register(
-            RawRegistry.DRIED_DIRT.getId(), () -> new BlockItem(Blocks.DRIED_DIRT.get(), new Item.Properties())
+        public static final ErosionModContent.ErosionItem DRIED_DIRT = new ErosionModContent.ErosionItem(
+            RawRegistry.DRIED_DIRT, () -> new BlockItem(Blocks.DRIED_DIRT.get(), new Item.Properties())
         );
-        public static final DeferredItem<Item> BISMUTHINITE_ORE = ITEMS.register(
-            RawRegistry.BISMUTHINITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem BISMUTHINITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.BISMUTHINITE_ORE, () -> new BlockItem(
                 Blocks.BISMUTHINITE_ORE.get(), new Item.Properties()
             )
         );
 
-        public static final DeferredItem<Item> SPHALERITE_ORE = ITEMS.register(
-            RawRegistry.SPHALERITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem SPHALERITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.SPHALERITE_ORE, () -> new BlockItem(
                 Blocks.SPHALERITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> MINERAL_RICH_DIRT = ITEMS.register(
-            RawRegistry.MINERAL_RICH_DIRT.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem MINERAL_RICH_DIRT = new ErosionModContent.ErosionItem(
+            RawRegistry.MINERAL_RICH_DIRT, () -> new BlockItem(
                 Blocks.MINERAL_RICH_DIRT.get(), new Item.Properties()
             )
         );
 
-        public static final DeferredItem<Item> KAOLINIZED_GRANITE = ITEMS.register(
-            RawRegistry.KAOLINIZED_GRANITE.getId(), () -> new BlockItem(Blocks.KAOLINIZED_GRANITE.get(), new Item.Properties())
+        public static final ErosionModContent.ErosionItem KAOLINIZED_GRANITE = new ErosionModContent.ErosionItem(
+            RawRegistry.KAOLINIZED_GRANITE, () -> new BlockItem(Blocks.KAOLINIZED_GRANITE.get(), new Item.Properties())
         );
-        public static final DeferredItem<Item> CRACKED_STONE = ITEMS.register(
-            RawRegistry.CRACKED_STONE.getId(), () -> new BlockItem(Blocks.CRACKED_STONE.get(), new Item.Properties())
+        public static final ErosionModContent.ErosionItem CRACKED_STONE = new ErosionModContent.ErosionItem(
+            RawRegistry.CRACKED_STONE, () -> new BlockItem(Blocks.CRACKED_STONE.get(), new Item.Properties())
         );
-        public static final DeferredItem<Item> ALBITIZED_GRANITE = ITEMS.register(
-            RawRegistry.ALBITIZED_GRANITE.getId(), () -> new BlockItem(Blocks.ALBITIZED_GRANITE.get(), new Item.Properties())
+        public static final ErosionModContent.ErosionItem ALBITIZED_GRANITE = new ErosionModContent.ErosionItem(
+            RawRegistry.ALBITIZED_GRANITE, () -> new BlockItem(Blocks.ALBITIZED_GRANITE.get(), new Item.Properties())
         );
-        public static final DeferredItem<Item> QUARTZ_GRAVEL = ITEMS.register(
-            RawRegistry.QUARTZ_GRAVEL.getId(), () -> new BlockItem(Blocks.QUARTZ_GRAVEL.get(), new Item.Properties())
+        public static final ErosionModContent.ErosionItem QUARTZ_GRAVEL = new ErosionModContent.ErosionItem(
+            RawRegistry.QUARTZ_GRAVEL, () -> new BlockItem(Blocks.QUARTZ_GRAVEL.get(), new Item.Properties())
         );
-        public static final DeferredItem<Item> PROPYLITIZED_DIORITE = ITEMS.register(
-            RawRegistry.PROPYLITIZED_DIORITE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem PROPYLITIZED_DIORITE = new ErosionModContent.ErosionItem(
+            RawRegistry.PROPYLITIZED_DIORITE, () -> new BlockItem(
                 Blocks.PROPYLITIZED_DIORITE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> CRACKED_CALCITE = ITEMS.register(
-            RawRegistry.CRACKED_CALCITE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CRACKED_CALCITE = new ErosionModContent.ErosionItem(
+            RawRegistry.CRACKED_CALCITE, () -> new BlockItem(
                 Blocks.CRACKED_CALCITE.get(), new Item.Properties()
             )
         );
 
-        public static final DeferredItem<Item> LIMONITE_ORE = ITEMS.register(
-            RawRegistry.LIMONITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem LIMONITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.LIMONITE_ORE, () -> new BlockItem(
                 Blocks.LIMONITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> HEMATITE_ORE = ITEMS.register(
-            RawRegistry.HEMATITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem HEMATITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.HEMATITE_ORE, () -> new BlockItem(
                 Blocks.HEMATITE_ORE.get(), new Item.Properties()
             )
         );
 
-        public static final DeferredItem<Item> BORAX_DEPOSIT = ITEMS.register(
-            RawRegistry.BORAX_DEPOSIT.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem BORAX_DEPOSIT = new ErosionModContent.ErosionItem(
+            RawRegistry.BORAX_DEPOSIT, () -> new BlockItem(
                 Blocks.BORAX_DEPOSIT.get(), new Item.Properties()
             )
         );
 
-        public static final DeferredItem<Item> MAGNETITE_ORE = ITEMS.register(
-            RawRegistry.MAGNETITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem MAGNETITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.MAGNETITE_ORE, () -> new BlockItem(
                 Blocks.MAGNETITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> AZURITE_ORE = ITEMS.register(
-            RawRegistry.AZURITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem AZURITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.AZURITE_ORE, () -> new BlockItem(
                 Blocks.AZURITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> GOETHITE_ORE = ITEMS.register(
-            RawRegistry.GOETHITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem GOETHITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.GOETHITE_ORE, () -> new BlockItem(
                 Blocks.GOETHITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> TETRAHEDRITE_ORE = ITEMS.register(
-            RawRegistry.TETRAHEDRITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem TETRAHEDRITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.TETRAHEDRITE_ORE, () -> new BlockItem(
                 Blocks.TETRAHEDRITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> ARSENOPYRITE_ORE = ITEMS.register(
-            RawRegistry.ARSENOPYRITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem ARSENOPYRITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.ARSENOPYRITE_ORE, () -> new BlockItem(
                 Blocks.ARSENOPYRITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> PYRITE_ORE = ITEMS.register(
-            RawRegistry.PYRITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem PYRITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.PYRITE_ORE, () -> new BlockItem(
                 Blocks.PYRITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> ANGLESITE_ORE = ITEMS.register(
-            RawRegistry.ANGLESITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem ANGLESITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.ANGLESITE_ORE, () -> new BlockItem(
                 Blocks.ANGLESITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> HALITE_ORE = ITEMS.register(
-            RawRegistry.HALITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem HALITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.HALITE_ORE, () -> new BlockItem(
                 Blocks.HALITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> GALENA_ORE = ITEMS.register(
-            RawRegistry.GALENA_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem GALENA_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.GALENA_ORE, () -> new BlockItem(
                 Blocks.GALENA_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> RUBY_ORE = ITEMS.register(
-            RawRegistry.RUBY_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem RUBY_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.RUBY_ORE, () -> new BlockItem(
                 Blocks.RUBY_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> SAPPHIRE_ORE = ITEMS.register(
-            RawRegistry.SAPPHIRE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem SAPPHIRE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.SAPPHIRE_ORE, () -> new BlockItem(
                 Blocks.SAPPHIRE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> CALCITE_MALACHITE_ORE = ITEMS.register(
-            RawRegistry.CALCITE_MALACHITE_ORE.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CALCITE_MALACHITE_ORE = new ErosionModContent.ErosionItem(
+            RawRegistry.CALCITE_MALACHITE_ORE, () -> new BlockItem(
                 Blocks.CALCITE_MALACHITE_ORE.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> NATIVE_GOLD_DEPOSIT = ITEMS.register(
-            RawRegistry.NATIVE_GOLD_DEPOSIT.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem NATIVE_GOLD_DEPOSIT = new ErosionModContent.ErosionItem(
+            RawRegistry.NATIVE_GOLD_DEPOSIT, () -> new BlockItem(
                 Blocks.NATIVE_GOLD_DEPOSIT.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> CASSITERITE_DEPOSIT = ITEMS.register(
-            RawRegistry.CASSITERITE_DEPOSIT.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem CASSITERITE_DEPOSIT = new ErosionModContent.ErosionItem(
+            RawRegistry.CASSITERITE_DEPOSIT, () -> new BlockItem(
                 Blocks.CASSITERITE_DEPOSIT.get(), new Item.Properties()
             )
         );
-        public static final DeferredItem<Item> NATIVE_SILVER_DEPOSIT = ITEMS.register(
-            RawRegistry.NATIVE_SILVER_DEPOSIT.getId(), () -> new BlockItem(
+        public static final ErosionModContent.ErosionItem NATIVE_SILVER_DEPOSIT = new ErosionModContent.ErosionItem(
+            RawRegistry.NATIVE_SILVER_DEPOSIT, () -> new BlockItem(
                 Blocks.NATIVE_SILVER_DEPOSIT.get(), new Item.Properties()
             )
         );
         
         // SIMPLE ITEMS
-        public static final DeferredItem<Item> FELDSPAR_POWDER = ITEMS.register(
-            RawRegistry.FELDSPAR_POWDER.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem FELDSPAR_POWDER = new ErosionModContent.ErosionItem(
+            RawRegistry.FELDSPAR_POWDER, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> FLUX = ITEMS.register(
-            RawRegistry.FLUX.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem FLUX = new ErosionModContent.ErosionItem(
+            RawRegistry.FLUX, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> SALT = ITEMS.register(
-            RawRegistry.SALT.getId(), () -> new Item(new Item.Properties().stacksTo(64))
+        public static final ErosionModContent.ErosionItem SALT = new ErosionModContent.ErosionItem(
+            RawRegistry.SALT, () -> new Item(new Item.Properties().stacksTo(64))
         );
-        public static final DeferredItem<Item> GAS_FILTER = ITEMS.register(
-            RawRegistry.GAS_FILTER.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem GAS_FILTER = new ErosionModContent.ErosionItem(
+            RawRegistry.GAS_FILTER, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> RUBY = ITEMS.register(
-            RawRegistry.RUBY.getId(), () -> new Item(new Item.Properties().stacksTo(64))
+        public static final ErosionModContent.ErosionItem RUBY = new ErosionModContent.ErosionItem(
+            RawRegistry.RUBY, () -> new Item(new Item.Properties().stacksTo(64))
         );
-        public static final DeferredItem<Item> SAPPHIRE = ITEMS.register(
-            RawRegistry.SAPPHIRE.getId(), () -> new Item(new Item.Properties().stacksTo(64))
+        public static final ErosionModContent.ErosionItem SAPPHIRE = new ErosionModContent.ErosionItem(
+            RawRegistry.SAPPHIRE, () -> new Item(new Item.Properties().stacksTo(64))
         );
-        public static final DeferredItem<Item> SULFUR_SLAG = ITEMS.register(
-            RawRegistry.SULFUR_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem SULFUR_SLAG = new ErosionModContent.ErosionItem(
+            RawRegistry.SULFUR_SLAG, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> ANTIMONY_SLAG = ITEMS.register(
-            RawRegistry.ANTIMONY_SLAG.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem ANTIMONY_SLAG = new ErosionModContent.ErosionItem(
+            RawRegistry.ANTIMONY_SLAG, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> DEBRIS = ITEMS.register(
-            RawRegistry.DEBRIS.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        public static final ErosionModContent.ErosionItem DEBRIS = new ErosionModContent.ErosionItem(
+            RawRegistry.DEBRIS, () -> new Item(new Item.Properties().stacksTo(16))
         );
-        public static final DeferredItem<Item> CRUSHED_EGG_SHELL = ITEMS.register(
-            RawRegistry.CRUSHED_EGG_SHELL.getId(), () -> new Item(new Item.Properties().stacksTo(16))
-        );
-
-        public static final DeferredItem<Item> BORAX = ITEMS.register(
-            RawRegistry.BORAX.getId(), () -> new Item(new Item.Properties().stacksTo(32))
-        );
-        public static final DeferredItem<Item> DEHYDRATED_BORAX = ITEMS.register(
-            RawRegistry.DEHYDRATED_BORAX.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem CRUSHED_EGG_SHELL = new ErosionModContent.ErosionItem(
+            RawRegistry.CRUSHED_EGG_SHELL, () -> new Item(new Item.Properties().stacksTo(16))
         );
 
-        public static final DeferredItem<Item> BUCKET_OF_SULFURIC_ACID = ITEMS.register(
-            RawRegistry.BUCKET_OF_SULFURIC_ACID.getId(), () -> new Item(new Item.Properties().stacksTo(1))
+        public static final ErosionModContent.ErosionItem BORAX = new ErosionModContent.ErosionItem(
+            RawRegistry.BORAX, () -> new Item(new Item.Properties().stacksTo(32))
+        );
+        public static final ErosionModContent.ErosionItem DEHYDRATED_BORAX = new ErosionModContent.ErosionItem(
+            RawRegistry.DEHYDRATED_BORAX, () -> new Item(new Item.Properties().stacksTo(32))
         );
 
-        public static final DeferredItem<Item> BORIC_ACID_CRYSTAL = ITEMS.register(
-            RawRegistry.BORIC_ACID_CRYSTAL.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem BUCKET_OF_SULFURIC_ACID = new ErosionModContent.ErosionItem(
+            RawRegistry.BUCKET_OF_SULFURIC_ACID, () -> new Item(new Item.Properties().stacksTo(1))
         );
 
-        public static final DeferredItem<Item> RAW_LIMONITE = ITEMS.register(
-            RawRegistry.RAW_LIMONITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem BORIC_ACID_CRYSTAL = new ErosionModContent.ErosionItem(
+            RawRegistry.BORIC_ACID_CRYSTAL, () -> new Item(new Item.Properties().stacksTo(32))
+        );
+
+        public static final ErosionModContent.ErosionItem RAW_LIMONITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_LIMONITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_LIMONITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_MAGNETITE = ITEMS.register(
-            RawRegistry.RAW_MAGNETITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_MAGNETITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_MAGNETITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_MAGNETITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_HEMATITE = ITEMS.register(
-            RawRegistry.RAW_HEMATITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_HEMATITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_HEMATITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_HEMATITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_MALACHITE = ITEMS.register(
-            RawRegistry.RAW_MALACHITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_MALACHITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_MALACHITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_MALACHITE.get()
             )
         );
 
-        public static final DeferredItem<Item> NATIVE_GOLD = ITEMS.register(
-            RawRegistry.NATIVE_GOLD.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem NATIVE_GOLD = new ErosionModContent.ErosionItem(
+            RawRegistry.NATIVE_GOLD, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.NATIVE_GOLD.get()
             )
         );
-        public static final DeferredItem<Item> RAW_CASSITERITE = ITEMS.register(
-            RawRegistry.RAW_CASSITERITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_CASSITERITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_CASSITERITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_CASSITERITE.get()
             )
         );
-        public static final DeferredItem<Item> TIN_CHUNK = ITEMS.register(
-            RawRegistry.TIN_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem TIN_CHUNK = new ErosionModContent.ErosionItem(
+            RawRegistry.TIN_CHUNK, () -> new Item(new Item.Properties().stacksTo(32))
         );
-        public static final DeferredItem<Item> LEAD_CHUNK = ITEMS.register(
-            RawRegistry.LEAD_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem LEAD_CHUNK = new ErosionModContent.ErosionItem(
+            RawRegistry.LEAD_CHUNK, () -> new Item(new Item.Properties().stacksTo(32))
         );
-        public static final DeferredItem<Item> NATIVE_SILVER = ITEMS.register(
-            RawRegistry.NATIVE_SILVER.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem NATIVE_SILVER = new ErosionModContent.ErosionItem(
+            RawRegistry.NATIVE_SILVER, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.NATIVE_SILVER.get()
             )
         );
-        public static final DeferredItem<Item> SILVER_CHUNK = ITEMS.register(
-            RawRegistry.SILVER_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem SILVER_CHUNK = new ErosionModContent.ErosionItem(
+            RawRegistry.SILVER_CHUNK, () -> new Item(new Item.Properties().stacksTo(32))
         );
 
-        public static final DeferredItem<Item> RAW_BISMUTHINITE = ITEMS.register(
-            RawRegistry.RAW_BISMUTHINITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_BISMUTHINITE= new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_BISMUTHINITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_BISMUTHINITE.get()
             )
         );
-        public static final DeferredItem<Item> BISMUTH_CHUNK = ITEMS.register(
-            RawRegistry.BISMUTH_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem BISMUTH_CHUNK = new ErosionModContent.ErosionItem(
+            RawRegistry.BISMUTH_CHUNK, () -> new Item(new Item.Properties().stacksTo(32))
         );
 
-        public static final DeferredItem<Item> RAW_SPHALERITE = ITEMS.register(
-            RawRegistry.RAW_SPHALERITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_SPHALERITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_SPHALERITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_SPHALERITE.get()
             )
         );
-        public static final DeferredItem<Item> ZINC_CHUNK = ITEMS.register(
-            RawRegistry.ZINC_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        public static final ErosionModContent.ErosionItem ZINC_CHUNK = new ErosionModContent.ErosionItem(
+            RawRegistry.ZINC_CHUNK, () -> new Item(new Item.Properties().stacksTo(32))
         );
 
-        public static final DeferredItem<Item> RAW_AZURITE = ITEMS.register(
-            RawRegistry.RAW_AZURITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_AZURITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_AZURITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_AZURITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_GOETHITE = ITEMS.register(
-            RawRegistry.RAW_GOETHITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_GOETHITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_GOETHITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_GOETHITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_TETRAHEDRITE = ITEMS.register(
-            RawRegistry.RAW_TETRAHEDRITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_TETRAHEDRITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_TETRAHEDRITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_TETRAHEDRITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_ARSENOPYRITE = ITEMS.register(
-            RawRegistry.RAW_ARSENOPYRITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_ARSENOPYRITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_ARSENOPYRITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_ARSENOPYRITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_PYRITE = ITEMS.register(
-            RawRegistry.RAW_PYRITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_PYRITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_PYRITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_PYRITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_ANGLESITE = ITEMS.register(
-            RawRegistry.RAW_ANGLESITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_ANGLESITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_ANGLESITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_ANGLESITE.get()
             )
         );
-        public static final DeferredItem<Item> RAW_GALENA = ITEMS.register(
-            RawRegistry.RAW_GALENA.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_GALENA = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_GALENA, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_GALENA.get()
             )
         );
-        public static final DeferredItem<Item> RAW_HALITE = ITEMS.register(
-            RawRegistry.RAW_HALITE.getId(), () -> new ErosionSimpleItems.ErosionRockBlockItem(
+        public static final ErosionModContent.ErosionItem RAW_HALITE = new ErosionModContent.ErosionItem(
+            RawRegistry.RAW_HALITE, () -> new ErosionSimpleItems.ErosionRockBlockItem(
                 Blocks.RAW_HALITE.get()
             )
         );
@@ -1053,109 +1004,97 @@ public class ErosionRegistry
     public class BlockEntities
     {
         //MACHINES
-        public static final Supplier<BlockEntityType<MaterialPurifierBlockEntity>> MATERIAL_PURIFIER = BLOCK_ENTITY_TYPES.register(
-            RawRegistry.MATERIAL_PURIFIER.getId(), () -> BlockEntityType.Builder.of(
-                MaterialPurifierBlockEntity::new, 
-                ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
-            ).build(null)
+        public static final ErosionModContent.ErosionBlockEntity<MaterialPurifierBlockEntity> MATERIAL_PURIFIER = new ErosionModContent
+        .ErosionBlockEntity<MaterialPurifierBlockEntity>(
+            RawRegistry.MATERIAL_PURIFIER, MaterialPurifierBlockEntity::new,
+            ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
         );
-        public static final Supplier<BlockEntityType<CrucibleBlockEntity>> CRUCIBLE = BLOCK_ENTITY_TYPES.register(
-            RawRegistry.CRUCIBLE.getId(), () -> BlockEntityType.Builder.of(
-                CrucibleBlockEntity::new, 
-                ErosionRegistry.Blocks.CRUCIBLE.get()
-            ).build(null)
-        );
-        /* *
-        public static final Supplier<BlockEntityType<ChemicalReactorBlockEntity>> CHEMICAL_REACTOR = BLOCK_ENTITY_TYPES.register(
-            RawRegistry.CHEMICAL_REACTOR.getId(), () -> BlockEntityType.Builder.of(
-                ChemicalReactorBlockEntity::new,
-                ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
-            ).build(null)
+        
+        public static final ErosionModContent.ErosionBlockEntity<CrucibleBlockEntity> CRUCIBLE = new ErosionModContent
+        .ErosionBlockEntity<CrucibleBlockEntity>(
+            RawRegistry.CRUCIBLE, CrucibleBlockEntity::new,
+            ErosionRegistry.Blocks.CRUCIBLE.get()
         );
 
-        public static final ErosionModContentResourceLocation CHEM_REACC = new ErosionModContentResourceLocation(
-            RawRegistry.CHEMICAL_REACTOR.getId(), RawRegistry.CHEMICAL_REACTOR.getName()
-        );*/
-
-        public static final ErosionModContent CHEMICAL_REACTOR = new ErosionModContent.ErosionBlockEntity<ChemicalReactorBlockEntity>(
-            new ErosionModContentResourceLocation(
-                RawRegistry.CHEMICAL_REACTOR.getId(), RawRegistry.CHEMICAL_REACTOR.getName()
-            ), ChemicalReactorBlockEntity::new,
+        public static final ErosionModContent.ErosionBlockEntity<ChemicalReactorBlockEntity> CHEMICAL_REACTOR = new ErosionModContent
+        .ErosionBlockEntity<ChemicalReactorBlockEntity>(
+            RawRegistry.CHEMICAL_REACTOR,
+            ChemicalReactorBlockEntity::new,
             ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
         );
     }
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EROSION_TAB = CREATIVE_MODE_TABS.register(
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EROSION_TAB = ErosionModContentManager.EROSION_MOD_CREATIVE_MODE_TABS.register(
         ErosionConfig.CREATIVE_TAB_NAME, () -> CreativeModeTab.builder()
         .title(Component.translatable(ErosionConfig.CREATIVE_TAB_ID))
-        .icon(() -> ErosionRegistry.Items.KAOLINIZED_GRANITE.get().getDefaultInstance())
+        .icon(() -> ErosionRegistry.Items.KAOLINIZED_GRANITE.getItemHolder().get().getDefaultInstance())
         .displayItems((parameters, output) -> {
             //ALL ITEMS GO HERE
             //SIMPLE BLOCKS
-            output.accept(ErosionRegistry.Items.DRIED_DIRT.get());
+            output.accept(ErosionRegistry.Items.DRIED_DIRT.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.KAOLINIZED_GRANITE.get());
-            output.accept(ErosionRegistry.Items.CRACKED_STONE.get());
-            output.accept(ErosionRegistry.Items.ALBITIZED_GRANITE.get());
-            output.accept(ErosionRegistry.Items.QUARTZ_GRAVEL.get());
-            output.accept(ErosionRegistry.Items.PROPYLITIZED_DIORITE.get());
-            output.accept(ErosionRegistry.Items.CRACKED_CALCITE.get());
+            output.accept(ErosionRegistry.Items.KAOLINIZED_GRANITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CRACKED_STONE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.ALBITIZED_GRANITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.QUARTZ_GRAVEL.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.PROPYLITIZED_DIORITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CRACKED_CALCITE.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.LIMONITE_ORE.get());
-            output.accept(ErosionRegistry.Items.CALCITE_MALACHITE_ORE.get());
-            output.accept(ErosionRegistry.Items.HEMATITE_ORE.get());
-            output.accept(ErosionRegistry.Items.BORAX_DEPOSIT.get());
-            output.accept(ErosionRegistry.Items.MAGNETITE_ORE.get());
+            output.accept(ErosionRegistry.Items.LIMONITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CALCITE_MALACHITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.HEMATITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.BORAX_DEPOSIT.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.MAGNETITE_ORE.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.RAW_HEMATITE.get());
-            output.accept(ErosionRegistry.Items.RAW_LIMONITE.get());
-            output.accept(ErosionRegistry.Items.RAW_MAGNETITE.get());
-            output.accept(ErosionRegistry.Items.RAW_MALACHITE.get());
+            output.accept(ErosionRegistry.Items.RAW_HEMATITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_LIMONITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_MAGNETITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_MALACHITE.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.NATIVE_GOLD_DEPOSIT.get());
-            output.accept(ErosionRegistry.Items.NATIVE_GOLD.get());
-            output.accept(ErosionRegistry.Items.RAW_CASSITERITE.get());
-            output.accept(ErosionRegistry.Items.TIN_CHUNK.get());
-            output.accept(ErosionRegistry.Items.LEAD_CHUNK.get());
-            output.accept(ErosionRegistry.Items.CASSITERITE_DEPOSIT.get());
+            output.accept(ErosionRegistry.Items.NATIVE_GOLD_DEPOSIT.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.NATIVE_GOLD.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_CASSITERITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.TIN_CHUNK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.LEAD_CHUNK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CASSITERITE_DEPOSIT.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.NATIVE_SILVER.get());
-            output.accept(ErosionRegistry.Items.NATIVE_SILVER_DEPOSIT.get());
-            output.accept(ErosionRegistry.Items.SILVER_CHUNK.get());
+            output.accept(ErosionRegistry.Items.NATIVE_SILVER.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.NATIVE_SILVER_DEPOSIT.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.SILVER_CHUNK.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.BISMUTH_CHUNK.get());
-            output.accept(ErosionRegistry.Items.BISMUTHINITE_ORE.get());
-            output.accept(ErosionRegistry.Items.RAW_BISMUTHINITE.get());
+            output.accept(ErosionRegistry.Items.BISMUTH_CHUNK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.BISMUTHINITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_BISMUTHINITE.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.ZINC_CHUNK.get());
-            output.accept(ErosionRegistry.Items.SPHALERITE_ORE.get());
-            output.accept(ErosionRegistry.Items.RAW_SPHALERITE.get());
-            output.accept(ErosionRegistry.Items.MINERAL_RICH_DIRT.get());
+            output.accept(ErosionRegistry.Items.ZINC_CHUNK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.SPHALERITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_SPHALERITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.MINERAL_RICH_DIRT.getItemHolder().get());
 
-            output.accept(ErosionRegistry.Items.RAW_AZURITE.get());
-            output.accept(ErosionRegistry.Items.RAW_GOETHITE.get());
-            output.accept(ErosionRegistry.Items.AZURITE_ORE.get());
-            output.accept(ErosionRegistry.Items.GOETHITE_ORE.get());
-            output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.get());
-            output.accept(ErosionRegistry.Items.ARSENOPYRITE_ORE.get());
-            output.accept(ErosionRegistry.Items.PYRITE_ORE.get());
-            output.accept(ErosionRegistry.Items.ANGLESITE_ORE.get());
-            output.accept(ErosionRegistry.Items.HALITE_ORE.get());
-            output.accept(ErosionRegistry.Items.GALENA_ORE.get());
-            output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
-            output.accept(ErosionRegistry.Items.RAW_ARSENOPYRITE.get());
-            output.accept(ErosionRegistry.Items.RAW_PYRITE.get());
-            output.accept(ErosionRegistry.Items.RAW_ANGLESITE.get());
-            output.accept(ErosionRegistry.Items.RAW_GALENA.get());
-            output.accept(ErosionRegistry.Items.RAW_HALITE.get());
-            output.accept(ErosionRegistry.Items.RUBY_ORE.get());
-            output.accept(ErosionRegistry.Items.SAPPHIRE_ORE.get());
+            output.accept(ErosionRegistry.Items.RAW_AZURITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_GOETHITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.AZURITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.GOETHITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.ARSENOPYRITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.PYRITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.ANGLESITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.HALITE_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.GALENA_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_ARSENOPYRITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_PYRITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_ANGLESITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_GALENA.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RAW_HALITE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RUBY_ORE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.SAPPHIRE_ORE.getItemHolder().get());
 
             //SIMPLE ITEMS
-            output.accept(ErosionRegistry.Items.FLUX.get());
-            output.accept(ErosionRegistry.Items.SALT.get());
-            output.accept(ErosionRegistry.Items.RUBY.get());
-            output.accept(ErosionRegistry.Items.BORAX.get());
+            output.accept(ErosionRegistry.Items.FLUX.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.SALT.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.RUBY.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.BORAX.getItemHolder().get());
             output.accept(ErosionRegistry.Items.DEHYDRATED_BORAX.get());
             output.accept(ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get());
             output.accept(ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get());
@@ -1167,31 +1106,21 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.FELDSPAR_POWDER.get());
 
             //MACHINES
-            output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.get());
-            output.accept(ErosionRegistry.Items.CRUCIBLE.get());
-            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.get());
-            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.get());
-            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get());
-            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
-            output.accept(ErosionRegistry.Items.BASIC_MASK.get());
-            output.accept(ErosionRegistry.Items.GAS_MASK.get());
-            output.accept(ErosionRegistry.Items.GAS_FILTER.get());
+            output.accept(ErosionRegistry.Items.MATERIAL_PURIFIER.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CRUCIBLE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_SCRUBBER.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.CHEMICAL_REACTOR_COOLING_SYSTEM.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.BASIC_MASK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.GAS_MASK.getItemHolder().get());
+            output.accept(ErosionRegistry.Items.GAS_FILTER.getItemHolder().get());
         })
         .build()
     );
 
     public static void init(IEventBus modEventBus)
     {
-        ErosionRegistry.ARMOR_MATERIALS.register(modEventBus);
-        ErosionRegistry.BLOCKS.register(modEventBus);
-        ErosionRegistry.ITEMS.register(modEventBus);
-        ErosionRegistry.CREATIVE_MODE_TABS.register(modEventBus);
-        ErosionRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
-        ErosionRegistry.MENUS.register(modEventBus);
-        ErosionRegistry.SOUND_EVENTS.register(modEventBus);
-        ErosionRegistry.SERIALIZERS.register(modEventBus);
-        ErosionRegistry.DATA_COMPONENTS.register(modEventBus);
-
         ErosionModContentManager.registerContent(modEventBus, () -> {});
 
         ErosionModContentManager.loadClasses(

@@ -40,7 +40,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
 
     public CrucibleBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ErosionRegistry.BlockEntities.CRUCIBLE.get(), pos, state);
+        super(ErosionRegistry.BlockEntities.CRUCIBLE.getBlockEntityHolder().get(), pos, state);
     }
 
     @Override

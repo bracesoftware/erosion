@@ -65,28 +65,44 @@ public final class ErosionModContentManager
     public static final DeferredRegister<RecipeSerializer<?>> EROSION_MOD_SERIALIZERS = DeferredRegister.create(
         Registries.RECIPE_SERIALIZER, Erosion.MODID
     );
-    public static class ErosionModContent
+    public static class ErosionModContent<T> implements Supplier<T>
     {
         protected DeferredBlock<Block> blockHolder;
         protected DeferredItem<Item> itemHolder;
         protected Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>> blockEntityHolder;
+        protected Supplier<SoundEvent> soundHolder;
 
-        public static final class ErosionBlock extends ErosionModContent
+        @Override public T get()
+        {
+            return null;
+        }
+
+        public static final class ErosionBlock extends ErosionModContent<Block>
         {
             public ErosionBlock(ErosionModContentResourceLocation id, Supplier<? extends Block> s)
             {
                 this.blockHolder = EROSION_MOD_BLOCKS.register(id.getId(), s);
             }
+
+            @Override public Block get()
+            {
+                return this.blockHolder.get();
+            }
         }
-        public static final class ErosionItem extends ErosionModContent
+        public static final class ErosionItem extends ErosionModContent<Item>
         {
             public ErosionItem(ErosionModContentResourceLocation id, Supplier<? extends Item> s)
             {
                 this.itemHolder = EROSION_MOD_ITEMS.register(id.getId(), s);
             }
+            
+            @Override public Item get()
+            {
+                return this.itemHolder.get();
+            }
         }
 
-        public static final class ErosionBlockEntity<T> extends ErosionModContent
+        public static final class ErosionBlockEntity<T> extends ErosionModContent<BlockEntityType<?>>
         {
             public ErosionBlockEntity(
                 ErosionModContentResourceLocation loc,
@@ -97,6 +113,28 @@ public final class ErosionModContentManager
                 this.blockEntityHolder = EROSION_MOD_BLOCK_ENTITY_TYPES.register(
                     loc.getId(), () -> BlockEntityType.Builder.of(s, b).build(null)
                 );
+            }
+
+            @Override public BlockEntityType<?> get()
+            {
+                return this.blockEntityHolder.get();
+            }
+        }
+        public static final class ErosionSound extends ErosionModContent<SoundEvent>
+        {
+            public ErosionSound(
+                ErosionModContentResourceLocation loc,
+                Supplier<SoundEvent> s
+            )
+            {
+                this.soundHolder = EROSION_MOD_SOUND_EVENTS.register(
+                    loc.getId(), s
+                );
+            }
+
+            @Override public SoundEvent get()
+            {
+                return this.soundHolder.get();
             }
         }
 
@@ -131,9 +169,15 @@ public final class ErosionModContentManager
 
     public static final void registerContent(IEventBus b, Runnable what)
     {
+        ErosionModContentManager.EROSION_MOD_ARMOR_MATERIALS.register(b);
         ErosionModContentManager.EROSION_MOD_BLOCKS.register(b);
         ErosionModContentManager.EROSION_MOD_ITEMS.register(b);
+        ErosionModContentManager.EROSION_MOD_CREATIVE_MODE_TABS.register(b);
         ErosionModContentManager.EROSION_MOD_BLOCK_ENTITY_TYPES.register(b);
+        ErosionModContentManager.EROSION_MOD_MENUS.register(b);
+        ErosionModContentManager.EROSION_MOD_SOUND_EVENTS.register(b);
+        ErosionModContentManager.EROSION_MOD_SERIALIZERS.register(b);
+        ErosionModContentManager.EROSION_MOD_DATA_COMPONENTS.register(b);
 
         what.run();
     }

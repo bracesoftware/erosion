@@ -28,6 +28,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlockEntity;
 import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
@@ -238,8 +239,8 @@ public final class ErosionMod
     {
         e.registerBlockEntity(
             Capabilities.ItemHandler.BLOCK,
-            ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.get(),
-            (blockEntity, side) -> blockEntity.getItemHandler(side)
+            ErosionRegistry.BlockEntities.MATERIAL_PURIFIER.getBlockEntityHolder().get(),
+            (blockEntity, side) -> ((MaterialPurifierBlockEntity) blockEntity).getItemHandler(side)
         );
     }
 

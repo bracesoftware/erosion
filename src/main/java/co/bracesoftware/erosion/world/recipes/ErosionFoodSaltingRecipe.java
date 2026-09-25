@@ -33,7 +33,7 @@ public class ErosionFoodSaltingRecipe extends CustomRecipe
             var s = ci.getItem(i);
             if(s.isEmpty()) continue;
             ++c;
-            if(s.is(ErosionRegistry.Items.SALT.get()))
+            if(s.is(ErosionRegistry.Items.SALT.getItemHolder().get()))
             {
                 salt = s;
             }
