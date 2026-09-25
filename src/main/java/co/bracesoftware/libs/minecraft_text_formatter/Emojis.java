@@ -44,11 +44,11 @@ public class Emojis
                 return b.toString();
             }
 
-            double procent = progress / max;
+            double procent = (double) progress / max;
             b.append(procent * 100);
             b.append("% ");
 
-            int prog = (int)procent * MAX_SIZE;
+            int prog = (int) (procent * MAX_SIZE);
             repeat(prog, () -> {
                 b.append(Emojis.StringConstants.FULL_BOX);
             });
