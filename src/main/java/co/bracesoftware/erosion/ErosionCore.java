@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
+import co.bracesoftware.erosion.ErosionCore.SaltableFood;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 
@@ -2112,6 +2113,30 @@ public class ErosionCore
             Items.COOKED_BEEF.getDescription().toString(),
             () -> Items.COOKED_BEEF
         );
+        public static final SaltableFood COOKED_CHICKEN = new SaltableFood(
+            Items.COOKED_CHICKEN.getDescription().toString(),
+            () -> Items.COOKED_CHICKEN
+        );
+        public static final SaltableFood COOKED_COD = new SaltableFood(
+            Items.COOKED_COD.getDescription().toString(),
+            () -> Items.COOKED_COD
+        );
+        public static final SaltableFood COOKED_MUTTON = new SaltableFood(
+            Items.COOKED_MUTTON.getDescription().toString(),
+            () -> Items.COOKED_MUTTON
+        );
+        public static final SaltableFood COOKED_PORKCHOP = new SaltableFood(
+            Items.COOKED_PORKCHOP.getDescription().toString(),
+            () -> Items.COOKED_PORKCHOP
+        );
+        public static final SaltableFood COOKED_RABBIT = new SaltableFood(
+            Items.COOKED_RABBIT.getDescription().toString(),
+            () -> Items.COOKED_RABBIT
+        );
+        public static final SaltableFood COOKED_SALMON = new SaltableFood(
+            Items.COOKED_SALMON.getDescription().toString(),
+            () -> Items.COOKED_SALMON
+        );
     }
 
     // ========================== REGISTRY
@@ -2196,7 +2221,13 @@ public class ErosionCore
     );
 
     private static final List<SaltableFood> SALTABLE_FOOD_LIST_ORIGINAL = List.of(
-        SaltableFoods.COOKED_BEEF
+        SaltableFoods.COOKED_BEEF,
+        SaltableFoods.COOKED_CHICKEN,
+        SaltableFoods.COOKED_COD,
+        SaltableFoods.COOKED_MUTTON,
+        SaltableFoods.COOKED_PORKCHOP,
+        SaltableFoods.COOKED_RABBIT,
+        SaltableFoods.COOKED_SALMON
     );
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
