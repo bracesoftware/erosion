@@ -36,8 +36,8 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         else
         {
             ErosionUtils.displayMessage(
-                p, ggwp + " durability: " + d + "%",
-                ErosionScreenMessage.Color.DARK_GREEN
+                p, ggwp + " durability:",
+                ErosionScreenMessage.Color.DARK_AQUA
             );
             ErosionUtils.displayMessage(
                 p, Emojis.Utils.formatLoadingBar(d, 100),

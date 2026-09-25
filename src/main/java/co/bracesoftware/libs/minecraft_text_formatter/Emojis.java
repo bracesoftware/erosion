@@ -26,6 +26,11 @@ public class Emojis
         public static final int MAX_SIZE = 20;
         public static String formatLoadingBar(int progress, int max)
         {
+            return formatLoadingBar(progress, max, "");
+        }
+
+        public static String formatLoadingBar(int progress, int max, String extra)
+        {
             var b = new StringBuilder();
             if(progress > max)
             {
@@ -33,6 +38,7 @@ public class Emojis
                 repeat(MAX_SIZE, () -> {
                     b.append(Emojis.StringConstants.FULL_BOX);
                 });
+                b.append(" " + extra);
                 return b.toString();
             }
             if(progress <= 0)
@@ -41,6 +47,7 @@ public class Emojis
                 repeat(MAX_SIZE, () -> {
                     b.append(Emojis.StringConstants.EMPTY_BOX);
                 });
+                b.append(" " + extra);
                 return b.toString();
             }
 
@@ -60,6 +67,8 @@ public class Emojis
                 else if(i == 1) b.append(Emojis.StringConstants.EMPTY_BOX_2);
                 else b.append(Emojis.StringConstants.EMPTY_BOX);
             }
+
+            b.append(" " + extra);
 
             return b.toString();
         }

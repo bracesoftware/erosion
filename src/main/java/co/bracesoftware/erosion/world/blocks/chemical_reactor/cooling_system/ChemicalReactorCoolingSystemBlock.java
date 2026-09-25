@@ -36,11 +36,11 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         else
         {
             ErosionUtils.displayMessage(
-                p, "Cooling fluid level: " + d + "mB",
-                ErosionScreenMessage.Color.DARK_GREEN
+                p, "Cooling fluid level:",
+                ErosionScreenMessage.Color.DARK_AQUA
             );
             ErosionUtils.displayMessage(
-                p, Emojis.Utils.formatLoadingBar(d, 1000),
+                p, Emojis.Utils.formatLoadingBar(d, 1000, d + "mB"),
                 ErosionScreenMessage.Color.DARK_GREEN
             );
         }

@@ -131,7 +131,7 @@ public class ErosionClient
             return;
         }
 
-        @Override 
+        @Override
         public void render(GuiGraphics gg, DeltaTracker dt)
         {
             Minecraft mc = Minecraft.getInstance();
