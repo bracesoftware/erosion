@@ -21,6 +21,8 @@
     "erosion:ruby_ore",
     "erosion:sapphire_ore",
     "erosion:pyrite_ore",
+    "erosion:anglesite_ore",
+    "erosion:galena_ore",
     "erosion:native_gold_deposit",
     "erosion:cassiterite_deposit",
     "erosion:native_silver_deposit",

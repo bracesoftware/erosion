@@ -2,24 +2,23 @@
   "neoforge:conditions": [
     {
       "type": "neoforge:item_exists",
-      "item": "erosion:sulfuric_acid_bucket"
+      "item": "oreganized:raw_lead"
     }
   ],
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "pattern": [
-    "AB"
+    "XXX",
+    "XXX",
+    "XXX"
   ],
   "key": {
-    "B": {
-      "item": "minecraft:bucket"
-    },
-    "A": {
-      "item": "butchery:bottle_of_sulfuric_acid"
+    "X": {
+      "item": "erosion:lead_chunk"
     }
   },
   "result": {
     "count": 1,
-    "id": "erosion:sulfuric_acid_bucket"
+    "id": "oreganized:raw_lead"
   }
 }

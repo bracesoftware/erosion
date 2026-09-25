@@ -10,6 +10,7 @@
     "erosion:native_gold",
     "erosion:raw_cassiterite",
     "erosion:tin_chunk",
+    "erosion:lead_chunk",
     "erosion:silver_chunk",
     "erosion:native_silver",
     "erosion:raw_bismuthinite",
@@ -20,6 +21,7 @@
     "erosion:raw_tetrahedrite",
     "erosion:raw_arsenopyrite",
     "erosion:raw_pyrite",
+    "erosion:raw_anglesite",
     "erosion:raw_dehydrated_limonite"
   ]
 }

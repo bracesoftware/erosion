@@ -13,6 +13,7 @@
     "erosion:raw_tetrahedrite",
     "erosion:raw_arsenopyrite",
     "erosion:raw_pyrite",
+    "erosion:raw_anglesite",
     "erosion:raw_dehydrated_limonite"
   ]
 }
