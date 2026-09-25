@@ -1175,6 +1175,8 @@ public class ErosionRegistry
         ErosionRegistry.BLOCK_ENTITY_TYPES.register(modEventBus);
         ErosionRegistry.MENUS.register(modEventBus);
         ErosionRegistry.SOUND_EVENTS.register(modEventBus);
+        ErosionRegistry.SERIALIZERS.register(modEventBus);
+        ErosionRegistry.DATA_COMPONENTS.register(modEventBus);
 
         try
         {
@@ -1184,6 +1186,7 @@ public class ErosionRegistry
             Class.forName(ErosionRegistry.Menus.class.getName());
             Class.forName(ErosionRegistry.ArmorMaterials.class.getName());
             Class.forName(ErosionRegistry.SoundEvents.class.getName());
+            Class.forName(ErosionRegistry.DataComponents.class.getName());
         }
         catch(ClassNotFoundException e)
         {
