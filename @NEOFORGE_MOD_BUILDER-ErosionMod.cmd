@@ -35,7 +35,7 @@ echo Releasing...
 title %SCRIPT_TITLE%: Releasing...
 copy build\libs\%bin% .\%bin%
 call _PUSHCHANGES
-echo - Everything is ready for release, if you want to; run -> _RELEASE
+echo - Everything is ready for release, if you want to; run _RELEASE
 echo ====== COMPLETE PROCESS FINISHED! ======
 
 title %SCRIPT_TITLE%: Process finished.
