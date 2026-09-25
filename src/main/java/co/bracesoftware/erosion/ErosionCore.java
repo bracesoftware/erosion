@@ -4,6 +4,7 @@ import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorMenu;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
+import co.bracesoftware.libs.minecraft_text_formatter.Emojis;
 import co.bracesoftware.erosion.api.eventbus.*;
 
 import java.util.ArrayList;
@@ -2581,7 +2582,7 @@ public class ErosionCore
             desc.add(
                 Component.literal("- Used as a ").withStyle(ChatFormatting.GRAY)
                 .append(
-                    Component.literal("cooling fluid").withStyle(ChatFormatting.AQUA)
+                    Component.literal(Emojis.StringConstants.COOLING_FLUID + " cooling fluid " + Emojis.StringConstants.COOLING_FLUID).withStyle(ChatFormatting.AQUA)
                 )
                 .append(
                     Component.literal(" for safely handling exothermic reactions in the reactor.")
@@ -2628,7 +2629,7 @@ public class ErosionCore
                         if(s.exothermic)
                         {
                             c = Component.literal(" (").withStyle(ChatFormatting.GRAY)
-                            .append(Component.literal("Exothermic!").withStyle(ChatFormatting.RED))
+                            .append(Component.literal(Emojis.StringConstants.FIRE + " Exothermic!").withStyle(ChatFormatting.RED))
                             .append(Component.literal(")").withStyle(ChatFormatting.GRAY));
                         }
                         return c;
