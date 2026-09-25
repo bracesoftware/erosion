@@ -1,5 +1,9 @@
-@echo off
+:config
 set "SCRIPT_TITLE=Erosion Mod Builder"
+set bin="Erosion-neoforge.jar"
+
+@echo off
+
 title %SCRIPT_TITLE%
 :start
 cls
@@ -29,9 +33,9 @@ call gradlew build -stacktrace --no-configuration-cache
 
 echo Releasing...
 title %SCRIPT_TITLE%: Releasing...
-
-echo - To release click on _RELEASE
-echo - To push changes run _PUSHCHANGES
+copy build\libs\%bin% .\%bin%
+call _PUSHCHANGES
+echo - Everything is ready for release, if you want to; run -> _RELEASE
 echo ====== COMPLETE PROCESS FINISHED! ======
 
 title %SCRIPT_TITLE%: Process finished.
