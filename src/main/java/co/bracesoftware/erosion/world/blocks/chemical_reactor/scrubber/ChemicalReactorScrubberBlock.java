@@ -6,6 +6,7 @@ import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.Erosio
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
+import co.bracesoftware.libs.minecraft_text_formatter.Emojis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +37,10 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         {
             ErosionUtils.displayMessage(
                 p, ggwp + " durability: " + d + "%",
+                ErosionScreenMessage.Color.DARK_GREEN
+            );
+            ErosionUtils.displayMessage(
+                p, Emojis.Utils.formatLoadingBar(d, 100),
                 ErosionScreenMessage.Color.DARK_GREEN
             );
         }

@@ -6,6 +6,7 @@ import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipes;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
+import co.bracesoftware.libs.minecraft_text_formatter.Emojis;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -36,6 +37,10 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         {
             ErosionUtils.displayMessage(
                 p, "Cooling fluid level: " + d + "mB",
+                ErosionScreenMessage.Color.DARK_GREEN
+            );
+            ErosionUtils.displayMessage(
+                p, Emojis.Utils.formatLoadingBar(d, 1000),
                 ErosionScreenMessage.Color.DARK_GREEN
             );
         }
