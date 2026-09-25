@@ -5,42 +5,79 @@ on:
     branches:
       - main
     paths:
-      - README.md
-
+      - 'README.md'
   workflow_dispatch:
 
 jobs:
-  sync:
+  sync-description:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout repozitorija
         uses: actions/checkout@v4
 
-      - name: Sync README to CurseForge
+      - name: Sinhronizuj opis na CurseForge
         env:
           CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
           CURSEFORGE_PROJECT_ID: ${{ secrets.CURSEFORGE_PROJECT_ID }}
         run: |
-          set -e
+          node -e '
+          const fs = require("fs");
+          const https = require("https");
 
-          jq -n \
-            --rawfile body README.md \
-            '{description: $body, descriptionType: "markdown"}' \
-            > payload.json
+          const token = process.env.CURSEFORGE_TOKEN;
+          const projectId = process.env.CURSEFORGE_PROJECT_ID;
 
-          RESPONSE=$(curl -s -w "%{http_code}" -o response.txt \
-            -X POST \
-            "https://minecraft.curseforge.com/api/projects/${CURSEFORGE_PROJECT_ID}/edit" \
-            -H "X-Api-Token: ${CURSEFORGE_TOKEN}" \
-            -F "metadata=<payload.json")
+          if (!token || !projectId) {
+            console.error("err: missing CURSEFORGE_TOKEN and CURSEFORGE_PROJECT_ID!");
+            process.exit(1);
+          }
 
-          echo "HTTP Status Code: $RESPONSE"
-          cat response.txt
+          const readmeText = fs.readFileSync("README.md", "utf8");
 
-          if [ "$RESPONSE" -ne 200 ] && [ "$RESPONSE" -ne 202 ]; then
-            echo "Failed to sync README to CurseForge"
-            exit 1
-          fi
+          const metadata = JSON.stringify({
+            description: readmeText,
+            descriptionType: "markdown"
+          });
 
-          echo "README successfully synced to CurseForge."
+          const boundary = "----WebKitFormBoundary" + Math.random().toString(36).substring(2);
+          
+          let body = "";
+          body += `--${boundary}\r\n`;
+          body += `Content-Disposition: form-data; name="metadata"\r\n\r\n`;
+          body += `${metadata}\r\n`;
+          body += `--${boundary}--\r\n`;
+
+          const options = {
+            hostname: "minecraft.curseforge.com",
+            path: `/api/projects/${projectId}/edit`,
+            method: "POST",
+            headers: {
+              "X-Api-Token": token,
+              "Content-Type": `multipart/form-data; boundary=${boundary}`,
+              "Content-Length": Buffer.byteLength(body, "utf8")
+            }
+          };
+
+          const req = https.request(options, (res) => {
+            console.log(`HTTP Status: ${res.statusCode}`);
+            let data = "";
+            res.on("data", chunk => data += chunk);
+            res.on("end", () => {
+              console.log("server:", data);
+              if (res.statusCode >= 200 && res.statusCode < 300) {
+                console.log("readme sync!");
+              } else {
+                console.error("curseforge err!");
+                process.exit(1);
+              }
+            });
+          });
+
+          req.on("error", (err) => {
+            console.error("Network err:", err);
+            process.exit(1);
+          });
+
+          req.write(body);
+          req.end();
+          '
