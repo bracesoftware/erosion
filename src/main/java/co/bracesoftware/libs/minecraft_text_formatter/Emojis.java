@@ -1,5 +1,7 @@
 package co.bracesoftware.libs.minecraft_text_formatter;
 
+import java.util.Locale;
+
 public class Emojis
 {
     public static class StringConstants
@@ -52,8 +54,7 @@ public class Emojis
             }
 
             double procent = (double) progress / max;
-            b.append(procent * 100);
-            b.append("% ");
+            b.append(String.format(Locale.US, "%.2f%%", procent * 100));
 
             int prog = (int) (procent * MAX_SIZE);
             repeat(prog, () -> {
