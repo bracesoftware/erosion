@@ -44,9 +44,9 @@ public class ComponentWordWrap
 
         for(var sw : a)
         {
-            boolean ww = isSymbol(sw.text) || sw.text.isBlank();
+            boolean ww = isSymbol(sw.text) || sw.text.isBlank() || (sw.text.length() < 4);
 
-            if(ww && iss) //prserve formatting 
+            if(ww && iss) //prserve formatting and tiny words, emojis etc
             {
                 cc.append(Component.literal(sw.text).setStyle(sw.style));
                 continue;
