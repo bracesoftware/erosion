@@ -16,28 +16,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download JAR from GitHub Release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -e
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
 
-          mkdir -p release
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-          gh release download "${GITHUB_REF_NAME}" \
-            --repo "${GITHUB_REPOSITORY}" \
-            --pattern "Erosion-neoforge.jar" \
-            --dir release
-
-          echo "Downloaded:"
-          ls -lh release/Erosion-neoforge.jar
+      - name: Build with Gradle
+        run: ./gradlew build
 
       - name: Upload to CurseForge
-        uses: Kirstein/curseforge-upload@v1
+        uses: mc-mod-core/curseforge-upload@v2
         with:
-          token: ${{ secrets.CURSEFORGE_TOKEN }}
-          project_id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
-          game_versions: '1.21.1,NeoForge'
-          file_path: 'release/Erosion-neoforge.jar'
+          api-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          project-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          # Prilagodi putanju gdje tvoj Gradle izbacuje gotov JAR (obično build/libs)
+          file-path: 'build/libs/Erosion-neoforge.jar'
+          game-versions: |
+            1.21.1
+            NeoForge
           changelog: 'Automated release ${{ github.ref_name }}'
-          release_type: 'release'
+          release-type: 'release'
