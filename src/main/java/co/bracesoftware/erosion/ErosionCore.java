@@ -2180,6 +2180,10 @@ public class ErosionCore
                 Component.literal("- The top must not be blocked by another block.")
                 .withStyle(ChatFormatting.DARK_AQUA)
             );
+            desc.add(
+                Component.literal("- To get the best efficiency, both top and bottom fans have to be exposed to air.")
+                .withStyle(ChatFormatting.GRAY)
+            );
         }
         else if(currentItem == ErosionRegistry.Items.CHEMICAL_REACTOR_MODULE.get())
         {
@@ -2575,8 +2579,14 @@ public class ErosionCore
         if(isCoolingFluid)
         {
             desc.add(
-                Component.literal("- Used as a cooling fluid for safely handling exothermic reactions in the reactor.")
-                .withStyle(ChatFormatting.DARK_RED)
+                Component.literal("- Used as a ").withStyle(ChatFormatting.GRAY)
+                .append(
+                    Component.literal("cooling fluid").withStyle(ChatFormatting.AQUA)
+                )
+                .append(
+                    Component.literal(" for safely handling exothermic reactions in the reactor.")
+                    .withStyle(ChatFormatting.GRAY)
+                )
             );
         }
         if(!usedIn.isEmpty())

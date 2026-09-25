@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "bottom": "erosion:block/chemical_reactor_cooling_system_bottom",
+    "bottom": "erosion:block/__erosion_generated__/chemical_reactor_cooling_system_top",
     "side": "erosion:block/__erosion_generated__/chemical_reactor_cooling_system_side",
     "top": "erosion:block/__erosion_generated__/chemical_reactor_cooling_system_top"
   }

@@ -223,6 +223,10 @@ implements IErosionChemicalReactorMultiBlockComponent
             if(f > 0)
             {
                 int mb = ErosionMod.RANDOM.nextInt(30);
+                if(l.getBlockState(p.relative(Direction.DOWN)).isAir())
+                {
+                    mb = mb / 2; //more exposed the cooler is, longer the coolin fluid will last
+                }
                 if(mb > f) mb = f;
                 var ns = s.setValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL, f - mb);
                 l.setBlockAndUpdate(p, ns);
