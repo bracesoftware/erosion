@@ -16,12 +16,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Isti korak koji imaš za skidanje fajla
       - name: Download JAR from GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -e
+
           mkdir -p release
 
           gh release download "${GITHUB_REF_NAME}" \
@@ -31,13 +31,14 @@ jobs:
 
           echo "Downloaded:"
           ls -lh release/Erosion-neoforge.jar
+
       - name: Prepare Version Data
         run: |
           set -e
 
           BUILD_VERSION="${GITHUB_REF_NAME#build}"
           SNAPSHOT_VERSION=$(cat snapshot.txt)
-          
+
           VERSION="${BUILD_VERSION}.${SNAPSHOT_VERSION}"
           DISPLAY_NAME="build ${BUILD_VERSION} snapshot ${SNAPSHOT_VERSION}"
 
@@ -45,22 +46,17 @@ jobs:
           echo "Snapshot version: ${SNAPSHOT_VERSION}"
           echo "Publishing version: ${VERSION}"
 
-          # Spašavanje varijabli u GitHub ENV kako bi ih akcija ispod mogla pročitati
           echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
           echo "DISPLAY_NAME=${DISPLAY_NAME}" >> "$GITHUB_ENV"
-      - name: Publish JAR to CurseForge
-        uses: modmuss50/mod-publish-action@v3
+
+      - name: Upload to CurseForge
+        uses: itsmeow/curseforge-upload@v3
         with:
-          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          curseforge-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
-          
-          files: 'release/Erosion-neoforge.jar'
-          
-          # Ubacujemo tvoja custom imena iz koraka iznad
-          name: ${{ env.DISPLAY_NAME }}
-          version: ${{ env.VERSION }}
+          token: ${{ secrets.CURSEFORGE_TOKEN }}
+          project_id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          file_path: 'release/Erosion-neoforge.jar'
+          game_endpoint: 'minecraft'
+          game_versions: '1.21.1,NeoForge'
+          display_name: ${{ env.DISPLAY_NAME }}
           changelog: 'Automated release ${{ env.VERSION }}'
-          
-          loaders: neoforge
-          game-versions: 1.21.1
-          release-type: release
+          release_type: 'release'
