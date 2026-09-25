@@ -50,6 +50,8 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
+import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
+import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContentResourceLocation;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -1063,11 +1065,23 @@ public class ErosionRegistry
                 ErosionRegistry.Blocks.CRUCIBLE.get()
             ).build(null)
         );
+        /* *
         public static final Supplier<BlockEntityType<ChemicalReactorBlockEntity>> CHEMICAL_REACTOR = BLOCK_ENTITY_TYPES.register(
             RawRegistry.CHEMICAL_REACTOR.getId(), () -> BlockEntityType.Builder.of(
                 ChemicalReactorBlockEntity::new,
                 ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
             ).build(null)
+        );
+
+        public static final ErosionModContentResourceLocation CHEM_REACC = new ErosionModContentResourceLocation(
+            RawRegistry.CHEMICAL_REACTOR.getId(), RawRegistry.CHEMICAL_REACTOR.getName()
+        );*/
+
+        public static final ErosionModContent CHEMICAL_REACTOR = new ErosionModContent.ErosionBlockEntity<ChemicalReactorBlockEntity>(
+            new ErosionModContentResourceLocation(
+                RawRegistry.CHEMICAL_REACTOR.getId(), RawRegistry.CHEMICAL_REACTOR.getName()
+            ), ChemicalReactorBlockEntity::new,
+            ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
         );
     }
 
@@ -1178,20 +1192,17 @@ public class ErosionRegistry
         ErosionRegistry.SERIALIZERS.register(modEventBus);
         ErosionRegistry.DATA_COMPONENTS.register(modEventBus);
 
-        try
-        {
-            Class.forName(ErosionRegistry.Blocks.class.getName());
-            Class.forName(ErosionRegistry.Items.class.getName());
-            Class.forName(ErosionRegistry.BlockEntities.class.getName());
-            Class.forName(ErosionRegistry.Menus.class.getName());
-            Class.forName(ErosionRegistry.ArmorMaterials.class.getName());
-            Class.forName(ErosionRegistry.SoundEvents.class.getName());
-            Class.forName(ErosionRegistry.DataComponents.class.getName());
-        }
-        catch(ClassNotFoundException e)
-        {
-            e.printStackTrace();
-        }
+        ErosionModContentManager.registerContent(modEventBus, () -> {});
+
+        ErosionModContentManager.loadClasses(
+            ErosionRegistry.Blocks.class,
+            ErosionRegistry.Items.class,
+            ErosionRegistry.BlockEntities.class,
+            ErosionRegistry.Menus.class,
+            ErosionRegistry.ArmorMaterials.class,
+            ErosionRegistry.SoundEvents.class,
+            ErosionRegistry.DataComponents.class
+        );
     }
 
     @SubscribeEvent 

@@ -33,7 +33,7 @@ implements IErosionChemicalReactorMultiBlockComponent
     {
         super(p, () -> (
             BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>
-        ) ErosionRegistry.BlockEntities.CHEMICAL_REACTOR.get(), ChemicalReactorBlock::new);
+        ) ErosionRegistry.BlockEntities.CHEMICAL_REACTOR.getBlockEntityHolder().get(), ChemicalReactorBlock::new);
         this.setServerLogic(new ChemicalReactorBlockServerLogic());
     }
 

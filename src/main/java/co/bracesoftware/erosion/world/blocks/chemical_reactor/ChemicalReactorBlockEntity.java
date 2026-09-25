@@ -22,7 +22,7 @@ implements IErosionChemicalReactorSystemComponent
 
     public ChemicalReactorBlockEntity(BlockPos pos, BlockState state)
     {
-        super(ErosionRegistry.BlockEntities.CHEMICAL_REACTOR.get(), pos, state);
+        super(ErosionRegistry.BlockEntities.CHEMICAL_REACTOR.getBlockEntityHolder().get(), pos, state);
     }
 
     @Override public boolean onBlockEntityTickOnServer(
