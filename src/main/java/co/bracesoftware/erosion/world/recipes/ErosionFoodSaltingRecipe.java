@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.world.recipes;
 
+import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore.ErosionRecipeRegistry;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.core.HolderLookup;
@@ -70,9 +71,9 @@ public class ErosionFoodSaltingRecipe extends CustomRecipe
         var o = food.get(DataComponents.FOOD);
         if(o != null)
         {
-            FoodProperties newFood = new FoodProperties.Builder()
-            .nutrition(o.nutrition() + 2)
-            .saturationModifier(o.saturation() + 0.2f)
+            var newFood = new FoodProperties.Builder()
+            .nutrition(o.nutrition() + ErosionConfig.SaltableFoodsSystem.EXTRA_NUTRITION)
+            .saturationModifier(o.saturation() + ErosionConfig.SaltableFoodsSystem.EXTRA_SATURATION)
             .build();
 
             food.set(DataComponents.FOOD, newFood);

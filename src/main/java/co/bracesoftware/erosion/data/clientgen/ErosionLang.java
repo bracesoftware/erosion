@@ -61,6 +61,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Items.RAW_PYRITE.get(), ErosionRegistry.RawRegistry.RAW_PYRITE.getName());
         add(ErosionRegistry.Items.RAW_ANGLESITE.get(), ErosionRegistry.RawRegistry.RAW_ANGLESITE.getName());
         add(ErosionRegistry.Items.RAW_GALENA.get(), ErosionRegistry.RawRegistry.RAW_GALENA.getName());
+        add(ErosionRegistry.Items.RAW_HALITE.get(), ErosionRegistry.RawRegistry.RAW_HALITE.getName());
 
         //SIMPLE BLOCKS
         add(ErosionRegistry.Blocks.DRIED_DIRT.get(), ErosionRegistry.RawRegistry.DRIED_DIRT.getName());
@@ -90,6 +91,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get(), ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getName());
         add(ErosionRegistry.Blocks.PYRITE_ORE.get(), ErosionRegistry.RawRegistry.PYRITE_ORE.getName());
         add(ErosionRegistry.Blocks.ANGLESITE_ORE.get(), ErosionRegistry.RawRegistry.ANGLESITE_ORE.getName());
+        add(ErosionRegistry.Blocks.HALITE_ORE.get(), ErosionRegistry.RawRegistry.HALITE_ORE.getName());
         add(ErosionRegistry.Blocks.GALENA_ORE.get(), ErosionRegistry.RawRegistry.GALENA_ORE.getName());
         add(ErosionRegistry.Blocks.RUBY_ORE.get(), ErosionRegistry.RawRegistry.RUBY_ORE.getName());
         add(ErosionRegistry.Blocks.SAPPHIRE_ORE.get(), ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName());

@@ -14,13 +14,27 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.registries.DeferredItem;
 
 public class ErosionSimpleItems
 {
-    public static class GasMask extends ArmorItem
+    public static final class ErosionRockBlockItem extends BlockItem
+    {
+        public static final int STACKS_TO = 32;
+        public ErosionRockBlockItem(Block id, Item.Properties p)
+        {
+            super(id, p);
+        }
+        public ErosionRockBlockItem(Block id)
+        {
+            super(id, new Item.Properties().stacksTo(STACKS_TO));
+        }
+    }
+    public static final class GasMask extends ArmorItem
     {
         public static enum Quality
         {

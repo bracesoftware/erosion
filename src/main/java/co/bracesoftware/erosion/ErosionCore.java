@@ -1230,10 +1230,12 @@ public class ErosionCore
         public static final AlterableMaterial.AlterationPath HYDROTHERMAL_BLOCK_GEN = new AlterableMaterial.AlterationPath(
             ErosionRegistry.DefaultAlterationPaths.HYDROTHERMAL_ALTERATION,
             () -> List.of(
-                ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get()
+                ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get(),
+                ErosionRegistry.Blocks.HALITE_ORE.get()
             ),
             () -> List.of(
-                ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
+                ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+                ErosionRegistry.Items.RAW_HALITE.get()
             ),
             new AlterationRules(List.of(
                 AlterationRules.CONTACT_WITH_WATER,
@@ -1310,7 +1312,8 @@ public class ErosionCore
                         ErosionRegistry.Blocks.AZURITE_ORE.get(),
                         ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
                         ErosionRegistry.Blocks.PYRITE_ORE.get(),
-                        ErosionRegistry.Blocks.GALENA_ORE.get()
+                        ErosionRegistry.Blocks.GALENA_ORE.get(),
+                        ErosionRegistry.Blocks.HALITE_ORE.get()
                     ),
                     () -> List.of(
                         Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
@@ -1323,7 +1326,8 @@ public class ErosionCore
                         ErosionRegistry.Items.RAW_AZURITE.get(),
                         ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
                         ErosionRegistry.Items.RAW_PYRITE.get(),
-                        ErosionRegistry.Items.RAW_GALENA.get()
+                        ErosionRegistry.Items.RAW_GALENA.get(),
+                        ErosionRegistry.Items.RAW_HALITE.get()
                     ),
                     new AlterationRules(List.of(
                         AlterationRules.CONTACT_WITH_WATER
@@ -1358,14 +1362,16 @@ public class ErosionCore
                         ErosionRegistry.Blocks.LIMONITE_ORE.get(),
                         ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
                         ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
-                        ErosionRegistry.Blocks.AZURITE_ORE.get()
+                        ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                        ErosionRegistry.Blocks.HALITE_ORE.get()
                     ),
                     () -> List.of(
                         Items.COBBLED_DEEPSLATE,
                         ErosionRegistry.Items.RAW_LIMONITE.get(),
                         ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
                         ErosionRegistry.Items.RAW_SPHALERITE.get(),
-                        ErosionRegistry.Items.RAW_AZURITE.get()
+                        ErosionRegistry.Items.RAW_AZURITE.get(),
+                        ErosionRegistry.Items.RAW_HALITE.get()
                     ),
                     new AlterationRules(List.of(
                         AlterationRules.CONTACT_WITH_WATER
@@ -2009,6 +2015,26 @@ public class ErosionCore
                 ErosionRegistry.Items.DEHYDRATED_BORAX.get()
             ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
         );
+        // -------------------------------------------------------------
+        //turn ore into its mined variant if mined with silk touch
+        public static final RefinableMaterial HALITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.HALITE_ORE.getName(),
+            () -> ErosionRegistry.Items.HALITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_HALITE.get()
+            )
+        );
+
+        //we purify halite into salt
+        //melting salt is inefficient
+        public static final RefinableMaterial RAW_HALITE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.RAW_HALITE.getName(),
+            () -> ErosionRegistry.Items.RAW_HALITE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.SALT.get()
+            )
+        );
+        // -------------------------------------------------------------
     }
     // ========================== CHEMICAL REACTIONS
 
@@ -2147,7 +2173,9 @@ public class ErosionCore
         RefinableMaterials.ANGLESITE_ORE,
         RefinableMaterials.RAW_ANGLESITE,
         RefinableMaterials.GALENA_ORE,
-        RefinableMaterials.RAW_GALENA
+        RefinableMaterials.RAW_GALENA,
+        RefinableMaterials.HALITE_ORE,
+        RefinableMaterials.RAW_HALITE
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
         CrucibleCatalysts.FLUX,
@@ -2551,6 +2579,15 @@ public class ErosionCore
             Map.entry(ErosionRegistry.Items.RAW_GALENA.get(), new ChemicalInfo(List.of(
                 "Lead(II)-sulfide",
                 "Also known as `galenite`"
+            ))),
+            Map.entry(ErosionRegistry.Items.SALT.get(), new ChemicalInfo(List.of(
+                "Sodium-chloride",
+                "Also known as kitchen salt"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_HALITE.get(), new ChemicalInfo(List.of(
+                "Mainly composed of sodium-chloride",
+                "Also known as rock salt",
+                "Contains impurities such as calcium-chloride or magnesium-chloride"
             ))),
             Map.entry(ErosionRegistry.Items.RAW_GOETHITE.get(), new ChemicalInfo(List.of(
                 "Dehydrated/anhydrous iron(III)-oxyhydroxide",

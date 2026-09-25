@@ -385,6 +385,16 @@ public class ErosionBlockStateGen extends BlockStateProvider
         );
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
             this,
+            ErosionRegistry.Items.RAW_HALITE.get(),
+            ErosionRegistry.Blocks.RAW_HALITE.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_HALITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.HALITE_ORE.getId() //block texture
+            )
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
             ErosionRegistry.Items.RAW_GALENA.get(),
             ErosionRegistry.Blocks.RAW_GALENA.get(),
             ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(

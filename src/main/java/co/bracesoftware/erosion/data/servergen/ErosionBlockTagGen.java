@@ -61,6 +61,9 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
             this,provider,ErosionRegistry.Blocks.ANGLESITE_ORE.get()
         );
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(
+            this,provider,ErosionRegistry.Blocks.HALITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(
             this,provider,ErosionRegistry.Blocks.GALENA_ORE.get()
         );
 
@@ -93,6 +96,9 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
         );
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
             this,provider,ErosionRegistry.Blocks.RAW_GALENA.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
+            this,provider,ErosionRegistry.Blocks.RAW_HALITE.get()
         );
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
             this,provider,ErosionRegistry.Blocks.RAW_GOETHITE.get()

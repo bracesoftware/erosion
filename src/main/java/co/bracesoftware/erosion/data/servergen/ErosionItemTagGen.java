@@ -87,6 +87,9 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
             this,provider,ErosionRegistry.Items.RAW_GALENA.get()
         );
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(
+            this,provider,ErosionRegistry.Items.RAW_HALITE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(
             this,provider,ErosionRegistry.Items.RAW_GOETHITE.get()
         );
 

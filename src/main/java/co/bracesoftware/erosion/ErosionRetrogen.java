@@ -112,7 +112,8 @@ public class ErosionRetrogen
             ErosionRegistry.Blocks.RAW_GOETHITE.get(),
 
             ErosionRegistry.Blocks.RAW_ANGLESITE.get(),
-            ErosionRegistry.Blocks.RAW_GALENA.get()
+            ErosionRegistry.Blocks.RAW_GALENA.get(),
+            ErosionRegistry.Blocks.RAW_HALITE.get()
         ))
     );
 
