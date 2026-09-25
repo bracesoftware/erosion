@@ -5,6 +5,8 @@
 > [!NOTE]
 > Welcome to chemically reimagined Minecraft!
 
+![Mod Version](https://img.shields.io/github/v/release/bracesoftware/erosion)
+
 Although this mod is called `Erosion`, it is focused on all kinds of geochemical processes that can alter blocks such as different types of stone, dirt and more.
 
 ## Tooltips
