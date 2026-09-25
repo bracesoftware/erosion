@@ -8,7 +8,6 @@ import co.bracesoftware.libs.minecraft_text_formatter.ComponentWordWrap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.TitleScreen;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -21,6 +20,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.api.distmarker.Dist;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
@@ -208,8 +208,18 @@ public class ErosionClient
     @SubscribeEvent 
     public static void onTooltip(ItemTooltipEvent e)
     {
-        Item currentItem = e.getItemStack().getItem();
+        var currentItem = e.getItemStack().getItem();
         var tooltip = e.getToolTip();
+        var stack = e.getItemStack();
+
+        if(stack.getOrDefault(ErosionRegistry.DataComponents.IS_SALTED_FOOD.get(), false))
+        {
+            tooltip.add(
+                Component.literal("Salted")
+                .withStyle(ChatFormatting.WHITE, ChatFormatting.BOLD)
+                .withStyle(s -> s.withFont(ErosionConfig.MINI_FONT))
+            );
+        }
 
         if(ErosionCore.ITEM_DESCRIPTIONS.containsKey(currentItem))
         {

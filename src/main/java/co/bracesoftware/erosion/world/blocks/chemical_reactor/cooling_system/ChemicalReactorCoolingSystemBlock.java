@@ -2,7 +2,7 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor.cooling_system;
 
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
-import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipes;
+import co.bracesoftware.erosion.ErosionCore.ErosionRecipeRegistry;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks.IErosionBlockWithTip;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorMultiBlockComponent;
@@ -63,7 +63,7 @@ implements IErosionBlockWithTip, IErosionChemicalReactorMultiBlockComponent
         {
             var holdingItem = p.getItemStack().getItem();
             int lev = p.getBlockState().getValue(ChemicalReactorCoolingSystemBlock.COOLING_FLUID_LEVEL);
-            for(var item : BlockEntityRecipes.ChemicalReactor.getChemicalReactorCoolingLiquids().entrySet())
+            for(var item : ErosionRecipeRegistry.ChemicalReactor.getChemicalReactorCoolingLiquids().entrySet())
             {
                 var coolingItem = item.getKey();
                 var giveBack = item.getValue();

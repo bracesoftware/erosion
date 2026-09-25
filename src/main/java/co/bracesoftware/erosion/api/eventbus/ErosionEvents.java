@@ -28,15 +28,15 @@ public class ErosionEvents
         }
     }
 
-    public static class ErosionModLoading extends BasicErosionEvent
+    public static final class ErosionModLoading extends BasicErosionEvent
     {
-        public void sayHi()
+        public final void sayHi()
         {
             ErosionUtils.Log("Someone said 'Hi'!");
         }
     }
 
-    public static class ErosionItemDescription extends BasicErosionEvent
+    public static final class ErosionItemDescription extends BasicErosionEvent
     {
         private List<Component> list = null;
         private Item item = null;
@@ -47,40 +47,45 @@ public class ErosionEvents
             this.list = l;
         }
 
-        public Item whatItem()
+        public final Item whatItem()
         {
             return this.item;
         }
 
-        public void addItemDescription(Component c)
+        public final void addItemDescription(Component c)
         {
             this.list.add(c);
         }
     }
 
-    public static class ErosionBlockEntityRecipeRegistration extends BasicErosionEvent
+    public static final class ErosionBlockEntityRecipeRegistration extends BasicErosionEvent
     {
-        public void registerRefinableMaterial(ErosionCore.RefinableMaterial rm)
+        public final void registerRefinableMaterial(ErosionCore.RefinableMaterial rm)
         {
             ErosionCore.add(rm);
         }
 
-        public void registerAlterableMaterial(ErosionCore.AlterableMaterial am)
+        public final void registerAlterableMaterial(ErosionCore.AlterableMaterial am)
         {
             ErosionCore.add(am);
         }
 
-        public void registerCrucibleCatalyst(ErosionCore.CrucibleCatalyst cc)
+        public final void registerCrucibleCatalyst(ErosionCore.CrucibleCatalyst cc)
         {
             ErosionCore.add(cc);
         }
 
-        public void registerChemicalReaction(ErosionCore.ChemicalReaction cr)
+        public final void registerChemicalReaction(ErosionCore.ChemicalReaction cr)
         {
             ErosionCore.add(cr);
         }
 
-        public void registerChemicalReactorCoolingFluid(ErosionCore.ChemicalReactorCoolingFluid f)
+        public final void registerChemicalReactorCoolingFluid(ErosionCore.ChemicalReactorCoolingFluid f)
+        {
+            ErosionCore.add(f);
+        }
+
+        public final void registerSaltableFood(ErosionCore.SaltableFood f)
         {
             ErosionCore.add(f);
         }

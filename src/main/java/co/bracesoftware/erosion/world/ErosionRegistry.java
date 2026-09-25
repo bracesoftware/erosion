@@ -3,6 +3,8 @@ package co.bracesoftware.erosion.world;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.mojang.serialization.Codec;
+
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
@@ -11,11 +13,14 @@ import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
+import co.bracesoftware.erosion.world.recipes.ErosionFoodSaltingRecipe;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffects;
@@ -24,6 +29,8 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -46,7 +53,6 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
-import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -86,6 +92,14 @@ public class ErosionRegistry
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(
         Registries.SOUND_EVENT, Erosion.MODID
+    );
+
+    public static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(
+        Registries.DATA_COMPONENT_TYPE, Erosion.MODID
+    );
+
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(
+        Registries.RECIPE_SERIALIZER, Erosion.MODID
     );
     // ===================================================== //
     public static class DefaultAlterationPaths
@@ -165,6 +179,8 @@ public class ErosionRegistry
         //ITEMS
         public static final IRawRegistry FELDSPAR_POWDER = new IRawRegistry("feldspar_powder", "Feldspar Powder");
         public static final IRawRegistry FLUX = new IRawRegistry("flux", "Flux");
+        public static final IRawRegistry SALT = new IRawRegistry("salt", "Salt");
+
         public static final IRawRegistry SULFUR_SLAG = new IRawRegistry("sulfur_slag", "Sulfur Slag");
         public static final IRawRegistry ANTIMONY_SLAG = new IRawRegistry("antimony_slag", "Antimony Slag");
         public static final IRawRegistry DEBRIS = new IRawRegistry("debris", "Debris");
@@ -271,6 +287,10 @@ public class ErosionRegistry
         //DATA ATTACHMENTS
         public static final IRawRegistry RETROGEN_DATA = new IRawRegistry("retrogen_data", "Erosion Retrogen Data");
 
+        //DATA COMPONENTS
+        public static final IRawRegistry IS_SALTED_FOOD = new IRawRegistry("is_salted_food", "Is Salted Food?");
+        public static final IRawRegistry IS_SALTED_FOOD_SERIALIZER = new IRawRegistry("isf_serializer", "Is Salted Food Serializer");
+
         //SOUND EVENTS
         public static final IRawRegistry ORE_MINE = new IRawRegistry("ore_mine", "Erosion Ore Sound");
         public static final IRawRegistry ORE_PLACE = new IRawRegistry("ore_place", "Erosion Ore Sound");
@@ -294,6 +314,23 @@ public class ErosionRegistry
     {
         //nothin yet
         public static Long2ObjectMap<List<String>> RETROGEN_DATA = new Long2ObjectOpenHashMap<>();
+    }
+
+    public static final class DataComponents
+    {
+        public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> IS_SALTED_FOOD = DATA_COMPONENTS.registerComponentType(
+            ErosionRegistry.RawRegistry.IS_SALTED_FOOD.getId(),
+            b -> b
+            .persistent(Codec.BOOL) 
+            .networkSynchronized(ByteBufCodecs.BOOL)
+        );
+        
+        public static final DeferredHolder<
+            RecipeSerializer<?>, SimpleCraftingRecipeSerializer<ErosionFoodSaltingRecipe>
+        > IS_SALTED_FOOD_SERIALIZER = SERIALIZERS.register(
+            RawRegistry.IS_SALTED_FOOD_SERIALIZER.getId(),
+            () -> new SimpleCraftingRecipeSerializer<>(ErosionFoodSaltingRecipe::new)
+        );
     }
 
     public static class GasTypes
@@ -851,6 +888,9 @@ public class ErosionRegistry
         public static final DeferredItem<Item> FLUX = ITEMS.register(
             RawRegistry.FLUX.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
+        public static final DeferredItem<Item> SALT = ITEMS.register(
+            RawRegistry.SALT.getId(), () -> new Item(new Item.Properties().stacksTo(16))
+        );
         public static final DeferredItem<Item> GAS_FILTER = ITEMS.register(
             RawRegistry.GAS_FILTER.getId(), () -> new Item(new Item.Properties().stacksTo(16))
         );
@@ -1078,6 +1118,7 @@ public class ErosionRegistry
 
             //SIMPLE ITEMS
             output.accept(ErosionRegistry.Items.FLUX.get());
+            output.accept(ErosionRegistry.Items.SALT.get());
             output.accept(ErosionRegistry.Items.RUBY.get());
             output.accept(ErosionRegistry.Items.BORAX.get());
             output.accept(ErosionRegistry.Items.DEHYDRATED_BORAX.get());

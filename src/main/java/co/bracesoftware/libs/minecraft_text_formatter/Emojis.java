@@ -9,6 +9,7 @@ public class Emojis
         public static final String COOLING_FLUID = "❄";
         public static final String FIRE = "🔥";
         public static final String CLOUD = "☁";
+        public static final String SKULL = "☠";
 
         public static final String FULL_BOX = "█";
         public static final String EMPTY_BOX_3 = "▓";

@@ -48,6 +48,9 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(
             this, provider, ErosionRegistry.Items.ANTIMONY_SLAG.get()
         );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(
+            this, provider, ErosionRegistry.Items.SALT.get()
+        );
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.DEBRIS.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.CRUSHED_EGG_SHELL.get());
 

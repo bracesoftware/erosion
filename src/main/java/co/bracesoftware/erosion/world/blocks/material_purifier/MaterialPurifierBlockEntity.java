@@ -57,7 +57,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
         if(ErosionConfig.isDebugOn()) if(!i.isEmpty()) {
             System.out.println("Items: " + i.size());
             System.out.println("Item: " + i.get(0).getItem().getItem());
-            System.out.println("Map keys: " + ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().keySet());
+            System.out.println("Map keys: " + ErosionCore.ErosionRecipeRegistry.MaterialPurifier.getRecipes().keySet());
             System.out.println("Working: " + be.working + " | Finished: " + be.finished);
         }
 
@@ -93,7 +93,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
             for(ItemEntity itemEntity : items)
             {
                 ItemStack stack = itemEntity.getItem();
-                if(ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().containsKey(stack.getItem()))
+                if(ErosionCore.ErosionRecipeRegistry.MaterialPurifier.getRecipes().containsKey(stack.getItem()))
                 {
                     ItemStack singleItem = stack.split(1);
                     be.storedItem = singleItem;
@@ -137,7 +137,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
                 be.finished = true;
                 be.progress = 0;
 
-                var l = ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().get(be.storedItem.getItem());
+                var l = ErosionCore.ErosionRecipeRegistry.MaterialPurifier.getRecipes().get(be.storedItem.getItem());
                 be.storedItem = new ItemStack(l.get(ErosionMod.RANDOM.nextInt(l.size())));
 
                 p.getServerLevel().setBlock(p.getBlockPos(),
@@ -204,7 +204,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
         {
             if (storedItem.isEmpty() && !working && finished && !stack.isEmpty())
             {
-                if(ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().containsKey(stack.getItem()))
+                if(ErosionCore.ErosionRecipeRegistry.MaterialPurifier.getRecipes().containsKey(stack.getItem()))
                 {
                     if (!simulate)
                     {
@@ -266,7 +266,7 @@ public class MaterialPurifierBlockEntity extends ErosionNetworkSafeBlockEntity<M
         @Override
         public boolean isItemValid(int slot, @NotNull ItemStack stack)
         {
-            return ErosionCore.BlockEntityRecipes.MaterialPurifier.getRecipes().containsKey(stack.getItem());
+            return ErosionCore.ErosionRecipeRegistry.MaterialPurifier.getRecipes().containsKey(stack.getItem());
         }
     };
 

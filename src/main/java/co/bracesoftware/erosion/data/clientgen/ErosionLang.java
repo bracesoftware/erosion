@@ -20,6 +20,7 @@ public class ErosionLang extends LanguageProvider
         
         //SIMPLE ITEMS
         add(ErosionRegistry.Items.FLUX.get(), ErosionRegistry.RawRegistry.FLUX.getName());
+        add(ErosionRegistry.Items.SALT.get(), ErosionRegistry.RawRegistry.SALT.getName());
         add(ErosionRegistry.Items.GAS_FILTER.get(), ErosionRegistry.RawRegistry.GAS_FILTER.getName());
         add(ErosionRegistry.Items.RUBY.get(), ErosionRegistry.RawRegistry.RUBY.getName());
         add(ErosionRegistry.Items.BORAX.get(), ErosionRegistry.RawRegistry.BORAX.getName());

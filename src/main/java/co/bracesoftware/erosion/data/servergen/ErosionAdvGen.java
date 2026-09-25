@@ -38,6 +38,15 @@ public class ErosionAdvGen extends AdvancementProvider
 
             //GENERATE
             var root = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateParentAdvancement(this);
+
+            // --------------------------- OTHER ADVANCEMENTS
+            var salt = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
+                this, "White Stuff",
+                "Acquire Salt.",
+                ErosionRegistry.Items.SALT.get(),
+                ErosionRegistry.RawRegistry.SALT.getId(),
+                root
+            );
             
             //------------------------- CRUCIBLE ADVANCEMENTS ---------------------------
             var crucible = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(

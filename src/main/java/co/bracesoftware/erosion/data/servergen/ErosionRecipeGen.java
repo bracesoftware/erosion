@@ -3,6 +3,7 @@ package co.bracesoftware.erosion.data.servergen;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionModCompat;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.recipes.ErosionFoodSaltingRecipe;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -239,6 +240,15 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
                 "X", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
                     Erosion.MODID, ErosionRegistry.RawRegistry.SULFUR_SLAG.getId()
                 )
+            )
+        );
+
+        SpecialRecipeBuilder.special(ErosionFoodSaltingRecipe::new)
+        .save(
+            output,
+            ResourceLocation.fromNamespaceAndPath(
+                Erosion.MODID,
+                ErosionRegistry.RawRegistry.IS_SALTED_FOOD_SERIALIZER.getId()
             )
         );
 

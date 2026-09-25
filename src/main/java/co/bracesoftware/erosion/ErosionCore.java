@@ -33,6 +33,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -458,6 +459,39 @@ public class ErosionCore
         }
     }
 
+    public static class SaltableFood extends ErosionDynamicItem
+    {
+        public Supplier<Item> food = null;
+        public Item foodItem = null;
+
+        public SaltableFood(String n, Supplier<Item> f)
+        {
+            this.name = n;
+            this.food = f;
+            this.setupAntiDuplicationSystem();
+        }
+
+        @Override public void setup() throws ErosionRecipeImplException
+        {
+            ErosionUtils.Log("Setting up saltable food: " + this.name);
+            this.preventDuplication(antiDuplicator);
+            this.foodItem = this.food.get();
+
+            ErosionRecipeRegistry.Misc.SaltableFoodsSystem.SALTABLE_FOODS.add(this.foodItem);
+            return;
+        }
+
+        @Override public void discard()
+        {
+            ErosionUtils.Log("Discarding saltable food: " + this.name);
+            this.discardDuplicationPreventionSys(antiDuplicator);
+
+            var l = ErosionRecipeRegistry.Misc.SaltableFoodsSystem.SALTABLE_FOODS;
+            if(!l.isEmpty()) l.clear();
+            return;
+        }
+    }
+
     public static class CrucibleCatalyst extends ErosionDynamicItem
     {
         public Supplier<Item> catalyst;
@@ -646,11 +680,11 @@ public class ErosionCore
             
             if(this.recipeCategory == BlockEntityRecipeRegistries.MATERIAL_PURIFIER)
             {
-                BlockEntityRecipes.MaterialPurifier.RECIPES.putIfAbsent(materialItem, productItem);
+                ErosionRecipeRegistry.MaterialPurifier.RECIPES.putIfAbsent(materialItem, productItem);
             }
             else if(this.recipeCategory == BlockEntityRecipeRegistries.CRUCIBLE)
             {
-                BlockEntityRecipes.Crucible.RECIPES.putIfAbsent(materialItem, productItem);
+                ErosionRecipeRegistry.Crucible.RECIPES.putIfAbsent(materialItem, productItem);
                 if(this.catalyst == null)
                 {
                     throw new ErosionRecipeImplException("Missing a catalyst for recipe: " + this.name);
@@ -662,7 +696,7 @@ public class ErosionCore
                     {
                         L_.add(f.catalystItem);
                     }
-                    BlockEntityRecipes.Crucible.CATALYSTS.putIfAbsent(materialItem, L_);
+                    ErosionRecipeRegistry.Crucible.CATALYSTS.putIfAbsent(materialItem, L_);
                 }
 
                 if(this.coproduct == null || this.coproductItem == null)
@@ -671,10 +705,10 @@ public class ErosionCore
                 }
                 else
                 {
-                    BlockEntityRecipes.Crucible.COPRODUCTS.putIfAbsent(materialItem, this.coproductItem);
+                    ErosionRecipeRegistry.Crucible.COPRODUCTS.putIfAbsent(materialItem, this.coproductItem);
                 }
                 
-                BlockEntityRecipes.Crucible.EMITTED_GASES.putIfAbsent(materialItem, emittedGases);
+                ErosionRecipeRegistry.Crucible.EMITTED_GASES.putIfAbsent(materialItem, emittedGases);
                 for(var f : this.emittedGases)
                 {
                     ErosionUtils.Log("Successfully registered gas `" + f.name + "` for crucible process -> " + this.name);
@@ -687,11 +721,11 @@ public class ErosionCore
         public void discard()
         {
             ErosionUtils.Log("Unloading refinable material item: " + this.name);
-            BlockEntityRecipes.MaterialPurifier.RECIPES.clear();
-            BlockEntityRecipes.Crucible.RECIPES.clear();
-            BlockEntityRecipes.Crucible.CATALYSTS.clear();
-            BlockEntityRecipes.Crucible.COPRODUCTS.clear();
-            BlockEntityRecipes.Crucible.EMITTED_GASES.clear();
+            ErosionRecipeRegistry.MaterialPurifier.RECIPES.clear();
+            ErosionRecipeRegistry.Crucible.RECIPES.clear();
+            ErosionRecipeRegistry.Crucible.CATALYSTS.clear();
+            ErosionRecipeRegistry.Crucible.COPRODUCTS.clear();
+            ErosionRecipeRegistry.Crucible.EMITTED_GASES.clear();
             this.discardDuplicationPreventionSys(antiDuplicator);
             return;
         }
@@ -956,7 +990,7 @@ public class ErosionCore
 
             this.preventDuplication(antiDuplicator);
 
-            BlockEntityRecipes.ChemicalReactor.COOLING_LIQUIDS.putIfAbsent(coolingFluidItem, giveBackItem);
+            ErosionRecipeRegistry.ChemicalReactor.COOLING_LIQUIDS.putIfAbsent(coolingFluidItem, giveBackItem);
             return;
         }
 
@@ -965,14 +999,14 @@ public class ErosionCore
         {
             ErosionUtils.Log("Discarding chemical reactor cooling fluid -> " + this.name);
             
-            BlockEntityRecipes.ChemicalReactor.COOLING_LIQUIDS.clear();
+            ErosionRecipeRegistry.ChemicalReactor.COOLING_LIQUIDS.clear();
             this.discardDuplicationPreventionSys(antiDuplicator);
             return;
         }
     }
 
     // ======================= ALTERABLE MATERIALS
-    public static class AlterableMaterials
+    public static final class AlterableMaterials
     {
         public static final AlterableMaterial GRASS_BLOCK = new AlterableMaterial(
             Blocks.GRASS_BLOCK.getName().getString(),
@@ -1513,7 +1547,7 @@ public class ErosionCore
     }
 
     // ========================== REFINABLE MATERIALS
-    public static class RefinableMaterials
+    public static final class RefinableMaterials
     {
         public static final RefinableMaterial.MaterialPurifier KAOLINIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
             ErosionRegistry.RawRegistry.KAOLINIZED_GRANITE.getName(),
@@ -1978,7 +2012,7 @@ public class ErosionCore
     }
     // ========================== CHEMICAL REACTIONS
 
-    public static class ChemicalReactions
+    public static final class ChemicalReactions
     {
         public static final ChemicalReaction DIRT_HYDRATION = new ChemicalReaction(
             ErosionRegistry.RawRegistry.ChemicalReactions.DIRT_HYDRATION.getName(),
@@ -2036,12 +2070,21 @@ public class ErosionCore
     
 
     // ------------------------------- COOLING FLUIDS
-    public static class ChemicalReactorCoolingFluids
+    public static final class ChemicalReactorCoolingFluids
     {
         public static final ChemicalReactorCoolingFluid WATER = new ChemicalReactorCoolingFluid(
             Items.WATER_BUCKET.getDescription().getString(),
             () -> Items.WATER_BUCKET,
             () -> Items.BUCKET
+        );
+    }
+
+    // -------------------------------- SALTABLE FOODS
+    public static final class SaltableFoods
+    {
+        public static final SaltableFood COOKED_BEEF = new SaltableFood(
+            Items.COOKED_BEEF.getDescription().toString(),
+            () -> Items.COOKED_BEEF
         );
     }
 
@@ -2124,11 +2167,16 @@ public class ErosionCore
         ChemicalReactorCoolingFluids.WATER
     );
 
+    private static final List<SaltableFood> SALTABLE_FOOD_LIST_ORIGINAL = List.of(
+        SaltableFoods.COOKED_BEEF
+    );
+
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST = new ArrayList<>();
     private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST = new ArrayList<>();
+    private static final List<SaltableFood> SALTABLE_FOOD_LIST = new ArrayList<>();
 
     public static void add(RefinableMaterial e)
     {
@@ -2152,13 +2200,17 @@ public class ErosionCore
         CHEMICAL_REACTOR_COOLING_FLUID_LIST.add(e);
     }
 
+    public static void add(SaltableFood e)
+    {
+        SALTABLE_FOOD_LIST.add(e);
+    }
+
     // =====================================
 
     @ErosionEvents.ErosionEventSubscribe
     public static void BE(ErosionEvents.ErosionBlockEntityRecipeRegistration e)
     {
         ErosionUtils.Log("Event called -> " + e.getClass().getName());
-        
         return;
     }
 
@@ -2175,12 +2227,14 @@ public class ErosionCore
         CRUCIBLE_CATALYST_LIST.clear();
         CHEMICAL_REACTION_LIST.clear();
         CHEMICAL_REACTOR_COOLING_FLUID_LIST.clear();
+        SALTABLE_FOOD_LIST.clear();
 
         REFINABLE_MATERIALS_LIST.addAll(REFINABLE_MATERIALS_LIST_ORIGINAL);
         ALTERABLE_MATERIALS_LIST.addAll(ALTERABLE_MATERIALS_LIST_ORIGINAL);
         CRUCIBLE_CATALYST_LIST.addAll(CRUCIBLE_CATALYST_LIST_ORIGINAL);
         CHEMICAL_REACTION_LIST.addAll(CHEMICAL_REACTION_LIST_ORIGINAL);
         CHEMICAL_REACTOR_COOLING_FLUID_LIST.addAll(CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL);
+        SALTABLE_FOOD_LIST.addAll(SALTABLE_FOOD_LIST_ORIGINAL);
 
         for(int i = 0; i < ErosionModCompat.COMPATIBLE_MODS.size(); ++i)
         {
@@ -2225,6 +2279,12 @@ public class ErosionCore
             var m = CHEMICAL_REACTOR_COOLING_FLUID_LIST.get(i);
             m.setup();
         }
+
+        for(int i = 0; i < SALTABLE_FOOD_LIST.size(); ++i)
+        {
+            var m = SALTABLE_FOOD_LIST.get(i);
+            m.setup();
+        }
         return;
     }
 
@@ -2265,10 +2325,16 @@ public class ErosionCore
             var m = CHEMICAL_REACTOR_COOLING_FLUID_LIST.get(i);
             m.discard();
         }
+
+        for(int i = 0; i < SALTABLE_FOOD_LIST.size(); ++i)
+        {
+            var m = SALTABLE_FOOD_LIST.get(i);
+            m.discard();
+        }
         return;
     }
 
-    public static List<Component> setupItemDescription(Item currentItem)
+    public static final List<Component> setupItemDescription(Item currentItem)
     {
         List<Component> desc = new ArrayList<>();
 
@@ -2651,6 +2717,14 @@ public class ErosionCore
             {
                 d.add(
                     Component.literal("  * ").withStyle(ChatFormatting.GRAY)
+                    .append(ErosionUtils.compute(() -> {
+                        Component c = Component.literal("");
+                        if(y.isToxic())
+                        {
+                            c = Component.literal(Emojis.StringConstants.SKULL + " ");
+                        }
+                        return c;
+                    }))
                     .append(
                         Component.literal(y.name).withStyle(ChatFormatting.BOLD)
                         .withStyle(
@@ -3077,6 +3151,36 @@ public class ErosionCore
             }
         }
 
+        boolean hasMiscInfo = false;
+
+        //gathering misc info
+        boolean saltable = ErosionRecipeRegistry.Misc.SaltableFoodsSystem.isSaltableFood(currentItem);
+
+        if(saltable)
+        {
+            hasMiscInfo = true;
+        }
+
+        //printing misc info
+        if(hasMiscInfo)
+        {
+            desc.add(Component.literal(""));
+            desc.add(Component.literal("Miscellaneous information").withStyle(
+                ChatFormatting.YELLOW,
+                ChatFormatting.ITALIC,
+                ChatFormatting.UNDERLINE
+            ));
+
+            if(saltable)
+            {
+                desc.add(
+                    Component.literal("- This is a food item that can be salted.")
+                    .withStyle(ChatFormatting.GRAY)
+                );
+            }
+        }
+
+        // --------------------------------------------------------------------- //
         var l = new ArrayList<Component>();
         var e = new ErosionEvents.ErosionItemDescription(currentItem, l);
         ErosionEventBus.ErosionEventInvocation.CALL_EVENT_LISTENERS(e);
@@ -3347,17 +3451,34 @@ public class ErosionCore
     }
 
     // =================================================== //
-    public static class BlockRecipes
-    {
-        
-    }
 
-    public static class BlockEntityRecipes
+    public static class ErosionRecipeRegistry
     {
+        public static class Misc
+        {
+            public static final class SaltableFoodsSystem
+            {
+                private static final List<Item> SALTABLE_FOODS = new ArrayList<>();
+                public static final List<Item> getSaltableFoods()
+                {
+                    return Collections.unmodifiableList(SALTABLE_FOODS);
+                }
+
+                public static final boolean isSaltableFood(Item it)
+                {
+                    return SALTABLE_FOODS.contains(it);
+                }
+
+                public static final boolean isSaltableFood(ItemStack it)
+                {
+                    return SALTABLE_FOODS.contains(it.getItem());
+                }
+            }
+        }
         public static class ChemicalReactor
         {
-            private static Map<Item, Item> COOLING_LIQUIDS = new HashMap<>();
-            public static Map<Item, Item> getChemicalReactorCoolingLiquids()
+            private static final Map<Item, Item> COOLING_LIQUIDS = new HashMap<>();
+            public static final Map<Item, Item> getChemicalReactorCoolingLiquids()
             {
                 return Collections.unmodifiableMap(COOLING_LIQUIDS);
             }
@@ -3368,36 +3489,36 @@ public class ErosionCore
         }
         public static class MaterialPurifier
         {
-            private static Map<Item, List<Item>> RECIPES = new HashMap<>();
+            private static final Map<Item, List<Item>> RECIPES = new HashMap<>();
 
-            public static Map<Item, List<Item>> getRecipes()
+            public static final Map<Item, List<Item>> getRecipes()
             {
                 return Collections.unmodifiableMap(RECIPES);
             }
         }
         public static class Crucible
         {
-            private static Map<Item, List<Item>> RECIPES = new HashMap<>();
-            private static Map<Item, List<Item>> CATALYSTS = new HashMap<>();
-            private static Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
-            private static Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
+            private static final Map<Item, List<Item>> RECIPES = new HashMap<>();
+            private static final Map<Item, List<Item>> CATALYSTS = new HashMap<>();
+            private static final Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
+            private static final Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
 
-            public static Map<Item, List<Item>> getRecipes()
+            public static final Map<Item, List<Item>> getRecipes()
             {
                 return Collections.unmodifiableMap(RECIPES);
             }
 
-            public static Map<Item, List<Item>> getCatalysts()
+            public static final Map<Item, List<Item>> getCatalysts()
             {
                 return Collections.unmodifiableMap(CATALYSTS);
             }
 
-            public static Map<Item, List<Item>> getCoproducts()
+            public static final Map<Item, List<Item>> getCoproducts()
             {
                 return Collections.unmodifiableMap(COPRODUCTS);
             }
 
-            public static Map<Item, List<GasType>> getEmittedGases()
+            public static final Map<Item, List<GasType>> getEmittedGases()
             {
                 return Collections.unmodifiableMap(EMITTED_GASES);
             }
@@ -3405,7 +3526,7 @@ public class ErosionCore
     }
     public static class Extra
     {
-        public static void bulkProcess(ServerLevel level)
+        public static final void bulkProcess(ServerLevel level)
         {
             for(int i = 0; i < ErosionConfig.MAX_GEOCHEMICAL_ALTERATIONS_PER_TICK / 2; ++i)
             {

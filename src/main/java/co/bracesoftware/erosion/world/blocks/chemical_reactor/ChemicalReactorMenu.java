@@ -164,7 +164,7 @@ public class ChemicalReactorMenu extends AbstractContainerMenu implements IErosi
 
     private void scanRecipez()
     {
-        for(var cr : ErosionCore.BlockEntityRecipes.ChemicalReactor.getChemicalReactions())
+        for(var cr : ErosionCore.ErosionRecipeRegistry.ChemicalReactor.getChemicalReactions())
         {
             if(cr.getReactants().equals(this.reactantsAsItemList()))
             {

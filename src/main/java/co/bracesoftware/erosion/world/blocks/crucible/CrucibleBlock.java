@@ -290,7 +290,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                 }
                 
                 //if holding a meltable item
-                if(ErosionCore.BlockEntityRecipes.Crucible.getRecipes().containsKey(p.getItemStack().getItem()))
+                if(ErosionCore.ErosionRecipeRegistry.Crucible.getRecipes().containsKey(p.getItemStack().getItem()))
                 {
                     if(!be.storedItem.isEmpty())
                     {
@@ -308,7 +308,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         );
                         return true;
                     }
-                    var m = ErosionCore.BlockEntityRecipes.Crucible.getCatalysts();
+                    var m = ErosionCore.ErosionRecipeRegistry.Crucible.getCatalysts();
                     if(m.containsKey(p.getItemStack().getItem()))
                     {
                         List<Item> c = m.get(p.getItemStack().getItem());
