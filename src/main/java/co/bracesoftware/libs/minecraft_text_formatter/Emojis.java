@@ -56,7 +56,7 @@ public class Emojis
             }
 
             double procent = (double) progress / max;
-            b.append(String.format(Locale.US, "%.2f%%", procent * 100));
+            b.append(String.format(Locale.US, "%.2f%% ", procent * 100));
 
             int prog = (int) (procent * MAX_SIZE);
             repeat(prog, () -> {

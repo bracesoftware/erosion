@@ -273,7 +273,7 @@ public final class ErosionConfig
 
     public static final class SaltableFoodsSystem
     {
-        public static final int EXTRA_NUTRITION = 3;
-        public static final float EXTRA_SATURATION = 0.5f;
+        public static final int EXTRA_NUTRITION = 2;
+        public static final float EXTRA_SATURATION = 0.2f;
     }
 }
