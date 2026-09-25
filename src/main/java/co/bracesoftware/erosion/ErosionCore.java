@@ -21,16 +21,7 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
-import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
-import co.bracesoftware.erosion.ErosionCore.AlterationPacketList;
-import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipeRegistries;
-import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipes;
-import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
-import co.bracesoftware.erosion.ErosionCore.ChemicalReactorCoolingFluid;
-import co.bracesoftware.erosion.ErosionCore.ChemicalReactorCoolingFluids;
-import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
-import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 

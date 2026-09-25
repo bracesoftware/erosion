@@ -223,6 +223,16 @@ public class ErosionModCompat
         Map.entry(
             () -> BuiltInRegistries.ITEM.get(
                 ResourceLocation.fromNamespaceAndPath(
+                    CompatibleMods.OREGANIZED.getModId(),
+                    "raw_lead"
+                )
+            ), List.of(
+                Component.literal("Compatible lead item (Pb)").withStyle(ChatFormatting.DARK_PURPLE, ChatFormatting.BOLD)
+            )
+        ),
+        Map.entry(
+            () -> BuiltInRegistries.ITEM.get(
+                ResourceLocation.fromNamespaceAndPath(
                     CompatibleMods.BUTCHERY.getModId(),
                     "sulfur"
                 )

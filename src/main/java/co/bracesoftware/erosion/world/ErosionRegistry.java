@@ -46,7 +46,6 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
-import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
