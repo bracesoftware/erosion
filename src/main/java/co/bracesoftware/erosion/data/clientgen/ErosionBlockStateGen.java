@@ -88,6 +88,9 @@ public class ErosionBlockStateGen extends BlockStateProvider
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.GALENA_ORE.get()
         );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.HALITE_ORE.get()
+        );
 
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.RUBY_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(

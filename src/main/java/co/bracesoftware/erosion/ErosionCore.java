@@ -2758,7 +2758,7 @@ public class ErosionCore
                         Component c = Component.literal("");
                         if(y.isToxic())
                         {
-                            c = Component.literal(Emojis.StringConstants.SKULL + " ");
+                            c = Component.literal(Emojis.StringConstants.WARNING + " ").withStyle(ChatFormatting.GOLD);
                         }
                         return c;
                     }))

@@ -46,7 +46,10 @@ This huge comment is dedicated to:
         -                   for being the first custom sound added by the mod
         * ChemicalReactorMenu
         -                   for being the first menu to be added to the game
-
+        * Galena ore
+        -                   for being THE FIRST MOD BLOCK TO BE MARKED AS AN ALTERABLE MATERIAL
+        * Raw Halite Rock
+        -                   for being the first rock to be able to be processed in a material purifier
     SOURCE CODE:
         * ErosionNetworkSafeVariants, and the whole erosion.data package
         -                   for making my life easier
