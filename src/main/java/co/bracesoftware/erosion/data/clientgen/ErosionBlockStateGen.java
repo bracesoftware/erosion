@@ -82,6 +82,12 @@ public class ErosionBlockStateGen extends BlockStateProvider
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
             this, ErosionRegistry.Blocks.PYRITE_ORE.get()
         );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.ANGLESITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
+            this, ErosionRegistry.Blocks.GALENA_ORE.get()
+        );
 
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(this, ErosionRegistry.Blocks.RUBY_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
@@ -365,6 +371,26 @@ public class ErosionBlockStateGen extends BlockStateProvider
                 this,
                 ErosionRegistry.RawRegistry.RAW_PYRITE.getId(), //item for texture
                 ErosionRegistry.RawRegistry.PYRITE_ORE.getId() //block texture
+            )
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
+            ErosionRegistry.Items.RAW_ANGLESITE.get(),
+            ErosionRegistry.Blocks.RAW_ANGLESITE.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_ANGLESITE.getId(), //item for texture
+                ErosionRegistry.RawRegistry.ANGLESITE_ORE.getId() //block texture
+            )
+        );
+        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRockWithRandomRotations(
+            this,
+            ErosionRegistry.Items.RAW_GALENA.get(),
+            ErosionRegistry.Blocks.RAW_GALENA.get(),
+            ErosionDataGeneratorsProgInterface.ErosionBlockState.createRockModel(
+                this,
+                ErosionRegistry.RawRegistry.RAW_GALENA.getId(), //item for texture
+                ErosionRegistry.RawRegistry.GALENA_ORE.getId() //block texture
             )
         );
 

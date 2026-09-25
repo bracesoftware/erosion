@@ -109,8 +109,10 @@ public class ErosionRetrogen
             ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get(),
             ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get(),
             ErosionRegistry.Blocks.RAW_PYRITE.get(),
-            ErosionRegistry.Blocks.RAW_GOETHITE.get()
+            ErosionRegistry.Blocks.RAW_GOETHITE.get(),
 
+            ErosionRegistry.Blocks.RAW_ANGLESITE.get(),
+            ErosionRegistry.Blocks.RAW_GALENA.get()
         ))
     );
 

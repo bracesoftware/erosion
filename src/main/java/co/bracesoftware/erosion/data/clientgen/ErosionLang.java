@@ -42,6 +42,7 @@ public class ErosionLang extends LanguageProvider
 
         add(ErosionRegistry.Items.NATIVE_GOLD.get(), ErosionRegistry.RawRegistry.NATIVE_GOLD.getName());
         add(ErosionRegistry.Items.TIN_CHUNK.get(), ErosionRegistry.RawRegistry.TIN_CHUNK.getName());
+        add(ErosionRegistry.Items.LEAD_CHUNK.get(), ErosionRegistry.RawRegistry.LEAD_CHUNK.getName());
         add(ErosionRegistry.Items.RAW_CASSITERITE.get(), ErosionRegistry.RawRegistry.RAW_CASSITERITE.getName());
 
         add(ErosionRegistry.Items.SILVER_CHUNK.get(), ErosionRegistry.RawRegistry.SILVER_CHUNK.getName());
@@ -57,6 +58,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Items.RAW_TETRAHEDRITE.get(), ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName());
         add(ErosionRegistry.Items.RAW_ARSENOPYRITE.get(), ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getName());
         add(ErosionRegistry.Items.RAW_PYRITE.get(), ErosionRegistry.RawRegistry.RAW_PYRITE.getName());
+        add(ErosionRegistry.Items.RAW_ANGLESITE.get(), ErosionRegistry.RawRegistry.RAW_ANGLESITE.getName());
 
         //SIMPLE BLOCKS
         add(ErosionRegistry.Blocks.DRIED_DIRT.get(), ErosionRegistry.RawRegistry.DRIED_DIRT.getName());
@@ -85,6 +87,8 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(), ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName());
         add(ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get(), ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getName());
         add(ErosionRegistry.Blocks.PYRITE_ORE.get(), ErosionRegistry.RawRegistry.PYRITE_ORE.getName());
+        add(ErosionRegistry.Blocks.ANGLESITE_ORE.get(), ErosionRegistry.RawRegistry.ANGLESITE_ORE.getName());
+        add(ErosionRegistry.Blocks.GALENA_ORE.get(), ErosionRegistry.RawRegistry.GALENA_ORE.getName());
         add(ErosionRegistry.Blocks.RUBY_ORE.get(), ErosionRegistry.RawRegistry.RUBY_ORE.getName());
         add(ErosionRegistry.Blocks.SAPPHIRE_ORE.get(), ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName());
 

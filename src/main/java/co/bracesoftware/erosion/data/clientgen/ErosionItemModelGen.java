@@ -39,6 +39,7 @@ public class ErosionItemModelGen extends ItemModelProvider {
         basicItem(ErosionRegistry.Items.NATIVE_GOLD.get());
         basicItem(ErosionRegistry.Items.RAW_CASSITERITE.get());
         basicItem(ErosionRegistry.Items.TIN_CHUNK.get());
+        basicItem(ErosionRegistry.Items.LEAD_CHUNK.get());
         
         basicItem(ErosionRegistry.Items.SILVER_CHUNK.get());
         basicItem(ErosionRegistry.Items.NATIVE_SILVER.get());
@@ -54,7 +55,7 @@ public class ErosionItemModelGen extends ItemModelProvider {
         basicItem(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
         basicItem(ErosionRegistry.Items.RAW_ARSENOPYRITE.get());
         basicItem(ErosionRegistry.Items.RAW_PYRITE.get());
-
+        basicItem(ErosionRegistry.Items.RAW_ANGLESITE.get());
         return;
     }
 }

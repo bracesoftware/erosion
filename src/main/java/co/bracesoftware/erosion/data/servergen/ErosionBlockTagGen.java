@@ -54,8 +54,14 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.RUBY_ORE.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(this, provider, ErosionRegistry.Blocks.SAPPHIRE_ORE.get());
 
-        ErosionTags.Blocks.createSimpleOre(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(
             this,provider,ErosionRegistry.Blocks.PYRITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(
+            this,provider,ErosionRegistry.Blocks.ANGLESITE_ORE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleOre(
+            this,provider,ErosionRegistry.Blocks.GALENA_ORE.get()
         );
 
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get());
@@ -79,10 +85,13 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(this, provider, ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get());
 
-        ErosionTags.Blocks.createSimpleRock(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
             this,provider,ErosionRegistry.Blocks.RAW_PYRITE.get()
         );
-        ErosionTags.Blocks.createSimpleRock(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
+            this,provider,ErosionRegistry.Blocks.RAW_ANGLESITE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
             this,provider,ErosionRegistry.Blocks.RAW_GOETHITE.get()
         );
         //MACHINES

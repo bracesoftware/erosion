@@ -192,6 +192,22 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
                 )
             )
         );
+        ErosionModCompat.JsonRecipeGenerator.generateCraftingRecipe(
+            "raw_lead_from_chunks", 
+            ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                ErosionModCompat.CompatibleMods.OREGANIZED.getModId(), "raw_lead"
+            ),
+            List.of(
+                "XXX",
+                "XXX",
+                "XXX"
+            ),
+            Map.of(
+                "X", ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(
+                    Erosion.MODID, ErosionRegistry.RawRegistry.LEAD_CHUNK.getId()
+                )
+            )
+        );
         ErosionDataGeneratorsProgInterface.ErosionRecipe.generateRecipe(
             "sulfuric_acid_bucket_from_bottle",
             ErosionModCompat.JsonRecipeGenerator.getItemNameFromNamespaceAndPath(

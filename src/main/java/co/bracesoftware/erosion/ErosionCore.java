@@ -21,7 +21,16 @@ import java.util.stream.Collectors;
 
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
+import co.bracesoftware.erosion.ErosionCore.AlterableMaterial;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
+import co.bracesoftware.erosion.ErosionCore.AlterationPacketList;
+import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipeRegistries;
+import co.bracesoftware.erosion.ErosionCore.BlockEntityRecipes;
+import co.bracesoftware.erosion.ErosionCore.ChemicalReaction;
+import co.bracesoftware.erosion.ErosionCore.ChemicalReactorCoolingFluid;
+import co.bracesoftware.erosion.ErosionCore.ChemicalReactorCoolingFluids;
+import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
+import co.bracesoftware.erosion.ErosionCore.RefinableMaterial;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 
@@ -971,986 +980,1149 @@ public class ErosionCore
         }
     }
 
-    // ======================= ERODABLE MATERIALS
-
-    public static final AlterableMaterial GRASS_BLOCK = new AlterableMaterial(
-        Blocks.GRASS_BLOCK.getName().getString(),
-        () -> Blocks.GRASS_BLOCK, () -> Items.GRASS_BLOCK,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.MUD,
-                    ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
-                ),
-                () -> List.of(
-                    Items.MUD,
-                    ErosionRegistry.Items.NATIVE_GOLD.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    ErosionRegistry.Items.NATIVE_SILVER.get(),
-                    ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.DRIED_DIRT.get(),
-                    Blocks.COARSE_DIRT
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.DRIED_DIRT.get(),
-                    Items.COARSE_DIRT
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+    // ======================= ALTERABLE MATERIALS
+    public static class AlterableMaterials
+    {
+        public static final AlterableMaterial GRASS_BLOCK = new AlterableMaterial(
+            Blocks.GRASS_BLOCK.getName().getString(),
+            () -> Blocks.GRASS_BLOCK, () -> Items.GRASS_BLOCK,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.MUD,
+                        ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
+                    ),
+                    () -> List.of(
+                        Items.MUD,
+                        ErosionRegistry.Items.NATIVE_GOLD.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        ErosionRegistry.Items.NATIVE_SILVER.get(),
+                        ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.DRIED_DIRT.get(),
+                        Blocks.COARSE_DIRT
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.DRIED_DIRT.get(),
+                        Items.COARSE_DIRT
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
+                )
             )
-        )
-    );
-    public static final AlterableMaterial MUD = new AlterableMaterial(
-        Blocks.MUD.getName().getString(),
-        () -> Blocks.MUD, () -> Items.MUD,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.MUD,
-                    ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
-                ),
-                () -> List.of(
-                    Items.MUD,
-                    ErosionRegistry.Items.NATIVE_SILVER.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    ErosionRegistry.Items.NATIVE_GOLD.get(),
-                    ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.DRIED_DIRT.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.DRIED_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+        );
+        public static final AlterableMaterial MUD = new AlterableMaterial(
+            Blocks.MUD.getName().getString(),
+            () -> Blocks.MUD, () -> Items.MUD,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.MUD,
+                        ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
+                    ),
+                    () -> List.of(
+                        Items.MUD,
+                        ErosionRegistry.Items.NATIVE_SILVER.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        ErosionRegistry.Items.NATIVE_GOLD.get(),
+                        ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.DRIED_DIRT.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.DRIED_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
+                )
             )
-        )
-    );
-    public static final AlterableMaterial DIRT = new AlterableMaterial(
-        Blocks.DIRT.getName().getString(),
-        () -> Blocks.DIRT, () -> Items.DIRT,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.MUD,
-                    ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
-                ),
-                () -> List.of(
-                    Items.MUD,
-                    ErosionRegistry.Items.NATIVE_GOLD.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    ErosionRegistry.Items.NATIVE_SILVER.get(),
-                    ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.DRIED_DIRT.get(),
-                    Blocks.COARSE_DIRT
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.DRIED_DIRT.get(),
-                    Items.COARSE_DIRT
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+        );
+        public static final AlterableMaterial DIRT = new AlterableMaterial(
+            Blocks.DIRT.getName().getString(),
+            () -> Blocks.DIRT, () -> Items.DIRT,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.MUD,
+                        ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
+                    ),
+                    () -> List.of(
+                        Items.MUD,
+                        ErosionRegistry.Items.NATIVE_GOLD.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        ErosionRegistry.Items.NATIVE_SILVER.get(),
+                        ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.DRIED_DIRT.get(),
+                        Blocks.COARSE_DIRT
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.DRIED_DIRT.get(),
+                        Items.COARSE_DIRT
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
+                )
             )
-        )
-    );
-    public static final AlterableMaterial GRAVEL = new AlterableMaterial(
-        Blocks.GRAVEL.getName().getString(),
-        () -> Blocks.GRAVEL, () -> Items.GRAVEL,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    ErosionRegistry.Items.NATIVE_SILVER.get(),
-                    ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
+        );
+        public static final AlterableMaterial GRAVEL = new AlterableMaterial(
+            Blocks.GRAVEL.getName().getString(),
+            () -> Blocks.GRAVEL, () -> Items.GRAVEL,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.MINERAL_RICH_DIRT.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        ErosionRegistry.Items.NATIVE_SILVER.get(),
+                        ErosionRegistry.Items.MINERAL_RICH_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                )
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial SAND = new AlterableMaterial(
-        Blocks.SAND.getName().getString(),
-        () -> Blocks.SAND, () -> Items.SAND,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    Blocks.GRAVEL,
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    Items.GRAVEL,
-                    ErosionRegistry.Items.NATIVE_SILVER.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
+        public static final AlterableMaterial SAND = new AlterableMaterial(
+            Blocks.SAND.getName().getString(),
+            () -> Blocks.SAND, () -> Items.SAND,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        Blocks.GRAVEL,
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        Items.GRAVEL,
+                        ErosionRegistry.Items.NATIVE_SILVER.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                )
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial COARSE_DIRT = new AlterableMaterial(
-        Blocks.COARSE_DIRT.getName().getString(),
-        () -> Blocks.COARSE_DIRT, () -> Items.COARSE_DIRT,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.MUD,
-                    ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get()
-                ),
-                () -> List.of(
-                    Items.MUD,
-                    ErosionRegistry.Items.NATIVE_GOLD.get(),
-                    ErosionRegistry.Items.RAW_CASSITERITE.get(),
-                    ErosionRegistry.Items.NATIVE_SILVER.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.DRIED_DIRT.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.DRIED_DIRT.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+        public static final AlterableMaterial COARSE_DIRT = new AlterableMaterial(
+            Blocks.COARSE_DIRT.getName().getString(),
+            () -> Blocks.COARSE_DIRT, () -> Items.COARSE_DIRT,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.MUD,
+                        ErosionRegistry.Blocks.NATIVE_GOLD_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.CASSITERITE_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get()
+                    ),
+                    () -> List.of(
+                        Items.MUD,
+                        ErosionRegistry.Items.NATIVE_GOLD.get(),
+                        ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                        ErosionRegistry.Items.NATIVE_SILVER.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.DRIED_DIRT.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.DRIED_DIRT.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
+                )
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial.AlterationPath GEMSTONE_GEN = new AlterableMaterial.AlterationPath(
-        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_HEAT_AND_PRESSURE,
-        () -> List.of(
-            ErosionRegistry.Blocks.RUBY_ORE.get(),
-            Blocks.EMERALD_ORE,
-            ErosionRegistry.Blocks.SAPPHIRE_ORE.get()
-        ),
-        () -> List.of(
-            ErosionRegistry.Items.RUBY.get(),
-            Items.EMERALD,
-            ErosionRegistry.Items.SAPPHIRE.get()
-        ),
-        new AlterationRules(List.of(
-            AlterationRules.CONTACT_WITH_LAVA,
-            AlterationRules.HIGH_PRESSURE
-        ))
-    );
-
-    public static final AlterableMaterial.AlterationPath HYDROTHERMAL_BLOCK_GEN = new AlterableMaterial.AlterationPath(
-        ErosionRegistry.DefaultAlterationPaths.HYDROTHERMAL_ALTERATION,
-        () -> List.of(
-            ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get()
-        ),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
-        ),
-        new AlterationRules(List.of(
-            AlterationRules.CONTACT_WITH_WATER,
-            AlterationRules.HIGH_PRESSURE
-        ))
-    );
-
-    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_AZURITE = new AlterableMaterial.AlterationPath(
-        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
-        () -> List.of(
-            ErosionRegistry.Blocks.AZURITE_ORE.get()
-        ),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_AZURITE.get()
-        ),
-        new AlterationRules(List.of(
-            AlterationRules.EXPOSURE_TO_AIR
-        ))
-    );
-
-    public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_GOETHITE = new AlterableMaterial.AlterationPath(
-        ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
-        () -> List.of(
-            ErosionRegistry.Blocks.GOETHITE_ORE.get()
-        ),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_GOETHITE.get()
-        ),
-        new AlterationRules(List.of(
-            AlterationRules.EXPOSURE_TO_AIR
-        ))
-    );
-
-    public static final AlterableMaterial COBBLESTONE = new AlterableMaterial(
-        Blocks.COBBLESTONE.getName().getString(),
-        () -> Blocks.COBBLESTONE, () -> Items.COBBLESTONE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.CRACKED_STONE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.CRACKED_STONE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+        public static final AlterableMaterial.AlterationPath GEMSTONE_GEN = new AlterableMaterial.AlterationPath(
+            ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_HEAT_AND_PRESSURE,
+            () -> List.of(
+                ErosionRegistry.Blocks.RUBY_ORE.get(),
+                Blocks.EMERALD_ORE,
+                ErosionRegistry.Blocks.SAPPHIRE_ORE.get()
             ),
-            HYDROTHERMAL_BLOCK_GEN,
-            EXPOSURE_TO_AIR_GEN_AZURITE,
-            EXPOSURE_TO_AIR_GEN_GOETHITE
-        )
-    );
-
-    public static final AlterableMaterial STONE = new AlterableMaterial(
-        Blocks.STONE.getName().getString(),
-        () -> Blocks.STONE, () -> Items.STONE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.COBBLESTONE, Blocks.GRAVEL, Blocks.CALCITE,
-                    ErosionRegistry.Blocks.LIMONITE_ORE.get(),
-                    ErosionRegistry.Blocks.HEMATITE_ORE.get(),
-                    ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
-                    ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
-                    ErosionRegistry.Blocks.AZURITE_ORE.get(),
-                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
-                    ErosionRegistry.Blocks.PYRITE_ORE.get()
-                ),
-                () -> List.of(
-                    Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
-                    ErosionRegistry.Items.RAW_LIMONITE.get(),
-                    ErosionRegistry.Items.RAW_HEMATITE.get(),
-                    ErosionRegistry.Items.RAW_MAGNETITE.get(),
-                    ErosionRegistry.Items.NATIVE_SILVER.get(),
-                    ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
-                    ErosionRegistry.Items.RAW_AZURITE.get(),
-                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
-                    ErosionRegistry.Items.RAW_PYRITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
-                    ErosionRegistry.Blocks.CRACKED_STONE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.BORAX.get(),
-                    ErosionRegistry.Items.CRACKED_STONE.get()
-                ), new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+            () -> List.of(
+                ErosionRegistry.Items.RUBY.get(),
+                Items.EMERALD,
+                ErosionRegistry.Items.SAPPHIRE.get()
             ),
-            EXPOSURE_TO_AIR_GEN_AZURITE,
-            EXPOSURE_TO_AIR_GEN_GOETHITE
-        )
-    );
+            new AlterationRules(List.of(
+                AlterationRules.CONTACT_WITH_LAVA,
+                AlterationRules.HIGH_PRESSURE
+            ))
+        );
 
-    public static final AlterableMaterial DEEPSLATE = new AlterableMaterial(
-        Blocks.DEEPSLATE.getName().getString(),
-        () -> Blocks.DEEPSLATE, () -> Items.DEEPSLATE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    Blocks.COBBLED_DEEPSLATE,
-                    ErosionRegistry.Blocks.LIMONITE_ORE.get(),
-                    ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
-                    ErosionRegistry.Blocks.AZURITE_ORE.get()
+        public static final AlterableMaterial.AlterationPath HYDROTHERMAL_BLOCK_GEN = new AlterableMaterial.AlterationPath(
+            ErosionRegistry.DefaultAlterationPaths.HYDROTHERMAL_ALTERATION,
+            () -> List.of(
+                ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get()
+            ),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
+            ),
+            new AlterationRules(List.of(
+                AlterationRules.CONTACT_WITH_WATER,
+                AlterationRules.HIGH_PRESSURE
+            ))
+        );
+
+        public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_AZURITE = new AlterableMaterial.AlterationPath(
+            ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
+            () -> List.of(
+                ErosionRegistry.Blocks.AZURITE_ORE.get()
+            ),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_AZURITE.get()
+            ),
+            new AlterationRules(List.of(
+                AlterationRules.EXPOSURE_TO_AIR
+            ))
+        );
+
+        public static final AlterableMaterial.AlterationPath EXPOSURE_TO_AIR_GEN_GOETHITE = new AlterableMaterial.AlterationPath(
+            ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
+            () -> List.of(
+                ErosionRegistry.Blocks.GOETHITE_ORE.get(),
+                ErosionRegistry.Blocks.ANGLESITE_ORE.get()
+            ),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_GOETHITE.get(),
+                ErosionRegistry.Items.RAW_ANGLESITE.get()
+            ),
+            new AlterationRules(List.of(
+                AlterationRules.EXPOSURE_TO_AIR
+            ))
+        );
+
+        public static final AlterableMaterial COBBLESTONE = new AlterableMaterial(
+            Blocks.COBBLESTONE.getName().getString(),
+            () -> Blocks.COBBLESTONE, () -> Items.COBBLESTONE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.CRACKED_STONE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.CRACKED_STONE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
                 ),
-                () -> List.of(
-                    Items.COBBLED_DEEPSLATE,
-                    ErosionRegistry.Items.RAW_LIMONITE.get(),
-                    ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
-                    ErosionRegistry.Items.RAW_AZURITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
-                () -> List.of(
-                    ErosionRegistry.Blocks.BORAX_DEPOSIT.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.BORAX.get()
-                ), new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_LAVA
-                ))
+                HYDROTHERMAL_BLOCK_GEN,
+                EXPOSURE_TO_AIR_GEN_AZURITE,
+                EXPOSURE_TO_AIR_GEN_GOETHITE
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial GRANITE = new AlterableMaterial(
-        Blocks.GRANITE.getName().getString(),
-        () -> Blocks.GRANITE, () -> Items.GRANITE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
-                    ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(),
-                    ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Blocks.HEMATITE_ORE.get(),
-                    ErosionRegistry.Blocks.PYRITE_ORE.get()
+        public static final AlterableMaterial STONE = new AlterableMaterial(
+            Blocks.STONE.getName().getString(),
+            () -> Blocks.STONE, () -> Items.STONE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.COBBLESTONE, Blocks.GRAVEL, Blocks.CALCITE,
+                        ErosionRegistry.Blocks.LIMONITE_ORE.get(),
+                        ErosionRegistry.Blocks.HEMATITE_ORE.get(),
+                        ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
+                        ErosionRegistry.Blocks.NATIVE_SILVER_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
+                        ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                        ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                        ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
+                        ErosionRegistry.Blocks.PYRITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        Items.COBBLESTONE, Items.GRAVEL, Items.CALCITE,
+                        ErosionRegistry.Items.RAW_LIMONITE.get(),
+                        ErosionRegistry.Items.RAW_HEMATITE.get(),
+                        ErosionRegistry.Items.RAW_MAGNETITE.get(),
+                        ErosionRegistry.Items.NATIVE_SILVER.get(),
+                        ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+                        ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                        ErosionRegistry.Items.RAW_AZURITE.get(),
+                        ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+                        ErosionRegistry.Items.RAW_PYRITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.BORAX_DEPOSIT.get(),
+                        ErosionRegistry.Blocks.CRACKED_STONE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.BORAX.get(),
+                        ErosionRegistry.Items.CRACKED_STONE.get()
+                    ), new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
                 ),
-                () -> List.of(
-                    ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
-                    ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
-                    ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
-                    ErosionRegistry.Items.RAW_HEMATITE.get(),
-                    ErosionRegistry.Items.RAW_PYRITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
+                EXPOSURE_TO_AIR_GEN_AZURITE,
+                EXPOSURE_TO_AIR_GEN_GOETHITE
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial DIORITE = new AlterableMaterial(
-        Blocks.DIORITE.getName().getString(),
-        () -> Blocks.DIORITE, () -> Items.DIORITE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get(),
-                    ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
-                    ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
-                    ErosionRegistry.Blocks.AZURITE_ORE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
-                    ErosionRegistry.Items.RAW_MAGNETITE.get(),
-                    ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get(),
-                    ErosionRegistry.Items.RAW_AZURITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ),HYDROTHERMAL_BLOCK_GEN
-        )
-    );
-
-    public static final AlterableMaterial TUFF = new AlterableMaterial(
-        Blocks.TUFF.getName().getString(),
-        () -> Blocks.TUFF, () -> Items.TUFF,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.LIMONITE_ORE.get(),
-                    ErosionRegistry.Blocks.SPHALERITE_ORE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.RAW_LIMONITE.get(),
-                    ErosionRegistry.Items.RAW_SPHALERITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN
-        )
-    );
-
-    public static final AlterableMaterial CALCITE = new AlterableMaterial(
-        Blocks.CALCITE.getName().getString(),
-        () -> Blocks.CALCITE, () -> Items.CALCITE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(),
-                    ErosionRegistry.Blocks.CRACKED_CALCITE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.RAW_MALACHITE.get(),
-                    ErosionRegistry.Items.CRACKED_CALCITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
+        public static final AlterableMaterial DEEPSLATE = new AlterableMaterial(
+            Blocks.DEEPSLATE.getName().getString(),
+            () -> Blocks.DEEPSLATE, () -> Items.DEEPSLATE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        Blocks.COBBLED_DEEPSLATE,
+                        ErosionRegistry.Blocks.LIMONITE_ORE.get(),
+                        ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
+                        ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                        ErosionRegistry.Blocks.AZURITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        Items.COBBLED_DEEPSLATE,
+                        ErosionRegistry.Items.RAW_LIMONITE.get(),
+                        ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+                        ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                        ErosionRegistry.Items.RAW_AZURITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN,
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_LAVA,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.BORAX_DEPOSIT.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.BORAX.get()
+                    ), new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_LAVA
+                    ))
+                )
             )
-        )
-    );
+        );
 
-    public static final AlterableMaterial ANDESITE = new AlterableMaterial(
-        Blocks.ANDESITE.getName().getString(),
-        () -> Blocks.ANDESITE, () -> Items.ANDESITE,
-        List.of(
-            new AlterableMaterial.AlterationPath(
-                ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
-                () -> List.of(
-                    ErosionRegistry.Blocks.AZURITE_ORE.get(),
-                    ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
-                ),
-                () -> List.of(
-                    ErosionRegistry.Items.RAW_AZURITE.get(),
-                    ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
-                ),
-                new AlterationRules(List.of(
-                    AlterationRules.CONTACT_WITH_WATER
-                ))
-            ), GEMSTONE_GEN
-        )
-    );
+        public static final AlterableMaterial GRANITE = new AlterableMaterial(
+            Blocks.GRANITE.getName().getString(),
+            () -> Blocks.GRANITE, () -> Items.GRANITE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
+                        ErosionRegistry.Blocks.ALBITIZED_GRANITE.get(),
+                        ErosionRegistry.Blocks.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Blocks.HEMATITE_ORE.get(),
+                        ErosionRegistry.Blocks.PYRITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
+                        ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
+                        ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
+                        ErosionRegistry.Items.RAW_HEMATITE.get(),
+                        ErosionRegistry.Items.RAW_PYRITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                )
+            )
+        );
+
+        public static final AlterableMaterial DIORITE = new AlterableMaterial(
+            Blocks.DIORITE.getName().getString(),
+            () -> Blocks.DIORITE, () -> Items.DIORITE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.PROPYLITIZED_DIORITE.get(),
+                        ErosionRegistry.Blocks.MAGNETITE_ORE.get(),
+                        ErosionRegistry.Blocks.BISMUTHINITE_ORE.get(),
+                        ErosionRegistry.Blocks.SPHALERITE_ORE.get(),
+                        ErosionRegistry.Blocks.AZURITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
+                        ErosionRegistry.Items.RAW_MAGNETITE.get(),
+                        ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+                        ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                        ErosionRegistry.Items.RAW_AZURITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ),HYDROTHERMAL_BLOCK_GEN
+            )
+        );
+
+        public static final AlterableMaterial TUFF = new AlterableMaterial(
+            Blocks.TUFF.getName().getString(),
+            () -> Blocks.TUFF, () -> Items.TUFF,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.LIMONITE_ORE.get(),
+                        ErosionRegistry.Blocks.SPHALERITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.RAW_LIMONITE.get(),
+                        ErosionRegistry.Items.RAW_SPHALERITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), GEMSTONE_GEN,HYDROTHERMAL_BLOCK_GEN
+            )
+        );
+
+        public static final AlterableMaterial CALCITE = new AlterableMaterial(
+            Blocks.CALCITE.getName().getString(),
+            () -> Blocks.CALCITE, () -> Items.CALCITE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.CALCITE_MALACHITE_ORE.get(),
+                        ErosionRegistry.Blocks.CRACKED_CALCITE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.RAW_MALACHITE.get(),
+                        ErosionRegistry.Items.CRACKED_CALCITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                )
+            )
+        );
+
+        public static final AlterableMaterial ANDESITE = new AlterableMaterial(
+            Blocks.ANDESITE.getName().getString(),
+            () -> Blocks.ANDESITE, () -> Items.ANDESITE,
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_WATER,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.AZURITE_ORE.get(),
+                        ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.RAW_AZURITE.get(),
+                        ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.CONTACT_WITH_WATER
+                    ))
+                ), GEMSTONE_GEN
+            )
+        );
+
+        public static final AlterableMaterial GALENA_ORE = new AlterableMaterial(
+            ErosionRegistry.RawRegistry.GALENA_ORE.getName(),
+            () -> ErosionRegistry.Blocks.GALENA_ORE.get(), () -> ErosionRegistry.Items.GALENA_ORE.get(),
+            List.of(
+                new AlterableMaterial.AlterationPath(
+                    ErosionRegistry.DefaultAlterationPaths.ALTERATION_BY_AIR_EXPOSURE,
+                    () -> List.of(
+                        ErosionRegistry.Blocks.ANGLESITE_ORE.get()
+                    ),
+                    () -> List.of(
+                        ErosionRegistry.Items.RAW_ANGLESITE.get()
+                    ),
+                    new AlterationRules(List.of(
+                        AlterationRules.EXPOSURE_TO_AIR
+                    ))
+                )
+            )
+        );
+    }
 
     // ============================== CRUCIBLE CATALYSTS
+    public static class CrucibleCatalysts
+    {
+        public static final CrucibleCatalyst FLUX = new CrucibleCatalyst(
+            ErosionRegistry.RawRegistry.FLUX.getName(),
+            () -> ErosionRegistry.Items.FLUX.get(), 60
+        );
 
-    public static final CrucibleCatalyst FLUX = new CrucibleCatalyst(
-        ErosionRegistry.RawRegistry.FLUX.getName(),
-        () -> ErosionRegistry.Items.FLUX.get(), 60
-    );
+        public static final CrucibleCatalyst CRUSHED_EGG_SHELL = new CrucibleCatalyst(
+            ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName(),
+            () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 20
+        );
 
-    public static final CrucibleCatalyst CRUSHED_EGG_SHELL = new CrucibleCatalyst(
-        ErosionRegistry.RawRegistry.CRUSHED_EGG_SHELL.getName(),
-        () -> ErosionRegistry.Items.CRUSHED_EGG_SHELL.get(), 20
-    );
+        public static final CrucibleCatalyst DEHYDRATED_BORAX = new CrucibleCatalyst(
+            ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName(),
+            () -> ErosionRegistry.Items.DEHYDRATED_BORAX.get(), 80
+        );
 
-    public static final CrucibleCatalyst DEHYDRATED_BORAX = new CrucibleCatalyst(
-        ErosionRegistry.RawRegistry.DEHYDRATED_BORAX.getName(),
-        () -> ErosionRegistry.Items.DEHYDRATED_BORAX.get(), 80
-    );
-
-    public static final CrucibleCatalyst BORIC_ACID_CRYSTAL = new CrucibleCatalyst(
-        ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getName(),
-        () -> ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(), 95
-    );
+        public static final CrucibleCatalyst BORIC_ACID_CRYSTAL = new CrucibleCatalyst(
+            ErosionRegistry.RawRegistry.BORIC_ACID_CRYSTAL.getName(),
+            () -> ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(), 95
+        );
+    }
 
     // ========================== REFINABLE MATERIALS
+    public static class RefinableMaterials
+    {
+        public static final RefinableMaterial.MaterialPurifier KAOLINIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.KAOLINIZED_GRANITE.getName(),
+            () -> ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
+            () -> List.of(Items.CLAY),
+            BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial.MaterialPurifier KAOLINIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.KAOLINIZED_GRANITE.getName(),
-        () -> ErosionRegistry.Items.KAOLINIZED_GRANITE.get(),
-        () -> List.of(Items.CLAY),
-        BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial.MaterialPurifier QUARTZ_GRAVEL = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.QUARTZ_GRAVEL.getName(),
+            () -> ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
+            () -> List.of(Items.QUARTZ),
+            BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial.MaterialPurifier QUARTZ_GRAVEL = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.QUARTZ_GRAVEL.getName(),
-        () -> ErosionRegistry.Items.QUARTZ_GRAVEL.get(),
-        () -> List.of(Items.QUARTZ),
-        BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial.MaterialPurifier ALBITIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.ALBITIZED_GRANITE.getName(),
+            () -> ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
+            () -> List.of(ErosionRegistry.Items.FELDSPAR_POWDER.get()),
+            BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial.MaterialPurifier ALBITIZED_GRANITE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.ALBITIZED_GRANITE.getName(),
-        () -> ErosionRegistry.Items.ALBITIZED_GRANITE.get(),
-        () -> List.of(ErosionRegistry.Items.FELDSPAR_POWDER.get()),
-        BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial.MaterialPurifier PROPYLITIZED_DIORITE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getName(),
+            () -> ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
+            () -> List.of(
+                Items.CLAY_BALL,
+                ErosionRegistry.Items.RAW_MAGNETITE.get(),
+                ErosionRegistry.Items.RAW_MALACHITE.get(),
+                ErosionRegistry.Items.CRACKED_CALCITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial.MaterialPurifier PROPYLITIZED_DIORITE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.PROPYLITIZED_DIORITE.getName(),
-        () -> ErosionRegistry.Items.PROPYLITIZED_DIORITE.get(),
-        () -> List.of(
-            Items.CLAY_BALL,
-            ErosionRegistry.Items.RAW_MAGNETITE.get(),
-            ErosionRegistry.Items.RAW_MALACHITE.get(),
-            ErosionRegistry.Items.CRACKED_CALCITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial CRACKED_STONE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.CRACKED_STONE.getName(),
+            () -> ErosionRegistry.Items.CRACKED_STONE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.BORAX.get(),
+                ErosionRegistry.Items.DEBRIS.get(),
+                ErosionRegistry.Items.FELDSPAR_POWDER.get(),
+                
+                ErosionRegistry.Items.RAW_LIMONITE.get(),
+                ErosionRegistry.Items.RAW_MAGNETITE.get(),
+                ErosionRegistry.Items.RAW_HEMATITE.get(),
+                ErosionRegistry.Items.RAW_GOETHITE.get(),
 
-    public static final RefinableMaterial CRACKED_STONE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.CRACKED_STONE.getName(),
-        () -> ErosionRegistry.Items.CRACKED_STONE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.BORAX.get(),
-            ErosionRegistry.Items.DEBRIS.get(),
-            ErosionRegistry.Items.FELDSPAR_POWDER.get(),
-            
-            ErosionRegistry.Items.RAW_LIMONITE.get(),
-            ErosionRegistry.Items.RAW_MAGNETITE.get(),
-            ErosionRegistry.Items.RAW_HEMATITE.get(),
-            ErosionRegistry.Items.RAW_GOETHITE.get(),
+                ErosionRegistry.Items.RAW_MALACHITE.get(),
+                ErosionRegistry.Items.RAW_AZURITE.get(),
+                ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
 
-            ErosionRegistry.Items.RAW_MALACHITE.get(),
-            ErosionRegistry.Items.RAW_AZURITE.get(),
-            ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+                ErosionRegistry.Items.NATIVE_SILVER.get(),
+                ErosionRegistry.Items.NATIVE_GOLD.get(),
 
-            ErosionRegistry.Items.NATIVE_SILVER.get(),
-            ErosionRegistry.Items.NATIVE_GOLD.get(),
+                ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+                ErosionRegistry.Items.RAW_CASSITERITE.get(),
+                ErosionRegistry.Items.RAW_SPHALERITE.get(),
 
-            ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-            ErosionRegistry.Items.RAW_CASSITERITE.get(),
-            ErosionRegistry.Items.RAW_SPHALERITE.get(),
+                ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+                ErosionRegistry.Items.RAW_PYRITE.get()
+            )
+        );
 
-            ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
-            ErosionRegistry.Items.RAW_PYRITE.get()
-        )
-    );
+        public static final RefinableMaterial.Crucible RAW_LIMONITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_LIMONITE.getName(),
+            () -> ErosionRegistry.Items.RAW_LIMONITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of(
+                ErosionRegistry.GasTypes.WATER_VAPOR
+            )
+        );
+        public static final RefinableMaterial.Crucible RAW_MAGNETITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),
+            () -> ErosionRegistry.Items.RAW_MAGNETITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
+        public static final RefinableMaterial.Crucible RAW_HEMATITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_HEMATITE.getName(),
+            () -> ErosionRegistry.Items.RAW_HEMATITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
+        public static final RefinableMaterial.Crucible RAW_MALACHITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_MALACHITE.getName(),
+            () -> ErosionRegistry.Items.RAW_MALACHITE.get(),
+            () -> List.of(
+                Items.RAW_COPPER
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
 
-    public static final RefinableMaterial.Crucible RAW_LIMONITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_LIMONITE.getName(),
-        () -> ErosionRegistry.Items.RAW_LIMONITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of(
-            ErosionRegistry.GasTypes.WATER_VAPOR
-        )
-    );
-    public static final RefinableMaterial.Crucible RAW_MAGNETITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_MAGNETITE.getName(),
-        () -> ErosionRegistry.Items.RAW_MAGNETITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
-    public static final RefinableMaterial.Crucible RAW_HEMATITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_HEMATITE.getName(),
-        () -> ErosionRegistry.Items.RAW_HEMATITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
-    public static final RefinableMaterial.Crucible RAW_MALACHITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_MALACHITE.getName(),
-        () -> ErosionRegistry.Items.RAW_MALACHITE.get(),
-        () -> List.of(
-            Items.RAW_COPPER
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
+        public static final RefinableMaterial.Crucible NATIVE_GOLD = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.NATIVE_GOLD.getName(),
+            () -> ErosionRegistry.Items.NATIVE_GOLD.get(),
+            () -> List.of(
+                Items.GOLD_NUGGET
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
 
-    public static final RefinableMaterial.Crucible NATIVE_GOLD = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.NATIVE_GOLD.getName(),
-        () -> ErosionRegistry.Items.NATIVE_GOLD.get(),
-        () -> List.of(
-            Items.GOLD_NUGGET
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
+        public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getName(),
+            () -> ErosionRegistry.Items.NATIVE_GOLD_DEPOSIT.get(),
+            () -> List.of(
+                ErosionRegistry.Items.NATIVE_GOLD.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial NATIVE_GOLD_DEPOSIT = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.NATIVE_GOLD_DEPOSIT.getName(),
-        () -> ErosionRegistry.Items.NATIVE_GOLD_DEPOSIT.get(),
-        () -> List.of(
-            ErosionRegistry.Items.NATIVE_GOLD.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial CALCITE_MALACHITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getName(),
+            () -> ErosionRegistry.Items.CALCITE_MALACHITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_MALACHITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial CALCITE_MALACHITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.CALCITE_MALACHITE_ORE.getName(),
-        () -> ErosionRegistry.Items.CALCITE_MALACHITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_MALACHITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial MAGNETITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.MAGNETITE_ORE.getName(),
+            () -> ErosionRegistry.Items.MAGNETITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_MAGNETITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial MAGNETITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.MAGNETITE_ORE.getName(),
-        () -> ErosionRegistry.Items.MAGNETITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_MAGNETITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial HEMATITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.HEMATITE_ORE.getName(),
+            () -> ErosionRegistry.Items.HEMATITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_HEMATITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial HEMATITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.HEMATITE_ORE.getName(),
-        () -> ErosionRegistry.Items.HEMATITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_HEMATITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial LIMONITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.LIMONITE_ORE.getName(),
+            () -> ErosionRegistry.Items.LIMONITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_LIMONITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
+        public static final RefinableMaterial CASSITERITE_DEPOSIT = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.CASSITERITE_DEPOSIT.getName(),
+            () -> ErosionRegistry.Items.CASSITERITE_DEPOSIT.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_CASSITERITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial LIMONITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.LIMONITE_ORE.getName(),
-        () -> ErosionRegistry.Items.LIMONITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_LIMONITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
-    public static final RefinableMaterial CASSITERITE_DEPOSIT = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.CASSITERITE_DEPOSIT.getName(),
-        () -> ErosionRegistry.Items.CASSITERITE_DEPOSIT.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_CASSITERITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial.Crucible RAW_CASSITERITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_CASSITERITE.getName(),
+            () -> ErosionRegistry.Items.RAW_CASSITERITE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.TIN_CHUNK.get()
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
+        public static final RefinableMaterial.Crucible NATIVE_SILVER = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.NATIVE_SILVER.getName(),
+            () -> ErosionRegistry.Items.NATIVE_SILVER.get(),
+            () -> List.of(
+                ErosionRegistry.Items.SILVER_CHUNK.get()
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
 
-    public static final RefinableMaterial.Crucible RAW_CASSITERITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_CASSITERITE.getName(),
-        () -> ErosionRegistry.Items.RAW_CASSITERITE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.TIN_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
-    public static final RefinableMaterial.Crucible NATIVE_SILVER = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.NATIVE_SILVER.getName(),
-        () -> ErosionRegistry.Items.NATIVE_SILVER.get(),
-        () -> List.of(
-            ErosionRegistry.Items.SILVER_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
+        public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getName(),
+            () -> ErosionRegistry.Items.NATIVE_SILVER_DEPOSIT.get(),
+            () -> List.of(
+                ErosionRegistry.Items.NATIVE_SILVER.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial NATIVE_SILVER_DEPOSIT = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.NATIVE_SILVER_DEPOSIT.getName(),
-        () -> ErosionRegistry.Items.NATIVE_SILVER_DEPOSIT.get(),
-        () -> List.of(
-            ErosionRegistry.Items.NATIVE_SILVER.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_BISMUTHINITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getName(),
+            () -> ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.BISMUTH_CHUNK.get()
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+                ErosionRegistry.Items.SULFUR_SLAG.get()
+            ), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_BISMUTHINITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_BISMUTHINITE.getName(),
-        () -> ErosionRegistry.Items.RAW_BISMUTHINITE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.BISMUTH_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get()
-        ), List.of(
-            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial BISMUTHINITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getName(),
+            () -> ErosionRegistry.Items.BISMUTHINITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_BISMUTHINITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial BISMUTHINITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.BISMUTHINITE_ORE.getName(),
-        () -> ErosionRegistry.Items.BISMUTHINITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_BISMUTHINITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial RAW_SPHALERITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_SPHALERITE.getName(),
+            () -> ErosionRegistry.Items.RAW_SPHALERITE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.ZINC_CHUNK.get()
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial RAW_SPHALERITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_SPHALERITE.getName(),
-        () -> ErosionRegistry.Items.RAW_SPHALERITE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.ZINC_CHUNK.get()
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of(
-            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial SPHALERITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName(),
+            () -> ErosionRegistry.Items.SPHALERITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_SPHALERITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial SPHALERITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.SPHALERITE_ORE.getName(),
-        () -> ErosionRegistry.Items.SPHALERITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_SPHALERITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_AZURITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_AZURITE.getName(),
+            () -> ErosionRegistry.Items.RAW_AZURITE.get(),
+            () -> List.of(
+                Items.RAW_COPPER
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(), List.of()
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_AZURITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_AZURITE.getName(),
-        () -> ErosionRegistry.Items.RAW_AZURITE.get(),
-        () -> List.of(
-            Items.RAW_COPPER
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(), List.of()
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial AZURITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.AZURITE_ORE.getName(),
+            () -> ErosionRegistry.Items.AZURITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_AZURITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial AZURITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.AZURITE_ORE.getName(),
-        () -> ErosionRegistry.Items.AZURITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_AZURITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_TETRAHEDRITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName(),
+            () -> ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
+            () -> List.of(
+                Items.RAW_COPPER
+            ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.CRUSHED_EGG_SHELL,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+                ErosionRegistry.Items.SULFUR_SLAG.get(),
+                ErosionRegistry.Items.ANTIMONY_SLAG.get()
+            ), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_TETRAHEDRITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_TETRAHEDRITE.getName(),
-        () -> ErosionRegistry.Items.RAW_TETRAHEDRITE.get(),
-        () -> List.of(
-            Items.RAW_COPPER
-        ), BlockEntityRecipeRegistries.CRUCIBLE, List.of(
-            FLUX, CRUSHED_EGG_SHELL,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get(),
-            ErosionRegistry.Items.ANTIMONY_SLAG.get()
-        ), List.of(
-            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial TETRAHEDRITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName(),
+            () -> ErosionRegistry.Items.TETRAHEDRITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial TETRAHEDRITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.TETRAHEDRITE_ORE.getName(),
-        () -> ErosionRegistry.Items.TETRAHEDRITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_TETRAHEDRITE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_ARSENOPYRITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getName(),
+            () -> ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+                ErosionRegistry.Items.SULFUR_SLAG.get()
+            ), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE,
+                ErosionRegistry.GasTypes.ARSENIC_TRIOXIDE
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_ARSENOPYRITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getName(),
-        () -> ErosionRegistry.Items.RAW_ARSENOPYRITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), List.of(
-            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get()
-        ), List.of(
-            ErosionRegistry.GasTypes.SULFUR_DIOXIDE,
-            ErosionRegistry.GasTypes.ARSENIC_TRIOXIDE
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial ARSENOPYRITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getName(),
+            () -> ErosionRegistry.Items.ARSENOPYRITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
+            )
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial ARSENOPYRITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.ARSENOPYRITE_ORE.getName(),
-        () -> ErosionRegistry.Items.ARSENOPYRITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_ARSENOPYRITE.get()
-        )
-    );
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_PYRITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_PYRITE.getName(),
+            () -> ErosionRegistry.Items.RAW_PYRITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+                ErosionRegistry.Items.SULFUR_SLAG.get()
+            ), List.of(
+                ErosionRegistry.GasTypes.SULFUR_DIOXIDE
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_PYRITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_PYRITE.getName(),
-        () -> ErosionRegistry.Items.RAW_PYRITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), List.of(
-            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get()
-        ), List.of(
-            ErosionRegistry.GasTypes.SULFUR_DIOXIDE
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial PYRITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.PYRITE_ORE.getName(),
+            () -> ErosionRegistry.Items.PYRITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_PYRITE.get()
+            )
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial PYRITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.PYRITE_ORE.getName(),
-        () -> ErosionRegistry.Items.PYRITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_PYRITE.get()
-        )
-    );
+        //-------------------------------------------------------
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_GOETHITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_GOETHITE.getName(),
+            () -> ErosionRegistry.Items.RAW_GOETHITE.get(),
+            () -> List.of(
+                Items.IRON_NUGGET
+            ), List.of(
+                CrucibleCatalysts.FLUX,
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+            ), List.of(
+            )
+        );
 
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial GOETHITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.GOETHITE_ORE.getName(),
+            () -> ErosionRegistry.Items.GOETHITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_GOETHITE.get()
+            )
+        );
 
-    //turn mined ore into pure ore
-    public static final RefinableMaterial.Crucible RAW_GOETHITE = new RefinableMaterial.Crucible(
-        ErosionRegistry.RawRegistry.RAW_GOETHITE.getName(),
-        () -> ErosionRegistry.Items.RAW_GOETHITE.get(),
-        () -> List.of(
-            Items.IRON_NUGGET
-        ), List.of(
-            FLUX,DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
-        ), () -> List.of(
-        ), List.of(
-        )
-    );
+        //-------------------------------------------------------
+        //-------------------------------------------------------
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_ANGLESITE = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_ANGLESITE.getName(),
+            () -> ErosionRegistry.Items.RAW_ANGLESITE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.LEAD_CHUNK.get()
+            ), List.of(
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+            ), List.of(
+            )
+        );
 
-    //turn block into its raw ore if mined with silk touch
-    public static final RefinableMaterial GOETHITE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.GOETHITE_ORE.getName(),
-        () -> ErosionRegistry.Items.GOETHITE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RAW_GOETHITE.get()
-        )
-    );
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial ANGLESITE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.ANGLESITE_ORE.getName(),
+            () -> ErosionRegistry.Items.ANGLESITE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_ANGLESITE.get()
+            )
+        );
+        //-------------------------------------------------------
+        //-------------------------------------------------------
+        //turn mined ore into pure ore
+        public static final RefinableMaterial.Crucible RAW_GALENA = new RefinableMaterial.Crucible(
+            ErosionRegistry.RawRegistry.RAW_GALENA.getName(),
+            () -> ErosionRegistry.Items.RAW_GALENA.get(),
+            () -> List.of(
+                ErosionRegistry.Items.LEAD_CHUNK.get()
+            ), List.of(
+                CrucibleCatalysts.DEHYDRATED_BORAX,
+                CrucibleCatalysts.BORIC_ACID_CRYSTAL
+            ), () -> List.of(
+            ), List.of(
+            )
+        );
 
-    //-------------------------------------------------------
+        //turn block into its raw ore if mined with silk touch
+        public static final RefinableMaterial GALENA_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.GALENA_ORE.getName(),
+            () -> ErosionRegistry.Items.GALENA_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RAW_GALENA.get()
+            )
+        );
+        //-------------------------------------------------------
 
-    public static final RefinableMaterial RUBY_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.RUBY_ORE.getName(),
-        () -> ErosionRegistry.Items.RUBY_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.RUBY.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
-    public static final RefinableMaterial SAPPHIRE_ORE = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName(),
-        () -> ErosionRegistry.Items.SAPPHIRE_ORE.get(),
-        () -> List.of(
-            ErosionRegistry.Items.SAPPHIRE.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial RUBY_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.RUBY_ORE.getName(),
+            () -> ErosionRegistry.Items.RUBY_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.RUBY.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
+        public static final RefinableMaterial SAPPHIRE_ORE = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName(),
+            () -> ErosionRegistry.Items.SAPPHIRE_ORE.get(),
+            () -> List.of(
+                ErosionRegistry.Items.SAPPHIRE.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
 
-    public static final RefinableMaterial BORAX = new RefinableMaterial.MaterialPurifier(
-        ErosionRegistry.RawRegistry.BORAX.getName(),
-        () -> ErosionRegistry.Items.BORAX.get(),
-        () -> List.of(
-            ErosionRegistry.Items.DEHYDRATED_BORAX.get()
-        ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
-    );
+        public static final RefinableMaterial BORAX = new RefinableMaterial.MaterialPurifier(
+            ErosionRegistry.RawRegistry.BORAX.getName(),
+            () -> ErosionRegistry.Items.BORAX.get(),
+            () -> List.of(
+                ErosionRegistry.Items.DEHYDRATED_BORAX.get()
+            ), BlockEntityRecipeRegistries.MATERIAL_PURIFIER
+        );
+    }
     // ========================== CHEMICAL REACTIONS
 
-    public static final ChemicalReaction DIRT_HYDRATION = new ChemicalReaction(
-        ErosionRegistry.RawRegistry.ChemicalReactions.DIRT_HYDRATION.getName(),
-        () -> List.of(
-            Items.DIRT, Items.WATER_BUCKET
-        ), () -> List.of(
-            Items.MUD, Items.BUCKET
-        ),
-        () -> List.of(Items.MUD),
-        List.of(
-            ErosionRegistry.GasTypes.WATER_VAPOR
-        ),false
-    );
+    public static class ChemicalReactions
+    {
+        public static final ChemicalReaction DIRT_HYDRATION = new ChemicalReaction(
+            ErosionRegistry.RawRegistry.ChemicalReactions.DIRT_HYDRATION.getName(),
+            () -> List.of(
+                Items.DIRT, Items.WATER_BUCKET
+            ), () -> List.of(
+                Items.MUD, Items.BUCKET
+            ),
+            () -> List.of(Items.MUD),
+            List.of(
+                ErosionRegistry.GasTypes.WATER_VAPOR
+            ),false
+        );
 
-    public static final ChemicalReaction SULFURIC_ACID_SYNTHESIS = new ChemicalReaction(
-        ErosionRegistry.RawRegistry.ChemicalReactions.SULFURIC_ACID_SYNTHESIS.getName(),
-        () -> List.of(
-            ErosionRegistry.Items.SULFUR_SLAG.get(),
-            Items.WATER_BUCKET
-        ), () -> List.of(
-            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
-        ),
-        () -> List.of(
-            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
-        ), List.of(),true
-    );
+        public static final ChemicalReaction SULFURIC_ACID_SYNTHESIS = new ChemicalReaction(
+            ErosionRegistry.RawRegistry.ChemicalReactions.SULFURIC_ACID_SYNTHESIS.getName(),
+            () -> List.of(
+                ErosionRegistry.Items.SULFUR_SLAG.get(),
+                Items.WATER_BUCKET
+            ), () -> List.of(
+                ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+            ),
+            () -> List.of(
+                ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+            ), List.of(),true
+        );
 
-    public static final ChemicalReaction BORIC_ACID_SYNTHESIS = new ChemicalReaction(
-        ErosionRegistry.RawRegistry.ChemicalReactions.BORIC_ACID_SYNTHESIS.getName(),
-        () -> List.of(
-            ErosionRegistry.Items.BORAX.get(),
-            ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
-        ), () -> List.of(
-            ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(),
-            Items.BUCKET
-        ), () -> List.of(
-            ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get()
-        ), List.of(),true
-    );
+        public static final ChemicalReaction BORIC_ACID_SYNTHESIS = new ChemicalReaction(
+            ErosionRegistry.RawRegistry.ChemicalReactions.BORIC_ACID_SYNTHESIS.getName(),
+            () -> List.of(
+                ErosionRegistry.Items.BORAX.get(),
+                ErosionRegistry.Items.BUCKET_OF_SULFURIC_ACID.get()
+            ), () -> List.of(
+                ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get(),
+                Items.BUCKET
+            ), () -> List.of(
+                ErosionRegistry.Items.BORIC_ACID_CRYSTAL.get()
+            ), List.of(),true
+        );
 
-    public static final ChemicalReaction ANHYDROUS_BORAX_HYDRATION = new ChemicalReaction(
-        ErosionRegistry.RawRegistry.ChemicalReactions.ANHYDROUS_BORAX_HYDRATION.getName(),
-        () -> List.of(
-            Items.WATER_BUCKET, ErosionRegistry.Items.DEHYDRATED_BORAX.get()
-        ), () -> List.of(
-            ErosionRegistry.Items.BORAX.get(),
-            Items.BUCKET
-        ), () -> List.of(
-            ErosionRegistry.Items.BORAX.get()
-        ), List.of(
-            ErosionRegistry.GasTypes.WATER_VAPOR
-        ),false
-    );
+        public static final ChemicalReaction ANHYDROUS_BORAX_HYDRATION = new ChemicalReaction(
+            ErosionRegistry.RawRegistry.ChemicalReactions.ANHYDROUS_BORAX_HYDRATION.getName(),
+            () -> List.of(
+                Items.WATER_BUCKET, ErosionRegistry.Items.DEHYDRATED_BORAX.get()
+            ), () -> List.of(
+                ErosionRegistry.Items.BORAX.get(),
+                Items.BUCKET
+            ), () -> List.of(
+                ErosionRegistry.Items.BORAX.get()
+            ), List.of(
+                ErosionRegistry.GasTypes.WATER_VAPOR
+            ),false
+        );
+    }
     
 
     // ------------------------------- COOLING FLUIDS
-
-    public static final ChemicalReactorCoolingFluid WATER = new ChemicalReactorCoolingFluid(
-        Items.WATER_BUCKET.getDescription().getString(),
-        () -> Items.WATER_BUCKET,
-        () -> Items.BUCKET
-    );
+    public static class ChemicalReactorCoolingFluids
+    {
+        public static final ChemicalReactorCoolingFluid WATER = new ChemicalReactorCoolingFluid(
+            Items.WATER_BUCKET.getDescription().getString(),
+            () -> Items.WATER_BUCKET,
+            () -> Items.BUCKET
+        );
+    }
 
     // ========================== REGISTRY
 
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST_ORIGINAL = List.of(
-        GRASS_BLOCK, DIRT, SAND, COARSE_DIRT,
-        STONE, DEEPSLATE, GRANITE, DIORITE,
-        TUFF, CALCITE, GRAVEL, MUD, ANDESITE,
-        COBBLESTONE
+        AlterableMaterials.GRASS_BLOCK,
+        AlterableMaterials.DIRT,
+        AlterableMaterials.SAND,
+        AlterableMaterials.COARSE_DIRT,
+        AlterableMaterials.STONE,
+        AlterableMaterials.DEEPSLATE,
+        AlterableMaterials.GRANITE,
+        AlterableMaterials.DIORITE,
+        AlterableMaterials.TUFF,
+        AlterableMaterials.CALCITE,
+        AlterableMaterials.GRAVEL,
+        AlterableMaterials.MUD,
+        AlterableMaterials.ANDESITE,
+        AlterableMaterials.COBBLESTONE,
+        AlterableMaterials.GALENA_ORE
     );
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST_ORIGINAL = List.of(
-        KAOLINIZED_GRANITE, QUARTZ_GRAVEL, ALBITIZED_GRANITE,
-        PROPYLITIZED_DIORITE, RAW_LIMONITE, RAW_HEMATITE,
-        RAW_MAGNETITE, RAW_MALACHITE, NATIVE_GOLD, NATIVE_GOLD_DEPOSIT,
-        CALCITE_MALACHITE_ORE, MAGNETITE_ORE, HEMATITE_ORE, LIMONITE_ORE,
-        CASSITERITE_DEPOSIT, RAW_CASSITERITE, NATIVE_SILVER,
-        NATIVE_SILVER_DEPOSIT, RAW_BISMUTHINITE, BISMUTHINITE_ORE,
-        RAW_SPHALERITE, SPHALERITE_ORE, RAW_AZURITE, AZURITE_ORE,
-        RAW_TETRAHEDRITE, TETRAHEDRITE_ORE, RUBY_ORE, SAPPHIRE_ORE,
-        BORAX, CRACKED_STONE, ARSENOPYRITE_ORE, RAW_ARSENOPYRITE,
-        PYRITE_ORE, RAW_PYRITE, GOETHITE_ORE, RAW_GOETHITE
+        RefinableMaterials.KAOLINIZED_GRANITE,
+        RefinableMaterials.QUARTZ_GRAVEL,
+        RefinableMaterials.ALBITIZED_GRANITE,
+        RefinableMaterials.PROPYLITIZED_DIORITE,
+        RefinableMaterials.RAW_LIMONITE,
+        RefinableMaterials.RAW_HEMATITE,
+        RefinableMaterials.RAW_MAGNETITE,
+        RefinableMaterials.RAW_MALACHITE,
+        RefinableMaterials.NATIVE_GOLD,
+        RefinableMaterials.NATIVE_GOLD_DEPOSIT,
+        RefinableMaterials.CALCITE_MALACHITE_ORE,
+        RefinableMaterials.MAGNETITE_ORE,
+        RefinableMaterials.HEMATITE_ORE,
+        RefinableMaterials.LIMONITE_ORE,
+        RefinableMaterials.CASSITERITE_DEPOSIT,
+        RefinableMaterials.RAW_CASSITERITE,
+        RefinableMaterials.NATIVE_SILVER,
+        RefinableMaterials.NATIVE_SILVER_DEPOSIT,
+        RefinableMaterials.RAW_BISMUTHINITE,
+        RefinableMaterials.BISMUTHINITE_ORE,
+        RefinableMaterials.RAW_SPHALERITE,
+        RefinableMaterials.SPHALERITE_ORE,
+        RefinableMaterials.RAW_AZURITE,
+        RefinableMaterials.AZURITE_ORE,
+        RefinableMaterials.RAW_TETRAHEDRITE,
+        RefinableMaterials.TETRAHEDRITE_ORE,
+        RefinableMaterials.RUBY_ORE,
+        RefinableMaterials.SAPPHIRE_ORE,
+        RefinableMaterials.BORAX,
+        RefinableMaterials.CRACKED_STONE,
+        RefinableMaterials.ARSENOPYRITE_ORE,
+        RefinableMaterials.RAW_ARSENOPYRITE,
+        RefinableMaterials.PYRITE_ORE,
+        RefinableMaterials.RAW_PYRITE,
+        RefinableMaterials.GOETHITE_ORE,
+        RefinableMaterials.RAW_GOETHITE,
+        RefinableMaterials.ANGLESITE_ORE,
+        RefinableMaterials.RAW_ANGLESITE,
+        RefinableMaterials.GALENA_ORE,
+        RefinableMaterials.RAW_GALENA
     );
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST_ORIGINAL = List.of(
-        FLUX, CRUSHED_EGG_SHELL, DEHYDRATED_BORAX,BORIC_ACID_CRYSTAL
+        CrucibleCatalysts.FLUX,
+        CrucibleCatalysts.CRUSHED_EGG_SHELL,
+        CrucibleCatalysts.DEHYDRATED_BORAX,
+        CrucibleCatalysts.BORIC_ACID_CRYSTAL
     );
 
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST_ORIGINAL = List.of(
-        DIRT_HYDRATION, BORIC_ACID_SYNTHESIS, SULFURIC_ACID_SYNTHESIS,
-        ANHYDROUS_BORAX_HYDRATION
+        ChemicalReactions.DIRT_HYDRATION,
+        ChemicalReactions.BORIC_ACID_SYNTHESIS,
+        ChemicalReactions.SULFURIC_ACID_SYNTHESIS,
+        ChemicalReactions.ANHYDROUS_BORAX_HYDRATION
     );
 
     private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL = List.of(
-        WATER
+        ChemicalReactorCoolingFluids.WATER
     );
 
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
@@ -2306,6 +2478,14 @@ public class ErosionCore
             ))),
             Map.entry(ErosionRegistry.Items.RAW_CASSITERITE.get(), new ChemicalInfo(List.of(
                 "Tin(IV)-oxide"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_ANGLESITE.get(), new ChemicalInfo(List.of(
+                "Lead(II)-sulfate",
+                "Oxidized galena"
+            ))),
+            Map.entry(ErosionRegistry.Items.RAW_GALENA.get(), new ChemicalInfo(List.of(
+                "Lead(II)-sulfide",
+                "Also known as `galenite`"
             ))),
             Map.entry(ErosionRegistry.Items.RAW_GOETHITE.get(), new ChemicalInfo(List.of(
                 "Dehydrated/anhydrous iron(III)-oxyhydroxide",

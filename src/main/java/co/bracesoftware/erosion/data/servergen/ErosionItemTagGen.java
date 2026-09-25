@@ -59,6 +59,7 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.NATIVE_GOLD.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_CASSITERITE.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.TIN_CHUNK.get());
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.LEAD_CHUNK.get());
 
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.SILVER_CHUNK.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.NATIVE_SILVER.get());
@@ -73,17 +74,20 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(this, provider, ErosionRegistry.Items.RAW_ARSENOPYRITE.get());
 
-        ErosionTags.Items.createSimpleRawOre(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(
             this,provider,ErosionRegistry.Items.RAW_PYRITE.get()
         );
-        ErosionTags.Items.createSimpleRawOre(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(
+            this,provider,ErosionRegistry.Items.RAW_ANGLESITE.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleRawOre(
             this,provider,ErosionRegistry.Items.RAW_GOETHITE.get()
         );
 
-        ErosionTags.Items.createSimpleArmorPiece(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleArmorPiece(
             this,provider,ErosionRegistry.Items.GAS_MASK.get()
         );
-        ErosionTags.Items.createSimpleArmorPiece(
+        ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimpleArmorPiece(
             this,provider,ErosionRegistry.Items.BASIC_MASK.get()
         );
 

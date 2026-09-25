@@ -46,6 +46,7 @@ import co.bracesoftware.erosion.world.blocks.chemical_reactor.module.ChemicalRea
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.scrubber.ChemicalReactorScrubberBlock;
 import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
+import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry.IRawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -152,6 +153,8 @@ public class ErosionRegistry
         public static final IRawRegistry TETRAHEDRITE_ORE = new IRawRegistry("tetrahedrite_ore", "Tetrahedrite Ore");
         public static final IRawRegistry ARSENOPYRITE_ORE = new IRawRegistry("arsenopyrite_ore", "Arsenopyrite Ore");
         public static final IRawRegistry PYRITE_ORE = new IRawRegistry("pyrite_ore", "Pyrite Ore");
+        public static final IRawRegistry ANGLESITE_ORE = new IRawRegistry("anglesite_ore", "Anglesite Ore");
+        public static final IRawRegistry GALENA_ORE = new IRawRegistry("galena_ore", "Galena Ore");
 
         public static final IRawRegistry RUBY_ORE = new IRawRegistry("ruby_ore", "Ruby Ore");
         public static final IRawRegistry SAPPHIRE_ORE = new IRawRegistry("sapphire_ore", "Sapphire Ore");
@@ -176,6 +179,7 @@ public class ErosionRegistry
         public static final IRawRegistry SILVER_CHUNK = new IRawRegistry("silver_chunk", "Silver Chunk");
         public static final IRawRegistry RAW_CASSITERITE = new IRawRegistry("raw_cassiterite", "Raw Cassiterite");
         public static final IRawRegistry TIN_CHUNK = new IRawRegistry("tin_chunk", "Tin Chunk");
+        public static final IRawRegistry LEAD_CHUNK = new IRawRegistry("lead_chunk", "Lead Chunk");
 
         public static final IRawRegistry RAW_BISMUTHINITE = new IRawRegistry("raw_bismuthinite", "Raw Bismuthinite");
         public static final IRawRegistry BISMUTH_CHUNK = new IRawRegistry("bismuth_chunk", "Bismuth Chunk");
@@ -190,6 +194,8 @@ public class ErosionRegistry
         public static final IRawRegistry RAW_TETRAHEDRITE = new IRawRegistry("raw_tetrahedrite", "Raw Tetrahedrite");
         public static final IRawRegistry RAW_ARSENOPYRITE = new IRawRegistry("raw_arsenopyrite", "Raw Arsenopyrite");
         public static final IRawRegistry RAW_PYRITE = new IRawRegistry("raw_pyrite", "Raw Pyrite");
+        public static final IRawRegistry RAW_ANGLESITE = new IRawRegistry("raw_anglesite", "Raw Anglesite");
+        public static final IRawRegistry RAW_GALENA = new IRawRegistry("raw_galena", "Raw Galena");
 
         public static final IRawRegistry BORAX = new IRawRegistry("borax", "Borax");
         public static final IRawRegistry DEHYDRATED_BORAX = new IRawRegistry("dehydrated_borax", "Dehydrated Borax");
@@ -544,6 +550,16 @@ public class ErosionRegistry
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
             )
         );
+        public static final DeferredBlock<Block> ANGLESITE_ORE = BLOCKS.register(
+            RawRegistry.ANGLESITE_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> GALENA_ORE = BLOCKS.register(
+            RawRegistry.GALENA_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
+                ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
+            )
+        );
         public static final DeferredBlock<Block> RUBY_ORE = BLOCKS.register(
             RawRegistry.RUBY_ORE.getId(), () -> new ErosionSimpleBlocks.StoneBlock(
                 ErosionSimpleBlocks.StoneBlock.getDefaultBlockProperties()
@@ -622,6 +638,16 @@ public class ErosionRegistry
         );
         public static final DeferredBlock<Block> RAW_PYRITE = BLOCKS.register(
             RawRegistry.RAW_PYRITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_ANGLESITE = BLOCKS.register(
+            RawRegistry.RAW_ANGLESITE.getId(), () -> new ErosionSimpleBlocks.RockBlock(
+                ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
+            )
+        );
+        public static final DeferredBlock<Block> RAW_GALENA = BLOCKS.register(
+            RawRegistry.RAW_GALENA.getId(), () -> new ErosionSimpleBlocks.RockBlock(
                 ErosionSimpleBlocks.RockBlock.getDefaultBlockProperties()
             )
         );
@@ -762,6 +788,16 @@ public class ErosionRegistry
                 Blocks.PYRITE_ORE.get(), new Item.Properties()
             )
         );
+        public static final DeferredItem<Item> ANGLESITE_ORE = ITEMS.register(
+            RawRegistry.ANGLESITE_ORE.getId(), () -> new BlockItem(
+                Blocks.ANGLESITE_ORE.get(), new Item.Properties()
+            )
+        );
+        public static final DeferredItem<Item> GALENA_ORE = ITEMS.register(
+            RawRegistry.GALENA_ORE.getId(), () -> new BlockItem(
+                Blocks.GALENA_ORE.get(), new Item.Properties()
+            )
+        );
         public static final DeferredItem<Item> RUBY_ORE = ITEMS.register(
             RawRegistry.RUBY_ORE.getId(), () -> new BlockItem(
                 Blocks.RUBY_ORE.get(), new Item.Properties()
@@ -871,6 +907,9 @@ public class ErosionRegistry
         public static final DeferredItem<Item> TIN_CHUNK = ITEMS.register(
             RawRegistry.TIN_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
         );
+        public static final DeferredItem<Item> LEAD_CHUNK = ITEMS.register(
+            RawRegistry.LEAD_CHUNK.getId(), () -> new Item(new Item.Properties().stacksTo(32))
+        );
         public static final DeferredItem<Item> NATIVE_SILVER = ITEMS.register(
             RawRegistry.NATIVE_SILVER.getId(), () -> new BlockItem(
                 Blocks.NATIVE_SILVER.get(), new Item.Properties().stacksTo(32)
@@ -921,6 +960,16 @@ public class ErosionRegistry
         public static final DeferredItem<Item> RAW_PYRITE = ITEMS.register(
             RawRegistry.RAW_PYRITE.getId(), () -> new BlockItem(
                 Blocks.RAW_PYRITE.get(), new Item.Properties().stacksTo(32)
+            )
+        );
+        public static final DeferredItem<Item> RAW_ANGLESITE = ITEMS.register(
+            RawRegistry.RAW_ANGLESITE.getId(), () -> new BlockItem(
+                Blocks.RAW_ANGLESITE.get(), new Item.Properties().stacksTo(32)
+            )
+        );
+        public static final DeferredItem<Item> RAW_GALENA = ITEMS.register(
+            RawRegistry.RAW_GALENA.getId(), () -> new BlockItem(
+                Blocks.RAW_GALENA.get(), new Item.Properties().stacksTo(32)
             )
         );
     }
@@ -979,6 +1028,7 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.NATIVE_GOLD.get());
             output.accept(ErosionRegistry.Items.RAW_CASSITERITE.get());
             output.accept(ErosionRegistry.Items.TIN_CHUNK.get());
+            output.accept(ErosionRegistry.Items.LEAD_CHUNK.get());
             output.accept(ErosionRegistry.Items.CASSITERITE_DEPOSIT.get());
 
             output.accept(ErosionRegistry.Items.NATIVE_SILVER.get());
@@ -1001,9 +1051,13 @@ public class ErosionRegistry
             output.accept(ErosionRegistry.Items.TETRAHEDRITE_ORE.get());
             output.accept(ErosionRegistry.Items.ARSENOPYRITE_ORE.get());
             output.accept(ErosionRegistry.Items.PYRITE_ORE.get());
+            output.accept(ErosionRegistry.Items.ANGLESITE_ORE.get());
+            output.accept(ErosionRegistry.Items.GALENA_ORE.get());
             output.accept(ErosionRegistry.Items.RAW_TETRAHEDRITE.get());
             output.accept(ErosionRegistry.Items.RAW_ARSENOPYRITE.get());
             output.accept(ErosionRegistry.Items.RAW_PYRITE.get());
+            output.accept(ErosionRegistry.Items.RAW_ANGLESITE.get());
+            output.accept(ErosionRegistry.Items.RAW_GALENA.get());
             output.accept(ErosionRegistry.Items.RUBY_ORE.get());
             output.accept(ErosionRegistry.Items.SAPPHIRE_ORE.get());
 

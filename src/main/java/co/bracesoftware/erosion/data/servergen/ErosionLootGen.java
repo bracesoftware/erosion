@@ -121,6 +121,16 @@ public class ErosionLootGen extends LootTableProvider
                     b, ErosionRegistry.Items.RAW_PYRITE.get()
                 )
             );
+            add(ErosionRegistry.Blocks.ANGLESITE_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RAW_ANGLESITE.get()
+                )
+            );
+            add(ErosionRegistry.Blocks.GALENA_ORE.get(),
+                b -> createOreDrop(
+                    b, ErosionRegistry.Items.RAW_GALENA.get()
+                )
+            );
 
             add(ErosionRegistry.Blocks.RUBY_ORE.get(),
                 b -> createOreDrop(
@@ -151,6 +161,7 @@ public class ErosionLootGen extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.RAW_TETRAHEDRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_PYRITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_ANGLESITE.get());
 
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
@@ -211,7 +222,10 @@ public class ErosionLootGen extends LootTableProvider
                 ErosionRegistry.Blocks.TETRAHEDRITE_ORE.get(),
                 ErosionRegistry.Blocks.ARSENOPYRITE_ORE.get(),
                 ErosionRegistry.Blocks.PYRITE_ORE.get(),
+                ErosionRegistry.Blocks.ANGLESITE_ORE.get(),
+                ErosionRegistry.Blocks.GALENA_ORE.get(),
                 ErosionRegistry.Blocks.RAW_PYRITE.get(),
+                ErosionRegistry.Blocks.RAW_ANGLESITE.get(),
                 ErosionRegistry.Blocks.RUBY_ORE.get(),
                 ErosionRegistry.Blocks.SAPPHIRE_ORE.get(),
 
