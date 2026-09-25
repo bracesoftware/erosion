@@ -2605,8 +2605,8 @@ public class ErosionCore
                     )
                 );
             }
-            desc.add(
-                Component.literal("- Named reactions can have following gases as coproducts:")
+            if(!reactionGasCoproducts.isEmpty()) desc.add(
+                Component.literal("- Named reaction(s) can have following gases as coproduct(s):")
                 .withStyle(ChatFormatting.GRAY)
             );
             formatGasList.accept(reactionGasCoproducts, desc);
