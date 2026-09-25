@@ -162,6 +162,7 @@ public class ErosionLootGen extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.RAW_ARSENOPYRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_PYRITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_ANGLESITE.get());
+            dropSelf(ErosionRegistry.Blocks.RAW_GALENA.get());
 
             //MACHINES
             dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
@@ -226,6 +227,7 @@ public class ErosionLootGen extends LootTableProvider
                 ErosionRegistry.Blocks.GALENA_ORE.get(),
                 ErosionRegistry.Blocks.RAW_PYRITE.get(),
                 ErosionRegistry.Blocks.RAW_ANGLESITE.get(),
+                ErosionRegistry.Blocks.RAW_GALENA.get(),
                 ErosionRegistry.Blocks.RUBY_ORE.get(),
                 ErosionRegistry.Blocks.SAPPHIRE_ORE.get(),
 

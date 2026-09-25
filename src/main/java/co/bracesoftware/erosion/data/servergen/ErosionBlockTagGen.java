@@ -92,6 +92,9 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
             this,provider,ErosionRegistry.Blocks.RAW_ANGLESITE.get()
         );
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
+            this,provider,ErosionRegistry.Blocks.RAW_GALENA.get()
+        );
+        ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleRock(
             this,provider,ErosionRegistry.Blocks.RAW_GOETHITE.get()
         );
         //MACHINES

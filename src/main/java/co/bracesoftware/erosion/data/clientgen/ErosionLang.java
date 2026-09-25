@@ -59,6 +59,7 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Items.RAW_ARSENOPYRITE.get(), ErosionRegistry.RawRegistry.RAW_ARSENOPYRITE.getName());
         add(ErosionRegistry.Items.RAW_PYRITE.get(), ErosionRegistry.RawRegistry.RAW_PYRITE.getName());
         add(ErosionRegistry.Items.RAW_ANGLESITE.get(), ErosionRegistry.RawRegistry.RAW_ANGLESITE.getName());
+        add(ErosionRegistry.Items.RAW_GALENA.get(), ErosionRegistry.RawRegistry.RAW_GALENA.getName());
 
         //SIMPLE BLOCKS
         add(ErosionRegistry.Blocks.DRIED_DIRT.get(), ErosionRegistry.RawRegistry.DRIED_DIRT.getName());
