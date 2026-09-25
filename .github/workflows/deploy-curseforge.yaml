@@ -16,27 +16,51 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up JDK 21
-        uses: actions/setup-java@v4
+      # Isti korak koji imaš za skidanje fajla
+      - name: Download JAR from GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          mkdir -p release
+
+          gh release download "${GITHUB_REF_NAME}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --pattern "Erosion-neoforge.jar" \
+            --dir release
+
+          echo "Downloaded:"
+          ls -lh release/Erosion-neoforge.jar
+      - name: Prepare Version Data
+        run: |
+          set -e
+
+          BUILD_VERSION="${GITHUB_REF_NAME#build}"
+          SNAPSHOT_VERSION=$(cat snapshot.txt)
+          
+          VERSION="${BUILD_VERSION}.${SNAPSHOT_VERSION}"
+          DISPLAY_NAME="build ${BUILD_VERSION} snapshot ${SNAPSHOT_VERSION}"
+
+          echo "Build version: ${BUILD_VERSION}"
+          echo "Snapshot version: ${SNAPSHOT_VERSION}"
+          echo "Publishing version: ${VERSION}"
+
+          # Spašavanje varijabli u GitHub ENV kako bi ih akcija ispod mogla pročitati
+          echo "VERSION=${VERSION}" >> "$GITHUB_ENV"
+          echo "DISPLAY_NAME=${DISPLAY_NAME}" >> "$GITHUB_ENV"
+      - name: Publish JAR to CurseForge
+        uses: modmuss50/mod-publish-action@v3
         with:
-          java-version: '21'
-          distribution: 'temurin'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Upload to CurseForge
-        uses: mc-mod-core/curseforge-upload@v2
-        with:
-          api-token: ${{ secrets.CURSEFORGE_TOKEN }}
-          project-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
-          # Prilagodi putanju gdje tvoj Gradle izbacuje gotov JAR (obično build/libs)
-          file-path: 'build/libs/Erosion-neoforge.jar'
-          game-versions: |
-            1.21.1
-            NeoForge
-          changelog: 'Automated release ${{ github.ref_name }}'
-          release-type: 'release'
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          curseforge-id: ${{ secrets.CURSEFORGE_PROJECT_ID }}
+          
+          files: 'release/Erosion-neoforge.jar'
+          
+          # Ubacujemo tvoja custom imena iz koraka iznad
+          name: ${{ env.DISPLAY_NAME }}
+          version: ${{ env.VERSION }}
+          changelog: 'Automated release ${{ env.VERSION }}'
+          
+          loaders: neoforge
+          game-versions: 1.21.1
+          release-type: release
