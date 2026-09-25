@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:erosion",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:salt"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Acquire Salt.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:salt"
+    },
+    "title": "White Stuff"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
