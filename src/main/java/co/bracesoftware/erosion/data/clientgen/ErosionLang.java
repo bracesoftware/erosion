@@ -100,14 +100,6 @@ public class ErosionLang extends LanguageProvider
         add(ErosionRegistry.Blocks.GALENA_ORE.get(), ErosionRegistry.RawRegistry.GALENA_ORE.getName());
         add(ErosionRegistry.Blocks.RUBY_ORE.get(), ErosionRegistry.RawRegistry.RUBY_ORE.getName());
         add(ErosionRegistry.Blocks.SAPPHIRE_ORE.get(), ErosionRegistry.RawRegistry.SAPPHIRE_ORE.getName());
-
-        //MACHINES
-        add(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(), ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getName());
-        add(ErosionRegistry.Blocks.CRUCIBLE.get(), ErosionRegistry.RawRegistry.CRUCIBLE.getName());
-        add(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getName());
-        add(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName());
-        add(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getName());
-        add(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getName());
         return;
     }
 }

@@ -298,60 +298,16 @@ public class ErosionBlockStateGen extends BlockStateProvider
 
         // ============================================= ////
         //CHEMICAL REACTOR
-        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId();
-
-        var side = modLoc("block/" + BLOCKID + "_side");
-        var bottom = modLoc("block/" + BLOCKID + "_bottom");
-        var top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
-
-        ModelFile crm = models().cubeBottomTop(
-            BLOCKID, side, bottom, top
-        );
-        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
-        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
+        
 
         //CHEMICAL REACTOR SCRUBBER
-        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId();
-
-        side = modLoc("block/" + BLOCKID + "_side");
-        bottom = modLoc("block/" + BLOCKID + "_bottom");
-        top = modLoc("block/" + BLOCKID + "_top");
-
-        crm = models().cubeBottomTop(
-            BLOCKID, side, bottom, top
-        );
-        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
-        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
+        
 
         //CHEMICAL REACTOR COOLING SYSTEM
-        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId();
-
-        side = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_side");
-        bottom = modLoc("block/" + BLOCKID + "_bottom");
-        top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
-        bottom = top;
-
-        crm = models().cubeBottomTop(
-            BLOCKID, side, bottom, top
-        );
-        simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
-        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
+        
 
         //CHEMICAL REACTOR MODULE
-        BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
-
-        side = modLoc("block/" + BLOCKID + "_side");
-        bottom = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_bottom");
-        top = modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
-
-        crm = models().cubeBottomTop(
-            BLOCKID, side, bottom, top
-        );
-        ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotationsForModel(
-            this,ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm
-        );
-        //simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
-        simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
+        
         return;
     }
 }

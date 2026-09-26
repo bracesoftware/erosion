@@ -4,6 +4,7 @@ import java.util.List;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.network.server.ErosionAimedAtBlockPosPacket;
 import co.bracesoftware.erosion.network.server.ErosionScreenMessagePacket;
 import co.bracesoftware.erosion.network.server.ErosionStatusSyncPacket;
@@ -44,6 +45,7 @@ import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
 import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
 import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContentResourceLocation;
+import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)
@@ -395,6 +397,10 @@ public class ErosionRegistry
             )
         ); static {
             MATERIAL_PURIFIER.ErosionModContentBuilder()
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(MATERIAL_PURIFIER.get(), RawRegistry.MATERIAL_PURIFIER.getName());
+            })
             .blockStateResourceGenerator(() -> {
                 ErosionModContentManager.getBlockStateResourceGenerator()
                 .getVariantBuilder(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()).forAllStates(s -> {
@@ -446,6 +452,10 @@ public class ErosionRegistry
             )
         ); static {
             CRUCIBLE.ErosionModContentBuilder()
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(CRUCIBLE.get(), RawRegistry.CRUCIBLE.getName());
+            })
             .blockStateResourceGenerator(() -> {
                 String BLOCKID = ErosionRegistry.RawRegistry.CRUCIBLE.getId();
                 Block crucible = ErosionRegistry.Blocks.CRUCIBLE.get();
@@ -546,45 +556,137 @@ public class ErosionRegistry
             RawRegistry.CHEMICAL_REACTOR, () -> new ChemicalReactorBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
-            )
-        ); static {
+            )); static {
             CHEMICAL_REACTOR.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                var BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR.getId();
+
+                var side = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_side");
+                var bottom = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_bottom");
+                var top = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
+
+                var crm = ErosionModContentManager.getBlockStateResourceGenerator().models().cubeBottomTop(
+                    BLOCKID, side, bottom, top
+                );
+                
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
+                
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(), crm);
+            })
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(CHEMICAL_REACTOR.get(), RawRegistry.CHEMICAL_REACTOR.getName());
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get());
             })
             .addKnownBlock(CHEMICAL_REACTOR);
         }
+        /*
+            Chemical Reactor Scrubber
+            -   Used for filtering chemical reactor output gases
+         */
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_SCRUBBER = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_SCRUBBER, () -> new ChemicalReactorScrubberBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
-            )
-        ); static {
+            )); static {
             CHEMICAL_REACTOR_SCRUBBER.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                var BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getId();
+
+                var side = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_side");
+                var bottom = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_bottom");
+                var top = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_top");
+
+                var crm = ErosionModContentManager.getBlockStateResourceGenerator().models().cubeBottomTop(
+                    BLOCKID, side, bottom, top
+                );
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
+                
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(), crm);
+            })
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(CHEMICAL_REACTOR_SCRUBBER.get(), RawRegistry.CHEMICAL_REACTOR_SCRUBBER.getName());
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get());
             })
             .addKnownBlock(CHEMICAL_REACTOR_SCRUBBER);
         }
+        /*
+            Module
+            -   Used for connecting different reactor componentz
+         */
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_MODULE = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_MODULE, () -> new ChemicalReactorModuleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
-            )
-        ); static {
+            )); static {
             CHEMICAL_REACTOR_MODULE.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                var BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_MODULE.getId();
+
+                var side = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_side");
+                var bottom = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_bottom");
+                var top = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
+
+                var crm = ErosionModContentManager.getBlockStateResourceGenerator().models().cubeBottomTop(
+                    BLOCKID, side, bottom, top
+                );
+                ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotationsForModel(
+                    ErosionModContentManager.getBlockStateResourceGenerator(),
+                    ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm
+                );
+                
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
+            })
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(CHEMICAL_REACTOR_MODULE.get(), RawRegistry.CHEMICAL_REACTOR_MODULE.getName());
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get());
             })
             .addKnownBlock(CHEMICAL_REACTOR_MODULE);
         }
+        /*
+            Cooling System
+            -   Used for safely handlin exothermic reactionz
+         */
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM, () -> new ChemicalReactorCoolingSystemBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
-            )
-        ); static {
+            )); static {
             CHEMICAL_REACTOR_COOLING_SYSTEM.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                var BLOCKID = ErosionRegistry.RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getId();
+
+                var side = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_side");
+                var bottom = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_bottom");
+                var top = ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_top");
+                bottom = top;
+
+                var crm = ErosionModContentManager.getBlockStateResourceGenerator().models().cubeBottomTop(
+                    BLOCKID, side, bottom, top
+                );
+
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlock(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(), crm);
+            })
+            .languageResourceGenerator(() -> {
+                ErosionModContentManager.getLanguageResourceGenerator()
+                .add(CHEMICAL_REACTOR_COOLING_SYSTEM.get(), RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM.getName());
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
             })
