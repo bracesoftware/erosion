@@ -12,6 +12,7 @@ import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
 import co.bracesoftware.erosion.world.recipes.ErosionFoodSaltingRecipe;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,12 +22,15 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.neoforged.neoforge.common.util.DeferredSoundType;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -391,11 +395,50 @@ public class ErosionRegistry
             )
         ); static {
             MATERIAL_PURIFIER.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                ErosionModContentManager.getBlockStateResourceGenerator()
+                .getVariantBuilder(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()).forAllStates(s -> {
+                    Direction d = s.getValue(MaterialPurifierBlock.FACING);
+                    int f = s.getValue(MaterialPurifierBlock.FUEL);
+                    boolean finished = s.getValue(MaterialPurifierBlock.FINISHED);
+                    
+                    String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
+                    String suf = finished ? "on" : "off";
+                    String texture = BLOCKID + "_front_fuel_" + f + "_" + suf;
+                    String modelf = BLOCKID + "_fuel_" + f + "_" + suf;
+
+                    ModelFile model = ErosionModContentManager.getBlockStateResourceGenerator().models().orientableWithBottom(
+                        modelf, ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_side"),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + ErosionUtils.getGeneratedFolder() + texture),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_bottom"),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_top")
+                    );
+
+                    return ConfiguredModel.builder()
+                        .modelFile(model)
+                        .rotationY(((int) d.toYRot() + 180) % 360)
+                        .build()
+                    ;
+                });
+
+                String BLOCKID = ErosionRegistry.RawRegistry.MATERIAL_PURIFIER.getId();
+                ErosionModContentManager.getBlockStateResourceGenerator().simpleBlockItem(
+                    ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),
+                    ErosionModContentManager.getBlockStateResourceGenerator().models().orientableWithBottom(
+                        BLOCKID,
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_side"),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_front"),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_bottom"),
+                        ErosionModContentManager.getBlockStateResourceGenerator().modLoc("block/" + BLOCKID + "_top")
+                    )
+                );
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
             })
             .addKnownBlock(MATERIAL_PURIFIER);
         }
+        //////////////////////////////////////////////////////////////////////////////
         public static final ErosionModContent.ErosionBlock CRUCIBLE = new ErosionModContent.ErosionBlock(
             RawRegistry.CRUCIBLE, () -> new CrucibleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
@@ -403,6 +446,96 @@ public class ErosionRegistry
             )
         ); static {
             CRUCIBLE.ErosionModContentBuilder()
+            .blockStateResourceGenerator(() -> {
+                String BLOCKID = ErosionRegistry.RawRegistry.CRUCIBLE.getId();
+                Block crucible = ErosionRegistry.Blocks.CRUCIBLE.get();
+
+                ModelFile[] heatModels = new ModelFile[ErosionConfig.CRUCIBLE_SECONDS + 1];
+                
+                for(int i = 0; i <= ErosionConfig.CRUCIBLE_SECONDS; i++)
+                {
+                    String modelName = BLOCKID + (i == 0 ? "" : "_heat_" + i);
+                    String texturePath = (i == 0) ? ("block/" + BLOCKID) : ("block/" + ErosionUtils.getGeneratedFolder() + BLOCKID + "_heat_" + i);
+
+                    heatModels[i] = ErosionModContentManager.getBlockStateResourceGenerator().models().withExistingParent(
+                        modelName, ErosionModContentManager.getBlockStateResourceGenerator().mcLoc("block/block")
+                    )
+                    .texture("particle", ErosionModContentManager.getBlockStateResourceGenerator().modLoc(texturePath))
+                    .texture("texture", ErosionModContentManager.getBlockStateResourceGenerator().modLoc(texturePath))
+
+                    // down
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_BOTTOM_FROM, CrucibleBlock.MIN_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_BOTTOM_TO, CrucibleBlock.MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    //walls
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.MIN_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MIN_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MAX_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
+                    .to(CrucibleBlock.INNER_MIN_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.INNER_MAX_XZ, CrucibleBlock.Y_WALLS_FROM, CrucibleBlock.INNER_MIN_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_WALLS_TO, CrucibleBlock.INNER_MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    // edges
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.MIN_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MIN_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MAX_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.MIN_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
+                    .to(CrucibleBlock.RIM_MIN_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end()
+
+                    .element()
+                    .from(CrucibleBlock.RIM_MAX_XZ, CrucibleBlock.Y_RIM_FROM, CrucibleBlock.RIM_MIN_XZ)
+                    .to(CrucibleBlock.MAX_XZ, CrucibleBlock.Y_RIM_TO, CrucibleBlock.RIM_MAX_XZ)
+                    .allFaces((direction, builder) -> builder.texture("#texture"))
+                    .end();
+                }
+
+                ErosionModContentManager.getBlockStateResourceGenerator().getVariantBuilder(crucible).forAllStates(state -> {
+                    Direction d = state.getValue(CrucibleBlock.FACING);
+                    int heat = state.getValue(CrucibleBlock.HEAT);
+                    
+                    int safeHeat = Math.min(Math.max(heat, 0), ErosionConfig.CRUCIBLE_SECONDS);
+                    ModelFile model = heatModels[safeHeat];
+
+                    return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY(((int) d.toYRot() + 180) % 360)
+                    .build();
+                });
+
+                ErosionModContentManager.getBlockStateResourceGenerator().simpleBlockItem(crucible, heatModels[0]);
+            })
             .lootResourceGenerator(() -> {
                 ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CRUCIBLE.get());
             })
