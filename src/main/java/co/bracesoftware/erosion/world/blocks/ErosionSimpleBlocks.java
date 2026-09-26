@@ -98,7 +98,8 @@ public class ErosionSimpleBlocks
         {
             @Override public boolean onAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
             {
-                return true;
+                if(p.getBlockClassInfo() instanceof StoneBlock) return true;
+                return false;
             }
         }
     }
