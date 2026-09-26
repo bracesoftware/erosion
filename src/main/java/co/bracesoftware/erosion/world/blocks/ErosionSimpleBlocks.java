@@ -92,14 +92,15 @@ public class ErosionSimpleBlocks
         {
             super(p);
             this.setCommonLogic(new StoneBlockCommonLogic());
+            this.passToDefaultBlockInteraction(true);//this is dynamic,changing this in the middle of nothing won't break things
+            //use this when you do not specify server logic for item using on block
         }
 
         public static class StoneBlockCommonLogic extends ErosionNetworkSafeBlockSidedLogic
         {
             @Override public boolean onAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
             {
-                if(p.getBlockClassInfo() instanceof StoneBlock) return true;
-                return false;
+                return true;
             }
         }
     }

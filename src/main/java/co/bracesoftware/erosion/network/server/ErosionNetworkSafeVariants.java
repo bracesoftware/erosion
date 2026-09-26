@@ -170,6 +170,7 @@ public class ErosionNetworkSafeVariants
 
         private static final Map<RandomTickSetupPacket, Boolean> RANDOM_TICK_SET_UP = new HashMap<>();
         private boolean callUseItemOnOnlyFlag = false;
+        private boolean simpleBlockFlag = false;
         public static final List<Class<? extends Block>> PLACEABLE_BLOCKS = new ArrayList<>();
         private RandomTickFrequency randomTickFrequency = RandomTickFrequency.VERY_LOW;
 
@@ -296,6 +297,11 @@ public class ErosionNetworkSafeVariants
             }
         }
 
+        public final void passToDefaultBlockInteraction(boolean what)
+        {
+            this.simpleBlockFlag = what;
+        }
+
         public final void callUseItemOnOnly(boolean cfg)
         {
             this.callUseItemOnOnlyFlag = cfg;
@@ -388,7 +394,7 @@ public class ErosionNetworkSafeVariants
                     );
                 }
             }
-            //super.useItemOn(stack, s, l, bp, p, hand, hr);
+            if(this.simpleBlockFlag) return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
             return ItemInteractionResult.SUCCESS;
         }
 
