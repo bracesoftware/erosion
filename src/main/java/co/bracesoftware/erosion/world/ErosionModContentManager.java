@@ -300,7 +300,7 @@ public final class ErosionModContentManager
 
         ErosionUtils.Log(
             String.format(
-                "Sucessfully loaded following content: %i item(s), %i block(s), %i block entities, %i menu(s), %i sound(s), %i data component(s), %i serializer(s)",
+                "Sucessfully loaded following content: %d item(s), %d block(s), %d block entities, %d menu(s), %d sound(s), %d data component(s), %d serializer(s)",
                 EROSION_ITEM_COUNT,
                 EROSION_BLOCK_COUNT,
                 EROSION_BLOCK_ENTITY_COUNT,
