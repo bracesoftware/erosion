@@ -400,6 +400,9 @@ public class ErosionRegistry
             )
         ); static {
             CRUCIBLE.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CRUCIBLE.get());
+            })
             .addKnownBlock(CRUCIBLE);
         }
         //======================= CHEMICAL REACTOR SYS

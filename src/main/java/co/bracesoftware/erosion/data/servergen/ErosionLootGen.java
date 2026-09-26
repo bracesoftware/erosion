@@ -22,20 +22,28 @@ public class ErosionLootGen extends LootTableProvider
     public ErosionLootGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) 
     {
         super(output, Set.of(), List.of(
-            new SubProviderEntry(ModBlockLootTables::new, LootContextParamSets.BLOCK)
+            new SubProviderEntry(ErosionLootGenSubProvider::new, LootContextParamSets.BLOCK)
         ), registries);
     }
 
-    private static class ModBlockLootTables extends BlockLootSubProvider 
+    public static class ErosionLootGenSubProvider extends BlockLootSubProvider 
     {
-        protected ModBlockLootTables(HolderLookup.Provider provider) 
+        protected ErosionLootGenSubProvider(HolderLookup.Provider provider) 
         {
             super(Set.of(), FeatureFlags.REGISTRY.allFlags(), provider);
         }
 
+        @Override public void dropSelf(Block b)
+        {
+            super.dropSelf(b);
+        }
+
+        public static ErosionLootGenSubProvider subProvider;
+
         @Override
         protected void generate() 
         {
+            subProvider = this;
             for(var rrr : ErosionModContentManager.EROSION_LOOT_GEN_TASKS)
             {
                 rrr.run();
@@ -184,7 +192,6 @@ public class ErosionLootGen extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get());
             dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
             dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get());
-            dropSelf(ErosionRegistry.Blocks.CRUCIBLE.get());
         }
 
         @Override
