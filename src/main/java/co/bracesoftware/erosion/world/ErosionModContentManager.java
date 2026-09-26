@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.world;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -134,11 +135,15 @@ public final class ErosionModContentManager
             public ErosionBlockEntity(
                 ErosionModContentResourceLocation loc,
                 BlockEntitySupplier<? extends ErosionNetworkSafeBlockEntity<T>> s,
-                Block... b
+                ErosionBlock... b
             )
             {
                 this.blockEntityHolder = EROSION_MOD_BLOCK_ENTITY_TYPES.register(
-                    loc.getId(), () -> BlockEntityType.Builder.of(s, b).build(null)
+                    loc.getId(), () -> BlockEntityType.Builder.of(
+                        s, Arrays.stream(b)
+                        .map(ErosionBlock::get)
+                        .toArray(Block[]::new)
+                    ).build(null)
                 );
             }
 

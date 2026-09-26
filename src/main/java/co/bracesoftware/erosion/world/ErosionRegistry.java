@@ -28,6 +28,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
+import net.neoforged.neoforge.common.util.DeferredSoundType;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
@@ -362,21 +363,21 @@ public class ErosionRegistry
     @SuppressWarnings("all")
     public static class SoundTypes
     {
-        public static final SoundType ORE = new SoundType(
+        public static final SoundType ORE = new DeferredSoundType(
             1f,1f,
-            ErosionRegistry.SoundEvents.ORE_MINE.get(),
-            ErosionRegistry.SoundEvents.ORE_PLACE.get(),
-            ErosionRegistry.SoundEvents.ORE_PLACE.get(),
-            ErosionRegistry.SoundEvents.ORE_MINE.get(),
-            ErosionRegistry.SoundEvents.ORE_MINE.get()
+            ErosionRegistry.SoundEvents.ORE_MINE,
+            ErosionRegistry.SoundEvents.ORE_PLACE,
+            ErosionRegistry.SoundEvents.ORE_PLACE,
+            ErosionRegistry.SoundEvents.ORE_MINE,
+            ErosionRegistry.SoundEvents.ORE_MINE
         );
-        public static final SoundType ROCK = new SoundType(
+        public static final SoundType ROCK = new DeferredSoundType(
             1f,1f,
-            ErosionRegistry.SoundEvents.ROCK.get(),
-            ErosionRegistry.SoundEvents.ROCK.get(),
-            ErosionRegistry.SoundEvents.ROCK.get(),
-            ErosionRegistry.SoundEvents.ROCK.get(),
-            ErosionRegistry.SoundEvents.ROCK.get()
+            ErosionRegistry.SoundEvents.ROCK,
+            ErosionRegistry.SoundEvents.ROCK,
+            ErosionRegistry.SoundEvents.ROCK,
+            ErosionRegistry.SoundEvents.ROCK,
+            ErosionRegistry.SoundEvents.ROCK
         );
     }
 
@@ -994,20 +995,20 @@ public class ErosionRegistry
         public static final ErosionModContent.ErosionBlockEntity<MaterialPurifierBlockEntity> MATERIAL_PURIFIER = new ErosionModContent
         .ErosionBlockEntity<MaterialPurifierBlockEntity>(
             RawRegistry.MATERIAL_PURIFIER, MaterialPurifierBlockEntity::new,
-            ErosionRegistry.Blocks.MATERIAL_PURIFIER.get()
+            ErosionRegistry.Blocks.MATERIAL_PURIFIER
         );
         
         public static final ErosionModContent.ErosionBlockEntity<CrucibleBlockEntity> CRUCIBLE = new ErosionModContent
         .ErosionBlockEntity<CrucibleBlockEntity>(
             RawRegistry.CRUCIBLE, CrucibleBlockEntity::new,
-            ErosionRegistry.Blocks.CRUCIBLE.get()
+            ErosionRegistry.Blocks.CRUCIBLE
         );
 
         public static final ErosionModContent.ErosionBlockEntity<ChemicalReactorBlockEntity> CHEMICAL_REACTOR = new ErosionModContent
         .ErosionBlockEntity<ChemicalReactorBlockEntity>(
             RawRegistry.CHEMICAL_REACTOR,
             ChemicalReactorBlockEntity::new,
-            ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
+            ErosionRegistry.Blocks.CHEMICAL_REACTOR
         );
     }
 
@@ -1108,8 +1109,6 @@ public class ErosionRegistry
 
     public static void init(IEventBus modEventBus)
     {
-        ErosionModContentManager.registerContent(modEventBus, () -> {});
-
         ErosionModContentManager.loadClasses(
             ErosionRegistry.Blocks.class,
             ErosionRegistry.Items.class,
@@ -1119,6 +1118,8 @@ public class ErosionRegistry
             ErosionRegistry.SoundEvents.class,
             ErosionRegistry.DataComponents.class
         );
+
+        ErosionModContentManager.registerContent(modEventBus, () -> {});
     }
 
     @SubscribeEvent 
