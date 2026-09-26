@@ -1110,6 +1110,7 @@ public class ErosionRegistry
     public static void init(IEventBus modEventBus)
     {
         ErosionModContentManager.loadClasses(
+            ErosionRegistry.class,
             ErosionRegistry.Blocks.class,
             ErosionRegistry.Items.class,
             ErosionRegistry.BlockEntities.class,
