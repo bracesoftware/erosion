@@ -7,6 +7,7 @@ import java.util.function.Supplier;
 import com.mojang.serialization.Codec;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
@@ -91,6 +92,7 @@ public final class ErosionModContentManager
         {
             public ErosionBooleanDataComponent(ErosionModContentResourceLocation loc)
             {
+                ErosionUtils.Log("Setting up boolean data component -> " + loc.getName());
                 this.booleanDataComponentHolder = EROSION_MOD_DATA_COMPONENTS.registerComponentType(
                     loc.getId(),
                     ComponentBuilder -> ComponentBuilder
@@ -109,6 +111,7 @@ public final class ErosionModContentManager
         {
             public ErosionBlock(ErosionModContentResourceLocation id, Supplier<? extends Block> s)
             {
+                ErosionUtils.Log("Setting up block -> " + id.getName());
                 this.blockHolder = EROSION_MOD_BLOCKS.register(id.getId(), s);
             }
 
@@ -121,6 +124,7 @@ public final class ErosionModContentManager
         {
             public ErosionItem(ErosionModContentResourceLocation id, Supplier<? extends Item> s)
             {
+                ErosionUtils.Log("Setting up item -> " + id.getName());
                 this.itemHolder = EROSION_MOD_ITEMS.register(id.getId(), s);
             }
             
@@ -138,6 +142,7 @@ public final class ErosionModContentManager
                 ErosionBlock... b
             )
             {
+                ErosionUtils.Log("Setting up block entity -> " + loc.getName());
                 this.blockEntityHolder = EROSION_MOD_BLOCK_ENTITY_TYPES.register(
                     loc.getId(), () -> BlockEntityType.Builder.of(
                         s, Arrays.stream(b)
@@ -159,6 +164,7 @@ public final class ErosionModContentManager
                 Supplier<SoundEvent> s
             )
             {
+                ErosionUtils.Log("Setting up sound -> " + loc.getName());
                 this.soundHolder = EROSION_MOD_SOUND_EVENTS.register(
                     loc.getId(), s
                 );
@@ -178,6 +184,7 @@ public final class ErosionModContentManager
                 Supplier<? extends MenuType<G>> s
             )
             {
+                ErosionUtils.Log("Setting up menu -> " + loc.getName());
                 this.menuHolderSpecific = EROSION_MOD_MENUS.register(
                     loc.getId(), s
                 );
@@ -200,6 +207,7 @@ public final class ErosionModContentManager
                 Supplier<? extends SimpleCraftingRecipeSerializer<G>> s
             )
             {
+                ErosionUtils.Log("Setting up serializer -> " + loc.getName());
                 this.serializerHolderSpecific = EROSION_MOD_SERIALIZERS.register(
                     loc.getId(), s
                 );
@@ -246,7 +254,15 @@ public final class ErosionModContentManager
     {
         for(var c : l)
         {
-            c.getName();
+            try
+            {
+                Class.forName(c.getName(), true, c.getClassLoader());
+            }
+            catch(Exception e)
+            {
+                ErosionUtils.Log("Could not load class -> " + c.getName());
+                e.printStackTrace();
+            }
         }
     }
 
