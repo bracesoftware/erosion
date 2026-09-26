@@ -91,6 +91,15 @@ public class ErosionSimpleBlocks
         public StoneBlock(BlockBehaviour.Properties p)
         {
             super(p);
+            this.setServerLogic(new StoneBlockServerLogic());
+        }
+
+        public static class StoneBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
+        {
+            @Override public boolean onAttemptToPlaceBlock(ErosionBlockInteractionPacket p)
+            {
+                return true;
+            }
         }
     }
 
