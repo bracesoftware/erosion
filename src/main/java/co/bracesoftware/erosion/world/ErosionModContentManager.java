@@ -73,6 +73,15 @@ public final class ErosionModContentManager
     public static final DeferredRegister<RecipeSerializer<?>> EROSION_MOD_SERIALIZERS = DeferredRegister.create(
         Registries.RECIPE_SERIALIZER, Erosion.MODID
     );
+
+    protected static int EROSION_MENU_COUNT = 0;
+    protected static int EROSION_BLOCK_COUNT = 0;
+    protected static int EROSION_ITEM_COUNT = 0;
+    protected static int EROSION_BLOCK_ENTITY_COUNT = 0;
+    protected static int EROSION_SOUND_COUNT = 0;
+    protected static int EROSION_DATA_COMPONENT_COUNT = 0;
+    protected static int EROSION_SERIALIZER_COUNT = 0;
+
     public static class ErosionModContent<T> implements Supplier<T>
     {
         protected DeferredBlock<Block> blockHolder;
@@ -99,6 +108,7 @@ public final class ErosionModContentManager
                     .persistent(Codec.BOOL) 
                     .networkSynchronized(ByteBufCodecs.BOOL)
                 );
+                EROSION_DATA_COMPONENT_COUNT++;
             }
 
             @Override public DataComponentType<Boolean> get()
@@ -113,6 +123,7 @@ public final class ErosionModContentManager
             {
                 ErosionUtils.Log("Setting up block -> " + id.getName());
                 this.blockHolder = EROSION_MOD_BLOCKS.register(id.getId(), s);
+                EROSION_BLOCK_COUNT++;
             }
 
             @Override public Block get()
@@ -126,6 +137,7 @@ public final class ErosionModContentManager
             {
                 ErosionUtils.Log("Setting up item -> " + id.getName());
                 this.itemHolder = EROSION_MOD_ITEMS.register(id.getId(), s);
+                EROSION_ITEM_COUNT++;
             }
             
             @Override public Item get()
@@ -150,6 +162,7 @@ public final class ErosionModContentManager
                         .toArray(Block[]::new)
                     ).build(null)
                 );
+                EROSION_BLOCK_ENTITY_COUNT++;
             }
 
             @Override public BlockEntityType<?> get()
@@ -168,6 +181,7 @@ public final class ErosionModContentManager
                 this.soundHolder = EROSION_MOD_SOUND_EVENTS.register(
                     loc.getId(), s
                 );
+                EROSION_SOUND_COUNT++;
             }
 
             @Override public SoundEvent get()
@@ -188,7 +202,7 @@ public final class ErosionModContentManager
                 this.menuHolderSpecific = EROSION_MOD_MENUS.register(
                     loc.getId(), s
                 );
-                //super.menuHolder = this.menuHolderSpecific;
+                EROSION_MENU_COUNT++;
             }
 
             @Override public MenuType<G> get()
@@ -211,6 +225,7 @@ public final class ErosionModContentManager
                 this.serializerHolderSpecific = EROSION_MOD_SERIALIZERS.register(
                     loc.getId(), s
                 );
+                EROSION_SERIALIZER_COUNT++;
             }
 
             @Override public SimpleCraftingRecipeSerializer<G> get()
@@ -282,6 +297,19 @@ public final class ErosionModContentManager
         ErosionModContentManager.EROSION_MOD_SOUND_EVENTS.register(b);
         ErosionModContentManager.EROSION_MOD_SERIALIZERS.register(b);
         ErosionModContentManager.EROSION_MOD_DATA_COMPONENTS.register(b);
+
+        ErosionUtils.Log(
+            String.format(
+                "Sucessfully loaded following content: %i item(s), %i block(s), %i block entities, %i menu(s), %i sound(s), %i data component(s), %i serializer(s)",
+                EROSION_ITEM_COUNT,
+                EROSION_BLOCK_COUNT,
+                EROSION_BLOCK_ENTITY_COUNT,
+                EROSION_MENU_COUNT,
+                EROSION_SOUND_COUNT,
+                EROSION_DATA_COMPONENT_COUNT,
+                EROSION_SERIALIZER_COUNT
+            )
+        );
 
         what.run();
     }
