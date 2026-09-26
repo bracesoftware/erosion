@@ -389,38 +389,56 @@ public class ErosionRegistry
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            MATERIAL_PURIFIER.ErosionModContentBuilder()
+            .addKnownBlock(MATERIAL_PURIFIER);
+        }
         public static final ErosionModContent.ErosionBlock CRUCIBLE = new ErosionModContent.ErosionBlock(
             RawRegistry.CRUCIBLE, () -> new CrucibleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            CRUCIBLE.ErosionModContentBuilder()
+            .addKnownBlock(CRUCIBLE);
+        }
         //======================= CHEMICAL REACTOR SYS
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR, () -> new ChemicalReactorBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            CHEMICAL_REACTOR.ErosionModContentBuilder()
+            .addKnownBlock(CHEMICAL_REACTOR);
+        }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_SCRUBBER = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_SCRUBBER, () -> new ChemicalReactorScrubberBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            CHEMICAL_REACTOR_SCRUBBER.ErosionModContentBuilder()
+            .addKnownBlock(CHEMICAL_REACTOR_SCRUBBER);
+        }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_MODULE = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_MODULE, () -> new ChemicalReactorModuleBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            CHEMICAL_REACTOR_MODULE.ErosionModContentBuilder()
+            .addKnownBlock(CHEMICAL_REACTOR_MODULE);
+        }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContent.ErosionBlock(
             RawRegistry.CHEMICAL_REACTOR_COOLING_SYSTEM, () -> new ChemicalReactorCoolingSystemBlock(
                 BlockBehaviour.Properties.of().strength(1.5f, 6.0f)
                 .requiresCorrectToolForDrops()
             )
-        );
+        ); static {
+            CHEMICAL_REACTOR_COOLING_SYSTEM.ErosionModContentBuilder()
+            .addKnownBlock(CHEMICAL_REACTOR_COOLING_SYSTEM);
+        }
         //----------------------------------------------
         //SIMPLE BLOCKS
         public static final ErosionModContent.ErosionBlock DRIED_DIRT = new ErosionModContent.ErosionBlock(

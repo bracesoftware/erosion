@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
+import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.loot.LootTableProvider;
@@ -10,9 +11,11 @@ import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
 public class ErosionLootGen extends LootTableProvider 
 {
@@ -187,7 +190,7 @@ public class ErosionLootGen extends LootTableProvider
         @Override
         protected Iterable<Block> getKnownBlocks()
         {
-            return List.of(
+            var p = new ArrayList<>(List.of(
                 //SIMPLE BLOCKS
                 ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get(),
                 ErosionRegistry.Blocks.CRACKED_STONE.get(),
@@ -242,16 +245,17 @@ public class ErosionLootGen extends LootTableProvider
                 ErosionRegistry.Blocks.RAW_GALENA.get(),
                 ErosionRegistry.Blocks.RAW_HALITE.get(),
                 ErosionRegistry.Blocks.RUBY_ORE.get(),
-                ErosionRegistry.Blocks.SAPPHIRE_ORE.get(),
+                ErosionRegistry.Blocks.SAPPHIRE_ORE.get()
 
                 // MACHINES
-                ErosionRegistry.Blocks.MATERIAL_PURIFIER.get(),
-                ErosionRegistry.Blocks.CHEMICAL_REACTOR.get(),
-                ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get(),
-                ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(),
-                ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get(),
-                ErosionRegistry.Blocks.CRUCIBLE.get()
+                //added via the manager
+            ));
+            p.addAll(
+                ErosionModContentManager.EROSION_KNOWN_BLOCKS.stream()
+                .map(ErosionModContent.ErosionBlock::get)
+                .toList()
             );
+            return p;
         }
     }
 }
