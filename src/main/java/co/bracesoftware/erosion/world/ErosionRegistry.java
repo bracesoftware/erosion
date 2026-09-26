@@ -391,6 +391,9 @@ public class ErosionRegistry
             )
         ); static {
             MATERIAL_PURIFIER.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
+            })
             .addKnownBlock(MATERIAL_PURIFIER);
         }
         public static final ErosionModContent.ErosionBlock CRUCIBLE = new ErosionModContent.ErosionBlock(
@@ -413,6 +416,9 @@ public class ErosionRegistry
             )
         ); static {
             CHEMICAL_REACTOR.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get());
+            })
             .addKnownBlock(CHEMICAL_REACTOR);
         }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_SCRUBBER = new ErosionModContent.ErosionBlock(
@@ -422,6 +428,9 @@ public class ErosionRegistry
             )
         ); static {
             CHEMICAL_REACTOR_SCRUBBER.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get());
+            })
             .addKnownBlock(CHEMICAL_REACTOR_SCRUBBER);
         }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_MODULE = new ErosionModContent.ErosionBlock(
@@ -431,6 +440,9 @@ public class ErosionRegistry
             )
         ); static {
             CHEMICAL_REACTOR_MODULE.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get());
+            })
             .addKnownBlock(CHEMICAL_REACTOR_MODULE);
         }
         public static final ErosionModContent.ErosionBlock CHEMICAL_REACTOR_COOLING_SYSTEM = new ErosionModContent.ErosionBlock(
@@ -440,6 +452,9 @@ public class ErosionRegistry
             )
         ); static {
             CHEMICAL_REACTOR_COOLING_SYSTEM.ErosionModContentBuilder()
+            .lootResourceGenerator(() -> {
+                ErosionModContentManager.getLootResourceGeneratorSubProvider().dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
+            })
             .addKnownBlock(CHEMICAL_REACTOR_COOLING_SYSTEM);
         }
         //----------------------------------------------

@@ -24,7 +24,6 @@ import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.Erosio
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.sounds.SoundEvent;
