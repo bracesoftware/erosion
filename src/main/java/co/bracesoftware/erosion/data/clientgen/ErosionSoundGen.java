@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -19,6 +20,11 @@ public class ErosionSoundGen extends SoundDefinitionsProvider
     public void registerSounds()
     {
         ErosionUtils.Log("Generating -> sounds.json");
+
+        for(var r : ErosionModContentManager.EROSION_SOUND_GEN_TASKS)
+        {
+            r.run();
+        }
 
         this.add(ErosionRegistry.SoundEvents.ORE_MINE.get(), definition()
             .with(sound(ResourceLocation.fromNamespaceAndPath(

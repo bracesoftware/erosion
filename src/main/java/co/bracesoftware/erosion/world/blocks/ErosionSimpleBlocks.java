@@ -88,6 +88,7 @@ public class ErosionSimpleBlocks
                 .mapColor(MapColor.STONE);
         }
 
+        @SuppressWarnings("all")
         public StoneBlock(BlockBehaviour.Properties p)
         {
             super(p);

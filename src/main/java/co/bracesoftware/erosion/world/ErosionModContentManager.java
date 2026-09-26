@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.world;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
@@ -8,9 +9,21 @@ import com.mojang.serialization.Codec;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.data.ErosionDataGenerators;
+import co.bracesoftware.erosion.data.clientgen.ErosionBlockStateGen;
+import co.bracesoftware.erosion.data.clientgen.ErosionItemModelGen;
+import co.bracesoftware.erosion.data.clientgen.ErosionLang;
+import co.bracesoftware.erosion.data.clientgen.ErosionSoundGen;
+import co.bracesoftware.erosion.data.servergen.ErosionAdvGen;
+import co.bracesoftware.erosion.data.servergen.ErosionBlockTagGen;
+import co.bracesoftware.erosion.data.servergen.ErosionItemTagGen;
+import co.bracesoftware.erosion.data.servergen.ErosionLootGen;
+import co.bracesoftware.erosion.data.servergen.ErosionRecipeGen;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -82,6 +95,77 @@ public final class ErosionModContentManager
     protected static int EROSION_DATA_COMPONENT_COUNT = 0;
     protected static int EROSION_SERIALIZER_COUNT = 0;
 
+    //DATAGEN
+    public static final List<Runnable> EROSION_BLOCK_STATE_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_LANG_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_ITEM_MODEL_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_SOUND_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_LOOT_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_RECIPE_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_ADVANCEMENT_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_BLOCK_TAG_GEN_TASKS = new ArrayList<>();
+    public static final List<Runnable> EROSION_ITEM_TAG_GEN_TASKS = new ArrayList<>();
+
+    public static final ErosionBlockStateGen getBlockStateResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_BLOCK_STATE_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionLang getLanguageResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_LANG_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionItemModelGen getItemModelResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_ITEM_MODEL_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionSoundGen getSoundResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_SOUND_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionLootGen getLootResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_LOOT_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionRecipeGen getRecipeResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_RECIPE_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionAdvGen getAdvancementResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_ADVANCEMENT_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionBlockTagGen getBlockTagResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_BLOCK_TAG_GENERATOR;
+    }
+    // --------------------------------------------------------------------------- //
+    public static final ErosionItemTagGen getItemTagResourceGenerator()
+    {
+        return ErosionDataGenerators.EROSION_ITEM_TAG_GENERATOR;
+    }
+
+    //SPECIFIC
+    public static final HolderLookup.Provider getBlockTagResourceGeneratorProvider()
+    {
+        return ErosionBlockTagGen.gProvider;
+    }
+    public static final HolderLookup.Provider getItemTagResourceGeneratorProvider()
+    {
+        return ErosionItemTagGen.provajda;
+    }
+    public static final RecipeOutput getRecipeResourceGeneratorOutput()
+    {
+        return ErosionRecipeGen.resourceOutput;
+    }
+
+    //MAIN CLASS
     public static class ErosionModContent<T> implements Supplier<T>
     {
         protected DeferredBlock<Block> blockHolder;
@@ -92,9 +176,79 @@ public final class ErosionModContentManager
         protected Object serializerHolder;
         protected DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> booleanDataComponentHolder;
 
+        public Runnable blockStateGenerator;
+        public Runnable languageGenerator;
+        public Runnable soundGenerator;
+        public Runnable itemModelGenerator;
+        public Runnable lootGenerator;
+        public Runnable recipeGenerator;
+        public Runnable advGenerator;
+        public Runnable itemTaggen;
+        public Runnable blockTaggen;
+
         @Override public T get()
         {
             return null;
+        }
+
+        public final ErosionModContent<T> ErosionModContentBuilder()
+        {
+            return this;
+        }
+
+        public final ErosionModContent<T> blockStateResourceGenerator(Runnable r)
+        {
+            this.blockStateGenerator = r;
+            EROSION_BLOCK_STATE_GEN_TASKS.add(this.blockStateGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> languageResourceGenerator(Runnable r)
+        {
+            this.languageGenerator = r;
+            EROSION_LANG_GEN_TASKS.add(this.languageGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> itemModelResourceGenerator(Runnable r)
+        {
+            this.itemModelGenerator = r;
+            EROSION_ITEM_MODEL_GEN_TASKS.add(this.itemModelGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> soundResourceGenerator(Runnable r)
+        {
+            this.soundGenerator = r;
+            EROSION_SOUND_GEN_TASKS.add(this.soundGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> advancementResourceGenerator(Runnable r)
+        {
+            this.advGenerator = r;
+            EROSION_ADVANCEMENT_GEN_TASKS.add(this.advGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> recipeResourceGenerator(Runnable r)
+        {
+            this.recipeGenerator = r;
+            EROSION_RECIPE_GEN_TASKS.add(this.recipeGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> lootResourceGenerator(Runnable r)
+        {
+            this.lootGenerator = r;
+            EROSION_LOOT_GEN_TASKS.add(this.lootGenerator);
+            return this;
+        }
+        public final ErosionModContent<T> blockTagResourceGenerator(Runnable r)
+        {
+            this.blockTaggen = r;
+            EROSION_BLOCK_TAG_GEN_TASKS.add(this.blockTaggen);
+            return this;
+        }
+        public final ErosionModContent<T> itemTagResourceGenerator(Runnable r)
+        {
+            this.itemTaggen = r;
+            EROSION_ITEM_TAG_GEN_TASKS.add(this.itemTaggen);
+            return this;
         }
 
         public static final class ErosionBooleanDataComponent extends ErosionModContent<DataComponentType<Boolean>>

@@ -3,6 +3,7 @@ package co.bracesoftware.erosion.data.clientgen;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlock;
 import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlock;
@@ -23,8 +24,14 @@ public class ErosionBlockStateGen extends BlockStateProvider
     }
 
     @Override
-    protected void registerStatesAndModels() 
+    protected void registerStatesAndModels()
     {
+        //AUTOMATIZACIO
+        for(var r : ErosionModContentManager.EROSION_BLOCK_STATE_GEN_TASKS)
+        {
+            r.run();
+        }
+
         //SIMPLE BLOCKS
         //RANDOMIZED ROTATION
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateRandomRotations(
@@ -465,6 +472,4 @@ public class ErosionBlockStateGen extends BlockStateProvider
         simpleBlockItem(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get(), crm);
         return;
     }
-
-    
 }

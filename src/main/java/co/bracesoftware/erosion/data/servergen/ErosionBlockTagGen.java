@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.*;
@@ -27,9 +28,16 @@ public class ErosionBlockTagGen extends BlockTagsProvider implements ErosionTags
         return this.tag(e);
     }
 
+    public static HolderLookup.Provider gProvider;
+
     @Override
     protected void addTags(HolderLookup.Provider provider) 
     {
+        gProvider = provider;
+        for(var rrr : ErosionModContentManager.EROSION_BLOCK_TAG_GEN_TASKS)
+        {
+            rrr.run();
+        }
         //SIMPLE BLOCKS
         ErosionDataGeneratorsProgInterface.ErosionTags.Blocks.createSimpleGravel(this, provider, ErosionRegistry.Blocks.DRIED_DIRT.get());
 

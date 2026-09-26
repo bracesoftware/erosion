@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.ErosionAdvancement;
@@ -35,6 +36,11 @@ public class ErosionAdvGen extends AdvancementProvider
             //DO NOT TOUCH
             this.efh = efh;
             this.k = s;
+
+            for(var rrr : ErosionModContentManager.EROSION_ADVANCEMENT_GEN_TASKS)
+            {
+                rrr.run();
+            }
 
             //GENERATE
             var root = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateParentAdvancement(this);

@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface.*;
@@ -31,9 +32,16 @@ public class ErosionItemTagGen extends ItemTagsProvider implements ErosionTags.E
         return this.tag(e);
     }
 
+    public static HolderLookup.Provider provajda;
+
     @Override
     protected void addTags(HolderLookup.Provider provider)
     {
+        provajda = provider;
+        for(var rrr : ErosionModContentManager.EROSION_ITEM_TAG_GEN_TASKS)
+        {
+            rrr.run();
+        }
         //SIMPLE ITEMS
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FELDSPAR_POWDER.get());
         ErosionDataGeneratorsProgInterface.ErosionTags.Items.createSimplePowder(this, provider, ErosionRegistry.Items.FLUX.get());

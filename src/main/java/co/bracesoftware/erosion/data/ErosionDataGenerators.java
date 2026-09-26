@@ -24,6 +24,16 @@ import net.neoforged.neoforge.data.event.GatherDataEvent;
 @EventBusSubscriber(modid = Erosion.MODID)
 public class ErosionDataGenerators 
 {
+    public static ErosionBlockStateGen EROSION_BLOCK_STATE_GENERATOR;
+    public static ErosionLang EROSION_LANG_GENERATOR;
+    public static ErosionItemModelGen EROSION_ITEM_MODEL_GENERATOR;
+    public static ErosionSoundGen EROSION_SOUND_GENERATOR;
+    public static ErosionLootGen EROSION_LOOT_GENERATOR;
+    public static ErosionRecipeGen EROSION_RECIPE_GENERATOR;
+    public static ErosionAdvGen EROSION_ADVANCEMENT_GENERATOR;
+    public static ErosionBlockTagGen EROSION_BLOCK_TAG_GENERATOR;
+    public static ErosionItemTagGen EROSION_ITEM_TAG_GENERATOR;
+
     @SubscribeEvent
     public static void gatherData(
         GatherDataEvent e
@@ -39,28 +49,34 @@ public class ErosionDataGenerators
             throw new ErosionDataGenException("Safe mode is on!");
         }
         
+        EROSION_BLOCK_STATE_GENERATOR = new ErosionBlockStateGen(p, e.getExistingFileHelper());
+        EROSION_LANG_GENERATOR = new ErosionLang(p);
+        EROSION_ITEM_MODEL_GENERATOR = new ErosionItemModelGen(p, e.getExistingFileHelper());
+        EROSION_SOUND_GENERATOR = new ErosionSoundGen(p, e.getExistingFileHelper());
+        EROSION_LOOT_GENERATOR = new ErosionLootGen(p, e.getLookupProvider());
+        EROSION_RECIPE_GENERATOR = new ErosionRecipeGen(p, e.getLookupProvider());
+        EROSION_ADVANCEMENT_GENERATOR = new ErosionAdvGen(p, e.getLookupProvider(), e.getExistingFileHelper());
+        EROSION_BLOCK_TAG_GENERATOR = new ErosionBlockTagGen(p, e.getLookupProvider(), e.getExistingFileHelper());
+        EROSION_ITEM_TAG_GENERATOR = new ErosionItemTagGen(p, e.getLookupProvider(), EROSION_BLOCK_TAG_GENERATOR.contentsGetter(), e.getExistingFileHelper());
+
         //other stuff
         ErosionDataGeneratorsProgInterface.ErosionBlockState.generateCustomTextures();
         ErosionBlockAnimGen.generateChemicalReactorAnims();
 
         //client provider
-        g.addProvider(e.includeClient(), new ErosionLang(p));
-        g.addProvider(e.includeClient(), new ErosionBlockStateGen(p, e.getExistingFileHelper()));
-        g.addProvider(e.includeClient(), new ErosionItemModelGen(p, e.getExistingFileHelper()));
-        g.addProvider(e.includeClient(), new ErosionSoundGen(p, e.getExistingFileHelper()));
+        g.addProvider(e.includeClient(), EROSION_LANG_GENERATOR);
+        g.addProvider(e.includeClient(), EROSION_BLOCK_STATE_GENERATOR);
+        g.addProvider(e.includeClient(), EROSION_ITEM_MODEL_GENERATOR);
+        g.addProvider(e.includeClient(), EROSION_SOUND_GENERATOR);
 
         //server providers
-        g.addProvider(e.includeServer(), new ErosionLootGen(p, e.getLookupProvider()));
-        g.addProvider(e.includeServer(), new ErosionRecipeGen(p, e.getLookupProvider()));
-        g.addProvider(e.includeServer(), new ErosionAdvGen(p, e.getLookupProvider(), e.getExistingFileHelper()));
+        g.addProvider(e.includeServer(), EROSION_LOOT_GENERATOR);
+        g.addProvider(e.includeServer(), EROSION_RECIPE_GENERATOR);
+        g.addProvider(e.includeServer(), EROSION_ADVANCEMENT_GENERATOR);
 
-        //block and item
-        var b = new ErosionBlockTagGen(p, e.getLookupProvider(), e.getExistingFileHelper());
-        g.addProvider(e.includeServer(), b);
-
-        g.addProvider(e.includeServer(), new ErosionItemTagGen(
-            p, e.getLookupProvider(), b.contentsGetter(), e.getExistingFileHelper())
-        );
+        //block and item/server providers
+        g.addProvider(e.includeServer(), EROSION_BLOCK_TAG_GENERATOR);
+        g.addProvider(e.includeServer(), EROSION_ITEM_TAG_GENERATOR);
         return;
     }
 }

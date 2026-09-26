@@ -1,6 +1,7 @@
 package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -15,6 +16,11 @@ public class ErosionItemModelGen extends ItemModelProvider {
     @Override
     protected void registerModels()
     {
+        for(var r : ErosionModContentManager.EROSION_ITEM_MODEL_GEN_TASKS)
+        {
+            r.run();
+        }
+
         basicItem(ErosionRegistry.Items.FELDSPAR_POWDER.get());
         basicItem(ErosionRegistry.Items.GAS_MASK.get());
         basicItem(ErosionRegistry.Items.BASIC_MASK.get());

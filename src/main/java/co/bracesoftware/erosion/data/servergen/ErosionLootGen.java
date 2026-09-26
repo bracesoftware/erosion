@@ -1,5 +1,6 @@
 package co.bracesoftware.erosion.data.servergen;
 
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -32,6 +33,10 @@ public class ErosionLootGen extends LootTableProvider
         @Override
         protected void generate() 
         {
+            for(var rrr : ErosionModContentManager.EROSION_LOOT_GEN_TASKS)
+            {
+                rrr.run();
+            }
             //SIMPLE BLOCKS
             dropSelf(ErosionRegistry.Blocks.KAOLINIZED_GRANITE.get());
             dropSelf(ErosionRegistry.Blocks.CRACKED_STONE.get());

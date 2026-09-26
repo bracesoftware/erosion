@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -16,6 +17,10 @@ public class ErosionLang extends LanguageProvider
     @Override
     protected void addTranslations() 
     {
+        for(var r : ErosionModContentManager.EROSION_LANG_GEN_TASKS)
+        {
+            r.run();
+        }
         add(ErosionConfig.CREATIVE_TAB_ID, Erosion.MODNAME);
         
         //SIMPLE ITEMS

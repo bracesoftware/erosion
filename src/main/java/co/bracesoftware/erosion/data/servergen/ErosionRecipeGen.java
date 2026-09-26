@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.data.servergen;
 
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionModCompat;
+import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.recipes.ErosionFoodSaltingRecipe;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
@@ -22,9 +23,17 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         super(output, registries);
     }
 
+    public static RecipeOutput resourceOutput;
+
     @Override
     protected void buildRecipes(RecipeOutput output)
     {
+        resourceOutput = output;
+        for(var rrr : ErosionModContentManager.EROSION_RECIPE_GEN_TASKS)
+        {
+            rrr.run();
+        }
+
         ShapedRecipeBuilder.shaped(
             RecipeCategory.BREWING, ErosionRegistry.Blocks.CHEMICAL_REACTOR.get()
         )
