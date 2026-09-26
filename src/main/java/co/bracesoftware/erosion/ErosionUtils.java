@@ -1,10 +1,10 @@
 package co.bracesoftware.erosion;
+
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.function.*;
-
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionAPIExceptions;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionAPIExceptions.ErosionDisplayMessageException;

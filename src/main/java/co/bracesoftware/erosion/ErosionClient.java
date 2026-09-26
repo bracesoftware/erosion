@@ -25,7 +25,6 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.util.Mth;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

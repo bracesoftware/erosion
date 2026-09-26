@@ -1,11 +1,9 @@
 package co.bracesoftware.erosion;
 
 import org.slf4j.Logger;
-
 import co.bracesoftware.erosion.ErosionRetrogen.RetrogenDataManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import com.mojang.logging.LogUtils;
-
 import net.minecraft.server.MinecraftServer;
 import net.neoforged.bus.api.IEventBus;
 import co.bracesoftware.erosion.api.eventbus.*;
@@ -27,7 +25,8 @@ This huge comment is dedicated to:
         * Material Purifier
         -                   for being THE FIRST BLOCK ENTITY ADDED TO THE MOD!
         * Crucible
-        -                   for being THE FIRST BLOCK WITH A CUSTOM MODEL
+        -                   for being THE FIRST BLOCK WITH A CUSTOM MODE
+        -                   for being THE FIRST BLOCK TO BE REIMPLEMENTED USING ErosionModContentManager
         * Chemical Reactor
         and its components
         such as Cooling System,

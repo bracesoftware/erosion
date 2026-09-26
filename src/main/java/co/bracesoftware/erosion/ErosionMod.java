@@ -23,9 +23,7 @@ import net.neoforged.neoforge.event.tick.LevelTickEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlockEntity;

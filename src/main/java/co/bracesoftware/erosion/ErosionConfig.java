@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
-
 import co.bracesoftware.erosion.ErosionExceptions.ErosionConfigException.ErosionWrongConfigGetterOrSetterMethodCalledException;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;

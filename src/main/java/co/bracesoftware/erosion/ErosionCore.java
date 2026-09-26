@@ -6,7 +6,6 @@ import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.GasType;
 import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
 import co.bracesoftware.libs.minecraft_text_formatter.Emojis;
 import co.bracesoftware.erosion.api.eventbus.*;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,13 +17,10 @@ import java.util.WeakHashMap;
 import java.util.function.BiConsumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
-
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
-
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

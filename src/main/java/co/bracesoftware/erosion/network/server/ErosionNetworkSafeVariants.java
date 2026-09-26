@@ -7,13 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
 import javax.annotation.Nullable;
-
 import org.checkerframework.checker.units.qual.A;
-
 import com.mojang.serialization.MapCodec;
-
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionNetworkSafeBlockException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionException;
 import co.bracesoftware.erosion.ErosionMod;

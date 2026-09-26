@@ -4,12 +4,9 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionBlockWithTipImpl;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-
 import java.util.EnumMap;
 import java.util.Map;
-
 import com.mojang.serialization.MapCodec;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;

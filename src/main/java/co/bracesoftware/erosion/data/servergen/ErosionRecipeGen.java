@@ -12,7 +12,6 @@ import net.minecraft.data.recipes.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.common.conditions.IConditionBuilder;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;

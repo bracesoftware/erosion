@@ -1,16 +1,13 @@
 package co.bracesoftware.erosion.world.blocks.material_purifier;
 
 import java.util.List;
-
 import javax.annotation.Nullable;
-
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionMaterialPurifierException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;

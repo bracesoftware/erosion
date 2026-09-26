@@ -3,7 +3,6 @@ package co.bracesoftware.erosion.data.servergen;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
-
 import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;

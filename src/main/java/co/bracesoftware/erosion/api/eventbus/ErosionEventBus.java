@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
-
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionEventBusException;
 import co.bracesoftware.erosion.api.eventbus.ErosionEvents.BasicErosionEvent;

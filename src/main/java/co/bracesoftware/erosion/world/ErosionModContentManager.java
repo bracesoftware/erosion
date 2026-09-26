@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
-
 import com.mojang.serialization.Codec;
-
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.data.ErosionDataGenerators;

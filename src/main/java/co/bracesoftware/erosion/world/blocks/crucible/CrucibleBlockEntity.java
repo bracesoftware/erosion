@@ -2,7 +2,6 @@ package co.bracesoftware.erosion.world.blocks.crucible;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockEntityExceptions.ErosionCrucibleException;

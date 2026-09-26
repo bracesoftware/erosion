@@ -2,7 +2,6 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor.module;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;

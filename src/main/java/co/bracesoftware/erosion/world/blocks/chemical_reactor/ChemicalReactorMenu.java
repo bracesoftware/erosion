@@ -3,7 +3,6 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;

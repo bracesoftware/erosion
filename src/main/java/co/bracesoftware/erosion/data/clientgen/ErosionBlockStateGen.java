@@ -1,19 +1,11 @@
 package co.bracesoftware.erosion.data.clientgen;
 
 import co.bracesoftware.erosion.Erosion;
-import co.bracesoftware.erosion.ErosionConfig;
-import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.world.ErosionModContentManager;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-import co.bracesoftware.erosion.world.blocks.crucible.CrucibleBlock;
-import co.bracesoftware.erosion.world.blocks.material_purifier.MaterialPurifierBlock;
 import co.bracesoftware.erosion.data.ErosionDataGeneratorsProgInterface;
-import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
-import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public class ErosionBlockStateGen extends BlockStateProvider 
@@ -114,7 +106,6 @@ public class ErosionBlockStateGen extends BlockStateProvider
         // ============================================= //
         //ModelFile[][][] purifierModels = new ModelFile[ErosionConfig.MAX_PURIFIER_FUEL + 1][2][];
 
-        String BLOCKID;
         // ============================================= //
         
         ////////////////////////////////////////////////////////////

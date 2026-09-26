@@ -45,7 +45,6 @@ import co.bracesoftware.erosion.world.blocks.crucible.*;
 import co.bracesoftware.erosion.world.blocks.material_purifier.*;
 import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
 import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContentResourceLocation;
-import co.bracesoftware.erosion.world.ErosionRegistry.RawRegistry;
 import co.bracesoftware.erosion.world.blocks.ErosionSimpleBlocks;
 
 @EventBusSubscriber(modid = Erosion.MODID)

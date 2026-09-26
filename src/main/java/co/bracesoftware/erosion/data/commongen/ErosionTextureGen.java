@@ -1,18 +1,14 @@
 package co.bracesoftware.erosion.data.commongen;
 
 import javax.imageio.ImageIO;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-
 import co.bracesoftware.erosion.*;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
-
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-
 import java.awt.Graphics2D;
 import java.io.File;
 import java.io.FileWriter;

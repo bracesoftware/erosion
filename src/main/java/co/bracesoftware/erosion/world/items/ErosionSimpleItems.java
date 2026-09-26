@@ -3,7 +3,6 @@ package co.bracesoftware.erosion.world.items;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;

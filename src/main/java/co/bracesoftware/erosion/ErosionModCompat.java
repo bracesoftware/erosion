@@ -3,20 +3,16 @@ package co.bracesoftware.erosion;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import com.google.gson.JsonObject;
 import com.google.gson.JsonArray;
-
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
-
 import co.bracesoftware.erosion.api.eventbus.ErosionEvents;
 import net.neoforged.fml.ModList;
 

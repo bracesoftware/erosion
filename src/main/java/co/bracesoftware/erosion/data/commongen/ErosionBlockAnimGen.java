@@ -5,7 +5,6 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionDataGenException;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.world.ErosionRegistry;
-
 import java.util.ArrayList;
 import java.util.List;
 

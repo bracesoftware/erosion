@@ -17,10 +17,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import it.unimi.dsi.fastutil.longs.LongSet;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCustomEntityExceptions.ErosionGasInitException;

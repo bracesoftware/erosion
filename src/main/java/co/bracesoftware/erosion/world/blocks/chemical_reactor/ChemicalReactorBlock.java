@@ -3,12 +3,9 @@ package co.bracesoftware.erosion.world.blocks.chemical_reactor;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionChemicalReactorException;
 import co.bracesoftware.erosion.ErosionMod;
 import co.bracesoftware.erosion.ErosionUtils;
-
 import java.util.HashSet;
-
 import javax.annotation.Nullable;
 import java.util.LinkedList;
-
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;

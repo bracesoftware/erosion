@@ -8,13 +8,10 @@ import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
-
 import com.mojang.brigadier.arguments.StringArgumentType;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
-
 import co.bracesoftware.erosion.ErosionCore.ErosionDynamicItem;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandParserException;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionCommandExceptions.ErosionCommandSetupException;

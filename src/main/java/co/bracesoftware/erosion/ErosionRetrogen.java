@@ -4,21 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
-
 import com.google.gson.reflect.TypeToken;
-
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.storage.LevelResource;
-
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.io.Writer;
 import java.io.Reader;
-
 import co.bracesoftware.erosion.world.ErosionRegistry;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
