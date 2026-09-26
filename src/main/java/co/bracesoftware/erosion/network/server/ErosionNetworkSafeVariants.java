@@ -297,9 +297,14 @@ public class ErosionNetworkSafeVariants
             }
         }
 
-        public final void passToDefaultBlockInteraction(boolean what)
+        public final void letMinecraftHandleInteractingWithThisBlock(boolean what)
         {
             this.simpleBlockFlag = what;
+        }
+
+        public final boolean isMinecraftHandlingInteractingWithThisBlock()
+        {
+            return this.simpleBlockFlag;
         }
 
         public final void callUseItemOnOnly(boolean cfg)

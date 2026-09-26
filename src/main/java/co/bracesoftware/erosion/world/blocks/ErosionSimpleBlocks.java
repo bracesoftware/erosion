@@ -92,8 +92,11 @@ public class ErosionSimpleBlocks
         {
             super(p);
             this.setCommonLogic(new StoneBlockCommonLogic());
-            this.passToDefaultBlockInteraction(true);//this is dynamic,changing this in the middle of nothing won't break things
+            this.letMinecraftHandleInteractingWithThisBlock(true);
+            //this func above is dynamic,changing this in the middle of nothing won't break things
             //use this when you do not specify server logic for item using on block
+            //if you are, you can use
+            boolean what = this.isMinecraftHandlingInteractingWithThisBlock();
         }
 
         public static class StoneBlockCommonLogic extends ErosionNetworkSafeBlockSidedLogic
