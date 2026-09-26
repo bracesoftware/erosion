@@ -429,14 +429,12 @@ public class ErosionNetworkSafeVariants
             });
         }
 
-        
         @Override protected final InteractionResult useWithoutItem(
             BlockState bs, Level leva, BlockPos bp,
             Player playa, BlockHitResult hr
         )
         {
-            return super.useWithoutItem(bs, leva, bp, playa, hr);
+            return InteractionResult.PASS;
         }
-        
     }
 }
