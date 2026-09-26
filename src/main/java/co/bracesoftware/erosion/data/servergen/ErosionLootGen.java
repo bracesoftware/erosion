@@ -185,13 +185,6 @@ public class ErosionLootGen extends LootTableProvider
             dropSelf(ErosionRegistry.Blocks.RAW_ANGLESITE.get());
             dropSelf(ErosionRegistry.Blocks.RAW_GALENA.get());
             dropSelf(ErosionRegistry.Blocks.RAW_HALITE.get());
-
-            //MACHINES
-            dropSelf(ErosionRegistry.Blocks.MATERIAL_PURIFIER.get());
-            dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR.get());
-            dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_SCRUBBER.get());
-            dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_COOLING_SYSTEM.get());
-            dropSelf(ErosionRegistry.Blocks.CHEMICAL_REACTOR_MODULE.get());
         }
 
         @Override
