@@ -250,7 +250,10 @@ public class ErosionClient
     @SubscribeEvent
     public static void regScreen(RegisterMenuScreensEvent e)
     {
-        e.register(ErosionRegistry.Menus.CHEMICAL_REACTOR.get(), ChemicalReactorScreen::new);
+        e.register(
+            ErosionRegistry.Menus.CHEMICAL_REACTOR.get(),
+            ChemicalReactorScreen::new
+        );
         return;
     }
 

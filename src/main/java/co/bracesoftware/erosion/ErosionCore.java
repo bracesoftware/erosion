@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 import it.unimi.dsi.fastutil.HashCommon;
 import it.unimi.dsi.fastutil.Hash;
 import co.bracesoftware.erosion.ErosionCore.AlterableMaterial.AlterationPath.AlterationPathType;
-import co.bracesoftware.erosion.ErosionCore.SaltableFood;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionRecipeImplException;
 
 

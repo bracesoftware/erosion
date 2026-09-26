@@ -3,22 +3,28 @@ package co.bracesoftware.erosion.world;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.mojang.serialization.Codec;
+
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
-import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContent;
-import co.bracesoftware.erosion.world.ErosionModContentManager.ErosionModContentResourceLocation;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.BlockEntityType.BlockEntitySupplier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -71,10 +77,31 @@ public final class ErosionModContentManager
         protected DeferredItem<Item> itemHolder;
         protected Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>> blockEntityHolder;
         protected Supplier<SoundEvent> soundHolder;
+        protected DeferredHolder<MenuType<?>, MenuType<? extends AbstractContainerMenu>> menuHolder;
+        protected Object serializerHolder;
+        protected DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> booleanDataComponentHolder;
 
         @Override public T get()
         {
             return null;
+        }
+
+        public static final class ErosionBooleanDataComponent extends ErosionModContent<DataComponentType<Boolean>>
+        {
+            public ErosionBooleanDataComponent(ErosionModContentResourceLocation loc)
+            {
+                this.booleanDataComponentHolder = EROSION_MOD_DATA_COMPONENTS.registerComponentType(
+                    loc.getId(),
+                    ComponentBuilder -> ComponentBuilder
+                    .persistent(Codec.BOOL) 
+                    .networkSynchronized(ByteBufCodecs.BOOL)
+                );
+            }
+
+            @Override public DataComponentType<Boolean> get()
+            {
+                return this.booleanDataComponentHolder.get();
+            }
         }
 
         public static final class ErosionBlock extends ErosionModContent<Block>
@@ -138,6 +165,47 @@ public final class ErosionModContentManager
             }
         }
 
+        public static final class ErosionMenu<G extends AbstractContainerMenu> extends ErosionModContent<MenuType<?>>
+        {
+            protected DeferredHolder<MenuType<?>, MenuType<G>> menuHolderSpecific;
+            public ErosionMenu(
+                ErosionModContentResourceLocation loc,
+                Supplier<? extends MenuType<G>> s
+            )
+            {
+                this.menuHolderSpecific = EROSION_MOD_MENUS.register(
+                    loc.getId(), s
+                );
+                //super.menuHolder = this.menuHolderSpecific;
+            }
+
+            @Override public MenuType<G> get()
+            {
+                return this.menuHolderSpecific.get();
+            }
+        }
+
+        public static final class ErosionSerializer<G extends CustomRecipe> extends ErosionModContent<SimpleCraftingRecipeSerializer<?>>
+        {
+            protected DeferredHolder<
+                RecipeSerializer<?>, SimpleCraftingRecipeSerializer<G>
+            > serializerHolderSpecific;
+            public ErosionSerializer(
+                ErosionModContentResourceLocation loc,
+                Supplier<? extends SimpleCraftingRecipeSerializer<G>> s
+            )
+            {
+                this.serializerHolderSpecific = EROSION_MOD_SERIALIZERS.register(
+                    loc.getId(), s
+                );
+            }
+
+            @Override public SimpleCraftingRecipeSerializer<G> get()
+            {
+                return this.serializerHolderSpecific.get();
+            }
+        }
+
         public final DeferredItem<Item> getItemHolder()
         {
             return this.itemHolder;
@@ -151,6 +219,21 @@ public final class ErosionModContentManager
         public final Supplier<BlockEntityType<? extends ErosionNetworkSafeBlockEntity<?>>> getBlockEntityHolder()
         {
             return this.blockEntityHolder;
+        }
+
+        public final Supplier<SoundEvent> getSoundHolder()
+        {
+            return this.soundHolder;
+        }
+
+        public final DeferredHolder<MenuType<?>, MenuType<?>> getMenuHolder()
+        {
+            return this.menuHolder;
+        }
+
+        public final Object getSerializerHolder()
+        {
+            return this.serializerHolder;
         }
     }
 

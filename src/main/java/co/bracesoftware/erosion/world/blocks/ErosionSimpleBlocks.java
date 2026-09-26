@@ -2,6 +2,7 @@ package co.bracesoftware.erosion.world.blocks;
 
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionExceptions.ErosionBlockExceptions.ErosionBlockWithTipImpl;
+import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlock;
 import co.bracesoftware.erosion.world.ErosionRegistry;
 
 import java.util.EnumMap;
@@ -15,7 +16,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.level.*;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -77,7 +77,7 @@ public class ErosionSimpleBlocks
         }
     }
 
-    public static class StoneBlock extends Block
+    public static class StoneBlock extends ErosionNetworkSafeBlock
     {
         public static BlockBehaviour.Properties getDefaultBlockProperties()
         {
@@ -138,7 +138,7 @@ public class ErosionSimpleBlocks
         }
     }
 
-    public static class RockBlock extends Block implements SimpleWaterloggedBlock
+    public static class RockBlock extends ErosionNetworkSafeBlock implements SimpleWaterloggedBlock
     {
         public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
         public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -227,6 +227,7 @@ public class ErosionSimpleBlocks
                 .setValue(FACING, Direction.NORTH)
                 .setValue(WATERLOGGED, false)
             );
+            this.setServerLogic(new RockBlockServerLogic());
         }
         
         @Override
@@ -265,33 +266,32 @@ public class ErosionSimpleBlocks
             if(ErosionConfig.SOMETHING_WENT_WRONG) return OLD_SHAPE_IF_SOMETHING_GOES_WRONG;
             return SHAPES.getOrDefault(bs.getValue(FACING), NORTH_SHAPE);
         }
-        @Override
-        protected InteractionResult useWithoutItem(
-            BlockState s, Level l, BlockPos p,
-            Player pl, BlockHitResult hitResult
-        ) 
-        {
-            if(!l.isClientSide())
-            {
-                ItemStack rockStack = new ItemStack(this.asItem());
-                boolean a = pl.getInventory().add(rockStack);
-                if(!a) Block.popResource(l, p, rockStack);
 
-                l.playSound(
-                    null, 
-                    p, 
-                    SoundEvents.ITEM_PICKUP, 
-                    SoundSource.PLAYERS, 
-                    0.2F, 
-                    (l.random.nextFloat() - l.random.nextFloat()) * 0.2F + 1.0F
+        public static class RockBlockServerLogic extends ErosionNetworkSafeBlockSidedLogic
+        {
+            @Override public boolean useWithoutItem(ErosionBlockInteractionPacket p)
+            {
+                var rockStack = new ItemStack(p.getThisPtr().asItem());
+                boolean a = p.getServerPlayer().getInventory().add(rockStack);
+                if(!a) Block.popResource(p.getServerLevel(), p.getBlockPos(), rockStack);
+
+                p.getServerLevel().playSound(
+                    null,
+                    p.getBlockPos(),
+                    SoundEvents.ITEM_PICKUP,
+                    SoundSource.PLAYERS,
+                    0.2F,
+                    (p.getServerLevel().random.nextFloat() - p.getServerLevel().random.nextFloat()) * 0.2F + 1.0F
                 );
                 
-                BlockState r = s.getValue(WATERLOGGED) ? Blocks.WATER.defaultBlockState() : Blocks.AIR.defaultBlockState();
-                l.setBlock(p, r, 3);
+                var r = p.getBlockState().getValue(WATERLOGGED)
+                ? Blocks.WATER.defaultBlockState()
+                : Blocks.AIR.defaultBlockState();
+                p.getServerLevel().setBlock(p.getBlockPos(), r, 3);
+                return true;
             }
-
-            return InteractionResult.sidedSuccess(l.isClientSide());
         }
+
         @Override
         public boolean canSurvive(BlockState s, LevelReader l, BlockPos p)
         {

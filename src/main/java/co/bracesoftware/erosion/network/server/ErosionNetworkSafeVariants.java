@@ -209,13 +209,16 @@ public class ErosionNetworkSafeVariants
             private final InteractionHand interactionHand;
             private final BlockHitResult blockHitResult;
             private final Block block;
+            private final ErosionNetworkSafeBlock thisPtr;
 
             public ErosionBlockInteractionPacket(
+                ErosionNetworkSafeBlock tp,
                 ItemStack is, BlockState bs, Level l, BlockPos bp,
                 Player p, InteractionHand hand, BlockHitResult hr,
                 Block b
             )
             {
+                this.thisPtr = tp;
                 this.itemStack = is;
                 this.blockState = bs;
                 this.level = l;
@@ -236,6 +239,7 @@ public class ErosionNetworkSafeVariants
                 return this;
             }
 
+            public Block getThisPtr() { return this.thisPtr; }
             public Block getBlockClassInfo() { return this.block; }
             public ItemStack getItemStack() { return this.itemStack; }
             public BlockState getBlockState() { return this.blockState; }
@@ -346,7 +350,7 @@ public class ErosionNetworkSafeVariants
             if(stack.getItem() instanceof BlockItem it)
             {
                 boolean result = false;
-                var packet = new ErosionBlockInteractionPacket(stack, bs, leva, bp, playa, hand, hr, it.getBlock());
+                var packet = new ErosionBlockInteractionPacket(this,stack, bs, leva, bp, playa, hand, hr, it.getBlock());
                 result = this.COMMON.onAttemptToPlaceBlock(
                     packet.toCommonOrClientPacket()
                 );
@@ -368,18 +372,18 @@ public class ErosionNetworkSafeVariants
 
                 if(stack.isEmpty() && !this.callUseItemOnOnlyFlag) result = this.SERVER.useWithoutItem(
                     new ErosionBlockInteractionPacket(
-                        null, bs, leva, bp, playa, null, hr,this
+                        this,null, bs, leva, bp, playa, null, hr,this
                     ).toServerPacket()
                 );
                 else result = this.SERVER.useItemOn(new ErosionBlockInteractionPacket(
-                    stack, bs, leva, bp, playa, hand, hr,this
+                    this,stack, bs, leva, bp, playa, hand, hr,this
                 ));
                 
                 if(!result)
                 {
                     this.SERVER.onInteractionFail(
                         new ErosionBlockInteractionPacket(
-                            null, bs, leva, bp, playa, null, null,this
+                            this,null, bs, leva, bp, playa, null, null,this
                         ).toServerPacket()
                     );
                 }
@@ -416,7 +420,7 @@ public class ErosionNetworkSafeVariants
                 return;
             }
             this.SERVER.onRandomTick(
-                new ErosionBlockInteractionPacket(null, cbs, l, bp, null, null, null, this)
+                new ErosionBlockInteractionPacket(this,null, cbs, l, bp, null, null, null, this)
                 .toServerPacket()
             );
             var d = this.getRandomTickFrequency().getDelay();
@@ -425,25 +429,14 @@ public class ErosionNetworkSafeVariants
             });
         }
 
-        /* 
+        
         @Override protected final InteractionResult useWithoutItem(
             BlockState bs, Level leva, BlockPos bp,
             Player playa, BlockHitResult hr
         )
         {
-            if(!leva.isClientSide())
-            {
-                var p = (ServerPlayer) playa;
-                var l = (ServerLevel) leva;
-                boolean result = this.serverUseWithoutItem(bs,l,bp, p, hr);
-                if(!result)
-                {
-                    this.onInteractionFail(bs, l, bp, p);
-                }
-            }
-            //super.useWithoutItem(bs, l, bp, p, hr);
-            return InteractionResult.SUCCESS;
+            return super.useWithoutItem(bs, leva, bp, playa, hr);
         }
-        */
+        
     }
 }

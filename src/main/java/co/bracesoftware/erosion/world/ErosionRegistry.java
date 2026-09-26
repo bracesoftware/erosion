@@ -1,8 +1,6 @@
 package co.bracesoftware.erosion.world;
 
 import java.util.List;
-import java.util.function.Supplier;
-import com.mojang.serialization.Codec;
 import co.bracesoftware.erosion.Erosion;
 import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionUtils;
@@ -14,34 +12,23 @@ import co.bracesoftware.erosion.world.items.ErosionSimpleItems;
 import co.bracesoftware.erosion.world.recipes.ErosionFoodSaltingRecipe;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffects;
-import net.minecraft.world.inventory.MenuType;
-import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SoundType;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload.*;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.*;
 import co.bracesoftware.erosion.world.blocks.chemical_reactor.ChemicalReactorSystemCore.IErosionChemicalReactorItem;
@@ -270,18 +257,14 @@ public class ErosionRegistry
 
     public static final class DataComponents
     {
-        public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> IS_SALTED_FOOD = DATA_COMPONENTS.registerComponentType(
-            ErosionRegistry.RawRegistry.IS_SALTED_FOOD.getId(),
-            b -> b
-            .persistent(Codec.BOOL) 
-            .networkSynchronized(ByteBufCodecs.BOOL)
+        public static final ErosionModContent.ErosionBooleanDataComponent IS_SALTED_FOOD = new ErosionModContent
+        .ErosionBooleanDataComponent(
+            RawRegistry.IS_SALTED_FOOD
         );
-        
-        public static final DeferredHolder<
-            RecipeSerializer<?>, SimpleCraftingRecipeSerializer<ErosionFoodSaltingRecipe>
-        > IS_SALTED_FOOD_SERIALIZER = SERIALIZERS.register(
-            RawRegistry.IS_SALTED_FOOD_SERIALIZER.getId(),
-            () -> new SimpleCraftingRecipeSerializer<>(ErosionFoodSaltingRecipe::new)
+
+        public static final ErosionModContent.ErosionSerializer<ErosionFoodSaltingRecipe> IS_SALTED_FOOD_SERIALIZER = new ErosionModContent
+        .ErosionSerializer<>(
+            RawRegistry.IS_SALTED_FOOD_SERIALIZER, () -> new SimpleCraftingRecipeSerializer<>(ErosionFoodSaltingRecipe::new)
         );
     }
 
@@ -333,38 +316,42 @@ public class ErosionRegistry
 
     public static class Menus
     {
-        public static final DeferredHolder<MenuType<?>, MenuType<ChemicalReactorMenu>> CHEMICAL_REACTOR = MENUS.register(
-            RawRegistry.CHEMICAL_REACTOR.getId(), () -> IMenuTypeExtension.create(
-                (winid, inv, data) -> new ChemicalReactorMenu(winid, inv, data.readBlockPos())
+        public static final ErosionModContent.ErosionMenu<ChemicalReactorMenu> CHEMICAL_REACTOR = new ErosionModContent
+        .ErosionMenu<>(
+            RawRegistry.CHEMICAL_REACTOR, () -> IMenuTypeExtension.create(
+                (w,i,d) -> new ChemicalReactorMenu(w,i,d.readBlockPos())
             )
         );
     }
 
     public static class SoundEvents
     {
-        public static final Supplier<SoundEvent> ORE_MINE = SOUND_EVENTS.register(
-            RawRegistry.ORE_MINE.getId(), () -> SoundEvent.createVariableRangeEvent(
+        public static final ErosionModContent.ErosionSound ORE_MINE = new ErosionModContent.ErosionSound(
+            RawRegistry.ORE_MINE, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
                     Erosion.MODID, RawRegistry.ORE_MINE.getId()
                 )
             )
         );
-        public static final Supplier<SoundEvent> ORE_PLACE = SOUND_EVENTS.register(
-            RawRegistry.ORE_PLACE.getId(), () -> SoundEvent.createVariableRangeEvent(
+        
+        public static final ErosionModContent.ErosionSound ORE_PLACE = new ErosionModContent.ErosionSound(
+            RawRegistry.ORE_PLACE, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
                     Erosion.MODID, RawRegistry.ORE_PLACE.getId()
                 )
             )
         );
-        public static final ErosionModContent.ErosionSound CRUCIBLE_MELTING = WHAT??.register(
-            RawRegistry.CRUCIBLE_MELTING.getId(), () -> SoundEvent.createVariableRangeEvent(
+
+        public static final ErosionModContent.ErosionSound CRUCIBLE_MELTING = new ErosionModContent.ErosionSound(
+            RawRegistry.CRUCIBLE_MELTING, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
                     Erosion.MODID, RawRegistry.CRUCIBLE_MELTING.getId()
                 )
             )
         );
-        public static final Supplier<SoundEvent> ROCK = SOUND_EVENTS.register(
-            RawRegistry.ROCK.getId(), () -> SoundEvent.createVariableRangeEvent(
+
+        public static final ErosionModContent.ErosionSound ROCK = new ErosionModContent.ErosionSound(
+            RawRegistry.ROCK, () -> SoundEvent.createVariableRangeEvent(
                 ResourceLocation.fromNamespaceAndPath(
                     Erosion.MODID, RawRegistry.ROCK.getId()
                 )
