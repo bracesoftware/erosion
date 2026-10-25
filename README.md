@@ -104,3 +104,6 @@ Register your class:
 ```java
 ErosionEventBus.registerListeners(NAME.class);
 ```
+
+### Thanks to
+* [EtrnlNight1](https://github.com/EtrnlNight1)
