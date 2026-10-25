@@ -18,7 +18,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-def computedVersion=14523161201449809493
+def computedVersion=15635004621354606198
 version = computedVersion
 group = mod_group_id
 

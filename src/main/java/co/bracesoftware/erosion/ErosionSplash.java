@@ -21,20 +21,28 @@ public class ErosionSplash extends JWindow
 
     static
     {
-        var s = new ErosionSplash(Erosion.MODNAME + "." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT);
-        s.setVisible(true);
-        new Thread(() -> {
-            try
-            {
-                Thread.sleep(5000);
-            }
-            catch(Exception e)
-            {
-                e.printStackTrace();
-            }
+        try
+        {
+            var s = new ErosionSplash(Erosion.MODNAME + "." + ErosionConfig.ErosionDataGen.ErosionTextureGen.OUTPUT_FORMAT);
+            s.setVisible(true);
+            new Thread(() -> {
+                try
+                {
+                    Thread.sleep(5000);
+                }
+                catch(Exception e)
+                {
+                    e.printStackTrace();
+                }
 
-            s.dispose();
-        }).start();
+                s.dispose();
+            }).start();
+        }
+        catch(Exception e)
+        {
+            ErosionUtils.Log("Could not create splash -> " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private BufferedImage logo;
