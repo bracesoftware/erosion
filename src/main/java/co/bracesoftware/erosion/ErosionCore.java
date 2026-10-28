@@ -9,7 +9,6 @@ import co.bracesoftware.libs.chrono.Task;
 import co.bracesoftware.libs.minecraft_text_formatter.Emojis;
 import co.bracesoftware.erosion.api.eventbus.*;
 import co.bracesoftware.erosion.network.server.ErosionServerData;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,7 +29,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -990,14 +988,11 @@ public class ErosionCore
 
         public static final Item getAlloyItemFromComponents(List<ItemStack> recipe)
         {
-            List<Item> r = new ArrayList<>();
-            for(var is : recipe)
-            {
-                if(!is.isEmpty())
-                {
-                    r.add(is.getItem());
-                }
-            }
+            List<Item> r = new ArrayList<>(
+                recipe.stream().map(
+                    k -> k.getItem()
+                ).toList()
+            );
             r.sort(ChemicalReactorMenu.itemComparator);
 
             for(var m : ErosionRecipeRegistry.Crucible.ALLOYS.entrySet())

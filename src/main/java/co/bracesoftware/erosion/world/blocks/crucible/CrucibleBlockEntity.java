@@ -12,9 +12,8 @@ import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.ContainerHelper;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -27,7 +26,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
     public ItemStack storedItem = ItemStack.EMPTY;
     public int progress = 0;
     public List<ItemStack> coproducts = null;
-    public NonNullList<ItemStack> alloyComponents = NonNullList.withSize(9, ItemStack.EMPTY);
+    public List<ItemStack> alloyComponents = new ArrayList<>();
     public boolean sealed = false;
 
     public static class DataRawName
@@ -40,6 +39,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
         public static final String COPRODUCT_LIST = "cpl";
         public static final String HEAT = "heat";
         public static final String SEALED = "sealed";
+        public static final String ALLOY_COMPONENTS = "alloy_components";
     }
 
     public CrucibleBlockEntity(BlockPos pos, BlockState state)
@@ -239,7 +239,15 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
             t.put(DataRawName.CATALYST, this.catalyst.save(r));
         }
 
-        ContainerHelper.saveAllItems(t, alloyComponents, r);
+        var lt = new ListTag();
+        for(var is : this.alloyComponents)
+        {
+            if(!is.isEmpty())
+            {
+                lt.add(is.save(r));
+            }
+        }
+        t.put(DataRawName.ALLOY_COMPONENTS, lt);
         t.putBoolean(DataRawName.SEALED, sealed);
         return;
     }
@@ -263,8 +271,17 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
             this.catalyst = ItemStack.parse(r, t.getCompound(DataRawName.CATALYST)).orElse(ItemStack.EMPTY);
         }
         else this.catalyst = ItemStack.EMPTY;
-
-        ContainerHelper.loadAllItems(t, alloyComponents, r);
+        
+        this.alloyComponents.clear();
+        if(t.contains(DataRawName.ALLOY_COMPONENTS, 9))
+        {
+            var lt = t.getList(DataRawName.ALLOY_COMPONENTS, 10);
+            for(int i = 0; i < lt.size(); i++)
+            {
+                ItemStack.parse(r, lt.getCompound(i)).ifPresent(this.alloyComponents::add);
+            }
+        }
+        
         this.sealed = t.getBoolean(DataRawName.SEALED);
 
         //other shi
