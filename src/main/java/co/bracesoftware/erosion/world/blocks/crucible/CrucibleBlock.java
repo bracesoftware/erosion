@@ -252,7 +252,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     }
 
                     var it = p.getItemStack().getItem();
-                    if(Alloy.canBeUsedForAlloying(it) && !be.working)
+                    if(Alloy.canBeUsedForAlloying(it) && !be.working && !be.storedItem.isEmpty())
                     {
                         p.getItemStack().shrink(1);
                         be.alloyComponents.add(new ItemStack(it,1));
