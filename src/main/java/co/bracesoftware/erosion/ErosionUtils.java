@@ -22,8 +22,11 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -274,6 +277,30 @@ public final class ErosionUtils
         {
             return createBoxCentered(h,w,l,0,y,0);
         }
+
+        public static final VoxelShape createCenteredPipe(
+            int h, int w, int l, int y, int ww
+        )
+        {
+            int minX = (16 - w) / 2;
+            int maxX = minX + w;
+            int minZ = (16 - l) / 2;
+            int maxZ = minZ + l;
+
+            int innerMinX = minX + ww;
+            int innerMaxX = maxX - ww;
+            int innerMinZ = minZ + ww;
+            int innerMaxZ = maxZ - ww;
+
+            int maxY = y + h;
+
+            return Shapes.or(
+                Block.box(minX, y, minZ, innerMinX, maxY, maxZ),
+                Block.box(innerMaxX, y, minZ, maxX, maxY, maxZ),
+                Block.box(innerMinX, y, minZ, innerMaxX, maxY, innerMinZ),
+                Block.box(innerMinX, y, innerMaxZ, innerMaxX, maxY, maxZ)
+            );
+        }
     }
     public static final List<BlockPos> getRandomPositionsInRadius(BlockPos p, int count, int radius)
     {
@@ -291,5 +318,22 @@ public final class ErosionUtils
             l.add(BlockPos.containing(x,y,z));
         }
         return l;
+    }
+
+    public static final class PlayerFuncs
+    {
+        public static final void giveItem(ServerPlayer p, ItemStack s)
+        {
+            boolean k = p.getInventory().add(s);
+            if(!k && !s.isEmpty())
+            {
+                p.drop(s, false);
+            }
+        }
+        public static final void giveItem(ServerPlayer p, Item i, int c)
+        {
+            var s = new ItemStack(i,c);
+            giveItem(p, s);
+        }
     }
 }

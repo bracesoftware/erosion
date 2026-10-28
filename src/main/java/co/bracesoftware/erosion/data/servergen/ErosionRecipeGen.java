@@ -156,6 +156,14 @@ public class ErosionRecipeGen extends RecipeProvider implements IConditionBuilde
         .unlockedBy("has_netheriteingot", has(Items.NETHERITE_INGOT))
         .save(output);
 
+        ShapedRecipeBuilder.shaped(
+            RecipeCategory.BREWING, ErosionRegistry.Items.CRUCIBLE_LID.get()
+        ).pattern("KKK")
+        .pattern("K K")
+        .define('K',ErosionRegistry.Items.KAOLINIZED_GRANITE.get())
+        .unlockedBy("has_kg", has(ErosionRegistry.Items.KAOLINIZED_GRANITE.get()))
+        .save(output);
+
         ShapelessRecipeBuilder.shapeless(
             RecipeCategory.MISC, ErosionRegistry.Items.FLUX.get()
         ).requires(ErosionRegistry.Items.FELDSPAR_POWDER.get())

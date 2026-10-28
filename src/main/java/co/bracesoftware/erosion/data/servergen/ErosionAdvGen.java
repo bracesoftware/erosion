@@ -61,6 +61,13 @@ public class ErosionAdvGen extends AdvancementProvider
                 ErosionRegistry.RawRegistry.CRUCIBLE.getId(),
                 root
             );
+            var crucible_lid = ErosionDataGeneratorsProgInterface.ErosionAdvancement.generateAdvancement(
+                this, "A cook in disguise!",
+                "Craft a Crucible Lid.",
+                ErosionRegistry.Items.CRUCIBLE_LID.get(),
+                ErosionRegistry.RawRegistry.CRUCIBLE_LID.getId(),
+                crucible
+            );
 
             var crushed_eggz = ErosionAdvancement.generateAdvancement(
                 this, "Crushing Eggs",

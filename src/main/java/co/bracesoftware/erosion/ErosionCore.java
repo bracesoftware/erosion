@@ -548,7 +548,7 @@ public class ErosionCore
         {
             for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
             {
-                CrucibleCatalyst c = CRUCIBLE_CATALYST_LIST.get(i);
+                var c = CRUCIBLE_CATALYST_LIST.get(i);
                 if(c.catalystItem == item)
                 {
                     return true;
@@ -561,7 +561,7 @@ public class ErosionCore
         {
             for(int i = 0; i < CRUCIBLE_CATALYST_LIST.size(); ++i)
             {
-                CrucibleCatalyst c = CRUCIBLE_CATALYST_LIST.get(i);
+                var c = CRUCIBLE_CATALYST_LIST.get(i);
                 if(c.catalystItem == item)
                 {
                     return c.successChance;
@@ -974,6 +974,45 @@ public class ErosionCore
             ErosionUtils.Log("Discarding erodable material: " + this.name);
             
             ALTERATION_INVERTED.clear();
+            this.discardDuplicationPreventionSys(antiDuplicator);
+            return;
+        }
+    }
+
+    public static final class Alloy extends ErosionDynamicItem
+    {
+        private final Supplier<List<Item>> alloyComponentsSupplier;
+        private final Supplier<Item> alloyItemSupplier;
+
+        private List<Item> alloyComponents;
+        private Item alloyItem;
+
+        public Alloy(
+            String n, Supplier<List<Item>> ac,
+            Supplier<Item> a
+        )
+        {
+            this.name = n;
+            this.alloyComponentsSupplier = ac;
+            this.alloyItemSupplier = a;
+
+            this.setupAntiDuplicationSystem();
+        }
+
+        @Override public void setup() throws ErosionRecipeImplException
+        {
+            ErosionUtils.Log("Setting up alloy recipe -> " + this.name);
+            this.alloyItem = this.alloyItemSupplier.get();
+            this.alloyComponents = this.alloyComponentsSupplier.get();
+
+            this.preventDuplication(antiDuplicator);
+            
+            return;
+        }
+
+        @Override public void discard()
+        {
+            ErosionUtils.Log("Discarding alloy recipe -> " + this.name);
             this.discardDuplicationPreventionSys(antiDuplicator);
             return;
         }
@@ -2618,6 +2657,7 @@ public class ErosionCore
                 return this.info;
             }
         }
+        
         final String TAB = "  * ";
 
         final Map<Item, ChemicalInfo> CHEMICAL_ITEM_INFO = Map.ofEntries(

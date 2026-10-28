@@ -12,7 +12,9 @@ import co.bracesoftware.erosion.world.ErosionRegistry;
 import co.bracesoftware.erosion.world.custom.ErosionCustomEntitySys.Gas;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
@@ -25,6 +27,8 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
     public ItemStack storedItem = ItemStack.EMPTY;
     public int progress = 0;
     public List<ItemStack> coproducts = null;
+    public NonNullList<ItemStack> alloyComponents = NonNullList.withSize(9, ItemStack.EMPTY);
+    public boolean sealed = false;
 
     public static class DataRawName
     {
@@ -34,12 +38,22 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
         public static final String STORED_ITEM = "stored";
         public static final String PROGRESS = "progress"; 
         public static final String COPRODUCT_LIST = "cpl";
-        public static final String HEAT = "heat"; 
+        public static final String HEAT = "heat";
+        public static final String SEALED = "sealed";
     }
 
     public CrucibleBlockEntity(BlockPos pos, BlockState state)
     {
         super(ErosionRegistry.BlockEntities.CRUCIBLE.getBlockEntityHolder().get(), pos, state);
+    }
+
+    public final boolean isEmpty()
+    {
+        return this.catalyst.isEmpty() &&
+        this.finished == true &&
+        this.working == false &&
+        this.storedItem.isEmpty() &&
+        this.alloyComponents.isEmpty();
     }
 
     @Override
@@ -178,9 +192,10 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
     protected void saveAdditional(CompoundTag t, HolderLookup.Provider r)
     {
         super.saveAdditional(t, r);
-        t.putBoolean(DataRawName.WORKING, working);
-        t.putBoolean(DataRawName.FINISHED, finished);
-        t.putInt(DataRawName.PROGRESS, progress);
+        
+        t.putBoolean(DataRawName.WORKING, this.working);
+        t.putBoolean(DataRawName.FINISHED, this.finished);
+        t.putInt(DataRawName.PROGRESS, this.progress);
         if(!this.storedItem.isEmpty())
         {
             t.put(DataRawName.STORED_ITEM, this.storedItem.save(r));
@@ -189,6 +204,9 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
         {
             t.put(DataRawName.CATALYST, this.catalyst.save(r));
         }
+
+        ContainerHelper.saveAllItems(t, alloyComponents, r);
+        t.putBoolean(DataRawName.SEALED, sealed);
         return;
     }
 
@@ -196,6 +214,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
     public void loadAdditional(CompoundTag t, HolderLookup.Provider r)
     {
         super.loadAdditional(t, r);
+
         this.working = t.getBoolean(DataRawName.WORKING);
         this.finished = t.getBoolean(DataRawName.FINISHED);
         this.progress = t.getInt(DataRawName.PROGRESS);
@@ -210,6 +229,9 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
             this.catalyst = ItemStack.parse(r, t.getCompound(DataRawName.CATALYST)).orElse(ItemStack.EMPTY);
         }
         else this.catalyst = ItemStack.EMPTY;
+
+        ContainerHelper.loadAllItems(t, alloyComponents, r);
+        this.sealed = t.getBoolean(DataRawName.SEALED);
         return;
     }
 }

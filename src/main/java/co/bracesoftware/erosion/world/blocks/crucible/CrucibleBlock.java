@@ -60,7 +60,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
     public static final int Y_RIM_FROM = 14;
     public static final int Y_RIM_TO = 16;
 
-    private static final VoxelShape SHAPE = Shapes.or(
+    private static final VoxelShape SHAPE_OLD = Shapes.or(
         Block.box(MIN_XZ, Y_BOTTOM_FROM, MIN_XZ, MAX_XZ, Y_BOTTOM_TO, MAX_XZ), 
         Block.box(MIN_XZ, Y_WALLS_FROM, MIN_XZ, MAX_XZ, Y_WALLS_TO, INNER_MIN_XZ),
         Block.box(MIN_XZ, Y_WALLS_FROM, INNER_MAX_XZ, MAX_XZ, Y_WALLS_TO, MAX_XZ),       
@@ -70,6 +70,21 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
         Block.box(MIN_XZ, Y_RIM_FROM, RIM_MAX_XZ, MAX_XZ, Y_RIM_TO, MAX_XZ),           
         Block.box(MIN_XZ, Y_RIM_FROM, RIM_MIN_XZ, RIM_MIN_XZ, Y_RIM_TO, RIM_MAX_XZ), 
         Block.box(RIM_MAX_XZ, Y_RIM_FROM, RIM_MIN_XZ, MAX_XZ, Y_RIM_TO, RIM_MAX_XZ)
+    );
+
+    public static final int CRUCIBLE_THICK = 2;
+    public static final int CRUCIBLE_WIDTH = 10;
+    public static final int CRUCIBLE_HEIGHT = 14;
+
+    public static final VoxelShape SHAPE = Shapes.or(
+        ErosionUtils.ModelRendering.createCenteredPipe(CRUCIBLE_HEIGHT, CRUCIBLE_WIDTH,CRUCIBLE_WIDTH, 0, CRUCIBLE_THICK),
+        ErosionUtils.ModelRendering.createBoxCentered(1, CRUCIBLE_WIDTH,CRUCIBLE_WIDTH,0)
+    );
+
+    public static final VoxelShape SEALED_SHAPE = Shapes.or(
+        ErosionUtils.ModelRendering.createBoxCentered(CRUCIBLE_HEIGHT,CRUCIBLE_WIDTH,CRUCIBLE_WIDTH,0),
+        ErosionUtils.ModelRendering.createBoxCentered(1,CRUCIBLE_WIDTH + 1,CRUCIBLE_WIDTH + 1,CRUCIBLE_HEIGHT),
+        ErosionUtils.ModelRendering.createBoxCentered(1,2,2,CRUCIBLE_HEIGHT + 1)
     );
 
     public static final IntegerProperty HEAT = IntegerProperty.create(
@@ -82,6 +97,9 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
     );
     public static final BooleanProperty WORKING = BooleanProperty.create(
         CrucibleBlockEntity.DataRawName.WORKING.toLowerCase()
+    );
+    public static final BooleanProperty SEALED = BooleanProperty.create(
+        CrucibleBlockEntity.DataRawName.SEALED.toLowerCase()
     );
 
     public CrucibleBlock(Properties p)
@@ -133,6 +151,10 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
     @Override 
     public VoxelShape getShape(BlockState s, BlockGetter l, BlockPos p, CollisionContext c)
     {
+        if(s.hasProperty(SEALED) && s.getValue(SEALED))
+        {
+            return SEALED_SHAPE;
+        }
         return SHAPE;
     }
 
@@ -147,7 +169,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> b)
     {
         //super.createBlockStateDefinition(b);
-        b.add(FACING, FINISHED, WORKING, HEAT);
+        b.add(FACING, FINISHED, WORKING, HEAT, SEALED);
     }
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext c)
@@ -179,8 +201,36 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         ErosionScreenMessage.Color.DARK_RED
                     );
                     p.getServerPlayer().hurt(p.getServerPlayer().damageSources().generic(), 1f);
-                
                     return true;
+                }
+              
+                //if the crucible is SEALED, completely different logik
+                if(be.sealed)
+                {
+                    if(p.getItemStack().isEmpty() && be.isEmpty())
+                    {
+                        be.sealed = false;
+                        be.setChanged();
+                        p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                        p.getServerLevel().setBlock(
+                            p.getBlockPos(),
+                            p.getBlockState()
+                            .setValue(FINISHED, be.finished)
+                            .setValue(WORKING, be.working)
+                            .setValue(SEALED, be.sealed),
+                            Block.UPDATE_ALL
+                        );
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "Lid removed",
+                            ErosionScreenMessage.Color.GRAY
+                        );
+                        ErosionUtils.PlayerFuncs.giveItem(
+                            p.getServerPlayer(),
+                            ErosionRegistry.Items.CRUCIBLE_LID.get(),1
+                        );
+                        return true;
+                    }
+                    return false;
                 }
                 //if player is holding a catalyst item
                 if(CrucibleCatalyst.isItemCrucibleCatalyst(p.getItemStack().getItem()))
@@ -238,8 +288,29 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     boolean logik = ((!be.working) && (be.finished));
 
                     //if bro's klikin for no reason, say it
-                    if(logik && be.storedItem.isEmpty() && be.catalyst.isEmpty())
+                    if(be.isEmpty())
                     {
+                        if(p.getItemStack().is(ErosionRegistry.Items.CRUCIBLE_LID.get()))
+                        {
+                            be.sealed = true;
+                            p.getItemStack().shrink(1);
+                            ErosionUtils.displayMessage(
+                                p.getServerPlayer(), "Lid on",
+                                ErosionScreenMessage.Color.GRAY
+                            );
+
+                            be.setChanged();
+                            p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                            p.getServerLevel().setBlock(
+                                p.getBlockPos(),
+                                p.getBlockState()
+                                .setValue(FINISHED, be.finished)
+                                .setValue(SEALED, be.sealed)
+                                .setValue(WORKING, be.working),
+                                Block.UPDATE_ALL
+                            );
+                            return true;
+                        }
                         ErosionUtils.displayMessage(
                             p.getServerPlayer(), "The crucible is completely empty",
                             ErosionScreenMessage.Color.GRAY
@@ -253,7 +324,9 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                             p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
                             ErosionScreenMessage.Color.DARK_AQUA
                         );
-                        p.getServerPlayer().getInventory().placeItemBackInInventory(be.storedItem);
+                        ErosionUtils.PlayerFuncs.giveItem(
+                            p.getServerPlayer(), be.storedItem
+                        );
                         be.storedItem = ItemStack.EMPTY;
                         be.setChanged();
                         p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
@@ -281,11 +354,10 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     //if crucible isn't working and is finished then take the catalyst out
                     if(logik && be.storedItem.isEmpty() && !be.catalyst.isEmpty())
                     {
-                        ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
+                        var fuelStack = new ItemStack(be.catalyst.getItem(), 1);
                         Containers.dropItemStack(p.getServerLevel(), p.getBlockPos().getX(), p.getBlockPos().getY(), p.getBlockPos().getZ(), fuelStack);
                         be.catalyst = ItemStack.EMPTY;
                         ErosionUtils.displayMessage(p.getServerPlayer(), "Catalyst taken out");
-                    
                         return true;
                     }
                 }
@@ -395,15 +467,22 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                 }
                 if(be.catalyst != null && !be.catalyst.isEmpty())
                 {
-                    ItemStack fuelStack = new ItemStack(be.catalyst.getItem(), 1);
+                    var fuelStack = new ItemStack(be.catalyst.getItem(), 1);
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), fuelStack);
                 }
                 if(be.coproducts != null && !be.coproducts.isEmpty())
                 {
-                    for(ItemStack coproduct : be.coproducts)
+                    for(var c : be.coproducts)
                     {
-                        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), coproduct);
+                        Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), c);
                     }
+                }
+                if(be.sealed)
+                {
+                    Containers.dropItemStack(
+                        level,pos.getX(), pos.getY(), pos.getZ(),
+                        new ItemStack(ErosionRegistry.Items.CRUCIBLE_LID.get(),1)
+                    );
                 }
             }
 
