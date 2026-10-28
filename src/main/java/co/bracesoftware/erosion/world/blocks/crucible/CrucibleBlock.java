@@ -83,7 +83,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
 
     public static final VoxelShape SEALED_SHAPE = Shapes.or(
         ErosionUtils.ModelRendering.createBoxCentered(CRUCIBLE_HEIGHT,CRUCIBLE_WIDTH,CRUCIBLE_WIDTH,0),
-        ErosionUtils.ModelRendering.createBoxCentered(1,CRUCIBLE_WIDTH + 1,CRUCIBLE_WIDTH + 1,CRUCIBLE_HEIGHT),
+        ErosionUtils.ModelRendering.createBoxCentered(1,CRUCIBLE_WIDTH + 2,CRUCIBLE_WIDTH + 2,CRUCIBLE_HEIGHT),
         ErosionUtils.ModelRendering.createBoxCentered(1,2,2,CRUCIBLE_HEIGHT + 1)
     );
 
