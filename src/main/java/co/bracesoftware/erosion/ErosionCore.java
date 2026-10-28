@@ -1035,7 +1035,7 @@ public class ErosionCore
         {
             ErosionUtils.Log("Setting up alloy recipe -> " + this.name);
             this.alloyItem = this.alloyItemSupplier.get();
-            this.alloyComponents = this.alloyComponentsSupplier.get();
+            this.alloyComponents = new ArrayList<>(this.alloyComponentsSupplier.get());
             this.alloyComponents.sort(ChemicalReactorMenu.itemComparator);
 
             CAN_BE_USED_FOR_ALLOYING.addAll(alloyComponents);
