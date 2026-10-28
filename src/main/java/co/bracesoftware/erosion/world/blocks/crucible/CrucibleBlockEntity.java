@@ -49,11 +49,19 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
 
     public final boolean isEmpty()
     {
+        boolean a = true;
+        for(var is : this.alloyComponents)
+        {
+            if(!is.isEmpty())
+            {
+                a = false;
+                break;
+            }
+        }
         return this.catalyst.isEmpty() &&
         this.finished == true &&
         this.working == false &&
-        this.storedItem.isEmpty() &&
-        this.alloyComponents.isEmpty();
+        this.storedItem.isEmpty() && a;
     }
 
     @Override

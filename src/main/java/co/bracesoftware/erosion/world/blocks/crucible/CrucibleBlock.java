@@ -341,7 +341,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     }
                 }
 
-                if(p.getItemStack().is(ErosionRegistry.Items.CRUCIBLE_LID.get()))
+                if(be.isEmpty() && p.getItemStack().is(ErosionRegistry.Items.CRUCIBLE_LID.get()))
                 {
                     be.sealed = true;
                     p.getItemStack().shrink(1);
