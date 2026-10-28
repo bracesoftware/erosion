@@ -1,963 +1,1923 @@
 {
   "variants": {
-    "facing=east,finished=false,heat=0,working=false": {
+    "facing=east,finished=false,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 90
     },
-    "facing=east,finished=false,heat=0,working=true": {
+    "facing=east,finished=false,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 90
     },
-    "facing=east,finished=false,heat=1,working=false": {
+    "facing=east,finished=false,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 90
     },
-    "facing=east,finished=false,heat=1,working=true": {
+    "facing=east,finished=false,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 90
     },
-    "facing=east,finished=false,heat=10,working=false": {
+    "facing=east,finished=false,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 90
     },
-    "facing=east,finished=false,heat=10,working=true": {
+    "facing=east,finished=false,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 90
     },
-    "facing=east,finished=false,heat=11,working=false": {
+    "facing=east,finished=false,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 90
     },
-    "facing=east,finished=false,heat=11,working=true": {
+    "facing=east,finished=false,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 90
     },
-    "facing=east,finished=false,heat=12,working=false": {
+    "facing=east,finished=false,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 90
     },
-    "facing=east,finished=false,heat=12,working=true": {
+    "facing=east,finished=false,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 90
     },
-    "facing=east,finished=false,heat=13,working=false": {
+    "facing=east,finished=false,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 90
     },
-    "facing=east,finished=false,heat=13,working=true": {
+    "facing=east,finished=false,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 90
     },
-    "facing=east,finished=false,heat=14,working=false": {
+    "facing=east,finished=false,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 90
     },
-    "facing=east,finished=false,heat=14,working=true": {
+    "facing=east,finished=false,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 90
     },
-    "facing=east,finished=false,heat=15,working=false": {
+    "facing=east,finished=false,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 90
     },
-    "facing=east,finished=false,heat=15,working=true": {
+    "facing=east,finished=false,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 90
     },
-    "facing=east,finished=false,heat=2,working=false": {
+    "facing=east,finished=false,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 90
     },
-    "facing=east,finished=false,heat=2,working=true": {
+    "facing=east,finished=false,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 90
     },
-    "facing=east,finished=false,heat=3,working=false": {
+    "facing=east,finished=false,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 90
     },
-    "facing=east,finished=false,heat=3,working=true": {
+    "facing=east,finished=false,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 90
     },
-    "facing=east,finished=false,heat=4,working=false": {
+    "facing=east,finished=false,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 90
     },
-    "facing=east,finished=false,heat=4,working=true": {
+    "facing=east,finished=false,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 90
     },
-    "facing=east,finished=false,heat=5,working=false": {
+    "facing=east,finished=false,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 90
     },
-    "facing=east,finished=false,heat=5,working=true": {
+    "facing=east,finished=false,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 90
     },
-    "facing=east,finished=false,heat=6,working=false": {
+    "facing=east,finished=false,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 90
     },
-    "facing=east,finished=false,heat=6,working=true": {
+    "facing=east,finished=false,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 90
     },
-    "facing=east,finished=false,heat=7,working=false": {
+    "facing=east,finished=false,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 90
     },
-    "facing=east,finished=false,heat=7,working=true": {
+    "facing=east,finished=false,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 90
     },
-    "facing=east,finished=false,heat=8,working=false": {
+    "facing=east,finished=false,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 90
     },
-    "facing=east,finished=false,heat=8,working=true": {
+    "facing=east,finished=false,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 90
     },
-    "facing=east,finished=false,heat=9,working=false": {
+    "facing=east,finished=false,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 90
     },
-    "facing=east,finished=false,heat=9,working=true": {
+    "facing=east,finished=false,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
       "y": 90
     },
-    "facing=east,finished=true,heat=0,working=false": {
+    "facing=east,finished=false,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 90
+    },
+    "facing=east,finished=false,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 90
     },
-    "facing=east,finished=true,heat=0,working=true": {
+    "facing=east,finished=true,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 90
     },
-    "facing=east,finished=true,heat=1,working=false": {
+    "facing=east,finished=true,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 90
     },
-    "facing=east,finished=true,heat=1,working=true": {
+    "facing=east,finished=true,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 90
     },
-    "facing=east,finished=true,heat=10,working=false": {
+    "facing=east,finished=true,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 90
     },
-    "facing=east,finished=true,heat=10,working=true": {
+    "facing=east,finished=true,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 90
     },
-    "facing=east,finished=true,heat=11,working=false": {
+    "facing=east,finished=true,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 90
     },
-    "facing=east,finished=true,heat=11,working=true": {
+    "facing=east,finished=true,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 90
     },
-    "facing=east,finished=true,heat=12,working=false": {
+    "facing=east,finished=true,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 90
     },
-    "facing=east,finished=true,heat=12,working=true": {
+    "facing=east,finished=true,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 90
     },
-    "facing=east,finished=true,heat=13,working=false": {
+    "facing=east,finished=true,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 90
     },
-    "facing=east,finished=true,heat=13,working=true": {
+    "facing=east,finished=true,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 90
     },
-    "facing=east,finished=true,heat=14,working=false": {
+    "facing=east,finished=true,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 90
     },
-    "facing=east,finished=true,heat=14,working=true": {
+    "facing=east,finished=true,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 90
     },
-    "facing=east,finished=true,heat=15,working=false": {
+    "facing=east,finished=true,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 90
     },
-    "facing=east,finished=true,heat=15,working=true": {
+    "facing=east,finished=true,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 90
     },
-    "facing=east,finished=true,heat=2,working=false": {
+    "facing=east,finished=true,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 90
     },
-    "facing=east,finished=true,heat=2,working=true": {
+    "facing=east,finished=true,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 90
     },
-    "facing=east,finished=true,heat=3,working=false": {
+    "facing=east,finished=true,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 90
     },
-    "facing=east,finished=true,heat=3,working=true": {
+    "facing=east,finished=true,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 90
     },
-    "facing=east,finished=true,heat=4,working=false": {
+    "facing=east,finished=true,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 90
     },
-    "facing=east,finished=true,heat=4,working=true": {
+    "facing=east,finished=true,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 90
     },
-    "facing=east,finished=true,heat=5,working=false": {
+    "facing=east,finished=true,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 90
     },
-    "facing=east,finished=true,heat=5,working=true": {
+    "facing=east,finished=true,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 90
     },
-    "facing=east,finished=true,heat=6,working=false": {
+    "facing=east,finished=true,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 90
     },
-    "facing=east,finished=true,heat=6,working=true": {
+    "facing=east,finished=true,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 90
     },
-    "facing=east,finished=true,heat=7,working=false": {
+    "facing=east,finished=true,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 90
     },
-    "facing=east,finished=true,heat=7,working=true": {
+    "facing=east,finished=true,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 90
     },
-    "facing=east,finished=true,heat=8,working=false": {
+    "facing=east,finished=true,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 90
     },
-    "facing=east,finished=true,heat=8,working=true": {
+    "facing=east,finished=true,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 90
     },
-    "facing=east,finished=true,heat=9,working=false": {
+    "facing=east,finished=true,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 90
     },
-    "facing=east,finished=true,heat=9,working=true": {
+    "facing=east,finished=true,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
       "y": 90
     },
-    "facing=north,finished=false,heat=0,working=false": {
+    "facing=east,finished=true,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 90
+    },
+    "facing=east,finished=true,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 90
+    },
+    "facing=north,finished=false,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible"
     },
-    "facing=north,finished=false,heat=0,working=true": {
+    "facing=north,finished=false,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible"
     },
-    "facing=north,finished=false,heat=1,working=false": {
+    "facing=north,finished=false,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible"
+    },
+    "facing=north,finished=false,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible"
+    },
+    "facing=north,finished=false,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1"
     },
-    "facing=north,finished=false,heat=1,working=true": {
+    "facing=north,finished=false,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1"
     },
-    "facing=north,finished=false,heat=10,working=false": {
+    "facing=north,finished=false,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1"
+    },
+    "facing=north,finished=false,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1"
+    },
+    "facing=north,finished=false,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10"
     },
-    "facing=north,finished=false,heat=10,working=true": {
+    "facing=north,finished=false,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10"
     },
-    "facing=north,finished=false,heat=11,working=false": {
+    "facing=north,finished=false,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10"
+    },
+    "facing=north,finished=false,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10"
+    },
+    "facing=north,finished=false,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11"
     },
-    "facing=north,finished=false,heat=11,working=true": {
+    "facing=north,finished=false,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11"
     },
-    "facing=north,finished=false,heat=12,working=false": {
+    "facing=north,finished=false,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11"
+    },
+    "facing=north,finished=false,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11"
+    },
+    "facing=north,finished=false,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12"
     },
-    "facing=north,finished=false,heat=12,working=true": {
+    "facing=north,finished=false,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12"
     },
-    "facing=north,finished=false,heat=13,working=false": {
+    "facing=north,finished=false,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12"
+    },
+    "facing=north,finished=false,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12"
+    },
+    "facing=north,finished=false,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13"
     },
-    "facing=north,finished=false,heat=13,working=true": {
+    "facing=north,finished=false,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13"
     },
-    "facing=north,finished=false,heat=14,working=false": {
+    "facing=north,finished=false,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13"
+    },
+    "facing=north,finished=false,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13"
+    },
+    "facing=north,finished=false,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14"
     },
-    "facing=north,finished=false,heat=14,working=true": {
+    "facing=north,finished=false,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14"
     },
-    "facing=north,finished=false,heat=15,working=false": {
+    "facing=north,finished=false,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14"
+    },
+    "facing=north,finished=false,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14"
+    },
+    "facing=north,finished=false,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15"
     },
-    "facing=north,finished=false,heat=15,working=true": {
+    "facing=north,finished=false,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15"
     },
-    "facing=north,finished=false,heat=2,working=false": {
+    "facing=north,finished=false,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15"
+    },
+    "facing=north,finished=false,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15"
+    },
+    "facing=north,finished=false,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2"
     },
-    "facing=north,finished=false,heat=2,working=true": {
+    "facing=north,finished=false,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2"
     },
-    "facing=north,finished=false,heat=3,working=false": {
+    "facing=north,finished=false,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2"
+    },
+    "facing=north,finished=false,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2"
+    },
+    "facing=north,finished=false,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3"
     },
-    "facing=north,finished=false,heat=3,working=true": {
+    "facing=north,finished=false,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3"
     },
-    "facing=north,finished=false,heat=4,working=false": {
+    "facing=north,finished=false,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3"
+    },
+    "facing=north,finished=false,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3"
+    },
+    "facing=north,finished=false,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4"
     },
-    "facing=north,finished=false,heat=4,working=true": {
+    "facing=north,finished=false,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4"
     },
-    "facing=north,finished=false,heat=5,working=false": {
+    "facing=north,finished=false,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4"
+    },
+    "facing=north,finished=false,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4"
+    },
+    "facing=north,finished=false,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5"
     },
-    "facing=north,finished=false,heat=5,working=true": {
+    "facing=north,finished=false,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5"
     },
-    "facing=north,finished=false,heat=6,working=false": {
+    "facing=north,finished=false,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5"
+    },
+    "facing=north,finished=false,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5"
+    },
+    "facing=north,finished=false,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6"
     },
-    "facing=north,finished=false,heat=6,working=true": {
+    "facing=north,finished=false,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6"
     },
-    "facing=north,finished=false,heat=7,working=false": {
+    "facing=north,finished=false,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6"
+    },
+    "facing=north,finished=false,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6"
+    },
+    "facing=north,finished=false,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7"
     },
-    "facing=north,finished=false,heat=7,working=true": {
+    "facing=north,finished=false,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7"
     },
-    "facing=north,finished=false,heat=8,working=false": {
+    "facing=north,finished=false,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7"
+    },
+    "facing=north,finished=false,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7"
+    },
+    "facing=north,finished=false,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8"
     },
-    "facing=north,finished=false,heat=8,working=true": {
+    "facing=north,finished=false,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8"
     },
-    "facing=north,finished=false,heat=9,working=false": {
+    "facing=north,finished=false,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8"
+    },
+    "facing=north,finished=false,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8"
+    },
+    "facing=north,finished=false,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9"
     },
-    "facing=north,finished=false,heat=9,working=true": {
+    "facing=north,finished=false,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9"
     },
-    "facing=north,finished=true,heat=0,working=false": {
+    "facing=north,finished=false,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9"
+    },
+    "facing=north,finished=false,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9"
+    },
+    "facing=north,finished=true,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible"
     },
-    "facing=north,finished=true,heat=0,working=true": {
+    "facing=north,finished=true,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible"
     },
-    "facing=north,finished=true,heat=1,working=false": {
+    "facing=north,finished=true,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible"
+    },
+    "facing=north,finished=true,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible"
+    },
+    "facing=north,finished=true,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1"
     },
-    "facing=north,finished=true,heat=1,working=true": {
+    "facing=north,finished=true,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1"
     },
-    "facing=north,finished=true,heat=10,working=false": {
+    "facing=north,finished=true,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1"
+    },
+    "facing=north,finished=true,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1"
+    },
+    "facing=north,finished=true,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10"
     },
-    "facing=north,finished=true,heat=10,working=true": {
+    "facing=north,finished=true,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10"
     },
-    "facing=north,finished=true,heat=11,working=false": {
+    "facing=north,finished=true,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10"
+    },
+    "facing=north,finished=true,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10"
+    },
+    "facing=north,finished=true,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11"
     },
-    "facing=north,finished=true,heat=11,working=true": {
+    "facing=north,finished=true,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11"
     },
-    "facing=north,finished=true,heat=12,working=false": {
+    "facing=north,finished=true,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11"
+    },
+    "facing=north,finished=true,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11"
+    },
+    "facing=north,finished=true,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12"
     },
-    "facing=north,finished=true,heat=12,working=true": {
+    "facing=north,finished=true,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12"
     },
-    "facing=north,finished=true,heat=13,working=false": {
+    "facing=north,finished=true,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12"
+    },
+    "facing=north,finished=true,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12"
+    },
+    "facing=north,finished=true,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13"
     },
-    "facing=north,finished=true,heat=13,working=true": {
+    "facing=north,finished=true,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13"
     },
-    "facing=north,finished=true,heat=14,working=false": {
+    "facing=north,finished=true,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13"
+    },
+    "facing=north,finished=true,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13"
+    },
+    "facing=north,finished=true,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14"
     },
-    "facing=north,finished=true,heat=14,working=true": {
+    "facing=north,finished=true,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14"
     },
-    "facing=north,finished=true,heat=15,working=false": {
+    "facing=north,finished=true,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14"
+    },
+    "facing=north,finished=true,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14"
+    },
+    "facing=north,finished=true,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15"
     },
-    "facing=north,finished=true,heat=15,working=true": {
+    "facing=north,finished=true,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15"
     },
-    "facing=north,finished=true,heat=2,working=false": {
+    "facing=north,finished=true,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15"
+    },
+    "facing=north,finished=true,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15"
+    },
+    "facing=north,finished=true,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2"
     },
-    "facing=north,finished=true,heat=2,working=true": {
+    "facing=north,finished=true,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2"
     },
-    "facing=north,finished=true,heat=3,working=false": {
+    "facing=north,finished=true,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2"
+    },
+    "facing=north,finished=true,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2"
+    },
+    "facing=north,finished=true,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3"
     },
-    "facing=north,finished=true,heat=3,working=true": {
+    "facing=north,finished=true,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3"
     },
-    "facing=north,finished=true,heat=4,working=false": {
+    "facing=north,finished=true,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3"
+    },
+    "facing=north,finished=true,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3"
+    },
+    "facing=north,finished=true,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4"
     },
-    "facing=north,finished=true,heat=4,working=true": {
+    "facing=north,finished=true,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4"
     },
-    "facing=north,finished=true,heat=5,working=false": {
+    "facing=north,finished=true,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4"
+    },
+    "facing=north,finished=true,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4"
+    },
+    "facing=north,finished=true,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5"
     },
-    "facing=north,finished=true,heat=5,working=true": {
+    "facing=north,finished=true,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5"
     },
-    "facing=north,finished=true,heat=6,working=false": {
+    "facing=north,finished=true,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5"
+    },
+    "facing=north,finished=true,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5"
+    },
+    "facing=north,finished=true,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6"
     },
-    "facing=north,finished=true,heat=6,working=true": {
+    "facing=north,finished=true,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6"
     },
-    "facing=north,finished=true,heat=7,working=false": {
+    "facing=north,finished=true,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6"
+    },
+    "facing=north,finished=true,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6"
+    },
+    "facing=north,finished=true,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7"
     },
-    "facing=north,finished=true,heat=7,working=true": {
+    "facing=north,finished=true,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7"
     },
-    "facing=north,finished=true,heat=8,working=false": {
+    "facing=north,finished=true,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7"
+    },
+    "facing=north,finished=true,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7"
+    },
+    "facing=north,finished=true,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8"
     },
-    "facing=north,finished=true,heat=8,working=true": {
+    "facing=north,finished=true,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8"
     },
-    "facing=north,finished=true,heat=9,working=false": {
+    "facing=north,finished=true,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8"
+    },
+    "facing=north,finished=true,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8"
+    },
+    "facing=north,finished=true,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9"
     },
-    "facing=north,finished=true,heat=9,working=true": {
+    "facing=north,finished=true,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9"
     },
-    "facing=south,finished=false,heat=0,working=false": {
+    "facing=north,finished=true,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9"
+    },
+    "facing=north,finished=true,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9"
+    },
+    "facing=south,finished=false,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 180
     },
-    "facing=south,finished=false,heat=0,working=true": {
+    "facing=south,finished=false,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 180
     },
-    "facing=south,finished=false,heat=1,working=false": {
+    "facing=south,finished=false,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 180
     },
-    "facing=south,finished=false,heat=1,working=true": {
+    "facing=south,finished=false,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 180
     },
-    "facing=south,finished=false,heat=10,working=false": {
+    "facing=south,finished=false,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 180
     },
-    "facing=south,finished=false,heat=10,working=true": {
+    "facing=south,finished=false,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 180
     },
-    "facing=south,finished=false,heat=11,working=false": {
+    "facing=south,finished=false,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 180
     },
-    "facing=south,finished=false,heat=11,working=true": {
+    "facing=south,finished=false,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 180
     },
-    "facing=south,finished=false,heat=12,working=false": {
+    "facing=south,finished=false,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 180
     },
-    "facing=south,finished=false,heat=12,working=true": {
+    "facing=south,finished=false,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 180
     },
-    "facing=south,finished=false,heat=13,working=false": {
+    "facing=south,finished=false,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 180
     },
-    "facing=south,finished=false,heat=13,working=true": {
+    "facing=south,finished=false,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 180
     },
-    "facing=south,finished=false,heat=14,working=false": {
+    "facing=south,finished=false,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 180
     },
-    "facing=south,finished=false,heat=14,working=true": {
+    "facing=south,finished=false,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 180
     },
-    "facing=south,finished=false,heat=15,working=false": {
+    "facing=south,finished=false,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 180
     },
-    "facing=south,finished=false,heat=15,working=true": {
+    "facing=south,finished=false,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 180
     },
-    "facing=south,finished=false,heat=2,working=false": {
+    "facing=south,finished=false,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 180
     },
-    "facing=south,finished=false,heat=2,working=true": {
+    "facing=south,finished=false,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 180
     },
-    "facing=south,finished=false,heat=3,working=false": {
+    "facing=south,finished=false,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 180
     },
-    "facing=south,finished=false,heat=3,working=true": {
+    "facing=south,finished=false,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 180
     },
-    "facing=south,finished=false,heat=4,working=false": {
+    "facing=south,finished=false,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 180
     },
-    "facing=south,finished=false,heat=4,working=true": {
+    "facing=south,finished=false,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 180
     },
-    "facing=south,finished=false,heat=5,working=false": {
+    "facing=south,finished=false,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 180
     },
-    "facing=south,finished=false,heat=5,working=true": {
+    "facing=south,finished=false,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 180
     },
-    "facing=south,finished=false,heat=6,working=false": {
+    "facing=south,finished=false,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 180
     },
-    "facing=south,finished=false,heat=6,working=true": {
+    "facing=south,finished=false,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 180
     },
-    "facing=south,finished=false,heat=7,working=false": {
+    "facing=south,finished=false,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 180
     },
-    "facing=south,finished=false,heat=7,working=true": {
+    "facing=south,finished=false,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 180
     },
-    "facing=south,finished=false,heat=8,working=false": {
+    "facing=south,finished=false,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 180
     },
-    "facing=south,finished=false,heat=8,working=true": {
+    "facing=south,finished=false,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 180
     },
-    "facing=south,finished=false,heat=9,working=false": {
+    "facing=south,finished=false,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 180
     },
-    "facing=south,finished=false,heat=9,working=true": {
+    "facing=south,finished=false,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
       "y": 180
     },
-    "facing=south,finished=true,heat=0,working=false": {
+    "facing=south,finished=false,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 180
+    },
+    "facing=south,finished=false,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 180
     },
-    "facing=south,finished=true,heat=0,working=true": {
+    "facing=south,finished=true,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 180
     },
-    "facing=south,finished=true,heat=1,working=false": {
+    "facing=south,finished=true,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 180
     },
-    "facing=south,finished=true,heat=1,working=true": {
+    "facing=south,finished=true,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 180
     },
-    "facing=south,finished=true,heat=10,working=false": {
+    "facing=south,finished=true,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 180
     },
-    "facing=south,finished=true,heat=10,working=true": {
+    "facing=south,finished=true,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 180
     },
-    "facing=south,finished=true,heat=11,working=false": {
+    "facing=south,finished=true,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 180
     },
-    "facing=south,finished=true,heat=11,working=true": {
+    "facing=south,finished=true,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 180
     },
-    "facing=south,finished=true,heat=12,working=false": {
+    "facing=south,finished=true,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 180
     },
-    "facing=south,finished=true,heat=12,working=true": {
+    "facing=south,finished=true,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 180
     },
-    "facing=south,finished=true,heat=13,working=false": {
+    "facing=south,finished=true,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 180
     },
-    "facing=south,finished=true,heat=13,working=true": {
+    "facing=south,finished=true,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 180
     },
-    "facing=south,finished=true,heat=14,working=false": {
+    "facing=south,finished=true,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 180
     },
-    "facing=south,finished=true,heat=14,working=true": {
+    "facing=south,finished=true,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 180
     },
-    "facing=south,finished=true,heat=15,working=false": {
+    "facing=south,finished=true,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 180
     },
-    "facing=south,finished=true,heat=15,working=true": {
+    "facing=south,finished=true,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 180
     },
-    "facing=south,finished=true,heat=2,working=false": {
+    "facing=south,finished=true,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 180
     },
-    "facing=south,finished=true,heat=2,working=true": {
+    "facing=south,finished=true,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 180
     },
-    "facing=south,finished=true,heat=3,working=false": {
+    "facing=south,finished=true,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 180
     },
-    "facing=south,finished=true,heat=3,working=true": {
+    "facing=south,finished=true,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 180
     },
-    "facing=south,finished=true,heat=4,working=false": {
+    "facing=south,finished=true,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 180
     },
-    "facing=south,finished=true,heat=4,working=true": {
+    "facing=south,finished=true,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 180
     },
-    "facing=south,finished=true,heat=5,working=false": {
+    "facing=south,finished=true,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 180
     },
-    "facing=south,finished=true,heat=5,working=true": {
+    "facing=south,finished=true,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 180
     },
-    "facing=south,finished=true,heat=6,working=false": {
+    "facing=south,finished=true,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 180
     },
-    "facing=south,finished=true,heat=6,working=true": {
+    "facing=south,finished=true,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 180
     },
-    "facing=south,finished=true,heat=7,working=false": {
+    "facing=south,finished=true,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 180
     },
-    "facing=south,finished=true,heat=7,working=true": {
+    "facing=south,finished=true,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 180
     },
-    "facing=south,finished=true,heat=8,working=false": {
+    "facing=south,finished=true,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 180
     },
-    "facing=south,finished=true,heat=8,working=true": {
+    "facing=south,finished=true,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 180
     },
-    "facing=south,finished=true,heat=9,working=false": {
+    "facing=south,finished=true,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 180
     },
-    "facing=south,finished=true,heat=9,working=true": {
+    "facing=south,finished=true,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
       "y": 180
     },
-    "facing=west,finished=false,heat=0,working=false": {
+    "facing=south,finished=true,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 180
+    },
+    "facing=south,finished=true,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 180
+    },
+    "facing=west,finished=false,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 270
     },
-    "facing=west,finished=false,heat=0,working=true": {
+    "facing=west,finished=false,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 270
     },
-    "facing=west,finished=false,heat=1,working=false": {
+    "facing=west,finished=false,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 270
     },
-    "facing=west,finished=false,heat=1,working=true": {
+    "facing=west,finished=false,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 270
     },
-    "facing=west,finished=false,heat=10,working=false": {
+    "facing=west,finished=false,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 270
     },
-    "facing=west,finished=false,heat=10,working=true": {
+    "facing=west,finished=false,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 270
     },
-    "facing=west,finished=false,heat=11,working=false": {
+    "facing=west,finished=false,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 270
     },
-    "facing=west,finished=false,heat=11,working=true": {
+    "facing=west,finished=false,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 270
     },
-    "facing=west,finished=false,heat=12,working=false": {
+    "facing=west,finished=false,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 270
     },
-    "facing=west,finished=false,heat=12,working=true": {
+    "facing=west,finished=false,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 270
     },
-    "facing=west,finished=false,heat=13,working=false": {
+    "facing=west,finished=false,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 270
     },
-    "facing=west,finished=false,heat=13,working=true": {
+    "facing=west,finished=false,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 270
     },
-    "facing=west,finished=false,heat=14,working=false": {
+    "facing=west,finished=false,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 270
     },
-    "facing=west,finished=false,heat=14,working=true": {
+    "facing=west,finished=false,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 270
     },
-    "facing=west,finished=false,heat=15,working=false": {
+    "facing=west,finished=false,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 270
     },
-    "facing=west,finished=false,heat=15,working=true": {
+    "facing=west,finished=false,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 270
     },
-    "facing=west,finished=false,heat=2,working=false": {
+    "facing=west,finished=false,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 270
     },
-    "facing=west,finished=false,heat=2,working=true": {
+    "facing=west,finished=false,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 270
     },
-    "facing=west,finished=false,heat=3,working=false": {
+    "facing=west,finished=false,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 270
     },
-    "facing=west,finished=false,heat=3,working=true": {
+    "facing=west,finished=false,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 270
     },
-    "facing=west,finished=false,heat=4,working=false": {
+    "facing=west,finished=false,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 270
     },
-    "facing=west,finished=false,heat=4,working=true": {
+    "facing=west,finished=false,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 270
     },
-    "facing=west,finished=false,heat=5,working=false": {
+    "facing=west,finished=false,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 270
     },
-    "facing=west,finished=false,heat=5,working=true": {
+    "facing=west,finished=false,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 270
     },
-    "facing=west,finished=false,heat=6,working=false": {
+    "facing=west,finished=false,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 270
     },
-    "facing=west,finished=false,heat=6,working=true": {
+    "facing=west,finished=false,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 270
     },
-    "facing=west,finished=false,heat=7,working=false": {
+    "facing=west,finished=false,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 270
     },
-    "facing=west,finished=false,heat=7,working=true": {
+    "facing=west,finished=false,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 270
     },
-    "facing=west,finished=false,heat=8,working=false": {
+    "facing=west,finished=false,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 270
     },
-    "facing=west,finished=false,heat=8,working=true": {
+    "facing=west,finished=false,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 270
     },
-    "facing=west,finished=false,heat=9,working=false": {
+    "facing=west,finished=false,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 270
     },
-    "facing=west,finished=false,heat=9,working=true": {
+    "facing=west,finished=false,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
       "y": 270
     },
-    "facing=west,finished=true,heat=0,working=false": {
+    "facing=west,finished=false,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 270
+    },
+    "facing=west,finished=false,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=0,sealed=false,working=false": {
       "model": "erosion:block/crucible",
       "y": 270
     },
-    "facing=west,finished=true,heat=0,working=true": {
+    "facing=west,finished=true,heat=0,sealed=false,working=true": {
       "model": "erosion:block/crucible",
       "y": 270
     },
-    "facing=west,finished=true,heat=1,working=false": {
+    "facing=west,finished=true,heat=0,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=0,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=1,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_1",
       "y": 270
     },
-    "facing=west,finished=true,heat=1,working=true": {
+    "facing=west,finished=true,heat=1,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_1",
       "y": 270
     },
-    "facing=west,finished=true,heat=10,working=false": {
+    "facing=west,finished=true,heat=1,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=1,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_1",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=10,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_10",
       "y": 270
     },
-    "facing=west,finished=true,heat=10,working=true": {
+    "facing=west,finished=true,heat=10,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_10",
       "y": 270
     },
-    "facing=west,finished=true,heat=11,working=false": {
+    "facing=west,finished=true,heat=10,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=10,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_10",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=11,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_11",
       "y": 270
     },
-    "facing=west,finished=true,heat=11,working=true": {
+    "facing=west,finished=true,heat=11,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_11",
       "y": 270
     },
-    "facing=west,finished=true,heat=12,working=false": {
+    "facing=west,finished=true,heat=11,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=11,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_11",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=12,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_12",
       "y": 270
     },
-    "facing=west,finished=true,heat=12,working=true": {
+    "facing=west,finished=true,heat=12,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_12",
       "y": 270
     },
-    "facing=west,finished=true,heat=13,working=false": {
+    "facing=west,finished=true,heat=12,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=12,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_12",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=13,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_13",
       "y": 270
     },
-    "facing=west,finished=true,heat=13,working=true": {
+    "facing=west,finished=true,heat=13,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_13",
       "y": 270
     },
-    "facing=west,finished=true,heat=14,working=false": {
+    "facing=west,finished=true,heat=13,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=13,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_13",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=14,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_14",
       "y": 270
     },
-    "facing=west,finished=true,heat=14,working=true": {
+    "facing=west,finished=true,heat=14,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_14",
       "y": 270
     },
-    "facing=west,finished=true,heat=15,working=false": {
+    "facing=west,finished=true,heat=14,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=14,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_14",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=15,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_15",
       "y": 270
     },
-    "facing=west,finished=true,heat=15,working=true": {
+    "facing=west,finished=true,heat=15,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_15",
       "y": 270
     },
-    "facing=west,finished=true,heat=2,working=false": {
+    "facing=west,finished=true,heat=15,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=15,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_15",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=2,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_2",
       "y": 270
     },
-    "facing=west,finished=true,heat=2,working=true": {
+    "facing=west,finished=true,heat=2,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_2",
       "y": 270
     },
-    "facing=west,finished=true,heat=3,working=false": {
+    "facing=west,finished=true,heat=2,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=2,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_2",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=3,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_3",
       "y": 270
     },
-    "facing=west,finished=true,heat=3,working=true": {
+    "facing=west,finished=true,heat=3,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_3",
       "y": 270
     },
-    "facing=west,finished=true,heat=4,working=false": {
+    "facing=west,finished=true,heat=3,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=3,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_3",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=4,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_4",
       "y": 270
     },
-    "facing=west,finished=true,heat=4,working=true": {
+    "facing=west,finished=true,heat=4,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_4",
       "y": 270
     },
-    "facing=west,finished=true,heat=5,working=false": {
+    "facing=west,finished=true,heat=4,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=4,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_4",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=5,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_5",
       "y": 270
     },
-    "facing=west,finished=true,heat=5,working=true": {
+    "facing=west,finished=true,heat=5,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_5",
       "y": 270
     },
-    "facing=west,finished=true,heat=6,working=false": {
+    "facing=west,finished=true,heat=5,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=5,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_5",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=6,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_6",
       "y": 270
     },
-    "facing=west,finished=true,heat=6,working=true": {
+    "facing=west,finished=true,heat=6,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_6",
       "y": 270
     },
-    "facing=west,finished=true,heat=7,working=false": {
+    "facing=west,finished=true,heat=6,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=6,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_6",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=7,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_7",
       "y": 270
     },
-    "facing=west,finished=true,heat=7,working=true": {
+    "facing=west,finished=true,heat=7,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_7",
       "y": 270
     },
-    "facing=west,finished=true,heat=8,working=false": {
+    "facing=west,finished=true,heat=7,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=7,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_7",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=8,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_8",
       "y": 270
     },
-    "facing=west,finished=true,heat=8,working=true": {
+    "facing=west,finished=true,heat=8,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_8",
       "y": 270
     },
-    "facing=west,finished=true,heat=9,working=false": {
+    "facing=west,finished=true,heat=8,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=8,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_8",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=9,sealed=false,working=false": {
       "model": "erosion:block/crucible_heat_9",
       "y": 270
     },
-    "facing=west,finished=true,heat=9,working=true": {
+    "facing=west,finished=true,heat=9,sealed=false,working=true": {
       "model": "erosion:block/crucible_heat_9",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=9,sealed=true,working=false": {
+      "model": "erosion:block/sealed_crucible_heat_9",
+      "y": 270
+    },
+    "facing=west,finished=true,heat=9,sealed=true,working=true": {
+      "model": "erosion:block/sealed_crucible_heat_9",
       "y": 270
     }
   }

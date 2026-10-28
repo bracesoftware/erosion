@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_kg": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:kaolinized_granite"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "erosion:crucible_lid"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_kg"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "erosion:crucible_lid"
+    ]
+  }
+}

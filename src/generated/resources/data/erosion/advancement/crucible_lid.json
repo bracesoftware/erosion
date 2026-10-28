@@ -1,0 +1,29 @@
+{
+  "parent": "erosion:crucible",
+  "criteria": {
+    "has_item": {
+      "conditions": {
+        "items": [
+          {
+            "items": "erosion:crucible_lid"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "description": "Craft a Crucible Lid.",
+    "icon": {
+      "count": 1,
+      "id": "erosion:crucible_lid"
+    },
+    "title": "A cook in disguise!"
+  },
+  "requirements": [
+    [
+      "has_item"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
