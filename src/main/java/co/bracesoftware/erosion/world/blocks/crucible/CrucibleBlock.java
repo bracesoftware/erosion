@@ -289,7 +289,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     }
 
                     boolean done = !be.working && be.finished;
-                    if(done && !be.storedItem.isEmpty())
+                    if(ff && done && !be.storedItem.isEmpty())
                     {
                         ErosionUtils.displayMessage(
                             p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
