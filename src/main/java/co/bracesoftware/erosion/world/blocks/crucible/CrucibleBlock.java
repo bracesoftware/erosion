@@ -116,6 +116,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
             .setValue(FINISHED, true)
             .setValue(WORKING, false)
             .setValue(HEAT, 0)
+            .setValue(SEALED, false)
         );
         this.callUseItemOnOnly(true);
         this.setServerLogic(new CrucibleBlockServerLogic());
