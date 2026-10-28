@@ -188,8 +188,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
             return;
         }
 
-        @Override
-        public boolean useItemOn(ErosionBlockInteractionPacket p)
+        @Override public boolean useItemOn(ErosionBlockInteractionPacket p)
         {
             if(p.getServerLevel().getBlockEntity(p.getBlockPos()) instanceof CrucibleBlockEntity be)
             {
@@ -290,27 +289,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                     //if bro's klikin for no reason, say it
                     if(be.isEmpty())
                     {
-                        if(p.getItemStack().is(ErosionRegistry.Items.CRUCIBLE_LID.get()))
-                        {
-                            be.sealed = true;
-                            p.getItemStack().shrink(1);
-                            ErosionUtils.displayMessage(
-                                p.getServerPlayer(), "Lid on",
-                                ErosionScreenMessage.Color.GRAY
-                            );
-
-                            be.setChanged();
-                            p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
-                            p.getServerLevel().setBlock(
-                                p.getBlockPos(),
-                                p.getBlockState()
-                                .setValue(FINISHED, be.finished)
-                                .setValue(SEALED, be.sealed)
-                                .setValue(WORKING, be.working),
-                                Block.UPDATE_ALL
-                            );
-                            return true;
-                        }
                         ErosionUtils.displayMessage(
                             p.getServerPlayer(), "The crucible is completely empty",
                             ErosionScreenMessage.Color.GRAY
@@ -360,6 +338,28 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         ErosionUtils.displayMessage(p.getServerPlayer(), "Catalyst taken out");
                         return true;
                     }
+                }
+
+                if(p.getItemStack().is(ErosionRegistry.Items.CRUCIBLE_LID.get()))
+                {
+                    be.sealed = true;
+                    p.getItemStack().shrink(1);
+                    ErosionUtils.displayMessage(
+                        p.getServerPlayer(), "Lid on",
+                        ErosionScreenMessage.Color.GRAY
+                    );
+
+                    be.setChanged();
+                    p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                    p.getServerLevel().setBlock(
+                        p.getBlockPos(),
+                        p.getBlockState()
+                        .setValue(FINISHED, be.finished)
+                        .setValue(SEALED, be.sealed)
+                        .setValue(WORKING, be.working),
+                        Block.UPDATE_ALL
+                    );
+                    return true;
                 }
                 
                 //if holding a meltable item

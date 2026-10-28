@@ -232,6 +232,20 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
 
         ContainerHelper.loadAllItems(t, alloyComponents, r);
         this.sealed = t.getBoolean(DataRawName.SEALED);
+
+        //other shi
+        if(this.level != null && !this.level.isClientSide())
+        {
+            var s = this.level.getBlockState(this.worldPosition);
+            if(s.hasProperty(CrucibleBlock.SEALED) && s.getValue(CrucibleBlock.SEALED) != this.sealed)
+            {
+                this.level.setBlock(
+                    this.worldPosition,
+                    s.setValue(CrucibleBlock.SEALED, this.sealed),
+                    Block.UPDATE_ALL
+                );
+            }
+        }
         return;
     }
 }
