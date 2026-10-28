@@ -1002,7 +1002,8 @@ public class ErosionCore
 
             for(var m : ErosionRecipeRegistry.Crucible.ALLOYS.entrySet())
             {
-                var l = m.getValue();
+                var l = new ArrayList<>(m.getValue());
+                l.sort(ChemicalReactorMenu.itemComparator);
                 var a = m.getKey();
 
                 if(l.equals(r))
@@ -1010,7 +1011,7 @@ public class ErosionCore
                     return a;
                 }
             }
-            return Items.AIR;
+            return null;
         }
 
         private final Supplier<List<Item>> alloyComponentsSupplier;
@@ -1035,8 +1036,7 @@ public class ErosionCore
         {
             ErosionUtils.Log("Setting up alloy recipe -> " + this.name);
             this.alloyItem = this.alloyItemSupplier.get();
-            this.alloyComponents = new ArrayList<>(this.alloyComponentsSupplier.get());
-            this.alloyComponents.sort(ChemicalReactorMenu.itemComparator);
+            this.alloyComponents = this.alloyComponentsSupplier.get();
 
             CAN_BE_USED_FOR_ALLOYING.addAll(alloyComponents);
 

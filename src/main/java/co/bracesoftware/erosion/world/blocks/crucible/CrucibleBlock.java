@@ -261,7 +261,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         ErosionUtils.displayMessage(
                             p.getServerPlayer(), "Added " + it.getDescription().getString()
                         );
-                        if(i != Items.AIR)
+                        if(i != null)
                         {
                             be.storedItem = new ItemStack(i,1);
                             be.working = true;
