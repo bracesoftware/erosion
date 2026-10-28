@@ -210,47 +210,68 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                 if(be.sealed)
                 {
                     boolean ff = p.getItemStack().isEmpty();
-                    if(ff && be.isEmpty())
+                    //if kliked with empty hand..
+                    if(ff)
                     {
-                        be.sealed = false;
-                        be.setChanged();
-                        p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
-                        p.getServerLevel().setBlock(
-                            p.getBlockPos(),
-                            p.getBlockState()
-                            .setValue(FINISHED, be.finished)
-                            .setValue(WORKING, be.working)
-                            .setValue(SEALED, be.sealed),
-                            Block.UPDATE_ALL
-                        );
-                        ErosionUtils.displayMessage(
-                            p.getServerPlayer(), "Lid removed",
-                            ErosionScreenMessage.Color.GRAY
-                        );
-                        ErosionUtils.PlayerFuncs.giveItem(
-                            p.getServerPlayer(),
-                            ErosionRegistry.Items.CRUCIBLE_LID.get(),1
-                        );
-                        return true;
-                    }
-
-                    if(ff && !be.isAlloyComponentsEmpty() && !be.working)
-                    {
-                        for(var is : be.alloyComponents)
+                        //if the crucible is also completely empty,remove the lid
+                        if(be.isEmpty())
                         {
-                            ErosionUtils.PlayerFuncs.giveItem(
-                                p.getServerPlayer(), is
+                            be.sealed = false;
+                            be.setChanged();
+                            p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                            p.getServerLevel().setBlock(
+                                p.getBlockPos(),
+                                p.getBlockState()
+                                .setValue(FINISHED, be.finished)
+                                .setValue(WORKING, be.working)
+                                .setValue(SEALED, be.sealed),
+                                Block.UPDATE_ALL
                             );
+                            ErosionUtils.displayMessage(
+                                p.getServerPlayer(), "Lid removed",
+                                ErosionScreenMessage.Color.GRAY
+                            );
+                            ErosionUtils.PlayerFuncs.giveItem(
+                                p.getServerPlayer(),
+                                ErosionRegistry.Items.CRUCIBLE_LID.get(),1
+                            );
+                            return true;
                         }
-                        be.alloyComponents.clear();
+                        //if there is stuff in the crucible, and it aint workin,take it all out
+                        if(!be.isAlloyComponentsEmpty() && !be.working)
+                        {
+                            for(var is : be.alloyComponents)
+                            {
+                                ErosionUtils.PlayerFuncs.giveItem(
+                                    p.getServerPlayer(), is
+                                );
+                            }
+                            be.alloyComponents.clear();
 
-                        ErosionUtils.displayMessage(
-                            p.getServerPlayer(), "Everything taken out",
-                            ErosionScreenMessage.Color.GRAY
-                        );
-                        return true;
-                    }
+                            ErosionUtils.displayMessage(
+                                p.getServerPlayer(), "Everything taken out",
+                                ErosionScreenMessage.Color.GRAY
+                            );
+                            return true;
+                        }
+                        //else take the product out
+                        boolean done = !be.working && be.finished;
+                        if(done && !be.storedItem.isEmpty())
+                        {
+                            ErosionUtils.displayMessage(
+                                p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
+                                ErosionScreenMessage.Color.DARK_AQUA
+                            );
 
+                            ErosionUtils.PlayerFuncs.giveItem(
+                                p.getServerPlayer(), be.storedItem.copy()
+                            );
+                            be.storedItem = ItemStack.EMPTY;
+                            return true;
+                        }
+                    } 
+
+                    //if the player is klikin with something that can be alloyed
                     var it = p.getItemStack().getItem();
                     if(Alloy.canBeUsedForAlloying(it) && !be.working && !be.storedItem.isEmpty())
                     {
@@ -287,22 +308,6 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         }
                         return true;
                     }
-
-                    boolean done = !be.working && be.finished;
-                    if(ff && done && !be.storedItem.isEmpty())
-                    {
-                        ErosionUtils.displayMessage(
-                            p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
-                            ErosionScreenMessage.Color.DARK_AQUA
-                        );
-
-                        ErosionUtils.PlayerFuncs.giveItem(
-                            p.getServerPlayer(), be.storedItem.copy()
-                        );
-                        be.storedItem = ItemStack.EMPTY;
-                        return true;
-                    }
-
                     return false;
                 }
                 //if player is holding a catalyst item
