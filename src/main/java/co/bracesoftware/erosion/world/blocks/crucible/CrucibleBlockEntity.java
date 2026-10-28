@@ -47,7 +47,7 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
         super(ErosionRegistry.BlockEntities.CRUCIBLE.getBlockEntityHolder().get(), pos, state);
     }
 
-    public final boolean isEmpty()
+    public final boolean isAlloyComponentsEmpty()
     {
         boolean a = true;
         for(var is : this.alloyComponents)
@@ -58,10 +58,16 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
                 break;
             }
         }
+        return a;
+    }
+
+    public final boolean isEmpty()
+    {
         return this.catalyst.isEmpty() &&
         this.finished == true &&
         this.working == false &&
-        this.storedItem.isEmpty() && a;
+        this.storedItem.isEmpty() &&
+        this.isAlloyComponentsEmpty();
     }
 
     @Override
@@ -82,7 +88,27 @@ public class CrucibleBlockEntity extends ErosionNetworkSafeBlockEntity<CrucibleB
             );
         }
 
-        if(be.working)
+        if(be.sealed && be.working)
+        {
+            be.progress++;
+            if(be.progress >= 20 * ErosionConfig.CRUCIBLE_SECONDS)
+            {
+                be.working = false;
+                be.finished = true;
+                be.progress = 0;
+
+                p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                p.getServerLevel().setBlock(p.getBlockPos(),
+                    p.getBlockState()
+                    .setValue(CrucibleBlock.FINISHED, be.finished)
+                    .setValue(CrucibleBlock.WORKING, be.working),
+                    Block.UPDATE_ALL
+                );
+
+                be.setChanged();
+            }
+        }
+        else if(!be.sealed && be.working)
         {
             if(ErosionConfig.CRUCIBLE_SECONDS < 1)
             {

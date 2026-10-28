@@ -981,6 +981,38 @@ public class ErosionCore
 
     public static final class Alloy extends ErosionDynamicItem
     {
+        private static final List<Item> CAN_BE_USED_FOR_ALLOYING = new ArrayList<>();
+
+        public static final boolean canBeUsedForAlloying(Item i)
+        {
+            return CAN_BE_USED_FOR_ALLOYING.contains(i);
+        }
+
+        public static final Item getAlloyItemFromComponents(List<ItemStack> recipe)
+        {
+            List<Item> r = new ArrayList<>();
+            for(var is : recipe)
+            {
+                if(!is.isEmpty())
+                {
+                    r.add(is.getItem());
+                }
+            }
+            r.sort(ChemicalReactorMenu.itemComparator);
+
+            for(var m : ErosionRecipeRegistry.Crucible.ALLOYS.entrySet())
+            {
+                var l = m.getValue();
+                var a = m.getKey();
+
+                if(l.equals(r))
+                {
+                    return a;
+                }
+            }
+            return Items.AIR;
+        }
+
         private final Supplier<List<Item>> alloyComponentsSupplier;
         private final Supplier<Item> alloyItemSupplier;
 
@@ -1004,9 +1036,12 @@ public class ErosionCore
             ErosionUtils.Log("Setting up alloy recipe -> " + this.name);
             this.alloyItem = this.alloyItemSupplier.get();
             this.alloyComponents = this.alloyComponentsSupplier.get();
+            this.alloyComponents.sort(ChemicalReactorMenu.itemComparator);
+
+            CAN_BE_USED_FOR_ALLOYING.addAll(alloyComponents);
 
             this.preventDuplication(antiDuplicator);
-            
+            ErosionRecipeRegistry.Crucible.ALLOYS.put(this.alloyItem, this.alloyComponents);
             return;
         }
 
@@ -1014,6 +1049,8 @@ public class ErosionCore
         {
             ErosionUtils.Log("Discarding alloy recipe -> " + this.name);
             this.discardDuplicationPreventionSys(antiDuplicator);
+            if(!ErosionRecipeRegistry.Crucible.ALLOYS.isEmpty()) ErosionRecipeRegistry.Crucible.ALLOYS.clear();
+            if(!CAN_BE_USED_FOR_ALLOYING.isEmpty()) CAN_BE_USED_FOR_ALLOYING.clear();
             return;
         }
     }
@@ -2193,6 +2230,18 @@ public class ErosionCore
         );
     }
 
+    // -------------------------------- ALLOYS
+    public static final class Alloys
+    {
+        public static final Alloy TEST = new Alloy(
+            ErosionRegistry.RawRegistry.LIMONITE_ORE.getName(),
+            () -> List.of(
+                ErosionRegistry.Items.ANGLESITE_ORE.get()
+            ),
+            () -> ErosionRegistry.Items.BISMUTHINITE_ORE.get()
+        );
+    }
+
     // -------------------------------- SALTABLE FOODS
     public static final class SaltableFoods
     {
@@ -2319,12 +2368,18 @@ public class ErosionCore
         SaltableFoods.COOKED_SALMON
     );
 
+    public static final List<Alloy> ALLOY_LIST_ORIGINAL = List.of(
+        Alloys.TEST
+    );
+
     private static final List<RefinableMaterial> REFINABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<AlterableMaterial> ALTERABLE_MATERIALS_LIST = new ArrayList<>();
     private static final List<CrucibleCatalyst> CRUCIBLE_CATALYST_LIST = new ArrayList<>();
     private static final List<ChemicalReaction> CHEMICAL_REACTION_LIST = new ArrayList<>();
     private static final List<ChemicalReactorCoolingFluid> CHEMICAL_REACTOR_COOLING_FLUID_LIST = new ArrayList<>();
     private static final List<SaltableFood> SALTABLE_FOOD_LIST = new ArrayList<>();
+    private static final List<Alloy> ALLOY_LIST = new ArrayList<>();
+
 
     public static void add(RefinableMaterial e)
     {
@@ -2353,6 +2408,11 @@ public class ErosionCore
         SALTABLE_FOOD_LIST.add(e);
     }
 
+    public static void add(Alloy e)
+    {
+        ALLOY_LIST.add(e);
+    }
+
     // =====================================
 
     @ErosionEvents.ErosionEventSubscribe
@@ -2376,6 +2436,7 @@ public class ErosionCore
         CHEMICAL_REACTION_LIST.clear();
         CHEMICAL_REACTOR_COOLING_FLUID_LIST.clear();
         SALTABLE_FOOD_LIST.clear();
+        ALLOY_LIST.clear();
 
         REFINABLE_MATERIALS_LIST.addAll(REFINABLE_MATERIALS_LIST_ORIGINAL);
         ALTERABLE_MATERIALS_LIST.addAll(ALTERABLE_MATERIALS_LIST_ORIGINAL);
@@ -2383,6 +2444,7 @@ public class ErosionCore
         CHEMICAL_REACTION_LIST.addAll(CHEMICAL_REACTION_LIST_ORIGINAL);
         CHEMICAL_REACTOR_COOLING_FLUID_LIST.addAll(CHEMICAL_REACTOR_COOLING_FLUID_LIST_ORIGINAL);
         SALTABLE_FOOD_LIST.addAll(SALTABLE_FOOD_LIST_ORIGINAL);
+        ALLOY_LIST.addAll(ALLOY_LIST_ORIGINAL);
 
         for(int i = 0; i < ErosionModCompat.COMPATIBLE_MODS.size(); ++i)
         {
@@ -2433,6 +2495,11 @@ public class ErosionCore
             var m = SALTABLE_FOOD_LIST.get(i);
             m.setup();
         }
+        for(int i = 0; i < ALLOY_LIST.size(); ++i)
+        {
+            var m = ALLOY_LIST.get(i);
+            m.setup();
+        }
         return;
     }
 
@@ -2477,6 +2544,11 @@ public class ErosionCore
         for(int i = 0; i < SALTABLE_FOOD_LIST.size(); ++i)
         {
             var m = SALTABLE_FOOD_LIST.get(i);
+            m.discard();
+        }
+        for(int i = 0; i < ALLOY_LIST.size(); ++i)
+        {
+            var m = ALLOY_LIST.get(i);
             m.discard();
         }
         return;
@@ -2613,6 +2685,13 @@ public class ErosionCore
                     "- To work with a reactor multiblock system, desublimator has to be placed on top of a " +
                     RawRegistry.CHEMICAL_REACTOR_MODULE.getName() + " to establish a functional gas pipe link."
                 ).withStyle(ChatFormatting.DARK_PURPLE)
+            );
+        }
+        else if(currentItem == ErosionRegistry.Items.CRUCIBLE_LID.get())
+        {
+            desc.add(
+                Component.literal("Used to seal the crucible so you can make alloys.")
+                .withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.BOLD)
             );
         }
 
@@ -2830,6 +2909,71 @@ public class ErosionCore
                     .append(Component.literal(" chance to emit coproduct gases.").withStyle(ChatFormatting.GRAY))
                 );
             }
+        }
+
+        List<String> alloyMadeFrom = new ArrayList<>();
+        List<String> usedForMakingAlloys = new ArrayList<>();
+
+        for(var ar : ErosionRecipeRegistry.Crucible.ALLOYS.entrySet())
+        {
+            if(ar.getValue().contains(currentItem))
+            {
+                usedForMakingAlloys.add(ar.getKey().getDescription().getString());
+            }
+            if(ar.getKey() == currentItem)
+            {
+                alloyMadeFrom.addAll(
+                    ar.getValue().stream().map(
+                        k -> k.getDescription().getString()
+                    ).toList()
+                );
+            }
+        }
+
+        if(!alloyMadeFrom.isEmpty() || !usedForMakingAlloys.isEmpty())
+        {
+            desc.add(Component.literal(""));
+            desc.add(
+                Component.literal("Alloying information").withStyle(ChatFormatting.DARK_AQUA, ChatFormatting.UNDERLINE)
+            );
+        }
+        if(!alloyMadeFrom.isEmpty())
+        {
+            var c = Component.literal("");
+            for(int i = 0; i < alloyMadeFrom.size(); i++)
+            {
+                var s = alloyMadeFrom.get(i);
+                c.append(
+                    Component.literal(s).withStyle(ChatFormatting.LIGHT_PURPLE)
+                );
+                if(!(i + 1 >= alloyMadeFrom.size()))
+                {
+                    c.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
+                }
+            }
+            desc.add(
+                Component.literal("- An alloy made from: ").withStyle(ChatFormatting.GRAY)
+                .append(c)
+            );
+        }
+        if(!usedForMakingAlloys.isEmpty())
+        {
+            var c = Component.literal("");
+            for(int i = 0; i < usedForMakingAlloys.size(); i++)
+            {
+                var s = usedForMakingAlloys.get(i);
+                c.append(
+                    Component.literal(s).withStyle(ChatFormatting.RED)
+                );
+                if(!(i + 1 >= usedForMakingAlloys.size()))
+                {
+                    c.append(Component.literal(", ").withStyle(ChatFormatting.GRAY));
+                }
+            }
+            desc.add(
+                Component.literal("- Used to produce following alloy(s): ").withStyle(ChatFormatting.GRAY)
+                .append(c)
+            );
         }
 
         final class AlterationInfo
@@ -3127,7 +3271,7 @@ public class ErosionCore
                     Component.literal("- ").withStyle(ChatFormatting.GRAY).append(
                         Component.literal(factor).withStyle(ChatFormatting.BLUE)
                     ).append(
-                        Component.literal(" can alter this block’s composition and transform it into:").withStyle(ChatFormatting.GRAY)
+                        Component.literal(" can alter this block's composition and transform it into:").withStyle(ChatFormatting.GRAY)
                     )
                 );
                 for(int i = 0; i < products.size(); i++)
@@ -3188,7 +3332,8 @@ public class ErosionCore
             {
                 desc.add(list.get(i));
             }
-            MutableComponent catalysts = Component.literal("None");
+            
+            var catalysts = Component.literal("None");
             if(!catalystListLmao.isEmpty())
             {
                 catalysts = Component.literal("");
@@ -3777,6 +3922,7 @@ public class ErosionCore
             private static final Map<Item, List<Item>> CATALYSTS = new HashMap<>();
             private static final Map<Item, List<Item>> COPRODUCTS = new HashMap<>();
             private static final Map<Item, List<GasType>> EMITTED_GASES = new HashMap<>();
+            private static final Map<Item, List<Item>> ALLOYS = new HashMap<>();
 
             public static final Map<Item, List<Item>> getRecipes()
             {
@@ -3796,6 +3942,11 @@ public class ErosionCore
             public static final Map<Item, List<GasType>> getEmittedGases()
             {
                 return Collections.unmodifiableMap(EMITTED_GASES);
+            }
+
+            public static final Map<Item, List<Item>> getAlloys()
+            {
+                return Collections.unmodifiableMap(ALLOYS);
             }
         }
     }

@@ -5,6 +5,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -34,6 +35,7 @@ import co.bracesoftware.erosion.ErosionConfig;
 import co.bracesoftware.erosion.ErosionCore;
 import co.bracesoftware.erosion.ErosionUtils;
 import co.bracesoftware.erosion.ErosionClient.ErosionScreenMessage;
+import co.bracesoftware.erosion.ErosionCore.Alloy;
 import co.bracesoftware.erosion.ErosionCore.CrucibleCatalyst;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBaseEntityBlock;
 import co.bracesoftware.erosion.network.server.ErosionNetworkSafeVariants.ErosionNetworkSafeBlockEntity;
@@ -207,7 +209,8 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                 //if the crucible is SEALED, completely different logik
                 if(be.sealed)
                 {
-                    if(p.getItemStack().isEmpty() && be.isEmpty())
+                    boolean ff = p.getItemStack().isEmpty();
+                    if(ff && be.isEmpty())
                     {
                         be.sealed = false;
                         be.setChanged();
@@ -230,6 +233,76 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
                         );
                         return true;
                     }
+
+                    if(ff && !be.isAlloyComponentsEmpty() && !be.working)
+                    {
+                        for(var is : be.alloyComponents)
+                        {
+                            ErosionUtils.PlayerFuncs.giveItem(
+                                p.getServerPlayer(), is
+                            );
+                        }
+                        be.alloyComponents.clear();
+
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "Everything taken out",
+                            ErosionScreenMessage.Color.GRAY
+                        );
+                        return true;
+                    }
+
+                    var it = p.getItemStack().getItem();
+                    if(Alloy.canBeUsedForAlloying(it) && !be.working)
+                    {
+                        p.getItemStack().shrink(1);
+                        be.alloyComponents.add(new ItemStack(it,1));
+
+                        var i = Alloy.getAlloyItemFromComponents(be.alloyComponents);
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "Added " + it.getDescription().getString()
+                        );
+                        if(i != Items.AIR)
+                        {
+                            be.storedItem = new ItemStack(i,1);
+                            be.working = true;
+                            be.finished = false;
+                            be.alloyComponents.clear();
+
+                            p.getServerLevel().playSound(
+                                null,p.getBlockPos(),
+                                ErosionRegistry.SoundEvents.CRUCIBLE_MELTING.get(),
+                                SoundSource.BLOCKS
+                            );
+
+                            be.setChanged();
+                            p.getServerLevel().getLightEngine().checkBlock(p.getBlockPos());
+                            p.getServerLevel().setBlock(
+                                p.getBlockPos(),
+                                p.getBlockState()
+                                .setValue(FINISHED, be.finished)
+                                .setValue(WORKING, be.working)
+                                .setValue(SEALED, be.sealed),
+                                Block.UPDATE_ALL
+                            );
+                        }
+                        return true;
+                    }
+
+                    boolean done = !be.working && be.finished;
+                    if(done && !be.storedItem.isEmpty())
+                    {
+                        ErosionUtils.displayMessage(
+                            p.getServerPlayer(), "You got " + be.storedItem.getItem().getDescription().getString(),
+                            ErosionScreenMessage.Color.DARK_AQUA
+                        );
+
+                        ErosionUtils.PlayerFuncs.giveItem(
+                            p.getServerPlayer(), be.storedItem.copy()
+                        );
+                        be.storedItem = ItemStack.EMPTY;
+                        return true;
+                    }
+
                     return false;
                 }
                 //if player is holding a catalyst item
@@ -462,7 +535,7 @@ public class CrucibleBlock extends ErosionNetworkSafeBaseEntityBlock<CrucibleBlo
         {
             if(level.getBlockEntity(pos) instanceof CrucibleBlockEntity be)
             {    
-                if(be.storedItem != null && !be.storedItem.isEmpty())
+                if(!be.sealed) if(be.storedItem != null && !be.storedItem.isEmpty())
                 {
                     Containers.dropItemStack(level, pos.getX(), pos.getY(), pos.getZ(), be.storedItem);
                 }

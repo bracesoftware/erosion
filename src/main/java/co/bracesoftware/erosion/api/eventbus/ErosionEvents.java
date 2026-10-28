@@ -88,5 +88,10 @@ public class ErosionEvents
         {
             ErosionCore.add(f);
         }
+
+        public final void registerAlloy(ErosionCore.Alloy f)
+        {
+            ErosionCore.add(f);
+        }
     }
 }
